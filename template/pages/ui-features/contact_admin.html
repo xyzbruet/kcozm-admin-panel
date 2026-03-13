@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Contact</title>
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+
+  <style>
+    :root{
+      --pink:#e91e63;--pink-dark:#c2185b;--pink-soft:#fce4ec;--pink-glow:rgba(233,30,99,.13);
+      --ink:#1a1a2e;--ink-mid:#4a4a6a;--ink-light:#8888aa;
+      --surface:#fff;--surface-2:#f8f7fc;--border:#ededf5;
+      --radius-sm:8px;--radius-md:14px;--radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,.08);--shadow-btn:0 4px 16px rgba(233,30,99,.32);--t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
+
+    /* ── Ensure main-panel fills remaining space correctly ── */
+    .main-panel { min-width: 0; overflow-x: hidden; }
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.94)}       to{opacity:1;transform:scale(1)}}
+    @keyframes pulse   {0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)}}
+
+    /* ── Page wrapper (matches Bridal structure) ── */
+    .kc-page-content { padding: 28px 28px 0; flex: 1; width: 100%; min-width: 0; }
+
+    /* Breadcrumb */
+    .kc-breadcrumb{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-breadcrumb a{color:var(--pink);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-breadcrumb a:hover{opacity:.72}
+    .kc-breadcrumb .sep{font-size:10px}
+
+    /* Card */
+    .kc-card{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--border);overflow:hidden;animation:fadeUp .45s ease both;width:100%;margin-bottom:28px;min-width:0}
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--radius-sm);background:var(--pink-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--pink);font-size:19px}
+    .kc-title{font-family:'Syne',sans-serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2}
+    .kc-title span{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px}
+    .kc-btn-add{background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
+    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(233,30,99,.40)}
+    .kc-btn-outline{padding:10px 20px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-mid);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--t)}
+    .kc-btn-outline:hover{border-color:var(--pink);color:var(--pink);background:var(--pink-soft)}
+
+    /* Two-col */
+    .kc-body{display:grid;grid-template-columns:460px 1fr;min-height:680px;min-width:0}
+    .kc-body > * { min-width: 0; }
+    @media(max-width:1050px){.kc-body{grid-template-columns:400px 1fr}}
+    @media(max-width:880px){.kc-body{grid-template-columns:1fr}}
+
+    /* Editor */
+    .kc-editor{border-right:1px solid var(--border);display:flex;flex-direction:column}
+    .kc-panel-head{padding:14px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface-2)}
+    .kc-panel-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-light);display:flex;align-items:center;gap:7px}
+    .kc-panel-title i{color:var(--pink)}
+    .kc-fields{padding:18px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:12px}
+
+    .kc-fgroup{border:1.5px solid var(--border);border-radius:var(--radius-md);overflow:hidden;animation:popIn .28s ease both;transition:box-shadow var(--t)}
+    .kc-fgroup:hover{box-shadow:0 4px 16px rgba(26,26,46,.07)}
+    .kc-fgroup-head{padding:11px 14px;background:var(--surface-2);display:flex;align-items:center;gap:9px}
+    .kc-fgroup-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px}
+    .kc-fgroup-label{font-weight:700;font-size:12.5px;color:var(--ink);flex:1}
+    .kc-sw-lbl{font-size:10.5px;font-weight:700;color:var(--ink-light);min-width:20px;text-align:right}
+    .kc-switch{position:relative;width:38px;height:21px;flex-shrink:0}
+    .kc-switch input{opacity:0;width:0;height:0;position:absolute}
+    .kc-switch-track{position:absolute;inset:0;border-radius:12px;background:#dde;transition:background var(--t);cursor:pointer}
+    .kc-switch input:checked+.kc-switch-track{background:var(--pink)}
+    .kc-switch-track::after{content:'';position:absolute;width:15px;height:15px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform var(--t);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+    .kc-switch input:checked+.kc-switch-track::after{transform:translateX(17px)}
+    .kc-fgroup-body{padding:13px 14px;display:flex;flex-direction:column;gap:9px}
+    .kc-fgroup-body.hidden{display:none}
+
+    .kc-field{display:flex;flex-direction:column;gap:4px}
+    .kc-label{font-size:10px;font-weight:700;color:var(--ink-light);text-transform:uppercase;letter-spacing:.5px}
+    .kc-input{width:100%;padding:8.5px 11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;transition:border-color var(--t),box-shadow var(--t),background var(--t)}
+    .kc-input:focus{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-glow);background:#fff}
+    .kc-input-ic{position:relative}
+    .kc-input-ic .ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:11.5px;color:var(--ink-light);pointer-events:none}
+    .kc-input-ic .kc-input{padding-left:32px}
+    .kc-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .kc-hours-grid{display:flex;flex-direction:column;gap:6px}
+    .kc-hour-row{display:grid;grid-template-columns:88px 1fr;gap:8px;align-items:center}
+    .kc-hour-day{font-size:12px;font-weight:600;color:var(--ink-mid)}
+
+    /* Preview */
+    .kc-preview{display:flex;flex-direction:column;background:#eeedf5}
+    .kc-preview-header{padding:14px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface-2)}
+    .kc-preview-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-light);display:flex;align-items:center;gap:8px}
+    .kc-live-dot{width:8px;height:8px;border-radius:50%;background:#4caf50;animation:pulse 1.8s ease infinite}
+    .kc-device-btns{display:flex;gap:6px}
+    .kc-dev-btn{width:30px;height:30px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink-light);transition:all var(--t)}
+    .kc-dev-btn.active,.kc-dev-btn:hover{border-color:var(--pink);color:var(--pink);background:var(--pink-soft)}
+    .kc-preview-frame-wrap{flex:1;padding:18px;overflow-y:auto;display:flex;justify-content:center}
+    .kc-frame{background:#fff;border-radius:var(--radius-md);box-shadow:0 8px 40px rgba(26,26,46,.15);overflow:hidden;transition:max-width var(--t);width:100%}
+    .kc-frame.tablet{max-width:680px}
+    .kc-frame.mobile{max-width:375px}
+
+    /* Live Preview */
+    #livePreview{font-family:'DM Sans',sans-serif;color:#1a1a2e}
+    .pv-hero{padding:44px 32px 38px;background:linear-gradient(135deg,#1a1a2e 0%,#2d1b4e 52%,#c2185b 100%);color:#fff;text-align:center;position:relative;overflow:hidden}
+    .pv-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 75% 30%,rgba(233,30,99,.3) 0%,transparent 60%);pointer-events:none}
+    .pv-hero-tag{display:inline-block;padding:4px 14px;border-radius:50px;background:rgba(233,30,99,.18);border:1px solid rgba(233,30,99,.38);font-size:9px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:#f48fb1;margin-bottom:12px;position:relative}
+    .pv-hero h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin:0 0 8px;line-height:1.2;position:relative}
+    .pv-hero p{font-size:12.5px;color:rgba(255,255,255,.68);line-height:1.7;margin:0 auto;max-width:340px;position:relative}
+    .pv-contact-list{padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+    .pv-row{display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:12px;transition:background .15s ease;text-decoration:none;color:inherit}
+    .pv-row:hover{background:#f5f4fb}
+    .pv-row-icon{width:40px;height:40px;min-width:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .pv-row-body{flex:1;min-width:0}
+    .pv-row-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#8888aa;margin-bottom:2px}
+    .pv-row-val{font-size:13.5px;font-weight:600;color:#1a1a2e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .pv-row-sub{font-size:11.5px;color:#aaaacc;margin-top:1px}
+    .pv-row-arr{color:#ccccdd;font-size:12px;flex-shrink:0}
+    .pv-row-sep{height:1px;background:#f0eff8;margin:0 14px}
+    .pv-sec-head{display:flex;align-items:center;gap:10px;padding:16px 18px 8px}
+    .pv-sec-head span{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8888aa;white-space:nowrap}
+    .pv-sec-head::after{content:'';flex:1;height:1px;background:#ededf5}
+    .pv-social-list{padding:0 18px 4px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .pv-soc-row{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;border:1.5px solid #ededf5;text-decoration:none;background:#fff;transition:box-shadow .15s ease,border-color .15s ease}
+    .pv-soc-row:hover{box-shadow:0 4px 14px rgba(26,26,46,.09);border-color:#ddddf0}
+    .pv-soc-icon{width:36px;height:36px;min-width:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .pv-soc-name{flex:1;font-size:13px;font-weight:600;color:#1a1a2e}
+    .pv-soc-handle{font-size:11px;color:#8888aa;font-weight:400}
+    .pv-soc-arr{color:#ccccdd;font-size:11px;flex-shrink:0}
+    .soc-ig{background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);color:#fff}
+    .soc-fb{background:#1877f2;color:#fff}
+    .soc-wa{background:#25d366;color:#fff}
+    .soc-yt{background:#ff0000;color:#fff}
+    .soc-tw{background:#1da1f2;color:#fff}
+    .pv-hours-wrap{padding:0 18px 16px}
+    .pv-hours-inner{border:1.5px solid #ededf5;border-radius:12px;overflow:hidden}
+    .pv-hr{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid #f0eff8;font-size:12.5px}
+    .pv-hr:last-child{border-bottom:none}
+    .pv-hr:nth-child(even){background:#fafafa}
+    .pv-hr .dy{font-weight:600;color:#4a4a6a}
+    .pv-hr .tm{color:#8888aa;font-size:12px}
+    .pv-hr .cl{color:#e53935;font-weight:700;font-size:11px;background:#fce4ec;padding:2px 9px;border-radius:20px}
+    .pv-map{margin:0 18px 18px;border-radius:12px;overflow:hidden;border:1.5px solid #ededf5}
+    .pv-map iframe{width:100%;height:150px;display:block;border:none}
+    .pv-map-ph{height:120px;background:#f8f7fc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#8888aa}
+    .pv-map-ph i{font-size:22px;opacity:.3}
+    .pv-map-ph span{font-size:11px;text-align:center;line-height:1.5;padding:0 16px}
+    .pv-empty{padding:72px 24px;text-align:center;color:#8888aa}
+    .pv-empty i{font-size:34px;opacity:.28;display:block;margin-bottom:12px}
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Same structure as Bridal: main-panel > kc-page-content -->
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <!-- Breadcrumb -->
+      <nav class="kc-breadcrumb">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Contact</span>
+      </nav>
+
+      <div class="kc-card">
+
+        <!-- Header -->
+        <div class="kc-card-header">
+          <div class="kc-title-block">
+            <div class="kc-icon-wrap"><i class="fa-solid fa-address-book"></i></div>
+            <h4 class="kc-title">Contact Page<span>Edit contact details, social handles &amp; business hours</span></h4>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="kc-btn-outline" onclick="location.reload()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+            <button class="kc-btn-add" onclick="saveContact()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="kc-body">
+
+          <!-- LEFT: Editor -->
+          <div class="kc-editor">
+            <div class="kc-panel-head">
+              <span class="kc-panel-title"><i class="fa-solid fa-sliders"></i> Contact Editor</span>
+              <span style="font-size:11px;color:var(--ink-light)">Toggle sections on/off</span>
+            </div>
+            <div class="kc-fields" id="editorFields"></div>
+          </div>
+
+          <!-- RIGHT: Preview -->
+          <div class="kc-preview">
+            <div class="kc-preview-header">
+              <div class="kc-preview-title"><span class="kc-live-dot"></span> Live Preview</div>
+              <div class="kc-device-btns">
+                <button class="kc-dev-btn active" id="devDesktop" onclick="setDevice('desktop')"><i class="fa-solid fa-desktop"></i></button>
+                <button class="kc-dev-btn" id="devTablet"  onclick="setDevice('tablet')"><i class="fa-solid fa-tablet-screen-button"></i></button>
+                <button class="kc-dev-btn" id="devMobile"  onclick="setDevice('mobile')"><i class="fa-solid fa-mobile-screen-button"></i></button>
+              </div>
+            </div>
+            <div class="kc-preview-frame-wrap">
+              <div class="kc-frame" id="previewFrame">
+                <div id="livePreview"></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /kc-body -->
+      </div><!-- /kc-card -->
+
+    </div><!-- /kc-page-content -->
+  </div><!-- /main-panel -->
+
+  <!-- Shared Components -->
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({
+      activePage : 'contact',
+      pageTitle  : 'Contact',
+      depth      : '../../'
+    });
+  </script>
+
+<script>
+/* ══ DATA ══ */
+var DATA = {
+  hero:    { enabled:true, tag:'Get In Touch', title:'Contact KCOZM', subtitle:"We'd love to hear from you. Reach out via any channel below." },
+  phone:   { enabled:true, primary:'+91 98765 43210', secondary:'+91 91234 56789', whatsapp:'+91 98765 43210' },
+  email:   { enabled:true, primary:'hello@kcozm.com', support:'support@kcozm.com' },
+  address: { enabled:true, line1:'2nd Floor, Glamour Plaza', line2:'MG Road, Near City Mall', city:'Nagpur', state:'Maharashtra', pincode:'440001', mapEmbed:'' },
+  website: { enabled:true, url:'https://www.kcozm.com' },
+  social:  { enabled:true, instagram:'https://instagram.com/kcozm', facebook:'https://facebook.com/kcozm', whatsapp:'https://wa.me/919876543210', youtube:'https://youtube.com/@kcozm', twitter:'' },
+  hours:   { enabled:true, days:[
+    {day:'Monday',    time:'10:00 AM – 8:00 PM'},
+    {day:'Tuesday',   time:'10:00 AM – 8:00 PM'},
+    {day:'Wednesday', time:'10:00 AM – 8:00 PM'},
+    {day:'Thursday',  time:'10:00 AM – 8:00 PM'},
+    {day:'Friday',    time:'10:00 AM – 9:00 PM'},
+    {day:'Saturday',  time:'9:00 AM – 9:00 PM'},
+    {day:'Sunday',    time:'Closed'}
+  ]}
+};
+
+var META = {
+  hero:    { icon:'fa-star',         color:'#e91e63', bg:'#fce4ec', label:'Hero Banner' },
+  phone:   { icon:'fa-phone',        color:'#2e7d32', bg:'#e8f5e9', label:'Phone Numbers' },
+  email:   { icon:'fa-envelope',     color:'#1565c0', bg:'#e3f2fd', label:'Email Addresses' },
+  address: { icon:'fa-location-dot', color:'#e65100', bg:'#fff3e0', label:'Address & Map' },
+  website: { icon:'fa-globe',        color:'#6a1b9a', bg:'#f3e5f5', label:'Website URL' },
+  social:  { icon:'fa-share-nodes',  color:'#c2185b', bg:'#fce4ec', label:'Social Media' },
+  hours:   { icon:'fa-clock',        color:'#00695c', bg:'#e0f2f1', label:'Business Hours' }
+};
+
+function renderEditor() {
+  document.getElementById('editorFields').innerHTML =
+    Object.keys(DATA).map(function(k, i) {
+      var sec = DATA[k], m = META[k];
+      return '<div class="kc-fgroup" style="animation-delay:' + (i * .04) + 's">'
+        + '<div class="kc-fgroup-head">'
+        + '<div class="kc-fgroup-icon" style="background:' + m.bg + ';color:' + m.color + '"><i class="fa-solid ' + m.icon + '"></i></div>'
+        + '<span class="kc-fgroup-label">' + m.label + '</span>'
+        + '<span class="kc-sw-lbl" id="lbl-' + k + '">' + (sec.enabled ? 'On' : 'Off') + '</span>'
+        + '<label class="kc-switch"><input type="checkbox"' + (sec.enabled ? ' checked' : '') + ' onchange="toggleSec(\'' + k + '\',this.checked)"><span class="kc-switch-track"></span></label>'
+        + '</div>'
+        + '<div class="kc-fgroup-body' + (sec.enabled ? '' : ' hidden') + '" id="body-' + k + '">' + buildFields(k, sec) + '</div>'
+        + '</div>';
+    }).join('');
+}
+
+function buildFields(key, sec) {
+  if (key === 'hero')
+    return fi('Tag Text',    'hero', 'tag',      sec.tag,      'fa-tag')
+         + fi('Page Title',  'hero', 'title',    sec.title,    'fa-heading')
+         + fi('Subtitle',    'hero', 'subtitle', sec.subtitle, 'fa-align-left');
+
+  if (key === 'phone')
+    return fi('Primary Number',        'phone', 'primary',   sec.primary,   'fa-phone')
+         + fi('Secondary (optional)',  'phone', 'secondary', sec.secondary, 'fa-phone-flip')
+         + fi('WhatsApp Number',       'phone', 'whatsapp',  sec.whatsapp,  'fa-whatsapp');
+
+  if (key === 'email')
+    return fi('Primary Email',            'email', 'primary', sec.primary, 'fa-envelope')
+         + fi('Support Email (optional)', 'email', 'support', sec.support, 'fa-envelope-open');
+
+  if (key === 'address')
+    return fi('Address Line 1', 'address', 'line1',    sec.line1,    'fa-building')
+         + fi('Address Line 2', 'address', 'line2',    sec.line2,    'fa-road')
+         + '<div class="kc-row2">' + fi2('City', 'address', 'city', sec.city) + fi2('State', 'address', 'state', sec.state) + '</div>'
+         + fi('PIN Code',                    'address', 'pincode',  sec.pincode,  'fa-map-pin')
+         + fi('Google Maps Embed URL (optional)', 'address', 'mapEmbed', sec.mapEmbed, 'fa-map');
+
+  if (key === 'website')
+    return fi('Website URL', 'website', 'url', sec.url, 'fa-globe');
+
+  if (key === 'social')
+    return fi('Instagram',              'social', 'instagram', sec.instagram, 'fa-instagram')
+         + fi('Facebook',               'social', 'facebook',  sec.facebook,  'fa-facebook')
+         + fi('WhatsApp Link',          'social', 'whatsapp',  sec.whatsapp,  'fa-whatsapp')
+         + fi('YouTube',                'social', 'youtube',   sec.youtube,   'fa-youtube')
+         + fi('Twitter / X (optional)', 'social', 'twitter',   sec.twitter,   'fa-twitter');
+
+  if (key === 'hours')
+    return '<div class="kc-hours-grid">'
+      + sec.days.map(function(d, i) {
+          return '<div class="kc-hour-row"><span class="kc-hour-day">' + d.day + '</span>'
+            + '<input type="text" class="kc-input" value="' + esc(d.time) + '" oninput="updateHour(' + i + ',this.value)" placeholder="10AM–8PM or Closed"></div>';
+        }).join('')
+      + '</div>';
+
+  return '';
+}
+
+function fi(lbl, key, prop, val, icon) {
+  return '<div class="kc-field"><label class="kc-label">' + lbl + '</label><div class="kc-input-ic">'
+    + '<i class="fa-solid ' + icon + ' ic"></i>'
+    + '<input type="text" class="kc-input" value="' + esc(val) + '" oninput="upd(\'' + key + '\',\'' + prop + '\',this.value)"></div></div>';
+}
+function fi2(lbl, key, prop, val) {
+  return '<div class="kc-field"><label class="kc-label">' + lbl + '</label>'
+    + '<input type="text" class="kc-input" value="' + esc(val) + '" oninput="upd(\'' + key + '\',\'' + prop + '\',this.value)"></div>';
+}
+function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function upd(key, prop, val)  { DATA[key][prop] = val; renderPreview(); }
+function updateHour(i, val)   { DATA.hours.days[i].time = val; renderPreview(); }
+
+function toggleSec(key, on) {
+  DATA[key].enabled = on;
+  var b = document.getElementById('body-' + key); if (b) b.classList.toggle('hidden', !on);
+  var l = document.getElementById('lbl-'  + key); if (l) l.textContent = on ? 'On' : 'Off';
+  renderPreview();
+}
+
+function renderPreview() {
+  var d = DATA, out = '';
+
+  if (d.hero.enabled) {
+    out += '<div class="pv-hero">'
+      + '<div class="pv-hero-tag">' + (d.hero.tag      || '') + '</div>'
+      + '<h2>'                       + (d.hero.title    || '') + '</h2>'
+      + '<p>'                        + (d.hero.subtitle || '') + '</p>'
+      + '</div>';
+  }
+
+  var rows = '';
+  if (d.phone.enabled && d.phone.primary) {
+    rows += contactRow('fa-phone','#e8f5e9','#2e7d32','Phone',
+      [d.phone.primary, d.phone.secondary].filter(Boolean).join('  ·  '),
+      d.phone.whatsapp ? 'WhatsApp: ' + d.phone.whatsapp : '',
+      'tel:' + d.phone.primary.replace(/\s/g,''));
+    rows += '<div class="pv-row-sep"></div>';
+  }
+  if (d.email.enabled && d.email.primary) {
+    rows += contactRow('fa-envelope','#e3f2fd','#1565c0','Email',
+      [d.email.primary, d.email.support].filter(Boolean).join('  ·  '), '', 'mailto:' + d.email.primary);
+    rows += '<div class="pv-row-sep"></div>';
+  }
+  if (d.website.enabled && d.website.url) {
+    rows += contactRow('fa-globe','#f3e5f5','#6a1b9a','Website', d.website.url, '', d.website.url);
+    rows += '<div class="pv-row-sep"></div>';
+  }
+  if (d.address.enabled && d.address.line1) {
+    var a = d.address;
+    rows += contactRow('fa-location-dot','#fff3e0','#e65100','Address',
+      [a.line1, a.line2].filter(Boolean).join(', '),
+      [a.city, a.state, a.pincode].filter(Boolean).join(', '), '#');
+  }
+  if (rows) out += '<div class="pv-contact-list">' + rows + '</div>';
+
+  if (d.social.enabled) {
+    var sr = '';
+    if (d.social.instagram) sr += socRow('fa-instagram','soc-ig','Instagram', hf(d.social.instagram,'instagram.com/'), d.social.instagram);
+    if (d.social.facebook)  sr += socRow('fa-facebook', 'soc-fb','Facebook',  hf(d.social.facebook, 'facebook.com/'),  d.social.facebook);
+    if (d.social.whatsapp)  sr += socRow('fa-whatsapp', 'soc-wa','WhatsApp',  d.social.whatsapp.replace('https://wa.me/','').replace('https://api.whatsapp.com/send?phone=',''), d.social.whatsapp);
+    if (d.social.youtube)   sr += socRow('fa-youtube',  'soc-yt','YouTube',   hf(d.social.youtube,  'youtube.com/'),   d.social.youtube);
+    if (d.social.twitter)   sr += socRow('fa-twitter',  'soc-tw','Twitter',   hf(d.social.twitter,  'twitter.com/'),   d.social.twitter);
+    if (sr) out += '<div class="pv-sec-head"><span>Follow &amp; Connect</span></div><div class="pv-social-list">' + sr + '</div>';
+  }
+
+  if (d.hours.enabled) {
+    out += '<div class="pv-sec-head"><span>Business Hours</span></div>'
+      + '<div class="pv-hours-wrap"><div class="pv-hours-inner">'
+      + d.hours.days.map(function(hr) {
+          var cl = hr.time.toLowerCase() === 'closed';
+          return '<div class="pv-hr"><span class="dy">' + hr.day + '</span>'
+            + (cl ? '<span class="cl">Closed</span>' : '<span class="tm">' + hr.time + '</span>') + '</div>';
+        }).join('')
+      + '</div></div>';
+  }
+
+  if (d.address.enabled) {
+    out += '<div class="pv-map">'
+      + (d.address.mapEmbed
+          ? '<iframe src="' + d.address.mapEmbed + '" allowfullscreen loading="lazy"></iframe>'
+          : '<div class="pv-map-ph"><i class="fa-solid fa-map-location-dot"></i><span>Paste a Google Maps embed URL to show map</span></div>')
+      + '</div>';
+  }
+
+  if (!out) out = '<div class="pv-empty"><i class="fa-solid fa-address-book"></i><p style="font-size:13px;margin:0">Enable sections on the left to preview.</p></div>';
+  document.getElementById('livePreview').innerHTML = out;
+}
+
+function contactRow(icon, bg, color, lbl, val, sub, href) {
+  return '<a class="pv-row" href="' + href + '" target="_blank">'
+    + '<div class="pv-row-icon" style="background:' + bg + ';color:' + color + '"><i class="fa-solid ' + icon + '"></i></div>'
+    + '<div class="pv-row-body">'
+    + '<div class="pv-row-lbl">' + lbl + '</div>'
+    + '<div class="pv-row-val">' + val + '</div>'
+    + (sub ? '<div class="pv-row-sub">' + sub + '</div>' : '')
+    + '</div>'
+    + '<i class="fa-solid fa-chevron-right pv-row-arr"></i>'
+    + '</a>';
+}
+function socRow(icon, cls, name, handle, url) {
+  return '<a class="pv-soc-row" href="' + url + '" target="_blank">'
+    + '<div class="pv-soc-icon ' + cls + '"><i class="fa-brands ' + icon + '"></i></div>'
+    + '<div style="flex:1;min-width:0;overflow:hidden">'
+    + '<div class="pv-soc-name">' + name + '</div>'
+    + (handle ? '<div class="pv-soc-handle">@' + handle.replace(/^@/,'') + '</div>' : '')
+    + '</div>'
+    + '<i class="fa-solid fa-chevron-right pv-soc-arr"></i>'
+    + '</a>';
+}
+function hf(url, domain) {
+  if (!url) return '';
+  try {
+    var u = url.replace(/https?:\/\//,'').replace(/www\./,'');
+    var idx = u.indexOf(domain);
+    return idx >= 0 ? u.slice(idx + domain.length).replace(/\//,'') : u;
+  } catch(e) { return url; }
+}
+
+function setDevice(d) {
+  document.getElementById('previewFrame').className = 'kc-frame' + (d !== 'desktop' ? ' ' + d : '');
+  ['Desktop','Tablet','Mobile'].forEach(function(x) {
+    document.getElementById('dev' + x).classList.toggle('active', x.toLowerCase() === d);
+  });
+}
+
+function saveContact() {
+  if (window.KcozmAdmin && KcozmAdmin.showToast) {
+    KcozmAdmin.showToast('Contact page saved successfully!', 'success');
+  }
+}
+
+renderEditor();
+renderPreview();
+</script>
+</body>
+</html>

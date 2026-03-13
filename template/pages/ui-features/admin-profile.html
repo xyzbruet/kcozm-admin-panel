@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin — My Profile</title>
+  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    /* ── Profile page scoped styles ── */
+    .kc-profile-page { padding: 28px 28px 0; }
+
+    /* ── Breadcrumb ── */
+    .kc-bc {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 500; color: var(--ink-3, #7a6a62);
+      margin-bottom: 24px;
+    }
+    .kc-bc a { color: var(--rose, #c97b84); text-decoration: none; }
+    .kc-bc a:hover { opacity: 0.75; }
+    .kc-bc i { font-size: 9px; opacity: 0.5; }
+
+    /* ── Hero cover ── */
+    .kc-cover {
+      height: 180px;
+      border-radius: 20px 20px 0 0;
+      background: linear-gradient(135deg, #18120f 0%, #3d2020 45%, #c97b84 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .kc-cover::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .kc-cover-edit {
+      position: absolute; bottom: 14px; right: 18px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 16px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 50px;
+      font-size: 12px; font-weight: 600; color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.2s ease;
+    }
+    .kc-cover-edit:hover { background: rgba(255,255,255,0.22); }
+
+    /* ── Profile card ── */
+    .kc-profile-card {
+      background: var(--surface, #fff);
+      border: 1px solid var(--border, #ebe5e0);
+      border-top: none;
+      border-radius: 0 0 20px 20px;
+      padding: 0 32px 28px;
+      box-shadow: 0 4px 24px rgba(24,18,15,0.07);
+      margin-bottom: 24px;
+    }
+
+    /* Avatar row */
+    .kc-avatar-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      margin-top: -52px;
+      margin-bottom: 20px;
+    }
+    .kc-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .kc-avatar {
+      width: 104px; height: 104px;
+      border-radius: 50%;
+      border: 4px solid var(--surface, #fff);
+      box-shadow: 0 4px 20px rgba(24,18,15,0.16);
+      background: linear-gradient(135deg, #fce4ec, #fdf8ef);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 38px; font-weight: 700;
+      color: #c97b84;
+      overflow: hidden;
+    }
+    .kc-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .kc-avatar-upload {
+      position: absolute; bottom: 4px; right: 4px;
+      width: 28px; height: 28px;
+      background: #c97b84;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 11px; color: #fff;
+      transition: background 0.2s ease;
+    }
+    .kc-avatar-upload:hover { background: #a85560; }
+    .kc-avatar-upload input { display: none; }
+
+    .kc-profile-meta { flex: 1; padding-bottom: 6px; }
+    .kc-profile-name {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--ink, #18120f);
+      line-height: 1.2;
+    }
+    .kc-profile-role-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 4px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: #c97b84;
+      background: #f9eced;
+      padding: 3px 12px; border-radius: 20px;
+      border: 1px solid rgba(201,123,132,0.25);
+    }
+    .kc-profile-since { font-size: 12px; color: var(--ink-3, #7a6a62); margin-top: 6px; }
+
+    /* Stats strip */
+    .kc-profile-stats {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border, #ebe5e0);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .kc-ps {
+      flex: 1; text-align: center; padding: 16px 12px;
+      border-right: 1px solid var(--border, #ebe5e0);
+    }
+    .kc-ps:last-child { border-right: none; }
+    .kc-ps-num {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 26px; font-weight: 700;
+      color: #c97b84; line-height: 1;
+    }
+    .kc-ps-lbl { font-size: 11px; color: var(--ink-3, #7a6a62); margin-top: 3px; font-weight: 500; }
+
+    /* ── Grid ── */
+    .kc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 900px) { .kc-grid { grid-template-columns: 1fr; } }
+
+    /* ── Section card ── */
+    .kc-sec {
+      background: var(--surface, #fff);
+      border: 1px solid var(--border, #ebe5e0);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(24,18,15,0.06);
+      margin-bottom: 20px;
+    }
+    .kc-sec.full { grid-column: 1 / -1; }
+    .kc-sec-head {
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border, #ebe5e0);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .kc-sec-icon {
+      width: 36px; height: 36px;
+      background: #f9eced;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      color: #c97b84; font-size: 14px;
+      flex-shrink: 0;
+    }
+    .kc-sec-title {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-size: 17px; font-weight: 700;
+      color: var(--ink, #18120f);
+    }
+    .kc-sec-sub { font-size: 11.5px; color: var(--ink-3, #7a6a62); margin-top: 1px; }
+    .kc-sec-body { padding: 22px; }
+
+    /* Form fields */
+    .kc-field { margin-bottom: 18px; }
+    .kc-field:last-child { margin-bottom: 0; }
+    .kc-label {
+      display: block;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--ink-3, #7a6a62); margin-bottom: 7px;
+    }
+    .kc-input, .kc-select, .kc-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border, #ebe5e0);
+      border-radius: 9px;
+      background: var(--surface-2, #faf8f6);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px; color: var(--ink, #18120f);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .kc-input:focus, .kc-select:focus, .kc-textarea:focus {
+      border-color: #c97b84;
+      box-shadow: 0 0 0 3px rgba(201,123,132,0.13);
+      background: #fff;
+    }
+    .kc-input:disabled {
+      opacity: 0.6; cursor: not-allowed; background: var(--surface-2, #faf8f6);
+    }
+    .kc-textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
+    .kc-select { cursor: pointer; }
+
+    .kc-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 600px) { .kc-field-row { grid-template-columns: 1fr; } }
+
+    /* Toggle */
+    .kc-toggle-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border, #ebe5e0);
+    }
+    .kc-toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .kc-toggle-info { flex: 1; }
+    .kc-toggle-label { font-size: 13.5px; font-weight: 600; color: var(--ink, #18120f); }
+    .kc-toggle-desc  { font-size: 12px; color: var(--ink-3, #7a6a62); margin-top: 2px; }
+    .kc-toggle {
+      position: relative; width: 44px; height: 24px; flex-shrink: 0;
+    }
+    .kc-toggle input { opacity: 0; width: 0; height: 0; }
+    .kc-slider {
+      position: absolute; inset: 0; cursor: pointer;
+      background: #ddd; border-radius: 99px;
+      transition: background 0.2s ease;
+    }
+    .kc-slider::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; border-radius: 50%;
+      left: 3px; bottom: 3px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+    .kc-toggle input:checked + .kc-slider { background: #c97b84; }
+    .kc-toggle input:checked + .kc-slider::before { transform: translateX(20px); }
+
+    /* Activity log */
+    .kc-activity { display: flex; flex-direction: column; gap: 0; }
+    .kc-act-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border, #ebe5e0);
+    }
+    .kc-act-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .kc-act-dot {
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .kc-act-dot.rose  { background: #f9eced; color: #c97b84; }
+    .kc-act-dot.gold  { background: #faf3e8; color: #b89060; }
+    .kc-act-dot.green { background: #e8f5e9; color: #2e7d32; }
+    .kc-act-dot.blue  { background: #e3f2fd; color: #1565c0; }
+    .kc-act-body { flex: 1; }
+    .kc-act-title { font-size: 13.5px; font-weight: 600; color: var(--ink, #18120f); }
+    .kc-act-desc  { font-size: 12px; color: var(--ink-3, #7a6a62); margin-top: 2px; }
+    .kc-act-time  { font-size: 11px; color: var(--ink-3, #7a6a62); flex-shrink: 0; margin-top: 3px; }
+
+    /* Danger zone */
+    .kc-danger-zone {
+      background: #fff5f5;
+      border: 1.5px solid #ffd7d7;
+      border-radius: 12px;
+      padding: 20px 22px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .kc-danger-info { flex: 1; }
+    .kc-danger-title { font-size: 14px; font-weight: 700; color: #c62828; }
+    .kc-danger-desc  { font-size: 12.5px; color: #8d4a4a; margin-top: 3px; line-height: 1.5; }
+    .kc-btn-danger {
+      padding: 9px 20px; border-radius: 9px;
+      background: #c62828; color: #fff; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; white-space: nowrap;
+      transition: opacity 0.2s ease;
+    }
+    .kc-btn-danger:hover { opacity: 0.85; }
+
+    /* Buttons */
+    .kc-btn-primary {
+      padding: 10px 24px; border-radius: 9px;
+      background: linear-gradient(135deg, #c97b84, #a85560);
+      color: #fff; border: none;
+      font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(201,123,132,0.30);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .kc-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(201,123,132,0.42); }
+    .kc-btn-outline {
+      padding: 10px 20px; border-radius: 9px;
+      border: 1.5px solid var(--border, #ebe5e0);
+      background: transparent;
+      font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
+      color: var(--ink-2, #3d3028); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: all 0.18s ease;
+    }
+    .kc-btn-outline:hover { border-color: #c97b84; color: #c97b84; background: #f9eced; }
+
+    .kc-sec-footer {
+      padding: 16px 22px;
+      border-top: 1px solid var(--border, #ebe5e0);
+      display: flex; align-items: center; gap: 10px; justify-content: flex-end;
+    }
+
+    /* Password strength */
+    .kc-pw-strength { margin-top: 8px; display: flex; gap: 4px; }
+    .kc-pw-bar {
+      flex: 1; height: 3px; border-radius: 3px; background: var(--border, #ebe5e0);
+      transition: background 0.3s ease;
+    }
+    .kc-pw-bar.weak   { background: #e53935; }
+    .kc-pw-bar.medium { background: #fb8c00; }
+    .kc-pw-bar.strong { background: #43a047; }
+    .kc-pw-label { font-size: 11px; color: var(--ink-3, #7a6a62); margin-top: 4px; }
+
+    /* Saved badge animation */
+    @keyframes kc-pop { 0%{transform:scale(0.8);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+    .kc-saved { animation: kc-pop 0.35s ease both; }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+      <div class="main-panel">
+        <div class="content-wrapper kc-profile-page">
+
+          <!-- Breadcrumb -->
+          <nav class="kc-bc">
+            <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span>My Profile</span>
+          </nav>
+
+          <!-- Cover + Identity -->
+          <div class="kc-cover">
+            <button class="kc-cover-edit" onclick="document.getElementById('coverUpload').click()">
+              <i class="fa-solid fa-camera"></i> Edit Cover
+            </button>
+            <input type="file" id="coverUpload" accept="image/*" style="display:none" onchange="handleCover(this)">
+          </div>
+
+          <div class="kc-profile-card">
+            <div class="kc-avatar-row">
+              <div class="kc-avatar-wrap">
+                <div class="kc-avatar" id="kcAvatar">A</div>
+                <label class="kc-avatar-upload" title="Change photo">
+                  <i class="fa-solid fa-camera"></i>
+                  <input type="file" accept="image/*" onchange="handleAvatar(this)">
+                </label>
+              </div>
+              <div class="kc-profile-meta">
+                <div class="kc-profile-name" id="displayName">Salon Admin</div>
+                <div class="kc-profile-role-tag"><i class="fa-solid fa-shield-halved"></i> Super Administrator</div>
+                <div class="kc-profile-since">
+                  <i class="fa-regular fa-clock" style="margin-right:4px;color:#c97b84"></i>
+                  Member since March 2023 &nbsp;·&nbsp;
+                  <i class="fa-solid fa-location-dot" style="margin-right:4px;color:#c97b84"></i>
+                  Main Branch, Mumbai
+                </div>
+              </div>
+              <div style="padding-bottom:6px;display:flex;gap:10px;margin-left:auto;">
+                <button class="kc-btn-outline" onclick="window.history.back()">
+                  <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                <button class="kc-btn-primary" onclick="saveAll()">
+                  <i class="fa-solid fa-floppy-disk"></i> Save Changes
+                </button>
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="kc-profile-stats">
+              <div class="kc-ps">
+                <div class="kc-ps-num">247</div>
+                <div class="kc-ps-lbl">Appointments Managed</div>
+              </div>
+              <div class="kc-ps">
+                <div class="kc-ps-num">38</div>
+                <div class="kc-ps-lbl">Staff Members</div>
+              </div>
+              <div class="kc-ps">
+                <div class="kc-ps-num">12</div>
+                <div class="kc-ps-lbl">Active Services</div>
+              </div>
+              <div class="kc-ps">
+                <div class="kc-ps-num">4.9★</div>
+                <div class="kc-ps-lbl">Average Rating</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grid -->
+          <div class="kc-grid">
+
+            <!-- Personal Information -->
+            <div class="kc-sec">
+              <div class="kc-sec-head">
+                <div class="kc-sec-icon"><i class="fa-solid fa-user"></i></div>
+                <div>
+                  <div class="kc-sec-title">Personal Information</div>
+                  <div class="kc-sec-sub">Update your name, bio and contact details</div>
+                </div>
+              </div>
+              <div class="kc-sec-body">
+                <div class="kc-field-row">
+                  <div class="kc-field">
+                    <label class="kc-label">First Name</label>
+                    <input type="text" class="kc-input" id="firstName" value="Salon" placeholder="First name">
+                  </div>
+                  <div class="kc-field">
+                    <label class="kc-label">Last Name</label>
+                    <input type="text" class="kc-input" id="lastName" value="Admin" placeholder="Last name">
+                  </div>
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">Display Name</label>
+                  <input type="text" class="kc-input" id="displayNameInput" value="Salon Admin" placeholder="How your name appears"
+                    oninput="document.getElementById('displayName').textContent=this.value">
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">Email Address</label>
+                  <input type="email" class="kc-input" value="admin@kcozm.com" placeholder="Email">
+                </div>
+                <div class="kc-field-row">
+                  <div class="kc-field">
+                    <label class="kc-label">Phone</label>
+                    <input type="tel" class="kc-input" value="+91 98765 43210" placeholder="Phone number">
+                  </div>
+                  <div class="kc-field">
+                    <label class="kc-label">Date of Birth</label>
+                    <input type="date" class="kc-input" value="1990-06-15">
+                  </div>
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">Branch</label>
+                  <select class="kc-select">
+                    <option selected>Main Branch — Mumbai</option>
+                    <option>Andheri Branch</option>
+                    <option>Bandra Branch</option>
+                    <option>Pune Branch</option>
+                  </select>
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">Bio</label>
+                  <textarea class="kc-textarea" placeholder="A short bio about yourself…">Managing KCOZM's beauty operations since 2023. Passionate about delivering exceptional salon experiences and building a world-class team.</textarea>
+                </div>
+              </div>
+              <div class="kc-sec-footer">
+                <button class="kc-btn-outline" onclick="resetPersonal()">Reset</button>
+                <button class="kc-btn-primary" onclick="saveSection('personal')">
+                  <i class="fa-solid fa-check"></i> Save
+                </button>
+              </div>
+            </div>
+
+            <!-- Account & Security -->
+            <div class="kc-sec">
+              <div class="kc-sec-head">
+                <div class="kc-sec-icon"><i class="fa-solid fa-lock"></i></div>
+                <div>
+                  <div class="kc-sec-title">Account & Security</div>
+                  <div class="kc-sec-sub">Manage your password and login security</div>
+                </div>
+              </div>
+              <div class="kc-sec-body">
+                <div class="kc-field">
+                  <label class="kc-label">Username</label>
+                  <input type="text" class="kc-input" value="salon_admin" disabled>
+                  <small style="font-size:11px;color:#7a6a62;margin-top:5px;display:block;">
+                    <i class="fa-solid fa-circle-info" style="color:#c97b84"></i>
+                    Username cannot be changed. Contact support if needed.
+                  </small>
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">Current Password</label>
+                  <div style="position:relative">
+                    <input type="password" class="kc-input" id="currPw" placeholder="Enter current password" style="padding-right:40px">
+                    <i class="fa-solid fa-eye" onclick="togglePw('currPw',this)"
+                      style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
+                  </div>
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">New Password</label>
+                  <div style="position:relative">
+                    <input type="password" class="kc-input" id="newPw" placeholder="Min. 8 characters" oninput="checkStrength(this)" style="padding-right:40px">
+                    <i class="fa-solid fa-eye" onclick="togglePw('newPw',this)"
+                      style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
+                  </div>
+                  <div class="kc-pw-strength" id="pwBars">
+                    <div class="kc-pw-bar" id="bar1"></div>
+                    <div class="kc-pw-bar" id="bar2"></div>
+                    <div class="kc-pw-bar" id="bar3"></div>
+                    <div class="kc-pw-bar" id="bar4"></div>
+                  </div>
+                  <div class="kc-pw-label" id="pwLabel">Enter a new password</div>
+                </div>
+                <div class="kc-field">
+                  <label class="kc-label">Confirm New Password</label>
+                  <div style="position:relative">
+                    <input type="password" class="kc-input" id="confirmPw" placeholder="Repeat new password" style="padding-right:40px">
+                    <i class="fa-solid fa-eye" onclick="togglePw('confirmPw',this)"
+                      style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
+                  </div>
+                </div>
+                <div style="padding:14px;background:#f9eced;border-radius:10px;border:1px solid rgba(201,123,132,0.20);display:flex;align-items:center;gap:10px;">
+                  <i class="fa-solid fa-shield-halved" style="color:#c97b84;font-size:18px;flex-shrink:0;"></i>
+                  <div>
+                    <div style="font-size:12.5px;font-weight:600;color:#18120f;">Two-Factor Authentication</div>
+                    <div style="font-size:11.5px;color:#7a6a62;margin-top:2px;">Add an extra layer of security to your account.</div>
+                  </div>
+                  <button class="kc-btn-outline" style="margin-left:auto;font-size:12px;padding:7px 14px;">Enable 2FA</button>
+                </div>
+              </div>
+              <div class="kc-sec-footer">
+                <button class="kc-btn-primary" onclick="saveSection('password')">
+                  <i class="fa-solid fa-key"></i> Update Password
+                </button>
+              </div>
+            </div>
+
+            <!-- Notifications Preferences -->
+            <div class="kc-sec">
+              <div class="kc-sec-head">
+                <div class="kc-sec-icon"><i class="fa-solid fa-bell"></i></div>
+                <div>
+                  <div class="kc-sec-title">Notification Preferences</div>
+                  <div class="kc-sec-sub">Control what alerts you receive</div>
+                </div>
+              </div>
+              <div class="kc-sec-body">
+                <div class="kc-toggle-row">
+                  <div class="kc-toggle-info">
+                    <div class="kc-toggle-label">New Appointments</div>
+                    <div class="kc-toggle-desc">Get notified when a new appointment is booked</div>
+                  </div>
+                  <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
+                </div>
+                <div class="kc-toggle-row">
+                  <div class="kc-toggle-info">
+                    <div class="kc-toggle-label">Customer Reviews</div>
+                    <div class="kc-toggle-desc">Alerts for new ratings and feedback</div>
+                  </div>
+                  <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
+                </div>
+                <div class="kc-toggle-row">
+                  <div class="kc-toggle-info">
+                    <div class="kc-toggle-label">Staff Activity</div>
+                    <div class="kc-toggle-desc">Notified when staff logs in or updates schedules</div>
+                  </div>
+                  <label class="kc-toggle"><input type="checkbox"><span class="kc-slider"></span></label>
+                </div>
+                <div class="kc-toggle-row">
+                  <div class="kc-toggle-info">
+                    <div class="kc-toggle-label">Monthly Reports</div>
+                    <div class="kc-toggle-desc">Summary report emailed at end of every month</div>
+                  </div>
+                  <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
+                </div>
+                <div class="kc-toggle-row">
+                  <div class="kc-toggle-info">
+                    <div class="kc-toggle-label">Promotional Campaigns</div>
+                    <div class="kc-toggle-desc">Offer launches and marketing updates</div>
+                  </div>
+                  <label class="kc-toggle"><input type="checkbox"><span class="kc-slider"></span></label>
+                </div>
+              </div>
+              <div class="kc-sec-footer">
+                <button class="kc-btn-primary" onclick="saveSection('notifications')">
+                  <i class="fa-solid fa-check"></i> Save Preferences
+                </button>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="kc-sec">
+              <div class="kc-sec-head">
+                <div class="kc-sec-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div>
+                  <div class="kc-sec-title">Recent Activity</div>
+                  <div class="kc-sec-sub">Your last 5 admin actions</div>
+                </div>
+              </div>
+              <div class="kc-sec-body">
+                <div class="kc-activity">
+                  <div class="kc-act-item">
+                    <div class="kc-act-dot rose"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="kc-act-body">
+                      <div class="kc-act-title">Confirmed appointment #1042</div>
+                      <div class="kc-act-desc">Bridal package — Priya Sharma</div>
+                    </div>
+                    <div class="kc-act-time">2 min ago</div>
+                  </div>
+                  <div class="kc-act-item">
+                    <div class="kc-act-dot gold"><i class="fa-solid fa-user-plus"></i></div>
+                    <div class="kc-act-body">
+                      <div class="kc-act-title">Added new staff member</div>
+                      <div class="kc-act-desc">Anika Sharma — Hair Stylist</div>
+                    </div>
+                    <div class="kc-act-time">1 hour ago</div>
+                  </div>
+                  <div class="kc-act-item">
+                    <div class="kc-act-dot green"><i class="fa-solid fa-tag"></i></div>
+                    <div class="kc-act-body">
+                      <div class="kc-act-title">Published new offer</div>
+                      <div class="kc-act-desc">Summer Bridal Special — 20% off</div>
+                    </div>
+                    <div class="kc-act-time">3 hours ago</div>
+                  </div>
+                  <div class="kc-act-item">
+                    <div class="kc-act-dot blue"><i class="fa-solid fa-pen-to-square"></i></div>
+                    <div class="kc-act-body">
+                      <div class="kc-act-title">Updated service pricing</div>
+                      <div class="kc-act-desc">Hair Spa — ₹850 → ₹950</div>
+                    </div>
+                    <div class="kc-act-time">Yesterday</div>
+                  </div>
+                  <div class="kc-act-item">
+                    <div class="kc-act-dot rose"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="kc-act-body">
+                      <div class="kc-act-title">Password changed</div>
+                      <div class="kc-act-desc">Successful security update</div>
+                    </div>
+                    <div class="kc-act-time">3 days ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="kc-sec full">
+              <div class="kc-sec-head">
+                <div class="kc-sec-icon"><i class="fa-solid fa-palette"></i></div>
+                <div>
+                  <div class="kc-sec-title">Appearance & Preferences</div>
+                  <div class="kc-sec-sub">Customize your admin panel experience</div>
+                </div>
+              </div>
+              <div class="kc-sec-body">
+                <div class="kc-field-row" style="grid-template-columns:1fr 1fr 1fr;">
+                  <div class="kc-field">
+                    <label class="kc-label">Language</label>
+                    <select class="kc-select">
+                      <option selected>English (EN)</option>
+                      <option>हिंदी (HI)</option>
+                      <option>मराठी (MR)</option>
+                    </select>
+                  </div>
+                  <div class="kc-field">
+                    <label class="kc-label">Timezone</label>
+                    <select class="kc-select">
+                      <option selected>Asia/Kolkata (IST +5:30)</option>
+                      <option>UTC</option>
+                      <option>Asia/Dubai (GST +4)</option>
+                    </select>
+                  </div>
+                  <div class="kc-field">
+                    <label class="kc-label">Date Format</label>
+                    <select class="kc-select">
+                      <option selected>DD/MM/YYYY</option>
+                      <option>MM/DD/YYYY</option>
+                      <option>YYYY-MM-DD</option>
+                    </select>
+                  </div>
+                </div>
+                <div style="margin-top:8px;">
+                  <div class="kc-toggle-row">
+                    <div class="kc-toggle-info">
+                      <div class="kc-toggle-label">Dark Mode</div>
+                      <div class="kc-toggle-desc">Switch to dark theme for comfortable night viewing</div>
+                    </div>
+                    <label class="kc-toggle">
+                      <input type="checkbox" id="darkToggle" onchange="KcozmAdmin._toggleDark(); document.getElementById('darkToggle').checked = document.body.classList.contains('dark-mode')">
+                      <span class="kc-slider"></span>
+                    </label>
+                  </div>
+                  <div class="kc-toggle-row">
+                    <div class="kc-toggle-info">
+                      <div class="kc-toggle-label">Compact Sidebar</div>
+                      <div class="kc-toggle-desc">Show icons only in the sidebar</div>
+                    </div>
+                    <label class="kc-toggle">
+                      <input type="checkbox" onchange="KcozmAdmin._toggleSidebar()">
+                      <span class="kc-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="kc-sec-footer">
+                <button class="kc-btn-primary" onclick="saveSection('appearance')">
+                  <i class="fa-solid fa-check"></i> Save Preferences
+                </button>
+              </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="kc-sec full">
+              <div class="kc-sec-head">
+                <div class="kc-sec-icon" style="background:#fff0f0;color:#c62828;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div>
+                  <div class="kc-sec-title" style="color:#c62828;">Danger Zone</div>
+                  <div class="kc-sec-sub">These actions are irreversible — proceed with caution</div>
+                </div>
+              </div>
+              <div class="kc-sec-body" style="display:flex;flex-direction:column;gap:14px;">
+                <div class="kc-danger-zone">
+                  <div class="kc-danger-info">
+                    <div class="kc-danger-title">Log out all sessions</div>
+                    <div class="kc-danger-desc">Sign out from all devices where you are currently logged in.</div>
+                  </div>
+                  <button class="kc-btn-danger" onclick="KcozmAdmin.showToast('All sessions terminated.','info')">Log out all</button>
+                </div>
+                <div class="kc-danger-zone">
+                  <div class="kc-danger-info">
+                    <div class="kc-danger-title">Delete Account</div>
+                    <div class="kc-danger-desc">Permanently delete your admin account. All data will be removed and cannot be recovered.</div>
+                  </div>
+                  <button class="kc-btn-danger" onclick="KcozmAdmin.showToast('Please contact super admin to delete account.','error')">Delete account</button>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /kc-grid -->
+
+        </div><!-- /content-wrapper -->
+      </div><!-- /main-panel -->
+    </div>
+  </div>
+
+  <!-- Vendor JS -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+
+  <!-- Shared Components -->
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({
+      activePage: 'settings',
+      pageTitle:  'My Profile',
+      depth:      '../../'
+    });
+  </script>
+
+  <script>
+    /* ── Avatar upload ── */
+    function handleAvatar(input) {
+      var file = input.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var av = document.getElementById('kcAvatar');
+        av.innerHTML = '<img src="' + e.target.result + '" alt="Avatar">';
+        KcozmAdmin.showToast('Profile photo updated!', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleCover(input) {
+      var file = input.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.querySelector('.kc-cover').style.backgroundImage = 'url(' + e.target.result + ')';
+        document.querySelector('.kc-cover').style.backgroundSize  = 'cover';
+        document.querySelector('.kc-cover').style.backgroundPosition = 'center';
+        KcozmAdmin.showToast('Cover photo updated!', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ── Password toggle ── */
+    function togglePw(id, icon) {
+      var inp = document.getElementById(id);
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        inp.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    /* ── Password strength ── */
+    function checkStrength(inp) {
+      var val = inp.value;
+      var strength = 0;
+      if (val.length >= 8)  strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+      var bars = ['bar1','bar2','bar3','bar4'];
+      var labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+      var cls = ['','weak','medium','medium','strong'];
+      bars.forEach(function(id, i) {
+        var el = document.getElementById(id);
+        el.className = 'kc-pw-bar' + (i < strength ? ' ' + cls[strength] : '');
+      });
+      document.getElementById('pwLabel').textContent = val ? labels[strength] + ' password' : 'Enter a new password';
+    }
+
+    /* ── Save sections ── */
+    function saveSection(section) {
+      var msgs = {
+        personal: 'Personal info saved successfully!',
+        password: 'Password updated securely!',
+        notifications: 'Notification preferences saved!',
+        appearance: 'Appearance preferences saved!'
+      };
+      KcozmAdmin.showToast(msgs[section] || 'Saved!', 'success');
+    }
+    function saveAll() { saveSection('personal'); }
+
+    function resetPersonal() {
+      document.getElementById('firstName').value = 'Salon';
+      document.getElementById('lastName').value = 'Admin';
+      document.getElementById('displayNameInput').value = 'Salon Admin';
+      document.getElementById('displayName').textContent = 'Salon Admin';
+      KcozmAdmin.showToast('Personal info reset.', 'info');
+    }
+
+    /* ── Sync dark toggle ── */
+    document.addEventListener('DOMContentLoaded', function() {
+      var dt = document.getElementById('darkToggle');
+      if (dt) dt.checked = document.body.classList.contains('dark-mode');
+    });
+  </script>
+</body>
+</html>

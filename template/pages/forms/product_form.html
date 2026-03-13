@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin - Add Product</title>
+  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ── Form Card Enhancements ── */
+    .product-form-card {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .product-form-card .card-header {
+      background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+      border-radius: 16px 16px 0 0;
+      padding: 20px 28px;
+    }
+
+    .product-form-card .card-header h4 {
+      color: #fff;
+      font-weight: 700;
+      margin: 0;
+      font-size: 1.3rem;
+      letter-spacing: 0.3px;
+    }
+
+    .product-form-card .card-header p {
+      color: rgba(255,255,255,0.8);
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+    }
+
+    .product-form-card .card-body {
+      padding: 32px 28px;
+    }
+
+    /* ── Field Groups ── */
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #444;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .form-group label .required-star {
+      color: #e91e63;
+      margin-left: 3px;
+    }
+
+    .form-control-custom {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #333;
+      background: #fafafa;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-control-custom:focus {
+      border-color: #e91e63;
+      box-shadow: 0 0 0 3px rgba(233,30,99,0.1);
+      background: #fff;
+    }
+
+    select.form-control-custom {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    textarea.form-control-custom {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    /* ── Image Upload Zone ── */
+    .upload-zone {
+      border: 2px dashed #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #fafafa;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .upload-zone:hover {
+      border-color: #e91e63;
+      background: #fff5f8;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-zone .upload-icon {
+      font-size: 2rem;
+      color: #e91e63;
+      margin-bottom: 8px;
+    }
+
+    .upload-zone p {
+      margin: 0;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .upload-zone .upload-hint {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 4px;
+    }
+
+    #imagePreview {
+      display: none;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    #imagePreview img {
+      max-height: 120px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ── Price Fields ── */
+    .input-prefix-wrapper {
+      position: relative;
+    }
+
+    .input-prefix-wrapper .prefix {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 14px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .input-prefix-wrapper .form-control-custom {
+      padding-left: 30px;
+    }
+
+    /* ── Rating Stars ── */
+    .star-rating {
+      display: flex;
+      gap: 6px;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      font-size: 1.6rem;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.15s;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #f5a623;
+    }
+
+    /* ── Section Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1.5px dashed #f0f0f0;
+      margin: 24px 0;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    /* ── Buttons ── */
+    .btn-submit-product {
+      background: linear-gradient(135deg, #e91e63, #c2185b);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-submit-product:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-cancel-product {
+      background: #f5f5f5;
+      color: #555;
+      border: 1.5px solid #ddd;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-left: 10px;
+    }
+
+    .btn-cancel-product:hover {
+      background: #ececec;
+    }
+
+    /* ── Toast Notification ── */
+    .toast-notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #333;
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+
+    .toast-notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-notification.success { background: #43a047; }
+    .toast-notification.error   { background: #e53935; }
+
+    /* ── Breadcrumb ── */
+    .page-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .page-breadcrumb a {
+      color: #e91e63;
+      text-decoration: none;
+    }
+
+    .page-breadcrumb a:hover { text-decoration: underline; }
+    .page-breadcrumb .sep { color: #ccc; }
+  </style>
+</head>
+
+<body>
+  <div class="row" id="proBanner">
+    <div class="col-12"></div>
+  </div>
+
+  <div class="container-scroller">
+
+    <!-- ══════════ NAVBAR ══════════ -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+
+        <!-- ✅ ROOT CAUSE FIX: Correct relative path from pages/forms/ → ../../images/logo.png -->
+        <a class="navbar-brand brand-logo" href="../../index.html">
+          <img src="../../images/logo.png" alt="Kcozm Logo" />
+        </a>
+
+        <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+          data-toggle="minimize">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item d-none d-lg-flex"><a class="nav-link" href="#">Calendar</a></li>
+          <li class="nav-item d-none d-lg-flex"><a class="nav-link active" href="#">Statistic</a></li>
+          <li class="nav-item d-none d-lg-flex"><a class="nav-link" href="#">Employee</a></li>
+        </ul>
+
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item d-none d-lg-flex mr-2"><a class="nav-link" href="#">Help</a></li>
+
+          <!-- Messages -->
+          <li class="nav-item dropdown d-flex">
+            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
+              id="messageDropdown" href="#" data-toggle="dropdown">
+              <i class="typcn typcn-message-typing"></i>
+              <span class="count bg-success">2</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../../images/faces/face4.jpg" alt="David Grey" class="profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow">
+                  <h6 class="preview-subject ellipsis font-weight-normal">David Grey</h6>
+                  <p class="font-weight-light small-text mb-0">The meeting is cancelled</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-secondary">
+                    <i class="typcn typcn-user-outline mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content flex-grow">
+                  <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook</h6>
+                  <p class="font-weight-light small-text mb-0">New product launch</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <img src="../../images/faces/face3.jpg" alt="Johnson" class="profile-pic">
+                </div>
+                <div class="preview-item-content flex-grow">
+                  <h6 class="preview-subject ellipsis font-weight-normal">Johnson</h6>
+                  <p class="font-weight-light small-text mb-0">Upcoming board meeting</p>
+                </div>
+              </a>
+            </div>
+          </li>
+
+          <!-- Notifications -->
+          <li class="nav-item dropdown d-flex">
+            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+              id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="typcn typcn-bell mr-0"></i>
+              <span class="count bg-danger">2</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success"><i class="typcn typcn-info-large mx-0"></i></div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0">Just now</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning"><i class="typcn typcn-cog mx-0"></i></div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0">Private message</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info"><i class="typcn typcn-user-outline mx-0"></i></div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0">2 days ago</p>
+                </div>
+              </a>
+            </div>
+          </li>
+
+          <!-- Profile -->
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
+              <i class="typcn typcn-user-outline mr-0"></i>
+              <span class="nav-profile-name">Evan Morales</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item"><i class="typcn typcn-cog text-primary"></i> Settings</a>
+              <a class="dropdown-item"><i class="typcn typcn-power text-primary"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- ══════════ END NAVBAR ══════════ -->
+
+    <div class="container-fluid page-body-wrapper">
+
+      <!-- Settings Panel -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close typcn typcn-delete-outline"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options" id="sidebar-light-theme">
+            <div class="img-ss rounded-circle bg-light border mr-3"></div> Light
+          </div>
+          <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
+            <div class="img-ss rounded-circle bg-dark border mr-3"></div> Dark
+          </div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles primary"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default border"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ SIDEBAR ══════════ -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <div class="d-flex sidebar-profile">
+              <div class="sidebar-profile-image">
+                <img src="../../images/faces/face29.png" alt="Profile">
+                <span class="sidebar-status-indicator"></span>
+              </div>
+              <div class="sidebar-profile-name">
+                <p class="sidebar-name">Kcozm</p>
+                <p class="sidebar-designation">Welcome</p>
+              </div>
+            </div>
+            <p class="sidebar-menu-title">Dash menu</p>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="../../index.html">
+              <i class="typcn typcn-device-desktop menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-briefcase menu-icon"></i>
+              <span class="menu-title">Website Management</span>
+              <i class="typcn typcn-chevron-right menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:void(0)" onclick="toggleSubmenu(event)">
+                    Home <i class="typcn typcn-chevron-right menu-arrow"></i>
+                  </a>
+                  <ul class="nav flex-column sub-menu home-submenu" style="display:none;">
+                    <li class="nav-item"><a class="nav-link" href="#">Banner</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Introduction</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Our Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Our Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">User List</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Description</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Brands</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="../ui-features/about.html">About us</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="../ui-features/e_shop.html">E-shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Franchise</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="../ui-features/Offers_new.html">Offer</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="true" aria-controls="form-elements">
+              <i class="typcn typcn-film menu-icon"></i>
+              <span class="menu-title">Form elements</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse show" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link active" href="product_form.html">Add Product</a></li>
+                <li class="nav-item"><a class="nav-link" href="basic_elements.html">Basic Elements</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
+              <span class="menu-title">Charts</span><i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="../charts/chartjs.html">ChartJs</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="typcn typcn-th-small-outline menu-icon"></i>
+              <span class="menu-title">Tables</span><i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="../tables/basic-table.html">Basic table</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="typcn typcn-user-add-outline menu-icon"></i>
+              <span class="menu-title">User Pages</span><i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="../samples/login.html">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="../samples/register.html">Register</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="../documentation/documentation.html">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Documentation</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="sidebar-legend">
+          <li><p class="sidebar-menu-title">Category</p></li>
+          <li class="nav-item"><a href="#" class="nav-link">#Sales</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">#Marketing</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">#Growth</a></li>
+        </ul>
+      </nav>
+      <!-- ══════════ END SIDEBAR ══════════ -->
+
+      <!-- ══════════ MAIN PANEL ══════════ -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <!-- Breadcrumb -->
+          <div class="page-breadcrumb">
+            <a href="../../index.html"><i class="typcn typcn-device-desktop"></i> Dashboard</a>
+            <span class="sep"><i class="typcn typcn-chevron-right"></i></span>
+            <a href="../ui-features/e_shop.html">E-shop</a>
+            <span class="sep"><i class="typcn typcn-chevron-right"></i></span>
+            <span>Add Product</span>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card product-form-card">
+
+                <!-- Card Header -->
+                <div class="card-header">
+                  <h4><i class="typcn typcn-plus-outline mr-2"></i>Add New Product</h4>
+                  <p>Fill in the details below to add a product to the e-shop</p>
+                </div>
+
+                <div class="card-body">
+
+                  <!-- ── SECTION: Media & Identity ── -->
+                  <p class="section-label">Product Identity</p>
+                  <div class="row">
+
+                    <!-- Product Image -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Product Image <span class="required-star">*</span></label>
+                        <div class="upload-zone" id="uploadZone">
+                          <input type="file" id="productImageInput" accept="image/*" onchange="previewImage(event)">
+                          <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                          <p>Click or drag & drop to upload</p>
+                          <p class="upload-hint">PNG, JPG, WEBP — max 5MB</p>
+                        </div>
+                        <div id="imagePreview">
+                          <img id="previewImg" src="" alt="Preview">
+                          <br>
+                          <button type="button" onclick="clearImage()"
+                            style="margin-top:8px; background:none; border:none; color:#e91e63; font-size:12px; cursor:pointer;">
+                            <i class="fa-solid fa-xmark"></i> Remove image
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Product Name -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Product Name <span class="required-star">*</span></label>
+                        <input type="text" class="form-control-custom" id="productName"
+                          placeholder="e.g. De Fabulous Reviver Shampoo 250ml">
+                      </div>
+
+                      <!-- Category -->
+                      <div class="form-group mt-3">
+                        <label>Category <span class="required-star">*</span></label>
+                        <select class="form-control-custom" id="productCategory">
+                          <option value="" disabled selected>Select Category</option>
+                          <option value="hair">Hair Care</option>
+                          <option value="skin">Skin Care</option>
+                          <option value="nail">Nail Care</option>
+                          <option value="makeup">Makeup</option>
+                          <option value="bridal">Bridal</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="section-divider">
+
+                  <!-- ── SECTION: Pricing ── -->
+                  <p class="section-label">Pricing & Stock</p>
+                  <div class="row">
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Current Price <span class="required-star">*</span></label>
+                        <div class="input-prefix-wrapper">
+                          <span class="prefix">₹</span>
+                          <input type="number" class="form-control-custom" id="currentPrice"
+                            placeholder="0.00" min="0" step="0.01">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Old Price</label>
+                        <div class="input-prefix-wrapper">
+                          <span class="prefix">₹</span>
+                          <input type="number" class="form-control-custom" id="oldPrice"
+                            placeholder="0.00" min="0" step="0.01">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Discount (%)</label>
+                        <input type="number" class="form-control-custom" id="discount"
+                          placeholder="e.g. 10" min="0" max="100" readonly
+                          style="background:#f0f0f0; color:#888; cursor:not-allowed;"
+                          title="Auto-calculated from prices">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Quantity / Size <span class="required-star">*</span></label>
+                        <input type="text" class="form-control-custom" id="quantity"
+                          placeholder="e.g. 250ml or 1 pack">
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="section-divider">
+
+                  <!-- ── SECTION: Details ── -->
+                  <p class="section-label">Additional Details</p>
+                  <div class="row">
+
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control-custom" id="description"
+                          placeholder="Write a brief product description..."></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Rating</label>
+                        <div class="star-rating" id="starRating">
+                          <input type="radio" id="star5" name="rating" value="5">
+                          <label for="star5" title="5 stars">★</label>
+                          <input type="radio" id="star4" name="rating" value="4">
+                          <label for="star4" title="4 stars">★</label>
+                          <input type="radio" id="star3" name="rating" value="3">
+                          <label for="star3" title="3 stars">★</label>
+                          <input type="radio" id="star2" name="rating" value="2">
+                          <label for="star2" title="2 stars">★</label>
+                          <input type="radio" id="star1" name="rating" value="1">
+                          <label for="star1" title="1 star">★</label>
+                        </div>
+                        <p style="font-size:12px; color:#aaa; margin-top:8px;" id="ratingText">No rating selected</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="section-divider">
+
+                  <!-- ── Action Buttons ── -->
+                  <div style="display:flex; justify-content:flex-end; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <button type="button" class="btn-cancel-product"
+                      onclick="location.href='../ui-features/e_shop.html'">
+                      <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                    <button type="button" class="btn-submit-product" onclick="submitForm()">
+                      <i class="fa-solid fa-check"></i> Submit Product
+                    </button>
+                  </div>
+
+                </div><!-- /card-body -->
+              </div><!-- /card -->
+            </div>
+          </div><!-- /row -->
+        </div><!-- /content-wrapper -->
+      </div>
+      <!-- ══════════ END MAIN PANEL ══════════ -->
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toast"></div>
+
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+
+  <script>
+    /* ── Image Preview ── */
+    function previewImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('Image must be under 5MB', 'error');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('imagePreview').style.display = 'block';
+        document.getElementById('uploadZone').style.borderColor = '#e91e63';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearImage() {
+      document.getElementById('productImageInput').value = '';
+      document.getElementById('imagePreview').style.display = 'none';
+      document.getElementById('uploadZone').style.borderColor = '#e0e0e0';
+    }
+
+    /* ── Auto-calculate Discount ── */
+    document.getElementById('currentPrice').addEventListener('input', calcDiscount);
+    document.getElementById('oldPrice').addEventListener('input', calcDiscount);
+
+    function calcDiscount() {
+      const cur = parseFloat(document.getElementById('currentPrice').value);
+      const old = parseFloat(document.getElementById('oldPrice').value);
+      const discountField = document.getElementById('discount');
+      if (old > 0 && cur >= 0 && cur < old) {
+        discountField.value = Math.round(((old - cur) / old) * 100);
+      } else {
+        discountField.value = '';
+      }
+    }
+
+    /* ── Star Rating Label ── */
+    document.querySelectorAll('.star-rating input').forEach(function (input) {
+      input.addEventListener('change', function () {
+        document.getElementById('ratingText').textContent = this.value + ' star' + (this.value > 1 ? 's' : '') + ' selected';
+      });
+    });
+
+    /* ── Form Submission ── */
+    function submitForm() {
+      const name     = document.getElementById('productName').value.trim();
+      const category = document.getElementById('productCategory').value;
+      const price    = document.getElementById('currentPrice').value;
+      const qty      = document.getElementById('quantity').value.trim();
+      const imgInput = document.getElementById('productImageInput');
+
+      if (!name) { showToast('Please enter a product name', 'error'); return; }
+      if (!category) { showToast('Please select a category', 'error'); return; }
+      if (!price || parseFloat(price) <= 0) { showToast('Please enter a valid current price', 'error'); return; }
+      if (!qty) { showToast('Please enter quantity/size', 'error'); return; }
+
+      // Success — in a real app you'd POST to an API here
+      showToast('Product added successfully!', 'success');
+      setTimeout(function () {
+        location.href = '../ui-features/e_shop.html';
+      }, 1800);
+    }
+
+    /* ── Toast Helper ── */
+    function showToast(message, type) {
+      const toast = document.getElementById('toast');
+      toast.textContent = '';
+      const icon = document.createElement('i');
+      icon.className = type === 'success' ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-xmark';
+      toast.appendChild(icon);
+      toast.appendChild(document.createTextNode(' ' + message));
+      toast.className = 'toast-notification ' + (type || '') + ' show';
+      setTimeout(function () {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    /* ── Sidebar Sub-menu Toggle ── */
+    function toggleSubmenu(e) {
+      e.preventDefault();
+      var submenu = e.target.closest('.nav-item').querySelector('.home-submenu');
+      if (submenu) {
+        submenu.style.display = (submenu.style.display === 'none') ? 'block' : 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>

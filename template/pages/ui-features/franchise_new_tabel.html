@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Franchise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+
+  <style>
+    :root {
+      --pink:#e91e63; --pink-dark:#c2185b; --pink-soft:#fce4ec; --pink-glow:rgba(233,30,99,0.13);
+      --ink:#1a1a2e; --ink-mid:#4a4a6a; --ink-light:#8888aa;
+      --surface:#ffffff; --surface-2:#f8f7fc; --border:#ededf5;
+      --radius-sm:8px; --radius-md:14px; --radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,0.08); --shadow-btn:0 4px 16px rgba(233,30,99,0.32); --t:0.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
+
+    .main-panel{min-width:0;overflow-x:hidden}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
+    @keyframes rowSlide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+
+    .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
+
+    .kc-breadcrumb{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-breadcrumb a{color:var(--pink);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-breadcrumb a:hover{opacity:.72}
+    .kc-breadcrumb .sep{font-size:10px}
+
+    .kc-card{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--border);overflow:hidden;animation:fadeUp .45s ease both;width:100%;margin-bottom:28px;min-width:0}
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--radius-sm);background:var(--pink-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--pink);font-size:19px}
+    .kc-title{font-family:'Syne',sans-serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2}
+    .kc-title span{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px}
+
+    .kc-btn-add{background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
+    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(233,30,99,0.40)}
+
+    .kc-toolbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .kc-search-wrap{position:relative;flex:1;min-width:220px;max-width:400px}
+    .kc-search-wrap .kc-si{position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+    .kc-search{width:100%;padding:9.5px 14px 9.5px 40px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color var(--t),box-shadow var(--t),background var(--t)}
+    .kc-search:focus{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-glow);background:#fff}
+    .kc-search::placeholder{color:var(--ink-light)}
+    .kc-stat-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-light);background:var(--surface-2);border:1px solid var(--border);padding:6px 16px;border-radius:50px;margin-left:auto;white-space:nowrap}
+    .kc-stat-pill strong{color:var(--pink);font-size:14px}
+
+    .kc-table-wrap{overflow-x:auto}
+    .kc-table{width:100%;border-collapse:collapse}
+    .kc-table thead th{padding:13px 20px;font-family:'Syne',sans-serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink-light);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
+    .kc-table thead th:first-child{padding-left:28px}
+    .kc-table thead th:last-child{padding-right:28px}
+    .kc-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t);animation:rowSlide 0.3s ease both}
+    .kc-table tbody tr:nth-child(1){animation-delay:.04s}
+    .kc-table tbody tr:nth-child(2){animation-delay:.08s}
+    .kc-table tbody tr:nth-child(3){animation-delay:.12s}
+    .kc-table tbody tr:nth-child(4){animation-delay:.16s}
+    .kc-table tbody tr:nth-child(5){animation-delay:.20s}
+    .kc-table tbody tr:hover{background:#fdf6f9}
+    .kc-table tbody tr:last-child{border-bottom:none}
+    .kc-table tbody td{padding:14px 20px;vertical-align:middle;font-size:13.5px;color:var(--ink-mid)}
+    .kc-table tbody td:first-child{padding-left:28px}
+    .kc-table tbody td:last-child{padding-right:28px}
+
+    .kc-serial{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--ink-light)}
+    .kc-img{width:56px;height:56px;border-radius:var(--radius-sm);object-fit:cover;border:2px solid var(--border);transition:transform var(--t),box-shadow var(--t);display:block;cursor:zoom-in}
+    .kc-img:hover{transform:scale(1.1);box-shadow:0 6px 18px rgba(0,0,0,0.14)}
+    .kc-name{font-weight:600;color:var(--ink);font-size:14px}
+
+    .kc-status{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;font-size:11.5px;font-weight:600}
+    .kc-status .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+    .kc-status.active  {background:#e8f5e9;color:#2e7d32}
+    .kc-status.inactive{background:#fff3e0;color:#e65100}
+    .kc-status.pending {background:#e3f2fd;color:#1565c0}
+
+    .kc-actions{display:flex;align-items:center;gap:8px}
+    .kc-act{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink-light);transition:background var(--t),border-color var(--t),transform var(--t),color var(--t)}
+    .kc-act:hover{transform:translateY(-2px)}
+    .kc-act.view:hover  {background:#e3f2fd;border-color:#90caf9;color:#1565c0}
+    .kc-act.edit:hover  {background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+    .kc-act.delete:hover{background:#fce4ec;border-color:#f48fb1;color:#c62828}
+
+    .kc-empty{text-align:center;padding:64px 20px;display:none}
+    .kc-empty-ring{width:76px;height:76px;border-radius:50%;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .kc-empty-ring i{color:var(--pink);font-size:30px;opacity:0.55}
+    .kc-empty h6{font-family:'Syne',sans-serif;font-size:17px;color:var(--ink);margin:0 0 8px}
+    .kc-empty p{font-size:13px;color:var(--ink-light);margin:0}
+
+    .kc-pagination{padding:16px 28px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .kc-pg{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:all var(--t)}
+    .kc-pg:hover:not([disabled]){border-color:var(--pink);color:var(--pink);background:var(--pink-soft)}
+    .kc-pg[disabled]{opacity:.38;cursor:not-allowed}
+    .kc-pg.active{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:var(--shadow-btn)}
+    .kc-pg-info{margin-left:auto;font-size:12.5px;color:var(--ink-light)}
+
+    .kc-modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,0.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center}
+    .kc-modal-overlay.show{display:flex}
+    .kc-modal{background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,0.24);animation:fadeUp 0.25s ease both}
+    .kc-modal-ring{width:64px;height:64px;border-radius:50%;background:var(--pink-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .kc-modal-ring i{color:var(--pink);font-size:26px}
+    .kc-modal h5{font-family:'Syne',sans-serif;font-size:19px;color:var(--ink);margin:0 0 10px}
+    .kc-modal p{font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6}
+    .kc-modal-row{display:flex;gap:10px}
+    .kc-btn-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:background var(--t)}
+    .kc-btn-cancel:hover{background:var(--surface-2)}
+    .kc-btn-confirm{flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--pink),var(--pink-dark));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;box-shadow:var(--shadow-btn);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-confirm:hover{opacity:.88;transform:translateY(-1px)}
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Bridal structure: main-panel > kc-page-content -->
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <nav class="kc-breadcrumb">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Franchise</span>
+      </nav>
+
+      <div class="kc-card">
+        <div class="kc-card-header">
+          <div class="kc-title-block">
+            <div class="kc-icon-wrap"><i class="fa-solid fa-store"></i></div>
+            <h4 class="kc-title">Franchise<span>Manage franchise locations &amp; partners</span></h4>
+          </div>
+          <button class="kc-btn-add" onclick="window.location.href='franchise_new_form.html'">
+            <i class="fa-solid fa-plus"></i> Add Franchise
+          </button>
+        </div>
+
+        <div class="kc-toolbar">
+          <div class="kc-search-wrap">
+            <i class="fa-solid fa-magnifying-glass kc-si"></i>
+            <input type="text" class="kc-search" id="searchInput" placeholder="Search franchise entries…" oninput="handleSearch()">
+          </div>
+          <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">0</strong></div>
+        </div>
+
+        <div class="kc-table-wrap">
+          <table class="kc-table">
+            <thead>
+              <tr>
+                <th style="width:64px;">#</th>
+                <th style="width:100px;">Image</th>
+                <th>Franchise Name</th>
+                <th>Location</th>
+                <th style="width:120px;">Status</th>
+                <th style="width:120px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+          <div class="kc-empty" id="emptyState">
+            <div class="kc-empty-ring"><i class="fa-solid fa-store-slash"></i></div>
+            <h6>No franchise entries found</h6>
+            <p>Try a different search, or click <strong>Add Franchise</strong> to create one.</p>
+          </div>
+        </div>
+
+        <div class="kc-pagination" id="paginationWrap">
+          <button class="kc-pg" id="prevBtn" onclick="changePage(-1)"><i class="fa-solid fa-angle-left"></i> Previous</button>
+          <div id="pageNumbers" style="display:flex;gap:6px;"></div>
+          <button class="kc-pg" id="nextBtn" onclick="changePage(1)">Next <i class="fa-solid fa-angle-right"></i></button>
+          <span class="kc-pg-info" id="pageInfo"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="kc-modal-overlay" id="deleteOverlay">
+    <div class="kc-modal">
+      <div class="kc-modal-ring"><i class="fa-solid fa-trash-can"></i></div>
+      <h5>Delete Franchise?</h5>
+      <p>This franchise entry will be permanently removed.<br>This action cannot be undone.</p>
+      <div class="kc-modal-row">
+        <button class="kc-btn-cancel"  onclick="closeModal()">Cancel</button>
+        <button class="kc-btn-confirm" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Components only -->
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({ activePage:'franchise', pageTitle:'Franchise', depth:'../../' });
+  </script>
+
+  <script>
+    var DATA = [
+      { id:1, img:'https://images.unsplash.com/photo-1560066984-138daaa0b1b8?w=200&q=80',   name:'Kcozm Nagpur Central',       location:'Central Avenue, Nagpur',            status:'active'   },
+      { id:2, img:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', name:'Kcozm Pune West',            location:'Baner Road, Pune',                  status:'active'   },
+      { id:3, img:'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=200&q=80', name:'Kcozm Mumbai Andheri',       location:'Link Road, Andheri West, Mumbai',   status:'active'   },
+      { id:4, img:'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=200&q=80',    name:'Kcozm Hyderabad HITEC',      location:'HITEC City, Hyderabad',             status:'pending'  },
+      { id:5, img:'https://images.unsplash.com/photo-1470259078422-826894b933aa?w=200&q=80', name:'Kcozm Bangalore Koramangala',location:'5th Block, Koramangala, Bangalore', status:'inactive' },
+      { id:6, img:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80', name:'Kcozm Delhi Saket',          location:'Select CityWalk, Saket, Delhi',     status:'active'   },
+    ];
+
+    var ROWS=5, page=1, list=DATA.slice(), delId=null;
+
+    function handleSearch(){
+      var q=document.getElementById('searchInput').value.toLowerCase().trim();
+      list=q?DATA.filter(function(r){return(r.name+r.location).toLowerCase().includes(q);}):DATA.slice();
+      page=1; render();
+    }
+
+    function render(){
+      var tbody=document.getElementById('tableBody'), empty=document.getElementById('emptyState'), pgWrap=document.getElementById('paginationWrap');
+      document.getElementById('totalCount').textContent=list.length;
+      if(!list.length){tbody.innerHTML='';empty.style.display='block';pgWrap.style.display='none';return;}
+      empty.style.display='none'; pgWrap.style.display='flex';
+      var pages=Math.ceil(list.length/ROWS); page=Math.min(page,pages);
+      var s=(page-1)*ROWS;
+      var sm={active:{cls:'active',label:'Active'},inactive:{cls:'inactive',label:'Inactive'},pending:{cls:'pending',label:'Pending'}};
+      tbody.innerHTML=list.slice(s,s+ROWS).map(function(r,i){
+        var st=sm[r.status]||sm.inactive;
+        return '<tr>'
+          +'<td><span class="kc-serial">'+(s+i+1)+'</span></td>'
+          +'<td><img class="kc-img" src="'+r.img+'" alt="'+r.name+'"></td>'
+          +'<td><p class="kc-name">'+r.name+'</p></td>'
+          +'<td><span style="font-size:13px;color:var(--ink-mid)"><i class="fa-solid fa-location-dot" style="color:var(--pink);margin-right:5px;font-size:12px"></i>'+r.location+'</span></td>'
+          +'<td><span class="kc-status '+st.cls+'"><span class="dot"></span>'+st.label+'</span></td>'
+          +'<td><div class="kc-actions">'
+          +'<button class="kc-act view"   onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
+          +'<button class="kc-act edit"   onclick="editRow('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
+          +'<button class="kc-act delete" onclick="openModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
+          +'</div></td></tr>';
+      }).join('');
+      renderPg(pages);
+    }
+
+    function renderPg(pages){
+      var nums=document.getElementById('pageNumbers');
+      document.getElementById('prevBtn').disabled=page===1;
+      document.getElementById('nextBtn').disabled=page===pages;
+      nums.innerHTML='';
+      for(var p=1;p<=pages;p++){
+        var b=document.createElement('button');
+        b.className='kc-pg'+(p===page?' active':''); b.textContent=p;
+        b.onclick=(function(pp){return function(){goPage(pp);};})(p);
+        nums.appendChild(b);
+      }
+      var s=(page-1)*ROWS+1, e=Math.min(page*ROWS,list.length);
+      document.getElementById('pageInfo').textContent='Showing '+s+'–'+e+' of '+list.length;
+    }
+
+    function changePage(d){page=Math.max(1,Math.min(page+d,Math.ceil(list.length/ROWS)));render();}
+    function goPage(p){page=p;render();}
+    function viewRow(id){if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Opening franchise #'+id+'…','info');}
+    function editRow(id){window.location.href='franchise_new_form.html?id='+id;}
+    function openModal(id){delId=id;document.getElementById('deleteOverlay').classList.add('show');}
+    function closeModal(){document.getElementById('deleteOverlay').classList.remove('show');delId=null;}
+    function confirmDelete(){
+      if(delId===null)return;
+      DATA=DATA.filter(function(r){return r.id!==delId;});
+      list=list.filter(function(r){return r.id!==delId;});
+      closeModal();render();
+      if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Franchise entry deleted.','success');
+    }
+    document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+    render();
+  </script>
+</body>
+</html>

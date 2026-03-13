@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin</title>
+  <link rel="shortcut icon" href="images/favicon.png" />
+  <style>
+    /* ── Dashboard page content styles ── */
+    .kc-page { padding: 24px 28px; }
+
+    /* Greeting bar */
+    .kc-greeting {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; flex-wrap: wrap;
+      gap: 14px; margin-bottom: 28px;
+    }
+    .kc-greeting-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--ink); margin: 0 0 4px;
+    }
+    .kc-greeting-sub { font-size: 13px; color: var(--ink-3); }
+
+    .kc-greeting-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .kc-pill-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px; background: var(--surface);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+      cursor: pointer; transition: all .18s ease;
+    }
+    .kc-pill-btn:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-lt); }
+    .kc-pill-btn i { font-size: 12px; }
+
+    /* Stat cards */
+    .kc-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-bottom: 28px; }
+    @media(max-width:1100px){ .kc-stats-row{ grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:600px) { .kc-stats-row{ grid-template-columns:1fr; } }
+
+    .kc-stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 22px 18px;
+      box-shadow: 0 2px 16px rgba(24,18,15,0.06);
+      display: flex; flex-direction: column; gap: 12px;
+      animation: fadeUp .4s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+
+    .kc-stat-card:nth-child(1){ animation-delay:.05s }
+    .kc-stat-card:nth-child(2){ animation-delay:.10s }
+    .kc-stat-card:nth-child(3){ animation-delay:.15s }
+    .kc-stat-card:nth-child(4){ animation-delay:.20s }
+
+    .kc-sc-top { display: flex; align-items: center; justify-content: space-between; }
+    .kc-sc-icon {
+      width: 42px; height: 42px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px;
+    }
+    .kc-sc-icon.rose  { background: var(--rose-lt);  color: var(--rose);  }
+    .kc-sc-icon.gold  { background: var(--gold-lt);  color: var(--gold);  }
+    .kc-sc-icon.green { background: #e8f5e9; color: #2e7d32; }
+    .kc-sc-icon.blue  { background: #e3f2fd; color: #1565c0; }
+
+    .kc-sc-badge {
+      font-size: 11px; font-weight: 700; padding: 3px 9px;
+      border-radius: 20px;
+    }
+    .kc-sc-badge.up   { background: #e8f5e9; color: #2e7d32; }
+    .kc-sc-badge.down { background: #fce4ec; color: #c62828; }
+
+    .kc-sc-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1;
+    }
+    .kc-sc-label { font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Two-column row */
+    .kc-two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; margin-bottom: 28px; }
+    @media(max-width:960px){ .kc-two-col{ grid-template-columns:1fr; } }
+
+    .kc-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 2px 16px rgba(24,18,15,0.06);
+      animation: fadeUp .45s ease both;
+    }
+    .kc-panel-head {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 18px;
+    }
+    .kc-panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-weight: 700; color: var(--ink);
+    }
+    .kc-panel-action {
+      font-size: 12px; font-weight: 600; color: var(--rose);
+      text-decoration: none; transition: opacity .18s;
+    }
+    .kc-panel-action:hover { opacity: .72; }
+
+    /* Recent table */
+    .kc-mini-table { width: 100%; border-collapse: collapse; }
+    .kc-mini-table th {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .7px; color: var(--ink-3);
+      padding: 0 0 10px; text-align: left;
+    }
+    .kc-mini-table td {
+      padding: 10px 0; font-size: 13px; color: var(--ink-2);
+      border-top: 1px solid var(--border);
+    }
+    .kc-mini-table td:last-child { text-align: right; }
+    .kc-status {
+      display: inline-flex; align-items: center;
+      gap: 5px; font-size: 11.5px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .kc-status.done    { background: #e8f5e9; color: #2e7d32; }
+    .kc-status.pending { background: #fff8e1; color: #e65100; }
+    .kc-status.cancel  { background: #fce4ec; color: #c62828; }
+
+    /* Quick links */
+    .kc-quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kc-quick-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 16px 10px;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      background: var(--surface-2); cursor: pointer;
+      text-decoration: none; transition: all .18s;
+    }
+    .kc-quick-item:hover { border-color: var(--rose); background: var(--rose-lt); }
+    .kc-quick-item i { font-size: 20px; color: var(--rose); }
+    .kc-quick-item span { font-size: 11.5px; font-weight: 600; color: var(--ink-2); }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ MAIN PANEL ══ -->
+  <div class="main-panel">
+    <div class="kc-page">
+
+      <!-- Greeting -->
+      <div class="kc-greeting">
+        <div>
+          <h2 class="kc-greeting-name">Welcome back, Admin 👋</h2>
+          <p class="kc-greeting-sub">Here's what's happening at KCOZM today.</p>
+        </div>
+        <div class="kc-greeting-actions">
+          <button class="kc-pill-btn"><i class="fa-solid fa-calendar-days"></i> Last 7 days</button>
+          <button class="kc-pill-btn"><i class="fa-solid fa-arrow-up-from-bracket"></i> Export</button>
+        </div>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="kc-stats-row">
+        <div class="kc-stat-card">
+          <div class="kc-sc-top">
+            <div class="kc-sc-icon rose"><i class="fa-solid fa-calendar-check"></i></div>
+            <span class="kc-sc-badge up">↑ 12%</span>
+          </div>
+          <div class="kc-sc-value">284</div>
+          <div class="kc-sc-label">Appointments</div>
+        </div>
+        <div class="kc-stat-card">
+          <div class="kc-sc-top">
+            <div class="kc-sc-icon gold"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <span class="kc-sc-badge up">↑ 8.4%</span>
+          </div>
+          <div class="kc-sc-value">₹1.2L</div>
+          <div class="kc-sc-label">Revenue</div>
+        </div>
+        <div class="kc-stat-card">
+          <div class="kc-sc-top">
+            <div class="kc-sc-icon green"><i class="fa-solid fa-users"></i></div>
+            <span class="kc-sc-badge up">↑ 5%</span>
+          </div>
+          <div class="kc-sc-value">1,842</div>
+          <div class="kc-sc-label">Clients</div>
+        </div>
+        <div class="kc-stat-card">
+          <div class="kc-sc-top">
+            <div class="kc-sc-icon blue"><i class="fa-solid fa-star"></i></div>
+            <span class="kc-sc-badge down">↓ 0.2</span>
+          </div>
+          <div class="kc-sc-value">4.8</div>
+          <div class="kc-sc-label">Avg Rating</div>
+        </div>
+      </div>
+
+      <!-- Two-col -->
+      <div class="kc-two-col">
+        <!-- Recent appointments -->
+        <div class="kc-panel">
+          <div class="kc-panel-head">
+            <div class="kc-panel-title">Recent Appointments</div>
+            <a href="pages/ui-features/appointments.html" class="kc-panel-action">View all →</a>
+          </div>
+          <table class="kc-mini-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Priya Singh</td>
+                <td>Bridal Makeup</td>
+                <td>13 Mar</td>
+                <td><span class="kc-status done">Completed</span></td>
+              </tr>
+              <tr>
+                <td>Neha Sharma</td>
+                <td>Hair Styling</td>
+                <td>13 Mar</td>
+                <td><span class="kc-status pending">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Aarti Patel</td>
+                <td>Facial</td>
+                <td>14 Mar</td>
+                <td><span class="kc-status pending">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Meera Joshi</td>
+                <td>Saree Draping</td>
+                <td>12 Mar</td>
+                <td><span class="kc-status done">Completed</span></td>
+              </tr>
+              <tr>
+                <td>Sunita Rao</td>
+                <td>Nail Art</td>
+                <td>11 Mar</td>
+                <td><span class="kc-status cancel">Cancelled</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Quick links -->
+        <div class="kc-panel">
+          <div class="kc-panel-head">
+            <div class="kc-panel-title">Quick Access</div>
+          </div>
+          <div class="kc-quick-grid">
+            <a class="kc-quick-item" href="pages/ui-features/bridal_tabel.html">
+              <i class="fa-solid fa-heart"></i>
+              <span>Bridal</span>
+            </a>
+            <a class="kc-quick-item" href="pages/ui-features/service.html">
+              <i class="fa-solid fa-scissors"></i>
+              <span>Services</span>
+            </a>
+            <a class="kc-quick-item" href="pages/ui-features/e_shop.html">
+              <i class="fa-solid fa-bottle-droplet"></i>
+              <span>Products</span>
+            </a>
+            <a class="kc-quick-item" href="pages/ui-features/contact_admin.html">
+              <i class="fa-solid fa-phone"></i>
+              <span>Contact</span>
+            </a>
+            <a class="kc-quick-item" href="pages/ui-features/Offers_new.html">
+              <i class="fa-solid fa-tag"></i>
+              <span>Offers</span>
+            </a>
+            <a class="kc-quick-item" href="pages/ui-features/franchise_new_tabel.html">
+              <i class="fa-solid fa-store"></i>
+              <span>Franchise</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /kc-page -->
+  </div><!-- /main-panel -->
+
+  <!-- Shared Components -->
+  <script src="js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({
+      activePage : 'dashboard',
+      depth      : './'
+    });
+  </script>
+
+</body>
+</html>
