@@ -1,610 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CelestialUI Admin</title>
-  <!-- base:css -->
-  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
-  <!-- endinject -->
+  <title>KCOZM — Service Categories</title>
   <link rel="shortcut icon" href="../../images/favicon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .kc-page{padding:24px 28px 32px}
+    .kc-anim{opacity:0;transform:translateY(14px);animation:kcRise .4s ease forwards}
+    @keyframes kcRise{to{opacity:1;transform:none}}
+    .kc-pg-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-page);overflow:hidden}
+    .kc-pg-head{padding:20px 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+    .kc-pg-title-wrap{display:flex;align-items:center;gap:12px}
+    .kc-pg-icon{width:40px;height:40px;border-radius:11px;background:var(--rose-lt);color:var(--rose-dk);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .kc-pg-title{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--ink)}
+    .kc-pg-sub{font-size:12px;color:var(--ink-3);margin-top:1px}
+    .kc-pg-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .kc-search-wrap{position:relative}
+    .kc-search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
+    .kc-search{padding:9px 16px 9px 36px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface-2);font-family:"DM Sans",sans-serif;font-size:13px;color:var(--ink);width:220px;outline:none;transition:border-color .18s}
+    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
+    .kc-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;border:none;text-decoration:none}
+    .kc-btn-gold{background:linear-gradient(135deg,#c8a040,#9a7020);color:#fff;box-shadow:0 3px 12px rgba(200,160,64,.28)}
+    .kc-btn-gold:hover{box-shadow:0 5px 18px rgba(200,160,64,.40);transform:translateY(-1px);color:#fff}
+    .kc-btn-rose{background:linear-gradient(135deg,#c97b84,#a85560);color:#fff;box-shadow:0 3px 12px rgba(201,123,132,.25)}
+    .kc-btn-rose:hover{box-shadow:0 5px 18px rgba(201,123,132,.38);transform:translateY(-1px);color:#fff}
+    .kc-btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
+    .kc-btn-outline:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-tbl-wrap{overflow-x:auto}
+    .kc-table{width:100%;border-collapse:collapse}
+    .kc-table thead th{padding:13px 20px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-3);background:var(--surface-2);text-align:left;border-bottom:1.5px solid var(--border)}
+    .kc-table tbody tr{transition:background .15s}
+    .kc-table tbody tr:hover{background:rgba(253,246,232,.45)}
+    .kc-table tbody td{padding:13px 20px;font-size:13.5px;color:var(--ink-2);border-bottom:1px solid var(--border);vertical-align:middle}
+    .kc-table tbody tr:last-child td{border-bottom:none}
+    .kc-banner-thumb{width:56px;height:48px;border-radius:9px;object-fit:cover;border:1px solid var(--border)}
+    .kc-banner-ph{width:56px;height:48px;border-radius:9px;background:linear-gradient(135deg,var(--gold-lt),rgba(200,160,64,.08));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold-dk);font-size:16px}
+    .kc-row-name{font-weight:600;color:var(--ink);font-size:13.5px}
+    .kc-row-meta{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+    .kc-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+    .kc-badge.gold{background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-badge.rose{background:var(--rose-lt);color:var(--rose-dk)}
+    .kc-badge.green{background:#e8f5e9;color:#2e7d32}
+    .kc-badge.blue{background:#e3f2fd;color:#1565c0}
+    .kc-actions{display:flex;align-items:center;gap:6px}
+    .kc-act-btn{width:32px;height:32px;border-radius:8px;border:none;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .15s}
+    .kc-act-btn.view{background:#e3f2fd;color:#1565c0}
+    .kc-act-btn.edit{background:#e8f5e9;color:#2e7d32}
+    .kc-act-btn.delete{background:#fce4ec;color:#c62828}
+    .kc-act-btn:hover{transform:scale(1.10)}
+    .kc-pagination{padding:16px 20px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--border)}
+    .kc-pg-info{font-size:12.5px;color:var(--ink-3);flex:1}
+    .kc-pg-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+    .kc-pg-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-pg-btn.active{background:var(--gold);border-color:var(--gold);color:#fff}
+    .kc-empty{padding:52px 20px;text-align:center}
 
+    /* inline add form */
+    .kc-inline{padding:22px 24px;border-top:1px solid var(--border);background:var(--surface-2);display:none}
+    .kc-inline.open{display:block}
+    .kc-if-title{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    .kc-form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
+    @media(max-width:720px){.kc-form-row{grid-template-columns:1fr}}
+    .kc-fg{display:flex;flex-direction:column;gap:7px}
+    .kc-fg.full{grid-column:1/-1}
+    .kc-label{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+    .kc-input,.kc-select{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:"DM Sans",sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color .18s;width:100%}
+    .kc-input:focus,.kc-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
+    .kc-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;background-color:var(--surface)}
+    .kc-file-zone{border:2px dashed var(--border);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:border-color .18s,background .18s;background:var(--surface)}
+    .kc-file-zone:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .kc-file-zone input{display:none}
+    .kc-form-footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding-top:18px;border-top:1px solid var(--border);margin-top:18px}
+  </style>
 </head>
-
 <body>
-  <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
-    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../images/logo.svg" alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg"
-            alt="logo" /></a>
-        <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
-          data-toggle="minimize">
-          <span class="typcn typcn-th-menu"></span>
-        </button>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <ul class="navbar-nav mr-lg-2">
-          <li class="nav-item  d-none d-lg-flex">
-            <a class="nav-link" href="#">
-              Calendar
-            </a>
-          </li>
-          <li class="nav-item  d-none d-lg-flex">
-            <a class="nav-link active" href="#">
-              Statistic
-            </a>
-          </li>
-          <li class="nav-item  d-none d-lg-flex">
-            <a class="nav-link" href="#">
-              Employee
-            </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item d-none d-lg-flex  mr-2">
-            <a class="nav-link" href="#">
-              Help
-            </a>
-          </li>
-          <li class="nav-item dropdown d-flex">
-            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
-              id="messageDropdown" href="#" data-toggle="dropdown">
-              <i class="typcn typcn-message-typing"></i>
-              <span class="count bg-success">2</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-              aria-labelledby="messageDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face4.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                  </h6>
-                  <p class="font-weight-light small-text mb-0">
-                    The meeting is cancelled
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face2.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                  </h6>
-                  <p class="font-weight-light small-text mb-0">
-                    New product launch
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face3.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                  </h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Upcoming board meeting
-                  </p>
-                </div>
-              </a>
+  <div class="main-panel">
+    <div class="kc-page">
+      <div class="kc-pg-card kc-anim" style="animation-delay:.05s">
+
+        <div class="kc-pg-head">
+          <div class="kc-pg-title-wrap">
+            <div class="kc-pg-icon"><i class="fa-solid fa-folder-tree"></i></div>
+            <div>
+              <div class="kc-pg-title">Service Sub-Categories</div>
+              <div class="kc-pg-sub">Organise services into specific sub-categories with banners</div>
             </div>
-          </li>
-          <li class="nav-item dropdown  d-flex">
-            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
-              id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="typcn typcn-bell mr-0"></i>
-              <span class="count bg-danger">2</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-              aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-success">
-                    <i class="typcn typcn-info-large mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Just now
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-warning">
-                    <i class="typcn typcn-cog mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Private message
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-info">
-                    <i class="typcn typcn-user-outline mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    2 days ago
-                  </p>
-                </div>
-              </a>
-            </div>
-          </li>
-          <li class="nav-item nav-profile dropdown">
-            <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
-              <i class="typcn typcn-user-outline mr-0"></i>
-              <span class="nav-profile-name">Evan Morales</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-              </a>
-              <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-              </a>
-            </div>
-          </li>
-        </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-          data-toggle="offcanvas">
-          <span class="typcn typcn-th-menu"></span>
-        </button>
-      </div>
-    </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_settings-panel.html -->
-      <div class="theme-setting-wrapper">
-        <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
-        <div id="theme-settings" class="settings-panel">
-          <i class="settings-close typcn typcn-delete-outline"></i>
-          <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options" id="sidebar-light-theme">
-            <div class="img-ss rounded-circle bg-light border mr-3"></div>
-            Light
           </div>
-          <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
-            <div class="img-ss rounded-circle bg-dark border mr-3"></div>
-            Dark
-          </div>
-          <p class="settings-heading mt-2">HEADER SKINS</p>
-          <div class="color-tiles mx-0 px-4">
-            <div class="tiles success"></div>
-            <div class="tiles warning"></div>
-            <div class="tiles danger"></div>
-            <div class="tiles primary"></div>
-            <div class="tiles info"></div>
-            <div class="tiles dark"></div>
-            <div class="tiles default border"></div>
-          </div>
-        </div>
-      </div>
-      <!-- partial -->
-      <!-- partial:../../partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item">
-            <div class="d-flex sidebar-profile">
-              <div class="sidebar-profile-image">
-                <img src="../../images/faces/face29.png" alt="image">
-                <span class="sidebar-status-indicator"></span>
-              </div>
-              <div class="sidebar-profile-name">
-                <p class="sidebar-name">
-                  Kenneth Osborne
-                </p>
-                <p class="sidebar-designation">
-                  Welcome
-                </p>
-              </div>
+          <div class="kc-pg-actions">
+            <div class="kc-search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="kc-search" placeholder="Search sub-category…" id="catSearch">
             </div>
-            <div class="nav-search">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search"
-                  aria-describedby="search">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="search">
-                    <i class="typcn typcn-zoom"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <p class="sidebar-menu-title">Dash menu</p>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../index.html">
-              <i class="typcn typcn-device-desktop menu-icon"></i>
-              <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-briefcase menu-icon"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="typcn typcn-chevron-right menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-              aria-controls="form-elements">
-              <i class="typcn typcn-film menu-icon"></i>
-              <span class="menu-title">Form elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
-              <span class="menu-title">Charts</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">ChartJs</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
-                            aria-controls="tables">
-                            <i class="typcn typcn-th-small-outline menu-icon"></i>
-                            <span class="menu-title">Master</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="tables">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="categorylist.html">Services Category</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link" href="service.html">Services</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link" href="styling.html">Styling</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link" href="loyalty.html">LoyaltyCard</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-        <i class="typcn typcn-compass menu-icon"></i>
-        <span class="menu-title">Icons</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="icons">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="../../pages/icons/mdi.html">Mdi icons</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-        <i class="typcn typcn-user-add-outline menu-icon"></i>
-        <span class="menu-title">User Pages</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="auth">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-        <i class="typcn typcn-globe-outline menu-icon"></i>
-        <span class="menu-title">Error pages</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="error">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-404.html"> 404 </a></li>
-          <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-500.html"> 500 </a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="../../pages/documentation/documentation.html">
-        <i class="typcn typcn-document-text menu-icon"></i>
-        <span class="menu-title">Documentation</span>
-      </a>
-    </li>
-    </ul>
-    <ul class="sidebar-legend">
-      <li>
-        <p class="sidebar-menu-title">Category</p>
-      </li>
-      <li class="nav-item"><a href="#" class="nav-link">#Sales</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">#Marketing</a></li>
-      <li class="nav-item"><a href="#" class="nav-link">#Growth</a></li>
-    </ul>
-    </nav>
-    <!-- partial -->
-    <!-- partial -->
-    <div class="main-panel">
-      <div class="content-wrapper">
-        <div class="row">
-
-
-          <div class="col-lg-12 grid-margin stretch-card">
-            <div class="card">
-
-              <div class="card-body">
-                <button onclick="window.location.href='cat_sevices.html'" style="
-      background:#e91e63;
-      color:#ffffff;
-      border:none;
-      padding:9px 20px;
-      border-radius:6px;
-      font-size:14px;
-      cursor:pointer;
-      font-weight:500;
-      float: inline-end;
-  ">
-                  Add Category
-                </button>
-
-
-                <h4 class="card-title">Category</h4>
-
-                <div
-                  style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:-14px;">
-
-                  <!-- Search Bar -->
-                  <div style="position:relative; width:350px; max-width:100%;">
-                    <i class="fa-solid fa-magnifying-glass" style="position:absolute; top:50%; left:15px; transform:translateY(-50%);
-                                  color:#9aa0a6; font-size:14px;"></i>
-
-                    <input type="text" placeholder="Search Category" style="width:100%;
-                                      padding:10px 15px 10px 40px;
-                                      border-radius:25px;
-                                      border:1px solid #e0e0e0;
-                                      background:#f5f7fa;
-                                      outline:none;
-                                      font-size:14px;">
-                  </div>
-
-                  <!-- Buttons -->
-
-                </div>
-              </div>
-              <hr>
-              <div style="display:flex; justify-content:space-between; align-items:center;">
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>
-                          Sr.no
-                        </th>
-                        <th>
-                          Category
-                        </th>
-                        <th>
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-
-                      <tr style="border-bottom:1px solid #eee;">
-                        <td style="padding:10px;">1</td>
-                        <td style="padding:15px;">
-                          Ladies
-                        </td>
-
-
-                        <td style="padding:15px;">
-                          <!-- view icon -->
-                          <i class="fa-solid fa-eye"
-                            style="color:#2196f3; font-size:14px; margin-right:15px; cursor: pointer;" title="View"></i>
-
-
-                          <!-- Edit Icon -->
-                          <i class="fa-solid fa-pen-to-square"
-                            style="color:#4caf50; font-size:18px; margin-right:15px; cursor:pointer;" title="Edit"></i>
-
-                          <!-- Delete Icon -->
-                          <i class="fa-solid fa-trash" style="color:#f44336; font-size:18px; cursor:pointer;"
-                            title="Delete"></i>
-
-                        </td>
-                      </tr>
-
-
-
-
-
-                      <tr style="border-bottom:1px solid #eee;">
-                        <td style="padding:10px;">2</td>
-                        <td style="padding:15px;">
-                          Gents
-                        </td>
-                        <td style="padding:15px;">
-                          <!-- view icon -->
-                          <i class="fa-solid fa-eye"
-                            style="color:#2196f3; font-size:14px; margin-right:15px; cursor: pointer;" title="View"></i>
-
-
-                          <!-- Edit Icon -->
-                          <i class="fa-solid fa-pen-to-square"
-                            style="color:#4caf50; font-size:18px; margin-right:15px; cursor:pointer;" title="Edit"></i>
-
-                          <!-- Delete Icon -->
-                          <i class="fa-solid fa-trash" style="color:#f44336; font-size:18px; cursor:pointer;"
-                            title="Delete"></i>
-
-                        </td>
-                      </tr>
-
-                    </tbody>
-                  </table>
-                </div>
-
-              </div>
-            </div>
+            <button class="kc-btn kc-btn-gold" id="toggleAdd"><i class="fa-solid fa-plus"></i> Add Sub-Category</button>
           </div>
         </div>
 
-        <!-- Previous Button -->
-        <button style="
-      background:#e91e63;
-      color:#ffffff;
-      border:none;
-      padding:10px 20px;
-      border-radius:6px;
-      font-size:14px;
-      cursor:pointer;
-      font-weight:500;
-  ">
-          <i class="fa-solid fa-angle-left" style="margin-right:6px;"></i>
-          Previous
-        </button>
-        <!-- Page 3 -->
-        <button style="
-      padding:6px 12px;
-      border:1px solid #dee2e6;
-      background:#ffffff;
-      border-radius:6px;
-      cursor:pointer;
-      font-size:14px;
-  ">
-          1
-        </button>
-        <!-- Next Button -->
-        <button style="
-      background:#e91e63;
-      color:#ffffff;
-      border:none;
-      padding:10px 20px;
-      border-radius:6px;
-      font-size:14px;
-      cursor:pointer;
-      font-weight:500;
-  ">
-          Next
-          <i class="fa-solid fa-angle-right" style="margin-left:6px;"></i>
-        </button>
+        <!-- Inline form -->
+        <div class="kc-inline" id="inlineForm">
+          <div class="kc-if-title"><i class="fa-solid fa-folder-plus" style="color:var(--gold-dk)"></i> Add Sub-Category</div>
+          <div class="kc-form-row">
+            <div class="kc-fg">
+              <label class="kc-label">Sub-Category Name</label>
+              <input type="text" class="kc-input" id="catName" placeholder="e.g. Hair Styling, Bridal Makeup…">
+            </div>
+            <div class="kc-fg">
+              <label class="kc-label">Parent Service</label>
+              <select class="kc-select" id="catService">
+                <option value="">Select Service</option>
+                <option>Ladies</option>
+                <option>Gents</option>
+                <option>Bridal</option>
+                <option>Kids</option>
+              </select>
+            </div>
+            <div class="kc-fg full">
+              <label class="kc-label">Banner Image</label>
+              <div class="kc-file-zone" onclick="document.getElementById('catBanner').click()">
+                <input type="file" id="catBanner" accept="image/*">
+                <div id="catBannerPreview">
+                  <i class="fa-solid fa-image" style="font-size:20px;color:var(--ink-3);margin-bottom:6px;display:block"></i>
+                  <span style="font-size:13px;color:var(--ink-3)">Upload banner &nbsp;<b style="color:var(--gold-dk)">browse file</b></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="kc-form-footer">
+            <button class="kc-btn kc-btn-outline" id="cancelAdd">Cancel</button>
+            <button class="kc-btn kc-btn-rose" id="saveAdd"><i class="fa-solid fa-check"></i> Save Sub-Category</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="kc-tbl-wrap">
+          <table class="kc-table">
+            <thead>
+              <tr>
+                <th style="width:50px">#</th>
+                <th style="width:76px">Banner</th>
+                <th>Sub-Category</th>
+                <th>Parent Service</th>
+                <th>Services Count</th>
+                <th style="width:110px">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="catTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="kc-pagination">
+          <span class="kc-pg-info" id="catInfo">Loading…</span>
+          <button class="kc-pg-btn"><i class="fa-solid fa-angle-left"></i> Prev</button>
+          <button class="kc-pg-btn active">1</button>
+          <button class="kc-pg-btn">Next <i class="fa-solid fa-angle-right"></i></button>
+        </div>
+
       </div>
     </div>
   </div>
-  <!-- main-panel ends -->
-  </div>
-  <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- base:js -->
-  <script src="../../vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
-  <script src="../../js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- plugin js for this page -->
-  <!-- End plugin js for this page -->
-  <!-- Custom js for this page-->
-  <!-- End custom js for this page-->
 
+  <script src="../../js/shared-components.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // 1. Get categories from localStorage
-      let categories = JSON.parse(localStorage.getItem("categories")) || [];
-      const tableBody = document.querySelector(".table-responsive table tbody");
+    KcozmAdmin.init({ activePage:'services', depth:'../../' });
 
-      function loadTable() {
-        // Clear the static placeholder rows
-        tableBody.innerHTML = "";
+    var cats = JSON.parse(localStorage.getItem('kc_sub_categories')) || [
+      {id:1,name:'Hair Styling',service:'Ladies',count:4},
+      {id:2,name:'Bridal Makeup',service:'Bridal',count:6},
+      {id:3,name:'Facials',service:'Ladies',count:3},
+      {id:4,name:'Nail Care',service:'Ladies',count:5},
+      {id:5,name:'Haircut & Trim',service:'Gents',count:3},
+      {id:6,name:'Beard Grooming',service:'Gents',count:4}
+    ];
 
-        // Colspan is now 3: Serial No, Category Name, and Actions
-        if (categories.length === 0) {
-          tableBody.innerHTML = '<tr><td colspan="3" class="text-center" style="padding:20px;">No categories found. Please add one.</td></tr>';
-          return;
-        }
+    var serviceCols = {Ladies:'rose',Gents:'blue',Bridal:'gold',Kids:'green'};
 
-        categories.forEach((item, index) => {
-          const row = `
-          <tr style="border-bottom:1px solid #eee;">
-            <td style="padding:10px;">${index + 1}</td>
-            <td style="padding:15px;">${item.name}</td>
-            <td style="padding:15px;">
-              <i class="fa-solid fa-eye" style="color:#2196f3; font-size:14px; margin-right:15px; cursor: pointer;" title="View"></i>
-              <i class="fa-solid fa-pen-to-square" style="color:#4caf50; font-size:18px; margin-right:15px; cursor:pointer;" title="Edit"></i>
-              <i class="fa-solid fa-trash deleteBtn" data-index="${index}" style="color:#f44336; font-size:18px; cursor:pointer;" title="Delete"></i>
-            </td>
-          </tr>
-        `;
-          tableBody.innerHTML += row;
-        });
+    function renderCats(data){
+      var tb=document.getElementById('catTbody');
+      document.getElementById('catInfo').innerHTML='Showing <b>'+data.length+'</b> sub-categories';
+      if(!data.length){tb.innerHTML='<tr><td colspan="6"><div class="kc-empty"><i class="fa-solid fa-folder-open" style="font-size:32px;color:var(--border);display:block;margin-bottom:10px"></i><div style="font-size:14px;color:var(--ink-3)">No sub-categories found</div></div></td></tr>';return;}
+      tb.innerHTML=data.map(function(c,i){
+        var col=serviceCols[c.service]||'gold';
+        return '<tr><td style="font-weight:600;color:var(--ink-3)">'+(i+1)+'</td>'
+          +'<td><div class="kc-banner-ph"><i class="fa-solid fa-folder-open"></i></div></td>'
+          +'<td><div class="kc-row-name">'+c.name+'</div></td>'
+          +'<td><span class="kc-badge '+col+'">'+c.service+'</span></td>'
+          +'<td><span style="font-weight:700;color:var(--ink)">'+c.count+'</span> <span style="font-size:11.5px;color:var(--ink-3)">services</span></td>'
+          +'<td><div class="kc-actions">'
+            +'<button class="kc-act-btn view"><i class="fa-solid fa-eye"></i></button>'
+            +'<button class="kc-act-btn edit"><i class="fa-solid fa-pen-to-square"></i></button>'
+            +'<button class="kc-act-btn delete" onclick="delCat('+c.id+')"><i class="fa-solid fa-trash"></i></button>'
+          +'</div></td></tr>';
+      }).join('');
+    }
+    renderCats(cats);
 
-        attachDeleteEvents();
-      }
+    function delCat(id){ if(!confirm('Delete this sub-category?')) return; cats=cats.filter(function(c){return c.id!==id;}); localStorage.setItem('kc_sub_categories',JSON.stringify(cats)); renderCats(cats); }
 
-      function attachDeleteEvents() {
-        document.querySelectorAll(".deleteBtn").forEach(button => {
-          button.onclick = function () {
-            // Identify the item by its position in the array
-            const index = parseInt(this.getAttribute("data-index"));
+    document.getElementById('toggleAdd').addEventListener('click',function(){ document.getElementById('inlineForm').classList.toggle('open'); });
+    document.getElementById('cancelAdd').addEventListener('click',function(){ document.getElementById('inlineForm').classList.remove('open'); });
 
-            if (confirm("Are you sure you want to delete this category?")) {
-              // Remove the specific item from the array
-              categories.splice(index, 1);
+    document.getElementById('saveAdd').addEventListener('click',function(){
+      var name=document.getElementById('catName').value.trim();
+      var svc=document.getElementById('catService').value;
+      if(!name||!svc){KcozmAdmin.showToast('Please fill all required fields','error');return;}
+      cats.push({id:Date.now(),name:name,service:svc,count:0});
+      localStorage.setItem('kc_sub_categories',JSON.stringify(cats));
+      renderCats(cats);
+      document.getElementById('inlineForm').classList.remove('open');
+      document.getElementById('catName').value='';
+      KcozmAdmin.showToast('Sub-category added successfully','success');
+    });
 
-              // Sync with localStorage and refresh table
-              localStorage.setItem("categories", JSON.stringify(categories));
-              loadTable();
-            }
-          };
-        });
-      }
+    document.getElementById('catSearch').addEventListener('input',function(){
+      var q=this.value.toLowerCase();
+      renderCats(cats.filter(function(c){return c.name.toLowerCase().includes(q)||c.service.toLowerCase().includes(q);}));
+    });
 
-      loadTable();
+    document.getElementById('catBanner').addEventListener('change',function(){
+      if(!this.files[0]) return;
+      var r=new FileReader(); r.onload=function(e){document.getElementById('catBannerPreview').innerHTML='<img src="'+e.target.result+'" style="max-height:54px;border-radius:8px">';};
+      r.readAsDataURL(this.files[0]);
     });
   </script>
-
 </body>
-
 </html>

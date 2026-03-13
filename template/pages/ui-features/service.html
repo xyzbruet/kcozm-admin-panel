@@ -1,625 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CelestialUI Admin</title>
-  <!-- base:css -->
-  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
-  <!-- endinject -->
+  <title>KCOZM — Services</title>
   <link rel="shortcut icon" href="../../images/favicon.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .kc-page{padding:24px 28px 32px}
+    .kc-anim{opacity:0;transform:translateY(14px);animation:kcRise .4s ease forwards}
+    @keyframes kcRise{to{opacity:1;transform:none}}
+    .kc-pg-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-page);overflow:hidden}
+    .kc-pg-head{padding:20px 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+    .kc-pg-title-wrap{display:flex;align-items:center;gap:12px}
+    .kc-pg-icon{width:40px;height:40px;border-radius:11px;background:var(--gold-lt);color:var(--gold-dk);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .kc-pg-title{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--ink)}
+    .kc-pg-sub{font-size:12px;color:var(--ink-3);margin-top:1px}
+    .kc-pg-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .kc-search-wrap{position:relative}
+    .kc-search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
+    .kc-search{padding:9px 16px 9px 36px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface-2);font-family:"DM Sans",sans-serif;font-size:13px;color:var(--ink);width:230px;outline:none;transition:border-color .18s,box-shadow .18s}
+    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
+    .kc-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;border:none;text-decoration:none}
+    .kc-btn-gold{background:linear-gradient(135deg,#c8a040,#9a7020);color:#fff;box-shadow:0 3px 12px rgba(200,160,64,.28)}
+    .kc-btn-gold:hover{box-shadow:0 5px 18px rgba(200,160,64,.40);transform:translateY(-1px);color:#fff}
+    .kc-btn-rose{background:linear-gradient(135deg,#c97b84,#a85560);color:#fff;box-shadow:0 3px 12px rgba(201,123,132,.25)}
+    .kc-btn-rose:hover{box-shadow:0 5px 18px rgba(201,123,132,.38);transform:translateY(-1px);color:#fff}
 
+    /* Tab nav */
+    .kc-tab-nav{display:flex;gap:0;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+    .kc-tab-link{padding:13px 20px;font-size:13px;font-weight:600;color:var(--ink-3);border:none;background:transparent;cursor:pointer;position:relative;transition:color .18s;white-space:nowrap}
+    .kc-tab-link::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2.5px;background:var(--gold);border-radius:2px 2px 0 0;transform:scaleX(0);transition:transform .2s}
+    .kc-tab-link.active{color:var(--gold-dk)}
+    .kc-tab-link.active::after{transform:scaleX(1)}
+    .kc-tab-pane{display:none}
+    .kc-tab-pane.active{display:block}
+
+    .kc-tbl-wrap{overflow-x:auto}
+    .kc-table{width:100%;border-collapse:collapse}
+    .kc-table thead th{padding:13px 20px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--ink-3);background:var(--surface-2);text-align:left;border-bottom:1.5px solid var(--border)}
+    .kc-table tbody tr{transition:background .15s}
+    .kc-table tbody tr:hover{background:rgba(253,246,232,.45)}
+    .kc-table tbody td{padding:13px 20px;font-size:13.5px;color:var(--ink-2);border-bottom:1px solid var(--border);vertical-align:middle}
+    .kc-table tbody tr:last-child td{border-bottom:none}
+    .kc-banner-thumb{width:52px;height:44px;border-radius:8px;object-fit:cover;border:1px solid var(--border);background:var(--surface-2)}
+    .kc-banner-ph{width:52px;height:44px;border-radius:8px;background:var(--gold-lt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold-dk);font-size:14px}
+    .kc-row-name{font-weight:600;color:var(--ink);font-size:13.5px}
+    .kc-row-meta{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+    .kc-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+    .kc-badge.gold{background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-badge.rose{background:var(--rose-lt);color:var(--rose-dk)}
+    .kc-badge.green{background:#e8f5e9;color:#2e7d32}
+    .kc-badge.blue{background:#e3f2fd;color:#1565c0}
+    .kc-actions{display:flex;align-items:center;gap:6px}
+    .kc-act-btn{width:32px;height:32px;border-radius:8px;border:none;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .15s}
+    .kc-act-btn.view{background:#e3f2fd;color:#1565c0}
+    .kc-act-btn.edit{background:#e8f5e9;color:#2e7d32}
+    .kc-act-btn.delete{background:#fce4ec;color:#c62828}
+    .kc-act-btn:hover{transform:scale(1.10)}
+    .kc-pagination{padding:16px 20px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);flex-wrap:wrap}
+    .kc-pg-info{font-size:12.5px;color:var(--ink-3);flex:1}
+    .kc-pg-btn{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-2);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+    .kc-pg-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-pg-btn.active{background:var(--gold);border-color:var(--gold);color:#fff}
+    .kc-empty{padding:52px 20px;text-align:center}
+    .kc-empty-icon{font-size:36px;color:var(--border);margin-bottom:12px}
+    .kc-empty-text{font-size:14px;color:var(--ink-3)}
+
+    /* Add service inline section */
+    .kc-inline-form{padding:20px 24px;border-top:1px solid var(--border);background:var(--surface-2);display:none}
+    .kc-inline-form.open{display:block}
+    .kc-if-title{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:18px}
+    .kc-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
+    @media(max-width:720px){.kc-form-grid{grid-template-columns:1fr}}
+    .kc-form-group{display:flex;flex-direction:column;gap:7px}
+    .kc-form-group.full{grid-column:1/-1}
+    .kc-label{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+    .kc-input,.kc-select{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:"DM Sans",sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color .18s,box-shadow .18s;width:100%}
+    .kc-input:focus,.kc-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
+    .kc-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;background-color:var(--surface)}
+    .kc-file-zone{border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:border-color .18s,background .18s;background:var(--surface)}
+    .kc-file-zone:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .kc-file-zone input{display:none}
+    .kc-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;min-height:34px;padding:8px 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface)}
+    .kc-chip{display:inline-flex;align-items:center;gap:6px;background:var(--gold-lt);color:var(--gold-dk);border:1px solid var(--gold);padding:4px 10px;border-radius:20px;font-size:12.5px;font-weight:600}
+    .kc-chip-x{width:15px;height:15px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer;border:none;padding:0;flex-shrink:0}
+    .kc-svc-input-row{display:flex;gap:10px}
+    .kc-svc-input-row .kc-input{flex:1}
+    .kc-form-footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding-top:20px;border-top:1px solid var(--border);margin-top:20px}
+    .kc-btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
+    .kc-btn-outline:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+
+    /* ── View Modal ── */
+    .kc-modal-overlay{position:fixed;inset:0;background:rgba(24,18,12,.55);backdrop-filter:blur(6px);z-index:9999;display:none;align-items:flex-end;justify-content:flex-end;padding:0}
+    .kc-modal-overlay.open{display:flex}
+    @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+    .kc-drawer{width:420px;max-width:100vw;height:100vh;background:var(--surface);box-shadow:-8px 0 40px rgba(24,18,12,.18);display:flex;flex-direction:column;animation:slideIn .28s cubic-bezier(.22,.68,0,1.2)}
+    .kc-drawer-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface-2)}
+    .kc-drawer-title{font-family:"Cormorant Garamond",serif;font-size:19px;font-weight:700;color:var(--ink)}
+    .kc-drawer-close{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s;flex-shrink:0}
+    .kc-drawer-close:hover{border-color:var(--rose);color:var(--rose-dk);background:var(--rose-lt)}
+    .kc-drawer-body{flex:1;overflow-y:auto;padding:24px}
+    .kc-vw-banner{width:100%;height:160px;border-radius:14px;background:linear-gradient(135deg,var(--gold-lt),rgba(201,123,132,.15));display:flex;align-items:center;justify-content:center;font-size:52px;color:var(--gold-dk);margin-bottom:22px;border:1px solid var(--border)}
+    .kc-vw-row{display:flex;gap:0;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+    .kc-vw-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+    .kc-vw-label{width:130px;flex-shrink:0;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-3);padding-top:2px}
+    .kc-vw-val{flex:1;font-size:14px;color:var(--ink);font-weight:500}
+    .kc-drawer-foot{padding:18px 24px;border-top:1px solid var(--border);display:flex;gap:10px}
+  </style>
 </head>
-
 <body>
-  <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
-    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../images/logo.svg" alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg"
-            alt="logo" /></a>
-        <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
-          data-toggle="minimize">
-          <span class="typcn typcn-th-menu"></span>
-        </button>
-      </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <ul class="navbar-nav mr-lg-2">
-          <li class="nav-item  d-none d-lg-flex">
-            <a class="nav-link" href="#">
-              Calendar
-            </a>
-          </li>
-          <li class="nav-item  d-none d-lg-flex">
-            <a class="nav-link active" href="#">
-              Statistic
-            </a>
-          </li>
-          <li class="nav-item  d-none d-lg-flex">
-            <a class="nav-link" href="#">
-              Employee
-            </a>
-          </li>
-        </ul>
-        <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item d-none d-lg-flex  mr-2">
-            <a class="nav-link" href="#">
-              Help
-            </a>
-          </li>
-          <li class="nav-item dropdown d-flex">
-            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
-              id="messageDropdown" href="#" data-toggle="dropdown">
-              <i class="typcn typcn-message-typing"></i>
-              <span class="count bg-success">2</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-              aria-labelledby="messageDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face4.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                  </h6>
-                  <p class="font-weight-light small-text mb-0">
-                    The meeting is cancelled
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face2.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                  </h6>
-                  <p class="font-weight-light small-text mb-0">
-                    New product launch
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <img src="../../images/faces/face3.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                  </h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Upcoming board meeting
-                  </p>
-                </div>
-              </a>
-            </div>
-          </li>
-          <li class="nav-item dropdown  d-flex">
-            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
-              id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="typcn typcn-bell mr-0"></i>
-              <span class="count bg-danger">2</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-              aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-success">
-                    <i class="typcn typcn-info-large mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Just now
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-warning">
-                    <i class="typcn typcn-cog mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Private message
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-info">
-                    <i class="typcn typcn-user-outline mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    2 days ago
-                  </p>
-                </div>
-              </a>
-            </div>
-          </li>
-          <li class="nav-item nav-profile dropdown">
-            <a class="nav-link dropdown-toggle  pl-0 pr-0" href="#" data-toggle="dropdown" id="profileDropdown">
-              <i class="typcn typcn-user-outline mr-0"></i>
-              <span class="nav-profile-name">Evan Morales</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
-                <i class="typcn typcn-cog text-primary"></i>
-                Settings
-              </a>
-              <a class="dropdown-item">
-                <i class="typcn typcn-power text-primary"></i>
-                Logout
-              </a>
-            </div>
-          </li>
-        </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-          data-toggle="offcanvas">
-          <span class="typcn typcn-th-menu"></span>
-        </button>
-      </div>
-    </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_settings-panel.html -->
-      <div class="theme-setting-wrapper">
-        <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
-        <div id="theme-settings" class="settings-panel">
-          <i class="settings-close typcn typcn-delete-outline"></i>
-          <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options" id="sidebar-light-theme">
-            <div class="img-ss rounded-circle bg-light border mr-3"></div>
-            Light
-          </div>
-          <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
-            <div class="img-ss rounded-circle bg-dark border mr-3"></div>
-            Dark
-          </div>
-          <p class="settings-heading mt-2">HEADER SKINS</p>
-          <div class="color-tiles mx-0 px-4">
-            <div class="tiles success"></div>
-            <div class="tiles warning"></div>
-            <div class="tiles danger"></div>
-            <div class="tiles primary"></div>
-            <div class="tiles info"></div>
-            <div class="tiles dark"></div>
-            <div class="tiles default border"></div>
-          </div>
+  <div class="main-panel">
+    <div class="kc-page">
+
+      <!-- STATS ROW -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px">
+        <div class="kc-anim" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-page);animation-delay:.05s;border-top:3px solid #c8a040">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)">Total Services</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1.1;margin:6px 0 4px">24</div>
+          <div style="font-size:11.5px;color:var(--gold-dk);font-weight:600"><i class="fa-solid fa-layer-group" style="margin-right:5px"></i>Across 6 categories</div>
+        </div>
+        <div class="kc-anim" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-page);animation-delay:.10s;border-top:3px solid #c97b84">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)">Ladies Services</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1.1;margin:6px 0 4px">16</div>
+          <div style="font-size:11.5px;color:var(--rose-dk);font-weight:600"><i class="fa-solid fa-venus" style="margin-right:5px"></i>Most popular</div>
+        </div>
+        <div class="kc-anim" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-page);animation-delay:.15s;border-top:3px solid #1565c0">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)">Gents Services</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1.1;margin:6px 0 4px">8</div>
+          <div style="font-size:11.5px;color:#1565c0;font-weight:600"><i class="fa-solid fa-mars" style="margin-right:5px"></i>Growing category</div>
+        </div>
+        <div class="kc-anim" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-page);animation-delay:.20s;border-top:3px solid #2e7d32">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)">Active Bookings</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1.1;margin:6px 0 4px">142</div>
+          <div style="font-size:11.5px;color:#2e7d32;font-weight:600"><i class="fa-solid fa-calendar-check" style="margin-right:5px"></i>This month</div>
         </div>
       </div>
-      <!-- partial -->
-      <!-- partial:../../partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item">
-            <div class="d-flex sidebar-profile">
-              <div class="sidebar-profile-image">
-                <img src="../../images/faces/face29.png" alt="image">
-                <span class="sidebar-status-indicator"></span>
-              </div>
-              <div class="sidebar-profile-name">
-                <p class="sidebar-name">
-                  Kenneth Osborne
-                </p>
-                <p class="sidebar-designation">
-                  Welcome
-                </p>
-              </div>
+
+      <!-- MAIN CARD -->
+      <div class="kc-pg-card kc-anim" style="animation-delay:.22s">
+
+        <!-- Header -->
+        <div class="kc-pg-head">
+          <div class="kc-pg-title-wrap">
+            <div class="kc-pg-icon"><i class="fa-solid fa-scissors"></i></div>
+            <div>
+              <div class="kc-pg-title">Services Management</div>
+              <div class="kc-pg-sub">Manage categories, sub-categories and individual services</div>
             </div>
-            <div class="nav-search">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Type to search..." aria-label="search"
-                  aria-describedby="search">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="search">
-                    <i class="typcn typcn-zoom"></i>
-                  </span>
+          </div>
+          <div class="kc-pg-actions">
+            <div class="kc-search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="kc-search" placeholder="Search services..." id="svcSearch">
+            </div>
+            <button class="kc-btn kc-btn-gold" id="addSvcToggle">
+              <i class="fa-solid fa-plus"></i> Add Service
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab Nav -->
+        <div class="kc-tab-nav">
+          <button class="kc-tab-link active" data-tab="all">All Services</button>
+          <button class="kc-tab-link" data-tab="ladies">Ladies</button>
+          <button class="kc-tab-link" data-tab="gents">Gents</button>
+          <button class="kc-tab-link" data-tab="bridal">Bridal</button>
+        </div>
+
+        <!-- Inline Add Form -->
+        <div class="kc-inline-form" id="addSvcForm">
+          <div class="kc-if-title">Add New Service</div>
+          <div class="kc-form-grid">
+            <div class="kc-form-group">
+              <label class="kc-label">Banner Image</label>
+              <div class="kc-file-zone" onclick="document.getElementById('bannerFile').click()">
+                <input type="file" id="bannerFile" accept="image/*">
+                <div id="filePreview">
+                  <div style="font-size:22px;color:var(--ink-3);margin-bottom:6px"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                  <div style="font-size:13px;color:var(--ink-3)">Click to upload banner &nbsp;<span style="color:var(--gold-dk);font-weight:600">or drag & drop</span></div>
+                  <div style="font-size:11px;color:var(--ink-3);margin-top:4px">PNG, JPG up to 5MB</div>
                 </div>
               </div>
             </div>
-            <p class="sidebar-menu-title">Dash menu</p>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../index.html">
-              <i class="typcn typcn-device-desktop menu-icon"></i>
-              <span class="menu-title">Dashboard <span class="badge badge-primary ml-3">New</span></span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="typcn typcn-briefcase menu-icon"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="typcn typcn-chevron-right menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a>
-                </li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a>
-                </li>
-              </ul>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="kc-form-group">
+                <label class="kc-label">Service Category</label>
+                <select class="kc-select" id="svcCat">
+                  <option value="">Select Category</option>
+                  <option value="ladies">Ladies</option>
+                  <option value="gents">Gents</option>
+                  <option value="bridal">Bridal</option>
+                  <option value="kids">Kids</option>
+                </select>
+              </div>
+              <div class="kc-form-group">
+                <label class="kc-label">Sub-Category</label>
+                <select class="kc-select" id="svcSubCat">
+                  <option value="">Select Sub-Category</option>
+                </select>
+              </div>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
-              aria-controls="form-elements">
-              <i class="typcn typcn-film menu-icon"></i>
-              <span class="menu-title">Form elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-              <i class="typcn typcn-chart-pie-outline menu-icon"></i>
-              <span class="menu-title">Charts</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/charts/chartjs.html">ChartJs</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false"
-                            aria-controls="tables">
-                            <i class="typcn typcn-th-small-outline menu-icon"></i>
-                            <span class="menu-title">Master</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="tables">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="categorylist.html">Services Category</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link" href="service.html">Services</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link" href="styling.html">Styling</a>
-                                </li>
-                                <li class="nav-item"> <a class="nav-link" href="loyalty.html">LoyaltyCard</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="typcn typcn-compass menu-icon"></i>
-              <span class="menu-title">Icons</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="icons">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/icons/mdi.html">Mdi icons</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="typcn typcn-user-add-outline menu-icon"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-              <i class="typcn typcn-globe-outline menu-icon"></i>
-              <span class="menu-title">Error pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-404.html"> 404 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/samples/error-500.html"> 500 </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../../pages/documentation/documentation.html">
-              <i class="typcn typcn-document-text menu-icon"></i>
-              <span class="menu-title">Documentation</span>
-            </a>
-          </li>
-        </ul>
-        <ul class="sidebar-legend">
-          <li>
-            <p class="sidebar-menu-title">Category</p>
-          </li>
-          <li class="nav-item"><a href="#" class="nav-link">#Sales</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">#Marketing</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">#Growth</a></li>
-        </ul>
-      </nav>
-      <!-- partial -->
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row">
-
-
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-
-                <div class="card-body">
-                  <button onclick="window.location.href='categoryform.html'" style="
-      background:#e91e63;
-      color:#ffffff;
-      border:none;
-      padding:9px 20px;
-      border-radius:6px;
-      font-size:14px;
-      cursor:pointer;
-      font-weight:500;
-      float: inline-end;
-  ">
-                    Add Category
-                  </button>
-
-
-                  <h4 class="card-title">Category</h4>
-
-                  <div
-                    style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; margin-bottom:-14px;">
-
-                    <!-- Search Bar -->
-                    <div style="position:relative; width:350px; max-width:100%;">
-                      <i class="fa-solid fa-magnifying-glass" style="position:absolute; top:50%; left:15px; transform:translateY(-50%);
-                                  color:#9aa0a6; font-size:14px;"></i>
-
-                      <input type="text" placeholder="Search Category"
-                        style="width:100%;padding:10px 15px 10px 40px;border-radius:25px; border:1px solid #e0e0e0;background:#f5f7fa;outline:none; font-size:14px;">
-                    </div>
-                  </div>
-                </div>
-                <hr>
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th>
-                            Sr.no
-                          </th>
-                          <th>
-                            Banner
-                          </th>
-                          <th>
-                            Sub-Category
-                          </th>
-                          <th>
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-
-
-                        <tr style="border-bottom:1px solid #eee;">
-                          <td style="padding:10px;">1</td>
-
-                          <td style="padding:15px;">
-                            <img src="/template/images/demo/portfolio.jpg">
-                          </td>
-
-                          <td style="padding:15px;">
-                            Hair Stying
-                          </td>
-
-
-                          <td style="padding:15px;">
-                            <!-- view icon -->
-                            <i class="fa-solid fa-eye"
-                              style="color:#2196f3; font-size:14px; margin-right:15px; cursor: pointer;"
-                              title="View"></i>
-
-
-                            <!-- Edit Icon -->
-                            <i class="fa-solid fa-pen-to-square"
-                              style="color:#4caf50; font-size:18px; margin-right:15px; cursor:pointer;"
-                              title="Edit"></i>
-
-                            <!-- Delete Icon -->
-                            <i class="fa-solid fa-trash" style="color:#f44336; font-size:18px; cursor:pointer;"
-                              title="Delete"></i>
-
-                          </td>
-                        </tr>
-
-
-
-
-
-                        <tr style="border-bottom:1px solid #eee;">
-                          <td style="padding:10px;">2</td>
-
-                          <td style="padding:15px;">
-                            <img src="/template/images/demo/portfolio.jpg">
-                          </td>
-
-                          <td style="padding:15px;">
-                            Hair-Cut
-                          </td>
-
-
-                          <td style="padding:15px;">
-                            <!-- view icon -->
-                            <i class="fa-solid fa-eye"
-                              style="color:#2196f3; font-size:14px; margin-right:15px; cursor: pointer;"
-                              title="View"></i>
-
-
-                            <!-- Edit Icon -->
-                            <i class="fa-solid fa-pen-to-square"
-                              style="color:#4caf50; font-size:18px; margin-right:15px; cursor:pointer;"
-                              title="Edit"></i>
-
-                            <!-- Delete Icon -->
-                            <i class="fa-solid fa-trash" style="color:#f44336; font-size:18px; cursor:pointer;"
-                              title="Delete"></i>
-
-                          </td>
-                        </tr>
-
-                      </tbody>
-                    </table>
-                  </div>
-
-                </div>
+            <div class="kc-form-group full">
+              <label class="kc-label">Add Service Names</label>
+              <div class="kc-svc-input-row">
+                <input type="text" class="kc-input" id="svcNameInput" placeholder="e.g. Bridal Makeup, Gold Facial…">
+                <button class="kc-btn kc-btn-gold" type="button" id="addSvcChip"><i class="fa-solid fa-plus"></i> Add</button>
+              </div>
+              <div class="kc-chips" id="svcChips">
+                <span style="font-size:12px;color:var(--ink-3);align-self:center">Services will appear here as chips…</span>
               </div>
             </div>
           </div>
-
-          <!-- Previous Button -->
-          <button style="
-      background:#e91e63;
-      color:#ffffff;
-      border:none;
-      padding:10px 20px;
-      border-radius:6px;
-      font-size:14px;
-      cursor:pointer;
-      font-weight:500;
-  ">
-            <i class="fa-solid fa-angle-left" style="margin-right:6px;"></i>
-            Previous
-          </button>
-          <!-- Page 3 -->
-          <button style="
-      padding:6px 12px;
-      border:1px solid #dee2e6;
-      background:#ffffff;
-      border-radius:6px;
-      cursor:pointer;
-      font-size:14px;
-  ">
-            1
-          </button>
-          <!-- Next Button -->
-          <button style="
-      background:#e91e63;
-      color:#ffffff;
-      border:none;
-      padding:10px 20px;
-      border-radius:6px;
-      font-size:14px;
-      cursor:pointer;
-      font-weight:500;
-  ">
-            Next
-            <i class="fa-solid fa-angle-right" style="margin-left:6px;"></i>
-          </button>
+          <div class="kc-form-footer">
+            <button class="kc-btn kc-btn-outline" id="cancelSvcForm">Cancel</button>
+            <button class="kc-btn kc-btn-rose" id="submitSvcForm"><i class="fa-solid fa-check"></i> Save Services</button>
+          </div>
         </div>
+
+        <!-- Table -->
+        <div class="kc-tbl-wrap kc-tab-pane active" id="pane-all">
+          <table class="kc-table" id="svcTable">
+            <thead>
+              <tr>
+                <th style="width:52px">#</th>
+                <th style="width:72px">Banner</th>
+                <th>Service Name</th>
+                <th>Category</th>
+                <th>Sub-Category</th>
+                <th>Status</th>
+                <th style="width:110px">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="svcTbody">
+              <!-- JS populated -->
+            </tbody>
+          </table>
+        </div>
+        <div class="kc-tbl-wrap kc-tab-pane" id="pane-ladies">
+          <table class="kc-table"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="ladiesTbody"></tbody></table>
+        </div>
+        <div class="kc-tbl-wrap kc-tab-pane" id="pane-gents">
+          <table class="kc-table"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="gentsTbody"></tbody></table>
+        </div>
+        <div class="kc-tbl-wrap kc-tab-pane" id="pane-bridal">
+          <table class="kc-table"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="bridalTbody"></tbody></table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="kc-pagination">
+          <span class="kc-pg-info">Showing <b>1–8</b> of <b>24</b> services</span>
+          <button class="kc-pg-btn"><i class="fa-solid fa-angle-left"></i> Prev</button>
+          <button class="kc-pg-btn active">1</button>
+          <button class="kc-pg-btn">2</button>
+          <button class="kc-pg-btn">3</button>
+          <button class="kc-pg-btn">Next <i class="fa-solid fa-angle-right"></i></button>
+        </div>
+
+      </div>
+    </div><!-- /kc-page -->
+  </div><!-- /main-panel -->
+
+
+  <!-- View Drawer -->
+  <div class="kc-modal-overlay" id="viewOverlay" onclick="if(event.target===this)closeView()">
+    <div class="kc-drawer" id="viewDrawer">
+      <div class="kc-drawer-head">
+        <div>
+          <div class="kc-drawer-title" id="drawerTitle">Service Details</div>
+          <div style="font-size:12px;color:var(--ink-3);margin-top:2px" id="drawerSub">View full information</div>
+        </div>
+        <button class="kc-drawer-close" onclick="closeView()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="kc-drawer-body" id="drawerBody"></div>
+      <div class="kc-drawer-foot">
+        <button class="kc-btn kc-btn-outline" style="flex:1" onclick="closeView()">Close</button>
+        <button class="kc-btn kc-btn-gold" style="flex:1"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
       </div>
     </div>
-    <!-- main-panel ends -->
   </div>
-  <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-  <!-- base:js -->
-  <script src="../../vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page-->
-  <!-- End plugin js for this page-->
-  <!-- inject:js -->
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
-  <script src="../../js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- plugin js for this page -->
-  <!-- End plugin js for this page -->
-  <!-- Custom js for this page-->
-  <!-- End custom js for this page-->
 
+  <script src="../../js/shared-components.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // 1. Get the list of submitted sub-categories from localStorage
-      let subCategories = JSON.parse(localStorage.getItem("sub_categories")) || [];
-      const tableBody = document.querySelector(".table-responsive table tbody");
+    KcozmAdmin.init({ activePage: 'services', depth: '../../' });
 
-      function loadTable() {
-        tableBody.innerHTML = "";
+    /* ── Seed data ── */
+    var services = [
+      { id:1, name:'Bridal Makeup',      cat:'Bridal',  sub:'Full Bridal',   status:'active'   },
+      { id:2, name:'Gold Facial',         cat:'Ladies',  sub:'Facials',       status:'active'   },
+      { id:3, name:'Hair Colour',         cat:'Ladies',  sub:'Hair Styling',  status:'active'   },
+      { id:4, name:'Manicure & Pedicure', cat:'Ladies',  sub:'Nail Care',     status:'active'   },
+      { id:5, name:'Saree Draping',       cat:'Ladies',  sub:'Styling',       status:'active'   },
+      { id:6, name:'Haircut',             cat:'Gents',   sub:'Hair',          status:'active'   },
+      { id:7, name:'Beard Grooming',      cat:'Gents',   sub:'Beard',         status:'active'   },
+      { id:8, name:'Bridal Trial',        cat:'Bridal',  sub:'Pre-Bridal',    status:'inactive' }
+    ];
 
-        if (subCategories.length === 0) {
-          // Adjusted colspan to 4 to match: Sr.no, Banner, Sub-Category/Service, Action
-          tableBody.innerHTML = '<tr><td colspan="4" class="text-center" style="padding:20px;">No sub-categories found.</td></tr>';
-          return;
-        }
+    var subCatMap = {
+      ladies: ['Facials','Hair Styling','Nail Care','Styling','Mehendi','Massage'],
+      gents:  ['Hair','Beard','Shaving','Head Massage'],
+      bridal: ['Full Bridal','Pre-Bridal','Reception','Engagement'],
+      kids:   ['Haircut','Nail Art']
+    };
 
-        subCategories.forEach((item, index) => {
-          // We display only the subcategory name and the service name below it
-          const row = `
-        <tr style="border-bottom:1px solid #eee;">
-          <td style="padding:10px;">${index + 1}</td>
-          <td style="padding:15px;">
-            <img src="${item.banner || 'https://via.placeholder.com/50'}" 
-                 style="width:50px; height:50px; border-radius:6px; object-fit:cover;" 
-                 alt="Banner">
-          </td>
-          <td style="padding:15px;">
-            <div style="font-weight: 600; color: #333; font-size: 14px;">${item.name}</div>
-            <div style="color: #777; font-size: 12px; margin-top: 4px;">Service: ${item.selectedService || 'Not specified'}</div>
-          </td>
-          <td style="padding:15px;">
-            <i class="fa-solid fa-eye" style="color:#2196f3; font-size:14px; margin-right:15px; cursor: pointer;" title="View"></i>
-            <i class="fa-solid fa-pen-to-square" style="color:#4caf50; font-size:18px; margin-right:15px; cursor:pointer;" title="Edit"></i>
-            <i class="fa-solid fa-trash deleteBtn" data-index="${index}" style="color:#f44336; font-size:18px; cursor:pointer;" title="Delete"></i>
-          </td>
-        </tr>
-      `;
-          tableBody.innerHTML += row;
-        });
+    function statusBadge(s){ return s==='active'?'<span class="kc-badge green"><i class="fa-solid fa-circle" style="font-size:7px"></i>Active</span>':'<span class="kc-badge" style="background:#fce4ec;color:#c62828"><i class="fa-solid fa-circle" style="font-size:7px"></i>Inactive</span>'; }
+    function catBadge(c){ var m={Ladies:'rose',Gents:'blue',Bridal:'gold',Kids:'green'}; return '<span class="kc-badge '+(m[c]||'gold')+'">'+c+'</span>'; }
 
-        attachDeleteEvents();
-      }
+    function renderTable(tbody, rows, showCat) {
+      if(!rows.length){ tbody.innerHTML='<tr><td colspan="10" style="padding:0"><div class="kc-empty"><div class="kc-empty-icon"><i class="fa-solid fa-scissors"></i></div><div class="kc-empty-text">No services found</div></div></td></tr>'; return; }
+      tbody.innerHTML = rows.map(function(r,i){
+        return '<tr><td style="font-weight:600;color:var(--ink-3)">'+(i+1)+'</td>'
+          +'<td><div class="kc-banner-ph"><i class="fa-solid fa-scissors"></i></div></td>'
+          +'<td><div class="kc-row-name">'+r.name+'</div></td>'
+          +(showCat?'<td>'+catBadge(r.cat)+'</td>':'')
+          +'<td><span style="font-size:13px;color:var(--ink-3)">'+r.sub+'</span></td>'
+          +(showCat?'<td>'+statusBadge(r.status)+'</td>':'<td>'+statusBadge(r.status)+'</td>')
+          +'<td><div class="kc-actions">'
+            +'<button class="kc-act-btn view" title="View" onclick="openView('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
+            +'<button class="kc-act-btn edit" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>'
+            +'<button class="kc-act-btn delete" title="Delete" onclick="deleteSvc('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
+          +'</div></td></tr>';
+      }).join('');
+    }
 
-      function attachDeleteEvents() {
-        document.querySelectorAll(".deleteBtn").forEach(button => {
-          button.onclick = function () {
-            const index = parseInt(this.getAttribute("data-index"));
+    function deleteSvc(id){ if(!confirm('Delete this service?')) return; services=services.filter(function(s){return s.id!==id;}); refreshAll(); }
 
-            if (confirm("Are you sure you want to delete this sub-category?")) {
-              subCategories.splice(index, 1);
-              localStorage.setItem("sub_categories", JSON.stringify(subCategories));
-              loadTable();
-            }
-          };
-        });
-      }
+    function refreshAll(){
+      renderTable(document.getElementById('svcTbody'),   services, true);
+      renderTable(document.getElementById('ladiesTbody'),services.filter(function(s){return s.cat==='Ladies';}),false);
+      renderTable(document.getElementById('gentsTbody'), services.filter(function(s){return s.cat==='Gents';}),false);
+      renderTable(document.getElementById('bridalTbody'),services.filter(function(s){return s.cat==='Bridal';}),false);
+    }
+    refreshAll();
 
-      loadTable();
+    /* Tabs */
+    document.querySelectorAll('.kc-tab-link').forEach(function(t){
+      t.addEventListener('click',function(){
+        document.querySelectorAll('.kc-tab-link').forEach(function(x){x.classList.remove('active')});
+        document.querySelectorAll('.kc-tab-pane').forEach(function(x){x.classList.remove('active')});
+        t.classList.add('active');
+        document.getElementById('pane-'+t.dataset.tab).classList.add('active');
+      });
     });
-  </script>
 
+    /* Sub-category cascades */
+    document.getElementById('svcCat').addEventListener('change',function(){
+      var sub=document.getElementById('svcSubCat'); sub.innerHTML='<option value="">Select Sub-Category</option>';
+      (subCatMap[this.value]||[]).forEach(function(s){sub.innerHTML+='<option>'+s+'</option>';});
+    });
+
+    /* Chips */
+    var chips=[];
+    document.getElementById('addSvcChip').addEventListener('click',function(){
+      var v=document.getElementById('svcNameInput').value.trim();
+      if(!v) return; if(chips.includes(v)){KcozmAdmin.showToast('Already added','info');return;}
+      chips.push(v); renderChips(); document.getElementById('svcNameInput').value='';
+    });
+    document.getElementById('svcNameInput').addEventListener('keydown',function(e){ if(e.key==='Enter'){e.preventDefault();document.getElementById('addSvcChip').click();} });
+
+    function renderChips(){
+      var c=document.getElementById('svcChips');
+      if(!chips.length){c.innerHTML='<span style="font-size:12px;color:var(--ink-3);align-self:center">Services will appear here as chips…</span>';return;}
+      c.innerHTML=chips.map(function(ch,i){
+        return '<span class="kc-chip">'+ch+'<button class="kc-chip-x" onclick="removeChip('+i+')">&times;</button></span>';
+      }).join('');
+    }
+    function removeChip(i){ chips.splice(i,1); renderChips(); }
+
+    /* Toggle add form */
+    document.getElementById('addSvcToggle').addEventListener('click',function(){
+      document.getElementById('addSvcForm').classList.toggle('open');
+    });
+    document.getElementById('cancelSvcForm').addEventListener('click',function(){
+      document.getElementById('addSvcForm').classList.remove('open');
+      chips=[]; renderChips();
+    });
+
+    /* Submit */
+    document.getElementById('submitSvcForm').addEventListener('click',function(){
+      var cat=document.getElementById('svcCat').value;
+      var sub=document.getElementById('svcSubCat').value;
+      if(!cat||!sub||!chips.length){KcozmAdmin.showToast('Please fill all fields and add at least one service','error');return;}
+      chips.forEach(function(name){
+        services.push({id:Date.now()+Math.random(),name:name,cat:cat.charAt(0).toUpperCase()+cat.slice(1),sub:sub,status:'active'});
+      });
+      chips=[]; renderChips(); refreshAll();
+      document.getElementById('addSvcForm').classList.remove('open');
+      KcozmAdmin.showToast('Services added successfully','success');
+    });
+
+    /* Search */
+    document.getElementById('svcSearch').addEventListener('input',function(){
+      var q=this.value.toLowerCase();
+      document.querySelectorAll('#svcTbody tr').forEach(function(r){
+        r.style.display=r.textContent.toLowerCase().includes(q)?'':'none';
+      });
+    });
+
+    /* File upload preview */
+    document.getElementById('bannerFile').addEventListener('change',function(){
+      if(!this.files[0]) return;
+      var r=new FileReader();
+      r.onload=function(e){ document.getElementById('filePreview').innerHTML='<img src="'+e.target.result+'" style="max-height:60px;border-radius:8px;margin-top:4px">'; };
+      r.readAsDataURL(this.files[0]);
+    });
+  
+    function openView(id){
+      var r=services.find(function(s){return s.id===id;});
+      if(!r) return;
+      document.getElementById('drawerTitle').textContent=r.name;
+      document.getElementById('drawerSub').textContent='Service — '+r.cat;
+      document.getElementById('drawerBody').innerHTML=
+        '<div class="kc-vw-banner"><i class="fa-solid fa-scissors"></i></div>'
+        +'<div class="kc-vw-row"><div class="kc-vw-label">Service Name</div><div class="kc-vw-val">'+r.name+'</div></div>'
+        +'<div class="kc-vw-row"><div class="kc-vw-label">Category</div><div class="kc-vw-val">'+catBadge(r.cat)+'</div></div>'
+        +'<div class="kc-vw-row"><div class="kc-vw-label">Sub-Category</div><div class="kc-vw-val">'+r.sub+'</div></div>'
+        +'<div class="kc-vw-row"><div class="kc-vw-label">Status</div><div class="kc-vw-val">'+statusBadge(r.status)+'</div></div>'
+        +'<div class="kc-vw-row"><div class="kc-vw-label">ID</div><div class="kc-vw-val" style="color:var(--ink-3);font-size:12px">#'+r.id+'</div></div>';
+      document.getElementById('viewOverlay').classList.add('open');
+    }
+    function closeView(){ document.getElementById('viewOverlay').classList.remove('open'); }
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeView();});
+</script>
 </body>
-
 </html>

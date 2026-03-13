@@ -3,296 +3,472 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>KCOZM Admin</title>
+  <title>KCOZM Admin — Dashboard</title>
   <link rel="shortcut icon" href="images/favicon.png" />
   <style>
-    /* ── Dashboard page content styles ── */
-    .kc-page { padding: 24px 28px; }
+    .kc-dash { padding: 28px 28px 0; }
+    .kc-anim { opacity:0; transform:translateY(16px); animation:kcRise .45s ease forwards; }
+    @keyframes kcRise { to { opacity:1; transform:none; } }
 
-    /* Greeting bar */
-    .kc-greeting {
-      display: flex; align-items: flex-start;
-      justify-content: space-between; flex-wrap: wrap;
-      gap: 14px; margin-bottom: 28px;
+    /* ── HERO ── */
+    .kc-hero {
+      background: linear-gradient(115deg, #1e1208 0%, #2e1c0a 45%, #1a1006 100%);
+      border-radius: 20px; padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap; margin-bottom: 24px;
+      position: relative; overflow: hidden; animation-delay:.05s;
     }
-    .kc-greeting-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 26px; font-weight: 700;
-      color: var(--ink); margin: 0 0 4px;
+    .kc-hero::before {
+      content:''; position:absolute; right:-60px; top:-60px;
+      width:280px; height:280px; border-radius:50%;
+      background:radial-gradient(circle,rgba(200,160,64,.18) 0%,transparent 70%);
+      pointer-events:none;
     }
-    .kc-greeting-sub { font-size: 13px; color: var(--ink-3); }
+    .kc-hero::after {
+      content:''; position:absolute; left:36%; bottom:-40px;
+      width:200px; height:200px; border-radius:50%;
+      background:radial-gradient(circle,rgba(200,160,64,.07) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .kc-hero-left { position:relative; z-index:1; }
+    .kc-hero-eyebrow { font-size:10.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(200,160,64,.68); margin-bottom:8px; }
+    .kc-hero-name { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:700; color:#fff; margin:0 0 6px; line-height:1.1; }
+    .kc-hero-name em { color:#ddb84e; font-style:normal; }
+    .kc-hero-sub { font-size:13px; color:rgba(238,218,185,.52); }
+    .kc-hero-right { display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:1; }
+    .kc-hero-btn {
+      display:inline-flex; align-items:center; gap:7px; padding:9px 18px; border-radius:9px;
+      font-family:'DM Sans',sans-serif; font-size:12.5px; font-weight:600;
+      cursor:pointer; transition:all .18s; border:none; text-decoration:none;
+    }
+    .kc-hero-btn.out { background:rgba(255,255,255,.07); border:1.5px solid rgba(200,160,64,.28); color:rgba(238,218,185,.85); }
+    .kc-hero-btn.out:hover { background:rgba(200,160,64,.14); border-color:rgba(200,160,64,.60); color:#e8c068; }
+    .kc-hero-btn.solid { background:linear-gradient(135deg,#c8a040,#9a7020); color:#fff; box-shadow:0 4px 16px rgba(200,160,64,.28); }
+    .kc-hero-btn.solid:hover { box-shadow:0 6px 22px rgba(200,160,64,.45); transform:translateY(-1px); }
 
-    .kc-greeting-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .kc-pill-btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 8px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px; background: var(--surface);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12.5px; font-weight: 600; color: var(--ink-2);
-      cursor: pointer; transition: all .18s ease;
+    /* ── KPI CARDS ── */
+    .kc-kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+    @media(max-width:1100px){ .kc-kpi-row{ grid-template-columns:repeat(2,1fr); } }
+    @media(max-width:600px) { .kc-kpi-row{ grid-template-columns:1fr; } }
+    .kc-kpi {
+      background:var(--surface); border:1px solid var(--border); border-radius:16px;
+      padding:20px 20px 16px; box-shadow:var(--shadow-page);
+      display:flex; flex-direction:column; gap:14px;
+      position:relative; overflow:hidden;
+      transition:box-shadow .2s, transform .2s;
     }
-    .kc-pill-btn:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-lt); }
-    .kc-pill-btn i { font-size: 12px; }
+    .kc-kpi:hover { box-shadow:0 8px 32px rgba(24,18,12,.10); transform:translateY(-2px); }
+    .kc-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:16px 16px 0 0; }
+    .kc-kpi.gold::before  { background:linear-gradient(90deg,#c8a040,#e8c060); }
+    .kc-kpi.rose::before  { background:linear-gradient(90deg,#c97b84,#e0a0a8); }
+    .kc-kpi.green::before { background:linear-gradient(90deg,#2e7d32,#66bb6a); }
+    .kc-kpi.blue::before  { background:linear-gradient(90deg,#1565c0,#42a5f5); }
+    .kc-kpi-head { display:flex; align-items:center; justify-content:space-between; }
+    .kc-kpi-icon { width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+    .kc-kpi.gold  .kc-kpi-icon { background:var(--gold-lt);  color:var(--gold-dk); }
+    .kc-kpi.rose  .kc-kpi-icon { background:var(--rose-lt);  color:var(--rose-dk); }
+    .kc-kpi.green .kc-kpi-icon { background:#e8f5e9; color:#2e7d32; }
+    .kc-kpi.blue  .kc-kpi-icon { background:#e3f2fd; color:#1565c0; }
+    .kc-kpi-badge { font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
+    .kc-kpi-badge.up   { background:#e8f5e9; color:#2e7d32; }
+    .kc-kpi-badge.down { background:#fce4ec; color:#c62828; }
+    .kc-kpi-value { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:700; color:var(--ink); line-height:1; }
+    .kc-kpi-label { font-size:11.5px; font-weight:600; color:var(--ink-3); text-transform:uppercase; letter-spacing:.6px; }
+    .kc-spark { display:flex; align-items:flex-end; gap:3px; height:32px; margin-top:2px; }
+    .kc-spark-bar { flex:1; border-radius:3px 3px 0 0; }
+    .kc-kpi.gold  .kc-spark-bar { background:rgba(200,160,64,.18); }
+    .kc-kpi.rose  .kc-spark-bar { background:rgba(201,123,132,.18); }
+    .kc-kpi.green .kc-spark-bar { background:rgba(46,125,50,.18); }
+    .kc-kpi.blue  .kc-spark-bar { background:rgba(21,101,192,.18); }
+    .kc-kpi.gold  .kc-spark-bar.hi { background:#c8a040; }
+    .kc-kpi.rose  .kc-spark-bar.hi { background:#c97b84; }
+    .kc-kpi.green .kc-spark-bar.hi { background:#2e7d32; }
+    .kc-kpi.blue  .kc-spark-bar.hi { background:#1565c0; }
 
-    /* Stat cards */
-    .kc-stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-bottom: 28px; }
-    @media(max-width:1100px){ .kc-stats-row{ grid-template-columns:repeat(2,1fr); } }
-    @media(max-width:600px) { .kc-stats-row{ grid-template-columns:1fr; } }
+    /* ── GRID MAIN ── */
+    .kc-grid-main { display:grid; grid-template-columns:1fr 1fr 340px; gap:18px; margin-bottom:24px; }
+    @media(max-width:1280px){ .kc-grid-main{ grid-template-columns:1fr 1fr; } }
+    @media(max-width:860px)  { .kc-grid-main{ grid-template-columns:1fr; } }
 
-    .kc-stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px 22px 18px;
-      box-shadow: 0 2px 16px rgba(24,18,15,0.06);
-      display: flex; flex-direction: column; gap: 12px;
-      animation: fadeUp .4s ease both;
-    }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+    /* ── CARD ── */
+    .kc-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:22px 22px 18px; box-shadow:var(--shadow-page); }
+    .kc-card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; gap:12px; }
+    .kc-card-title { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700; color:var(--ink); }
+    .kc-card-link { font-size:12px; font-weight:600; color:var(--gold-dk); text-decoration:none; transition:opacity .18s; white-space:nowrap; }
+    .kc-card-link:hover { opacity:.72; }
+    .kc-tabs { display:flex; gap:4px; }
+    .kc-tab { padding:5px 12px; border-radius:8px; font-size:12px; font-weight:600; border:1.5px solid var(--border); background:transparent; color:var(--ink-3); cursor:pointer; transition:all .15s; }
+    .kc-tab.active { background:var(--gold-lt); border-color:var(--gold); color:var(--gold-dk); }
 
-    .kc-stat-card:nth-child(1){ animation-delay:.05s }
-    .kc-stat-card:nth-child(2){ animation-delay:.10s }
-    .kc-stat-card:nth-child(3){ animation-delay:.15s }
-    .kc-stat-card:nth-child(4){ animation-delay:.20s }
+    /* Revenue chart */
+    .kc-rev-chart { position:relative; height:170px; margin:0 -4px 12px; }
+    .kc-rev-canvas { width:100%; height:100%; }
+    .kc-rev-legend { display:flex; gap:16px; flex-wrap:wrap; }
+    .kc-rev-leg-item { display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600; color:var(--ink-3); }
+    .kc-rev-leg-dot { width:8px; height:8px; border-radius:50%; }
 
-    .kc-sc-top { display: flex; align-items: center; justify-content: space-between; }
-    .kc-sc-icon {
-      width: 42px; height: 42px; border-radius: 11px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 17px;
-    }
-    .kc-sc-icon.rose  { background: var(--rose-lt);  color: var(--rose);  }
-    .kc-sc-icon.gold  { background: var(--gold-lt);  color: var(--gold);  }
-    .kc-sc-icon.green { background: #e8f5e9; color: #2e7d32; }
-    .kc-sc-icon.blue  { background: #e3f2fd; color: #1565c0; }
+    /* Appointments table */
+    .kc-appt-table { width:100%; border-collapse:collapse; }
+    .kc-appt-table th { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.7px; color:var(--ink-3); padding:0 0 10px; text-align:left; }
+    .kc-appt-table td { padding:10px 0; font-size:13px; color:var(--ink-2); border-top:1px solid var(--border); vertical-align:middle; }
+    .kc-appt-table td:last-child { text-align:right; }
+    .kc-client-cell { display:flex; align-items:center; gap:10px; }
+    .kc-av { width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:700; color:#fff; flex-shrink:0; }
+    .kc-av.c1{background:linear-gradient(135deg,#c97b84,#a85560)}
+    .kc-av.c2{background:linear-gradient(135deg,#c8a040,#9a7020)}
+    .kc-av.c3{background:linear-gradient(135deg,#1565c0,#42a5f5)}
+    .kc-av.c4{background:linear-gradient(135deg,#2e7d32,#66bb6a)}
+    .kc-av.c5{background:linear-gradient(135deg,#6a1b9a,#ab47bc)}
+    .kc-cname { font-weight:600; font-size:13px; color:var(--ink); }
+    .kc-ctime { font-size:11px; color:var(--ink-3); }
+    .kc-status { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; }
+    .kc-status::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; }
+    .kc-status.done    { background:#e8f5e9; color:#2e7d32; }
+    .kc-status.pending { background:#fff8e1; color:#e65100; }
+    .kc-status.cancel  { background:#fce4ec; color:#c62828; }
 
-    .kc-sc-badge {
-      font-size: 11px; font-weight: 700; padding: 3px 9px;
-      border-radius: 20px;
-    }
-    .kc-sc-badge.up   { background: #e8f5e9; color: #2e7d32; }
-    .kc-sc-badge.down { background: #fce4ec; color: #c62828; }
+    /* Right column */
+    .kc-right-col { display:flex; flex-direction:column; gap:18px; }
 
-    .kc-sc-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px; font-weight: 700; color: var(--ink); line-height: 1;
-    }
-    .kc-sc-label { font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.5px; }
+    /* Donut */
+    .kc-donut-wrap { position:relative; width:130px; height:130px; margin:0 auto 18px; }
+    .kc-donut-wrap svg { transform:rotate(-90deg); }
+    .kc-donut-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .kc-donut-val { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:700; color:var(--ink); line-height:1; }
+    .kc-donut-lbl { font-size:9px; font-weight:700; color:var(--ink-3); margin-top:2px; letter-spacing:1px; }
+    .kc-donut-legend { display:flex; flex-direction:column; gap:8px; }
+    .kc-dl-row { display:flex; align-items:center; justify-content:space-between; font-size:12px; }
+    .kc-dl-label { display:flex; align-items:center; gap:8px; color:var(--ink-2); font-weight:500; }
+    .kc-dl-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+    .kc-dl-val { font-weight:700; color:var(--ink); font-size:11.5px; }
 
-    /* Two-column row */
-    .kc-two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; margin-bottom: 28px; }
-    @media(max-width:960px){ .kc-two-col{ grid-template-columns:1fr; } }
+    /* Staff */
+    .kc-staff-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); }
+    .kc-staff-row:last-child { border-bottom:none; padding-bottom:0; }
+    .kc-s-av { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#fff; flex-shrink:0; }
+    .kc-staff-info { flex:1; }
+    .kc-staff-name { font-size:13px; font-weight:600; color:var(--ink); }
+    .kc-staff-role { font-size:11px; color:var(--ink-3); }
+    .kc-staff-count { font-size:11px; font-weight:700; color:var(--gold-dk); background:var(--gold-lt); padding:3px 9px; border-radius:20px; white-space:nowrap; }
 
-    .kc-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 2px 16px rgba(24,18,15,0.06);
-      animation: fadeUp .45s ease both;
-    }
-    .kc-panel-head {
-      display: flex; align-items: center;
-      justify-content: space-between; margin-bottom: 18px;
-    }
-    .kc-panel-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 17px; font-weight: 700; color: var(--ink);
-    }
-    .kc-panel-action {
-      font-size: 12px; font-weight: 600; color: var(--rose);
-      text-decoration: none; transition: opacity .18s;
-    }
-    .kc-panel-action:hover { opacity: .72; }
+    /* Schedule */
+    .kc-sch-item { display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--border); }
+    .kc-sch-item:last-child { border-bottom:none; padding-bottom:0; }
+    .kc-sch-time { font-size:11px; font-weight:700; color:var(--ink-3); min-width:42px; padding-top:1px; text-align:right; }
+    .kc-sch-line { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+    .kc-sch-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; border:2px solid var(--surface); box-shadow:0 0 0 2px currentColor; margin-top:2px; }
+    .kc-sch-dot.done   { color:#2e7d32; background:#2e7d32; }
+    .kc-sch-dot.active { color:var(--gold); background:var(--gold); }
+    .kc-sch-dot.pend   { color:var(--ink-3); background:transparent; }
+    .kc-sch-conn { width:1px; flex:1; min-height:18px; background:var(--border); margin:2px 0; }
+    .kc-sch-body { flex:1; }
+    .kc-sch-name { font-size:13px; font-weight:600; color:var(--ink); }
+    .kc-sch-svc  { font-size:11.5px; color:var(--ink-3); margin-top:2px; }
 
-    /* Recent table */
-    .kc-mini-table { width: 100%; border-collapse: collapse; }
-    .kc-mini-table th {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .7px; color: var(--ink-3);
-      padding: 0 0 10px; text-align: left;
-    }
-    .kc-mini-table td {
-      padding: 10px 0; font-size: 13px; color: var(--ink-2);
-      border-top: 1px solid var(--border);
-    }
-    .kc-mini-table td:last-child { text-align: right; }
-    .kc-status {
-      display: inline-flex; align-items: center;
-      gap: 5px; font-size: 11.5px; font-weight: 600;
-      padding: 3px 10px; border-radius: 20px;
-    }
-    .kc-status.done    { background: #e8f5e9; color: #2e7d32; }
-    .kc-status.pending { background: #fff8e1; color: #e65100; }
-    .kc-status.cancel  { background: #fce4ec; color: #c62828; }
+    /* Bottom grid */
+    .kc-grid-bot { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-bottom:28px; }
+    @media(max-width:1100px){ .kc-grid-bot{ grid-template-columns:1fr 1fr; } }
+    @media(max-width:700px)  { .kc-grid-bot{ grid-template-columns:1fr; } }
 
-    /* Quick links */
-    .kc-quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .kc-quick-item {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 8px; padding: 16px 10px;
-      border: 1.5px solid var(--border); border-radius: 12px;
-      background: var(--surface-2); cursor: pointer;
-      text-decoration: none; transition: all .18s;
-    }
-    .kc-quick-item:hover { border-color: var(--rose); background: var(--rose-lt); }
-    .kc-quick-item i { font-size: 20px; color: var(--rose); }
-    .kc-quick-item span { font-size: 11.5px; font-weight: 600; color: var(--ink-2); }
+    /* Services */
+    .kc-svc-item { display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1px solid var(--border); }
+    .kc-svc-item:last-child { border-bottom:none; }
+    .kc-svc-rank { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:700; color:var(--border); min-width:22px; text-align:center; }
+    .kc-svc-info { flex:1; }
+    .kc-svc-name { font-size:13px; font-weight:600; color:var(--ink); }
+    .kc-svc-bar-wrap { height:4px; background:var(--border); border-radius:4px; margin-top:5px; }
+    .kc-svc-bar { height:100%; border-radius:4px; background:linear-gradient(90deg,#c8a040,#e8c060); }
+    .kc-svc-count { font-size:12px; font-weight:700; color:var(--ink-2); white-space:nowrap; }
+
+    /* Quick access */
+    .kc-quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .kc-quick-item { display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 10px; border:1.5px solid var(--border); border-radius:12px; background:var(--surface-2); cursor:pointer; text-decoration:none; transition:all .18s; }
+    .kc-quick-item:hover { border-color:var(--gold); background:var(--gold-lt); }
+    .kc-quick-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:15px; }
+    .kc-quick-item:hover .kc-quick-icon { background:rgba(200,160,64,.15) !important; color:var(--gold-dk) !important; }
+    .kc-quick-item span { font-size:11.5px; font-weight:600; color:var(--ink-2); }
+    .kc-quick-item:hover span { color:var(--gold-dk); }
+
+    /* Activity */
+    .kc-act-item { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(--border); }
+    .kc-act-item:last-child { border-bottom:none; }
+    .kc-act-icon { width:32px; height:32px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; }
+    .kc-act-icon.gold  { background:var(--gold-lt); color:var(--gold-dk); }
+    .kc-act-icon.rose  { background:var(--rose-lt); color:var(--rose-dk); }
+    .kc-act-icon.green { background:#e8f5e9; color:#2e7d32; }
+    .kc-act-icon.blue  { background:#e3f2fd; color:#1565c0; }
+    .kc-act-text { font-size:12.5px; color:var(--ink-2); line-height:1.45; }
+    .kc-act-text b { color:var(--ink); font-weight:600; }
+    .kc-act-time { font-size:10.5px; color:var(--ink-3); margin-top:2px; }
   </style>
 </head>
-
 <body>
-
-  <!-- ══ MAIN PANEL ══ -->
   <div class="main-panel">
-    <div class="kc-page">
+    <div class="kc-dash">
 
-      <!-- Greeting -->
-      <div class="kc-greeting">
-        <div>
-          <h2 class="kc-greeting-name">Welcome back, Admin 👋</h2>
-          <p class="kc-greeting-sub">Here's what's happening at KCOZM today.</p>
+      <!-- HERO -->
+      <div class="kc-hero kc-anim" style="animation-delay:.05s">
+        <div class="kc-hero-left">
+          <div class="kc-hero-eyebrow">Friday, 13 March 2026</div>
+          <h1 class="kc-hero-name">Good morning, <em>Admin</em> 👋</h1>
+          <p class="kc-hero-sub">KCOZM has 12 appointments scheduled today. Revenue is up 8.4% this week.</p>
         </div>
-        <div class="kc-greeting-actions">
-          <button class="kc-pill-btn"><i class="fa-solid fa-calendar-days"></i> Last 7 days</button>
-          <button class="kc-pill-btn"><i class="fa-solid fa-arrow-up-from-bracket"></i> Export</button>
+        <div class="kc-hero-right">
+          <button class="kc-hero-btn out"><i class="fa-solid fa-calendar-week"></i> This Week</button>
+          <button class="kc-hero-btn out"><i class="fa-solid fa-arrow-up-from-bracket"></i> Export</button>
+          <a href="pages/ui-features/appointments.html" class="kc-hero-btn solid"><i class="fa-solid fa-plus"></i> New Appointment</a>
         </div>
       </div>
 
-      <!-- Stat cards -->
-      <div class="kc-stats-row">
-        <div class="kc-stat-card">
-          <div class="kc-sc-top">
-            <div class="kc-sc-icon rose"><i class="fa-solid fa-calendar-check"></i></div>
-            <span class="kc-sc-badge up">↑ 12%</span>
-          </div>
-          <div class="kc-sc-value">284</div>
-          <div class="kc-sc-label">Appointments</div>
+      <!-- KPIs -->
+      <div class="kc-kpi-row">
+        <div class="kc-kpi gold kc-anim" style="animation-delay:.10s">
+          <div class="kc-kpi-head"><div class="kc-kpi-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div><span class="kc-kpi-badge up">↑ 8.4%</span></div>
+          <div class="kc-kpi-value">₹1.28L</div>
+          <div class="kc-kpi-label">Weekly Revenue</div>
+          <div class="kc-spark" id="sp0"></div>
         </div>
-        <div class="kc-stat-card">
-          <div class="kc-sc-top">
-            <div class="kc-sc-icon gold"><i class="fa-solid fa-indian-rupee-sign"></i></div>
-            <span class="kc-sc-badge up">↑ 8.4%</span>
-          </div>
-          <div class="kc-sc-value">₹1.2L</div>
-          <div class="kc-sc-label">Revenue</div>
+        <div class="kc-kpi rose kc-anim" style="animation-delay:.15s">
+          <div class="kc-kpi-head"><div class="kc-kpi-icon"><i class="fa-solid fa-calendar-check"></i></div><span class="kc-kpi-badge up">↑ 12%</span></div>
+          <div class="kc-kpi-value">284</div>
+          <div class="kc-kpi-label">Appointments</div>
+          <div class="kc-spark" id="sp1"></div>
         </div>
-        <div class="kc-stat-card">
-          <div class="kc-sc-top">
-            <div class="kc-sc-icon green"><i class="fa-solid fa-users"></i></div>
-            <span class="kc-sc-badge up">↑ 5%</span>
-          </div>
-          <div class="kc-sc-value">1,842</div>
-          <div class="kc-sc-label">Clients</div>
+        <div class="kc-kpi green kc-anim" style="animation-delay:.20s">
+          <div class="kc-kpi-head"><div class="kc-kpi-icon"><i class="fa-solid fa-users"></i></div><span class="kc-kpi-badge up">↑ 5%</span></div>
+          <div class="kc-kpi-value">1,842</div>
+          <div class="kc-kpi-label">Total Clients</div>
+          <div class="kc-spark" id="sp2"></div>
         </div>
-        <div class="kc-stat-card">
-          <div class="kc-sc-top">
-            <div class="kc-sc-icon blue"><i class="fa-solid fa-star"></i></div>
-            <span class="kc-sc-badge down">↓ 0.2</span>
-          </div>
-          <div class="kc-sc-value">4.8</div>
-          <div class="kc-sc-label">Avg Rating</div>
+        <div class="kc-kpi blue kc-anim" style="animation-delay:.25s">
+          <div class="kc-kpi-head"><div class="kc-kpi-icon"><i class="fa-solid fa-star"></i></div><span class="kc-kpi-badge up">↑ 0.3</span></div>
+          <div class="kc-kpi-value">4.8</div>
+          <div class="kc-kpi-label">Avg Rating</div>
+          <div class="kc-spark" id="sp3"></div>
         </div>
       </div>
 
-      <!-- Two-col -->
-      <div class="kc-two-col">
-        <!-- Recent appointments -->
-        <div class="kc-panel">
-          <div class="kc-panel-head">
-            <div class="kc-panel-title">Recent Appointments</div>
-            <a href="pages/ui-features/appointments.html" class="kc-panel-action">View all →</a>
+      <!-- MAIN GRID -->
+      <div class="kc-grid-main">
+
+        <!-- Revenue chart -->
+        <div class="kc-card kc-anim" style="animation-delay:.28s">
+          <div class="kc-card-head">
+            <div class="kc-card-title">Revenue Overview</div>
+            <div class="kc-tabs">
+              <button class="kc-tab active" onclick="switchTab(this,'7d')">7D</button>
+              <button class="kc-tab" onclick="switchTab(this,'30d')">30D</button>
+              <button class="kc-tab" onclick="switchTab(this,'90d')">90D</button>
+            </div>
           </div>
-          <table class="kc-mini-table">
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Service</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+          <div class="kc-rev-chart"><canvas id="revCanvas" class="kc-rev-canvas"></canvas></div>
+          <div class="kc-rev-legend">
+            <div class="kc-rev-leg-item"><div class="kc-rev-leg-dot" style="background:#c8a040"></div>This week</div>
+            <div class="kc-rev-leg-item"><div class="kc-rev-leg-dot" style="background:#ddd6cc"></div>Last week</div>
+            <div class="kc-rev-leg-item" style="margin-left:auto;font-weight:700;color:var(--ink)">₹1,28,400 total</div>
+          </div>
+        </div>
+
+        <!-- Appointments -->
+        <div class="kc-card kc-anim" style="animation-delay:.32s">
+          <div class="kc-card-head">
+            <div class="kc-card-title">Recent Appointments</div>
+            <a href="pages/ui-features/appointments.html" class="kc-card-link">View all →</a>
+          </div>
+          <table class="kc-appt-table">
+            <thead><tr><th>Client</th><th>Service</th><th>Status</th></tr></thead>
             <tbody>
-              <tr>
-                <td>Priya Singh</td>
-                <td>Bridal Makeup</td>
-                <td>13 Mar</td>
-                <td><span class="kc-status done">Completed</span></td>
-              </tr>
-              <tr>
-                <td>Neha Sharma</td>
-                <td>Hair Styling</td>
-                <td>13 Mar</td>
-                <td><span class="kc-status pending">Pending</span></td>
-              </tr>
-              <tr>
-                <td>Aarti Patel</td>
-                <td>Facial</td>
-                <td>14 Mar</td>
-                <td><span class="kc-status pending">Pending</span></td>
-              </tr>
-              <tr>
-                <td>Meera Joshi</td>
-                <td>Saree Draping</td>
-                <td>12 Mar</td>
-                <td><span class="kc-status done">Completed</span></td>
-              </tr>
-              <tr>
-                <td>Sunita Rao</td>
-                <td>Nail Art</td>
-                <td>11 Mar</td>
-                <td><span class="kc-status cancel">Cancelled</span></td>
-              </tr>
+              <tr><td><div class="kc-client-cell"><div class="kc-av c1">PS</div><div><div class="kc-cname">Priya Singh</div><div class="kc-ctime">10:00 AM</div></div></div></td><td>Bridal Makeup</td><td><span class="kc-status done">Completed</span></td></tr>
+              <tr><td><div class="kc-client-cell"><div class="kc-av c2">NS</div><div><div class="kc-cname">Neha Sharma</div><div class="kc-ctime">11:30 AM</div></div></div></td><td>Hair Styling</td><td><span class="kc-status pending">Pending</span></td></tr>
+              <tr><td><div class="kc-client-cell"><div class="kc-av c3">AP</div><div><div class="kc-cname">Aarti Patel</div><div class="kc-ctime">1:00 PM</div></div></div></td><td>Facial &amp; Cleanup</td><td><span class="kc-status pending">Pending</span></td></tr>
+              <tr><td><div class="kc-client-cell"><div class="kc-av c4">MJ</div><div><div class="kc-cname">Meera Joshi</div><div class="kc-ctime">3:30 PM</div></div></div></td><td>Saree Draping</td><td><span class="kc-status done">Completed</span></td></tr>
+              <tr><td><div class="kc-client-cell"><div class="kc-av c5">SR</div><div><div class="kc-cname">Sunita Rao</div><div class="kc-ctime">5:00 PM</div></div></div></td><td>Nail Art</td><td><span class="kc-status cancel">Cancelled</span></td></tr>
             </tbody>
           </table>
         </div>
 
-        <!-- Quick links -->
-        <div class="kc-panel">
-          <div class="kc-panel-head">
-            <div class="kc-panel-title">Quick Access</div>
+        <!-- Right col spans 2 rows -->
+        <div class="kc-right-col" style="grid-row:1/span 2">
+
+          <!-- Revenue split -->
+          <div class="kc-card kc-anim" style="animation-delay:.30s">
+            <div class="kc-card-head"><div class="kc-card-title">Revenue Split</div><span style="font-size:11px;color:var(--ink-3)">This week</span></div>
+            <div class="kc-donut-wrap">
+              <svg viewBox="0 0 100 100" width="130" height="130">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#ebe5de" stroke-width="12"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#c8a040" stroke-width="12" stroke-dasharray="90.7 148.4" stroke-dashoffset="0" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#c97b84" stroke-width="12" stroke-dasharray="69.2 169.9" stroke-dashoffset="-91.7" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#1565c0" stroke-width="12" stroke-dasharray="47.7 191.4" stroke-dashoffset="-161.9" stroke-linecap="round"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#d0ccc8" stroke-width="12" stroke-dasharray="31.0 208.1" stroke-dashoffset="-210.6" stroke-linecap="round"/>
+              </svg>
+              <div class="kc-donut-center"><div class="kc-donut-val">₹1.28L</div><div class="kc-donut-lbl">TOTAL</div></div>
+            </div>
+            <div class="kc-donut-legend">
+              <div class="kc-dl-row"><div class="kc-dl-label"><div class="kc-dl-dot" style="background:#c8a040"></div>Bridal</div><div class="kc-dl-val">38% · ₹48,600</div></div>
+              <div class="kc-dl-row"><div class="kc-dl-label"><div class="kc-dl-dot" style="background:#c97b84"></div>Services</div><div class="kc-dl-val">29% · ₹37,200</div></div>
+              <div class="kc-dl-row"><div class="kc-dl-label"><div class="kc-dl-dot" style="background:#1565c0"></div>Products</div><div class="kc-dl-val">20% · ₹25,600</div></div>
+              <div class="kc-dl-row"><div class="kc-dl-label"><div class="kc-dl-dot" style="background:#d0ccc8"></div>Other</div><div class="kc-dl-val">13% · ₹17,000</div></div>
+            </div>
           </div>
-          <div class="kc-quick-grid">
-            <a class="kc-quick-item" href="pages/ui-features/bridal_tabel.html">
-              <i class="fa-solid fa-heart"></i>
-              <span>Bridal</span>
-            </a>
-            <a class="kc-quick-item" href="pages/ui-features/service.html">
-              <i class="fa-solid fa-scissors"></i>
-              <span>Services</span>
-            </a>
-            <a class="kc-quick-item" href="pages/ui-features/e_shop.html">
-              <i class="fa-solid fa-bottle-droplet"></i>
-              <span>Products</span>
-            </a>
-            <a class="kc-quick-item" href="pages/ui-features/contact_admin.html">
-              <i class="fa-solid fa-phone"></i>
-              <span>Contact</span>
-            </a>
-            <a class="kc-quick-item" href="pages/ui-features/Offers_new.html">
-              <i class="fa-solid fa-tag"></i>
-              <span>Offers</span>
-            </a>
-            <a class="kc-quick-item" href="pages/ui-features/franchise_new_tabel.html">
-              <i class="fa-solid fa-store"></i>
-              <span>Franchise</span>
-            </a>
+
+          <!-- Staff on duty -->
+          <div class="kc-card kc-anim" style="animation-delay:.34s">
+            <div class="kc-card-head"><div class="kc-card-title">Staff On Duty</div><a href="pages/ui-features/staff.html" class="kc-card-link">Manage →</a></div>
+            <div class="kc-staff-row"><div class="kc-s-av" style="background:linear-gradient(135deg,#c8a040,#9a7020)">RK</div><div class="kc-staff-info"><div class="kc-staff-name">Rekha Kaur</div><div class="kc-staff-role">Sr. Makeup Artist</div></div><span class="kc-staff-count">4 appts</span></div>
+            <div class="kc-staff-row"><div class="kc-s-av" style="background:linear-gradient(135deg,#c97b84,#a85560)">SM</div><div class="kc-staff-info"><div class="kc-staff-name">Sunita Mehta</div><div class="kc-staff-role">Hair Stylist</div></div><span class="kc-staff-count">3 appts</span></div>
+            <div class="kc-staff-row"><div class="kc-s-av" style="background:linear-gradient(135deg,#1565c0,#42a5f5)">PD</div><div class="kc-staff-info"><div class="kc-staff-name">Pooja Devi</div><div class="kc-staff-role">Beautician</div></div><span class="kc-staff-count">3 appts</span></div>
+            <div class="kc-staff-row"><div class="kc-s-av" style="background:linear-gradient(135deg,#2e7d32,#66bb6a)">AV</div><div class="kc-staff-info"><div class="kc-staff-name">Anita Verma</div><div class="kc-staff-role">Nail Artist</div></div><span class="kc-staff-count">2 appts</span></div>
           </div>
         </div>
-      </div>
 
-    </div><!-- /kc-page -->
+        <!-- Today's schedule -->
+        <div class="kc-card kc-anim" style="animation-delay:.36s">
+          <div class="kc-card-head"><div class="kc-card-title">Today's Schedule</div><a href="pages/ui-features/appointments.html" class="kc-card-link">Full view →</a></div>
+          <div class="kc-sch-item"><div class="kc-sch-time">9:00</div><div class="kc-sch-line"><div class="kc-sch-dot done"></div><div class="kc-sch-conn"></div></div><div class="kc-sch-body"><div class="kc-sch-name">Bridal Trial — Ritu S.</div><div class="kc-sch-svc">Full bridal makeup · Rekha Kaur</div></div></div>
+          <div class="kc-sch-item"><div class="kc-sch-time">10:30</div><div class="kc-sch-line"><div class="kc-sch-dot done"></div><div class="kc-sch-conn"></div></div><div class="kc-sch-body"><div class="kc-sch-name">Hair Colour — Priya M.</div><div class="kc-sch-svc">Global colour + toner · Sunita Mehta</div></div></div>
+          <div class="kc-sch-item"><div class="kc-sch-time">12:00</div><div class="kc-sch-line"><div class="kc-sch-dot active"></div><div class="kc-sch-conn"></div></div><div class="kc-sch-body"><div class="kc-sch-name">Facial — Aarti P.</div><div class="kc-sch-svc">Gold facial · Pooja Devi &nbsp;<span style="font-size:10px;color:var(--gold);font-weight:700">● LIVE</span></div></div></div>
+          <div class="kc-sch-item"><div class="kc-sch-time">2:00</div><div class="kc-sch-line"><div class="kc-sch-dot pend"></div><div class="kc-sch-conn"></div></div><div class="kc-sch-body"><div class="kc-sch-name">Nail Art — Kavya R.</div><div class="kc-sch-svc">French gel + nail art · Anita Verma</div></div></div>
+          <div class="kc-sch-item"><div class="kc-sch-time">4:30</div><div class="kc-sch-line"><div class="kc-sch-dot pend"></div></div><div class="kc-sch-body"><div class="kc-sch-name">Saree Draping — Meena J.</div><div class="kc-sch-svc">Traditional draping · Rekha Kaur</div></div></div>
+        </div>
+
+      </div><!-- /grid-main -->
+
+      <!-- BOTTOM GRID -->
+      <div class="kc-grid-bot">
+
+        <!-- Top services -->
+        <div class="kc-card kc-anim" style="animation-delay:.38s">
+          <div class="kc-card-head"><div class="kc-card-title">Top Services</div><a href="pages/ui-features/service.html" class="kc-card-link">All →</a></div>
+          <div class="kc-svc-item"><div class="kc-svc-rank">01</div><div class="kc-svc-info"><div class="kc-svc-name">Bridal Makeup</div><div class="kc-svc-bar-wrap"><div class="kc-svc-bar" style="width:88%"></div></div></div><div class="kc-svc-count">88</div></div>
+          <div class="kc-svc-item"><div class="kc-svc-rank">02</div><div class="kc-svc-info"><div class="kc-svc-name">Hair Styling</div><div class="kc-svc-bar-wrap"><div class="kc-svc-bar" style="width:72%"></div></div></div><div class="kc-svc-count">72</div></div>
+          <div class="kc-svc-item"><div class="kc-svc-rank">03</div><div class="kc-svc-info"><div class="kc-svc-name">Facial &amp; Cleanup</div><div class="kc-svc-bar-wrap"><div class="kc-svc-bar" style="width:58%"></div></div></div><div class="kc-svc-count">58</div></div>
+          <div class="kc-svc-item"><div class="kc-svc-rank">04</div><div class="kc-svc-info"><div class="kc-svc-name">Nail Art</div><div class="kc-svc-bar-wrap"><div class="kc-svc-bar" style="width:44%"></div></div></div><div class="kc-svc-count">44</div></div>
+          <div class="kc-svc-item"><div class="kc-svc-rank">05</div><div class="kc-svc-info"><div class="kc-svc-name">Saree Draping</div><div class="kc-svc-bar-wrap"><div class="kc-svc-bar" style="width:30%"></div></div></div><div class="kc-svc-count">30</div></div>
+        </div>
+
+        <!-- Quick access -->
+        <div class="kc-card kc-anim" style="animation-delay:.40s">
+          <div class="kc-card-head"><div class="kc-card-title">Quick Access</div></div>
+          <div class="kc-quick-grid">
+            <a class="kc-quick-item" href="pages/ui-features/bridal_tabel.html"><div class="kc-quick-icon" style="background:var(--rose-lt);color:var(--rose-dk)"><i class="fa-solid fa-heart"></i></div><span>Bridal</span></a>
+            <a class="kc-quick-item" href="pages/ui-features/service.html"><div class="kc-quick-icon" style="background:var(--gold-lt);color:var(--gold-dk)"><i class="fa-solid fa-scissors"></i></div><span>Services</span></a>
+            <a class="kc-quick-item" href="pages/ui-features/e_shop.html"><div class="kc-quick-icon" style="background:#e3f2fd;color:#1565c0"><i class="fa-solid fa-bottle-droplet"></i></div><span>Products</span></a>
+            <a class="kc-quick-item" href="pages/ui-features/Offers_new.html"><div class="kc-quick-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fa-solid fa-tag"></i></div><span>Offers</span></a>
+            <a class="kc-quick-item" href="pages/ui-features/franchise_new_tabel.html"><div class="kc-quick-icon" style="background:var(--gold-lt);color:var(--gold-dk)"><i class="fa-solid fa-store"></i></div><span>Franchise</span></a>
+            <a class="kc-quick-item" href="pages/ui-features/contact_admin.html"><div class="kc-quick-icon" style="background:var(--rose-lt);color:var(--rose-dk)"><i class="fa-solid fa-phone"></i></div><span>Contact</span></a>
+          </div>
+        </div>
+
+        <!-- Activity feed -->
+        <div class="kc-card kc-anim" style="animation-delay:.42s">
+          <div class="kc-card-head"><div class="kc-card-title">Live Activity</div></div>
+          <div class="kc-act-item"><div class="kc-act-icon gold"><i class="fa-solid fa-calendar-plus"></i></div><div><div class="kc-act-text"><b>New booking</b> — Kavya R. booked Nail Art for 2:00 PM</div><div class="kc-act-time">5 minutes ago</div></div></div>
+          <div class="kc-act-item"><div class="kc-act-icon rose"><i class="fa-solid fa-star"></i></div><div><div class="kc-act-text"><b>5★ Review</b> — "Absolutely loved the bridal experience!"</div><div class="kc-act-time">22 minutes ago</div></div></div>
+          <div class="kc-act-item"><div class="kc-act-icon green"><i class="fa-solid fa-cart-shopping"></i></div><div><div class="kc-act-text"><b>Order #0421</b> — Hair serum ×2, Face mask ×1</div><div class="kc-act-time">1 hour ago</div></div></div>
+          <div class="kc-act-item"><div class="kc-act-icon blue"><i class="fa-solid fa-user-plus"></i></div><div><div class="kc-act-text"><b>New client</b> — Deepa Nair registered via website</div><div class="kc-act-time">2 hours ago</div></div></div>
+          <div class="kc-act-item"><div class="kc-act-icon gold"><i class="fa-solid fa-circle-check"></i></div><div><div class="kc-act-text"><b>Completed</b> — Meera J. · Saree Draping</div><div class="kc-act-time">3 hours ago</div></div></div>
+        </div>
+
+      </div><!-- /grid-bot -->
+    </div><!-- /kc-dash -->
   </div><!-- /main-panel -->
 
-  <!-- Shared Components -->
   <script src="js/shared-components.js"></script>
   <script>
-    KcozmAdmin.init({
-      activePage : 'dashboard',
-      depth      : './'
-    });
-  </script>
+    KcozmAdmin.init({ activePage:'dashboard', depth:'./' });
 
+    /* Tab switch */
+    function switchTab(el, period) {
+      el.closest('.kc-tabs').querySelectorAll('.kc-tab').forEach(function(t){ t.classList.remove('active'); });
+      el.classList.add('active');
+    }
+
+    /* Sparklines */
+    var sparks = {
+      sp0: [55,72,60,85,78,90,100],
+      sp1: [40,65,55,80,70,88,95],
+      sp2: [60,68,72,75,80,85,90],
+      sp3: [80,75,82,78,85,88,90]
+    };
+    Object.keys(sparks).forEach(function(id){
+      var wrap = document.getElementById(id);
+      if(!wrap) return;
+      var vals = sparks[id], max = Math.max.apply(null,vals);
+      vals.forEach(function(v,i){
+        var b = document.createElement('div');
+        b.className = 'kc-spark-bar' + (i===vals.length-1?' hi':'');
+        b.style.height = Math.round(v/max*100)+'%';
+        wrap.appendChild(b);
+      });
+    });
+
+    /* Revenue canvas chart */
+    (function(){
+      var canvas = document.getElementById('revCanvas');
+      if(!canvas) return;
+      var dpr = window.devicePixelRatio||1;
+      var W = canvas.offsetWidth, H = canvas.offsetHeight;
+      canvas.width = W*dpr; canvas.height = H*dpr;
+      var ctx = canvas.getContext('2d');
+      ctx.scale(dpr,dpr);
+
+      var tw = [12000,18500,14200,22000,19800,26000,16400];
+      var lw = [10000,15000,12000,18000,17000,21000,14000];
+      var labels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      var pad = {t:12,r:8,b:26,l:38};
+      var cW = W-pad.l-pad.r, cH = H-pad.t-pad.b, maxV = 30000;
+      var step = cW/(tw.length-1);
+      function xAt(i){ return pad.l+i*step; }
+      function yAt(v){ return pad.t+cH-(v/maxV)*cH; }
+
+      /* Grid */
+      [0,.25,.5,.75,1].forEach(function(f){
+        var y = pad.t+cH*f;
+        ctx.strokeStyle='rgba(235,229,222,0.9)'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cW,y); ctx.stroke();
+        ctx.fillStyle='rgba(144,120,96,0.55)';
+        ctx.font='10px DM Sans,sans-serif'; ctx.textAlign='right';
+        ctx.fillText('₹'+((maxV*(1-f))/1000).toFixed(0)+'k',pad.l-5,y+3.5);
+      });
+
+      /* Last week fill */
+      var fl = ctx.createLinearGradient(0,pad.t,0,pad.t+cH);
+      fl.addColorStop(0,'rgba(220,210,200,.35)'); fl.addColorStop(1,'rgba(220,210,200,.02)');
+      ctx.beginPath(); ctx.moveTo(xAt(0),yAt(lw[0]));
+      lw.forEach(function(v,i){ if(i>0) ctx.lineTo(xAt(i),yAt(v)); });
+      ctx.lineTo(xAt(lw.length-1),pad.t+cH); ctx.lineTo(xAt(0),pad.t+cH); ctx.closePath();
+      ctx.fillStyle=fl; ctx.fill();
+
+      /* This week fill */
+      var ft = ctx.createLinearGradient(0,pad.t,0,pad.t+cH);
+      ft.addColorStop(0,'rgba(200,160,64,.28)'); ft.addColorStop(1,'rgba(200,160,64,.02)');
+      ctx.beginPath(); ctx.moveTo(xAt(0),yAt(tw[0]));
+      tw.forEach(function(v,i){ if(i>0) ctx.lineTo(xAt(i),yAt(v)); });
+      ctx.lineTo(xAt(tw.length-1),pad.t+cH); ctx.lineTo(xAt(0),pad.t+cH); ctx.closePath();
+      ctx.fillStyle=ft; ctx.fill();
+
+      /* Last week line */
+      ctx.beginPath();
+      lw.forEach(function(v,i){ i===0?ctx.moveTo(xAt(i),yAt(v)):ctx.lineTo(xAt(i),yAt(v)); });
+      ctx.strokeStyle='#ccc6be'; ctx.lineWidth=1.8; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+
+      /* This week line */
+      ctx.beginPath();
+      tw.forEach(function(v,i){ i===0?ctx.moveTo(xAt(i),yAt(v)):ctx.lineTo(xAt(i),yAt(v)); });
+      ctx.strokeStyle='#c8a040'; ctx.lineWidth=2.5; ctx.stroke();
+
+      /* Dots */
+      tw.forEach(function(v,i){
+        ctx.beginPath(); ctx.arc(xAt(i),yAt(v),3.5,0,Math.PI*2);
+        ctx.fillStyle='#fff'; ctx.fill();
+        ctx.strokeStyle='#c8a040'; ctx.lineWidth=2; ctx.stroke();
+      });
+
+      /* X labels */
+      ctx.fillStyle='rgba(144,120,96,.65)';
+      ctx.font='10px DM Sans,sans-serif'; ctx.textAlign='center';
+      labels.forEach(function(l,i){ ctx.fillText(l,xAt(i),pad.t+cH+18); });
+    })();
+  </script>
 </body>
 </html>
