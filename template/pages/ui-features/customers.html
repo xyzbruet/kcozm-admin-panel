@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Customers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
+      --pk:#e91e63; --pk-dk:#c2185b; --pk-lt:#fce4ec;
+      --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060;
+      --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
+      --r-sm:8px; --r-md:14px; --r-lg:20px;
+      --shadow:0 2px 24px rgba(26,18,8,.08); --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
+
+    .main-panel{min-width:0;overflow-x:hidden}
+    .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
+
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+    /* Breadcrumb */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i{font-size:10px}
+
+    /* Stats */
+    .kc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    @media(max-width:900px){.kc-stats{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.kc-stats{grid-template-columns:1fr}}
+    .kc-stat{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);padding:20px 22px;animation:fadeUp .45s ease both;position:relative;overflow:hidden}
+    .kc-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+    .kc-stat:nth-child(1)::before{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
+    .kc-stat:nth-child(2)::before{background:linear-gradient(90deg,#4caf50,#2e7d32)}
+    .kc-stat:nth-child(3)::before{background:linear-gradient(90deg,var(--pk),var(--pk-dk))}
+    .kc-stat:nth-child(4)::before{background:linear-gradient(90deg,#2196f3,#1565c0)}
+    .kc-stat-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:10px}
+    .kc-stat-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--ink);line-height:1}
+    .kc-stat-sub{display:flex;align-items:center;gap:5px;margin-top:8px;font-size:12px}
+    .kc-stat-up{color:#2e7d32;font-weight:600}
+    .kc-stat-dn{color:var(--pk-dk);font-weight:600}
+    .kc-stat-icon{position:absolute;right:18px;top:18px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+    .kc-stat:nth-child(1) .kc-stat-icon{background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-stat:nth-child(2) .kc-stat-icon{background:#e8f5e9;color:#2e7d32}
+    .kc-stat:nth-child(3) .kc-stat-icon{background:var(--pk-lt);color:var(--pk-dk)}
+    .kc-stat:nth-child(4) .kc-stat-icon{background:#e3f2fd;color:#1565c0}
+
+    /* Card */
+    .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .5s .05s ease both;margin-bottom:28px}
+    .kc-card-head{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .kc-head-left{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
+    .kc-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--gold-glow);transition:transform var(--t),box-shadow var(--t);white-space:nowrap;text-decoration:none}
+    .kc-btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
+    .kc-btn-out{padding:9px 18px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--t);white-space:nowrap}
+    .kc-btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+
+    /* Toolbar */
+    .kc-toolbar{padding:14px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface-2)}
+    .kc-search-wrap{position:relative;flex:1;min-width:200px;max-width:320px}
+    .kc-search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
+    .kc-search{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;transition:all var(--t)}
+    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+    .kc-search::placeholder{color:var(--ink-3)}
+    .kc-filter-tabs{display:flex;gap:4px}
+    .kc-ftab{padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);font-size:12.5px;font-weight:600;color:var(--ink-3);cursor:pointer;background:var(--surface);transition:all var(--t);white-space:nowrap}
+    .kc-ftab.active,.kc-ftab:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-sort-select{padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-2);background:var(--surface);outline:none;cursor:pointer;transition:border-color var(--t)}
+    .kc-sort-select:focus{border-color:var(--gold)}
+
+    /* Table */
+    .kc-tbl-wrap{overflow-x:auto}
+    table.kc-tbl{width:100%;border-collapse:collapse}
+    .kc-tbl th{padding:12px 20px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
+    .kc-tbl th:first-child{padding-left:26px}
+    .kc-tbl th:last-child{padding-right:26px;text-align:right}
+    .kc-tbl td{padding:14px 20px;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--ink-2);vertical-align:middle;transition:background var(--t)}
+    .kc-tbl td:first-child{padding-left:26px}
+    .kc-tbl td:last-child{padding-right:26px;text-align:right}
+    .kc-tbl tr:last-child td{border-bottom:none}
+    .kc-tbl tbody tr:hover td{background:#fdf8f0;cursor:pointer}
+
+    /* Customer cell */
+    .kc-cust{display:flex;align-items:center;gap:12px}
+    .kc-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff}
+    .kc-cust-name{font-weight:600;color:var(--ink);font-size:14px}
+    .kc-cust-email{font-size:12px;color:var(--ink-3);margin-top:2px}
+
+    /* Badge */
+    .kc-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;font-size:11.5px;font-weight:600}
+    .kc-badge.vip   {background:#fff8e1;color:#f57f17}
+    .kc-badge.active{background:#e8f5e9;color:#2e7d32}
+    .kc-badge.new   {background:var(--pk-lt);color:var(--pk-dk)}
+    .kc-badge.idle  {background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)}
+
+    /* Rating */
+    .kc-rating{display:flex;align-items:center;gap:4px}
+    .kc-rating .stars{color:var(--gold);font-size:12px}
+    .kc-rating span{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+
+    /* Row actions */
+    .kc-row-actions{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+    .kc-row-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:13px;transition:all var(--t)}
+    .kc-row-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-row-btn.danger:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+
+    /* Pagination */
+    .kc-pag{padding:16px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .kc-pag-info{font-size:13px;color:var(--ink-3)}
+    .kc-pag-btns{display:flex;gap:4px}
+    .kc-pag-btn{min-width:34px;height:34px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all var(--t)}
+    .kc-pag-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-pag-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border-color:transparent}
+
+    /* Customer drawer */
+    .kc-drawer-ov{display:none;position:fixed;inset:0;background:rgba(26,18,8,.55);z-index:2000;backdrop-filter:blur(3px)}
+    .kc-drawer-ov.show{display:block}
+    .kc-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,95vw);background:var(--surface);box-shadow:-8px 0 50px rgba(26,18,8,.18);z-index:2001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
+    .kc-drawer.show{transform:translateX(0)}
+    .kc-drawer-head{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .kc-drawer-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--ink)}
+    .kc-drawer-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
+    .kc-drawer-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+    .kc-drawer-body{flex:1;overflow-y:auto;padding:22px}
+    .kc-drawer-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fff}
+    .kc-drawer-name{text-align:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-drawer-sub{text-align:center;font-size:13px;color:var(--ink-3);margin-top:4px}
+    .kc-drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+    .kc-ds{background:var(--surface-2);border-radius:var(--r-md);padding:14px;text-align:center;border:1px solid var(--border)}
+    .kc-ds-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-ds-lbl{font-size:11px;color:var(--ink-3);margin-top:4px}
+    .kc-drawer-sec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin:18px 0 10px}
+    .kc-drawer-info-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .kc-drawer-info-row:last-child{border-bottom:none}
+    .kc-di-icon{width:34px;height:34px;border-radius:8px;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;color:var(--gold-dk);font-size:13px;flex-shrink:0}
+    .kc-di-lbl{font-size:11px;color:var(--ink-3)}
+    .kc-di-val{font-size:13.5px;font-weight:600;color:var(--ink)}
+    .kc-hist-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .kc-hist-item:last-child{border-bottom:none}
+    .kc-hist-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+    .kc-hist-svc{font-size:13.5px;font-weight:600;color:var(--ink);flex:1}
+    .kc-hist-date{font-size:12px;color:var(--ink-3)}
+    .kc-hist-amt{font-size:13px;font-weight:700;color:var(--gold-dk)}
+    .kc-drawer-footer{padding:16px 22px;border-top:1px solid var(--border);display:flex;gap:10px}
+  </style>
+</head>
+<body>
+
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span>Customers</span>
+      </nav>
+
+      <!-- Stats -->
+      <div class="kc-stats">
+        <div class="kc-stat" style="animation-delay:.0s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-users"></i></div>
+          <div class="kc-stat-label">Total Customers</div>
+          <div class="kc-stat-val">1,842</div>
+          <div class="kc-stat-sub"><span class="kc-stat-up"><i class="fa-solid fa-arrow-up"></i> 5%</span> <span style="color:var(--ink-3)">vs last month</span></div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.07s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-user-check"></i></div>
+          <div class="kc-stat-label">Active This Month</div>
+          <div class="kc-stat-val">364</div>
+          <div class="kc-stat-sub"><span class="kc-stat-up"><i class="fa-solid fa-arrow-up"></i> 12%</span> <span style="color:var(--ink-3)">returning</span></div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.14s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-crown"></i></div>
+          <div class="kc-stat-label">VIP Members</div>
+          <div class="kc-stat-val">87</div>
+          <div class="kc-stat-sub"><span class="kc-stat-up"><i class="fa-solid fa-arrow-up"></i> 3</span> <span style="color:var(--ink-3)">new this week</span></div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.21s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-user-plus"></i></div>
+          <div class="kc-stat-label">New This Month</div>
+          <div class="kc-stat-val">48</div>
+          <div class="kc-stat-sub"><span class="kc-stat-dn"><i class="fa-solid fa-arrow-down"></i> 2%</span> <span style="color:var(--ink-3)">vs last month</span></div>
+        </div>
+      </div>
+
+      <!-- Main card -->
+      <div class="kc-card">
+        <div class="kc-card-head">
+          <div class="kc-head-left">
+            <div class="kc-icon-wrap"><i class="fa-solid fa-users"></i></div>
+            <div class="kc-title">Customers <small>Manage your salon clients</small></div>
+          </div>
+          <div class="kc-head-right">
+            <button class="kc-btn-out"><i class="fa-solid fa-file-export"></i> Export</button>
+            <button class="kc-btn-gold" onclick="openDrawer('new')"><i class="fa-solid fa-plus"></i> Add Customer</button>
+          </div>
+        </div>
+
+        <div class="kc-toolbar">
+          <div class="kc-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="kc-search" placeholder="Search customers…" oninput="filterTable(this.value)">
+          </div>
+          <div class="kc-filter-tabs">
+            <button class="kc-ftab active" onclick="setFilter(this,'all')">All</button>
+            <button class="kc-ftab" onclick="setFilter(this,'vip')">VIP</button>
+            <button class="kc-ftab" onclick="setFilter(this,'active')">Active</button>
+            <button class="kc-ftab" onclick="setFilter(this,'new')">New</button>
+          </div>
+          <select class="kc-sort-select" onchange="sortTable(this.value)">
+            <option value="name">Sort by Name</option>
+            <option value="visits">Most Visits</option>
+            <option value="spend">Highest Spend</option>
+            <option value="recent">Most Recent</option>
+          </select>
+        </div>
+
+        <div class="kc-tbl-wrap">
+          <table class="kc-tbl">
+            <thead>
+              <tr>
+                <th>#</th><th>Customer</th><th>Phone</th><th>Status</th>
+                <th>Visits</th><th>Total Spend</th><th>Rating</th><th>Last Visit</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="custTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="kc-pag">
+          <div class="kc-pag-info" id="pagInfo">Showing 1–10 of 32</div>
+          <div class="kc-pag-btns">
+            <button class="kc-pag-btn">‹</button>
+            <button class="kc-pag-btn active">1</button>
+            <button class="kc-pag-btn">2</button>
+            <button class="kc-pag-btn">3</button>
+            <button class="kc-pag-btn">4</button>
+            <button class="kc-pag-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /kc-page-content -->
+  </div><!-- /main-panel -->
+
+  <!-- Customer Detail Drawer -->
+  <div class="kc-drawer-ov" id="drawerOv" onclick="closeDrawer()"></div>
+  <div class="kc-drawer" id="drawer">
+    <div class="kc-drawer-head">
+      <div class="kc-drawer-title" id="drawerTitle">Customer Profile</div>
+      <button class="kc-drawer-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="kc-drawer-body" id="drawerBody"></div>
+    <div class="kc-drawer-footer">
+      <button class="kc-btn-gold" style="flex:1"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</button>
+      <button class="kc-btn-out"><i class="fa-solid fa-pen"></i> Edit</button>
+    </div>
+  </div>
+
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({ activePage:'customers', pageTitle:'Customers', depth:'../../' });
+
+    const AVATARS=['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5','#795548','#607d8b'];
+    const CUSTOMERS=[
+      {id:1, name:'Priya Sharma',   email:'priya.sharma@gmail.com',  phone:'+91 98201 11234',status:'vip',   visits:24,spend:'₹48,200',rating:5.0,last:'2 days ago',  city:'Pune'},
+      {id:2, name:'Ananya Singh',   email:'ananya.s@outlook.com',    phone:'+91 90001 22345',status:'active',visits:18,spend:'₹32,500',rating:4.8,last:'1 week ago',  city:'Mumbai'},
+      {id:3, name:'Meera Kapoor',   email:'meera.k@gmail.com',       phone:'+91 99201 33456',status:'vip',   visits:31,spend:'₹62,800',rating:5.0,last:'3 days ago',  city:'Pune'},
+      {id:4, name:'Ritika Joshi',   email:'ritika.j@yahoo.com',      phone:'+91 88001 44567',status:'new',   visits:2, spend:'₹3,400', rating:4.5,last:'5 days ago',  city:'Nagpur'},
+      {id:5, name:'Kavya Nair',     email:'kavya.nair@gmail.com',    phone:'+91 77201 55678',status:'active',visits:12,spend:'₹21,600',rating:4.7,last:'2 weeks ago', city:'Pune'},
+      {id:6, name:'Deepa Menon',    email:'deepa.m@gmail.com',       phone:'+91 91101 66789',status:'idle',  visits:5, spend:'₹8,900', rating:4.2,last:'2 months ago',city:'Mumbai'},
+      {id:7, name:'Sunita Verma',   email:'sunita.v@gmail.com',      phone:'+91 80001 77890',status:'vip',   visits:28,spend:'₹55,400',rating:4.9,last:'4 days ago',  city:'Hyderabad'},
+      {id:8, name:'Pallavi Desai',  email:'pallavi.d@outlook.com',   phone:'+91 99001 88901',status:'active',visits:9, spend:'₹16,200',rating:4.6,last:'1 week ago',  city:'Pune'},
+      {id:9, name:'Nandita Rao',    email:'nandita.r@gmail.com',     phone:'+91 78001 99012',status:'new',   visits:1, spend:'₹1,800', rating:4.0,last:'1 day ago',   city:'Bangalore'},
+      {id:10,name:'Shalini Iyer',   email:'shalini.i@gmail.com',     phone:'+91 92001 10123',status:'active',visits:15,spend:'₹27,300',rating:4.8,last:'3 days ago',  city:'Mumbai'},
+    ];
+
+    function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
+    function starStr(r){let s='';for(let i=0;i<5;i++)s+=i<Math.floor(r)?'★':'☆';return s}
+    function badgeHtml(st){
+      const m={vip:'<span class="kc-badge vip"><i class="fa-solid fa-crown" style="font-size:10px"></i> VIP</span>',active:'<span class="kc-badge active"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>',new:'<span class="kc-badge new">New</span>',idle:'<span class="kc-badge idle">Idle</span>'};
+      return m[st]||'';
+    }
+
+    function renderTable(data){
+      const tb=document.getElementById('custTbody'); tb.innerHTML='';
+      data.forEach((c,i)=>{
+        const av=AVATARS[i%AVATARS.length];
+        tb.innerHTML+=`<tr onclick="openDrawer(${c.id})" style="animation:fadeUp .3s ${i*.04}s ease both">
+          <td><span style="font-size:12px;color:var(--ink-3);font-weight:700">${String(c.id).padStart(2,'0')}</span></td>
+          <td><div class="kc-cust"><div class="kc-avatar" style="background:${av}">${initials(c.name)}</div><div><div class="kc-cust-name">${c.name}</div><div class="kc-cust-email">${c.email}</div></div></div></td>
+          <td style="color:var(--ink-3);font-size:13px">${c.phone}</td>
+          <td>${badgeHtml(c.status)}</td>
+          <td><span style="font-weight:700;color:var(--ink)">${c.visits}</span> <span style="font-size:11px;color:var(--ink-3)">visits</span></td>
+          <td><span style="font-weight:700;color:var(--gold-dk)">${c.spend}</span></td>
+          <td><div class="kc-rating"><span class="stars" style="color:var(--gold)">${starStr(c.rating)}</span> <span>${c.rating}</span></div></td>
+          <td style="font-size:12.5px;color:var(--ink-3)">${c.last}</td>
+          <td><div class="kc-row-actions">
+            <button class="kc-row-btn" onclick="event.stopPropagation()" title="Message"><i class="fa-solid fa-comment"></i></button>
+            <button class="kc-row-btn" onclick="event.stopPropagation()" title="Book"><i class="fa-solid fa-calendar-plus"></i></button>
+            <button class="kc-row-btn danger" onclick="event.stopPropagation()" title="Delete"><i class="fa-solid fa-trash"></i></button>
+          </div></td>
+        </tr>`;
+      });
+    }
+    renderTable(CUSTOMERS);
+
+    function filterTable(q){
+      const r=CUSTOMERS.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.email.toLowerCase().includes(q.toLowerCase()));
+      renderTable(r);
+    }
+    function setFilter(el,f){
+      document.querySelectorAll('.kc-ftab').forEach(b=>b.classList.remove('active'));
+      el.classList.add('active');
+      renderTable(f==='all'?CUSTOMERS:CUSTOMERS.filter(c=>c.status===f));
+    }
+    function sortTable(v){
+      const r=[...CUSTOMERS];
+      if(v==='name')  r.sort((a,b)=>a.name.localeCompare(b.name));
+      if(v==='visits')r.sort((a,b)=>b.visits-a.visits);
+      if(v==='spend') r.sort((a,b)=>parseInt(b.spend.replace(/\D/g,''))-parseInt(a.spend.replace(/\D/g,'')));
+      renderTable(r);
+    }
+
+    function openDrawer(id){
+      if(id==='new') return;
+      const c=CUSTOMERS.find(x=>x.id===id); if(!c) return;
+      const av=AVATARS[(c.id-1)%AVATARS.length];
+      document.getElementById('drawerTitle').textContent=c.name;
+      document.getElementById('drawerBody').innerHTML=`
+        <div class="kc-drawer-avatar" style="background:${av}">${initials(c.name)}</div>
+        <div class="kc-drawer-name">${c.name}</div>
+        <div class="kc-drawer-sub">${c.city} · ${badgeHtml(c.status)}</div>
+        <div class="kc-drawer-stats">
+          <div class="kc-ds"><div class="kc-ds-val">${c.visits}</div><div class="kc-ds-lbl">Visits</div></div>
+          <div class="kc-ds"><div class="kc-ds-val">${c.spend}</div><div class="kc-ds-lbl">Spent</div></div>
+          <div class="kc-ds"><div class="kc-ds-val">${c.rating}</div><div class="kc-ds-lbl">Rating</div></div>
+        </div>
+        <div class="kc-drawer-sec">Contact Info</div>
+        <div class="kc-drawer-info-row"><div class="kc-di-icon"><i class="fa-solid fa-envelope"></i></div><div><div class="kc-di-lbl">Email</div><div class="kc-di-val">${c.email}</div></div></div>
+        <div class="kc-drawer-info-row"><div class="kc-di-icon"><i class="fa-solid fa-phone"></i></div><div><div class="kc-di-lbl">Phone</div><div class="kc-di-val">${c.phone}</div></div></div>
+        <div class="kc-drawer-info-row"><div class="kc-di-icon"><i class="fa-solid fa-location-dot"></i></div><div><div class="kc-di-lbl">City</div><div class="kc-di-val">${c.city}</div></div></div>
+        <div class="kc-drawer-sec">Recent Visits</div>
+        <div class="kc-hist-item"><div class="kc-hist-dot"></div><div class="kc-hist-svc">Bridal Hair &amp; Makeup</div><div class="kc-hist-date">2 days ago</div><div class="kc-hist-amt">₹8,500</div></div>
+        <div class="kc-hist-item"><div class="kc-hist-dot"></div><div class="kc-hist-svc">Hair Colour + Highlights</div><div class="kc-hist-date">3 weeks ago</div><div class="kc-hist-amt">₹4,200</div></div>
+        <div class="kc-hist-item"><div class="kc-hist-dot"></div><div class="kc-hist-svc">Facial &amp; Cleanup</div><div class="kc-hist-date">6 weeks ago</div><div class="kc-hist-amt">₹2,100</div></div>
+      `;
+      document.getElementById('drawerOv').classList.add('show');
+      document.getElementById('drawer').classList.add('show');
+      document.body.style.overflow='hidden';
+    }
+    function closeDrawer(){
+      document.getElementById('drawerOv').classList.remove('show');
+      document.getElementById('drawer').classList.remove('show');
+      document.body.style.overflow='';
+    }
+  </script>
+</body>
+</html>
