@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM — Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#9a7020; --gold-ddk:#7a5010;
+      --gold-lt:#fdf6e8; --gold-mid:#fdf0d0; --gold-glow:rgba(200,160,64,.18);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#18120f; --ink-2:#3d3028; --ink-3:#907860; --ink-4:#c4b098;
+      --surface:#fff; --surface-2:#faf8f6; --surface-3:#f4f0eb;
+      --border:#ebe5de; --border-lt:#f2ede6;
+      --green:#2e7d32; --green-lt:#e8f5e9;
+      --blue:#1565c0; --blue-lt:#e3f2fd;
+      --shadow-sm:0 1px 6px rgba(24,18,12,.06);
+      --shadow:0 2px 24px rgba(24,18,12,.08);
+      --shadow-md:0 6px 32px rgba(24,18,12,.11);
+      --shadow-lg:0 12px 48px rgba(24,18,12,.16);
+      --r:14px; --r-sm:9px; --t:.2s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink);line-height:1.5}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+    .kc-page-content{padding:0;flex:1;width:100%;min-width:0;display:flex;flex-direction:column}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
+    @keyframes fadeIn  {from{opacity:0}                             to{opacity:1}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.93)}        to{opacity:1;transform:scale(1)}}
+    @keyframes pulse   {0%,100%{opacity:1}50%{opacity:.5}}
+    @keyframes slideRight{from{transform:translateX(-20px);opacity:0}to{transform:none;opacity:1}}
+
+    /* ══════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════ */
+    .settings-hero {
+      background: linear-gradient(135deg, #1c1409 0%, #2a1c0a 40%, #1a1008 100%);
+      padding: 36px 40px 32px;
+      position: relative; overflow: hidden;
+      animation: fadeDown .4s ease both;
+    }
+    .settings-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,160,64,.14) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,123,132,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .settings-hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,160,64,.35) 30%, rgba(200,160,64,.55) 50%, rgba(200,160,64,.35) 70%, transparent);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .hero-left { display: flex; align-items: center; gap: 20px; }
+    .hero-icon {
+      width: 60px; height: 60px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(200,160,64,.25), rgba(200,160,64,.10));
+      border: 1px solid rgba(200,160,64,.30);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: var(--gold); flex-shrink: 0;
+      box-shadow: 0 0 24px rgba(200,160,64,.15);
+    }
+    .hero-title {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 5px;
+    }
+    .hero-sub {
+      font-size: 13px; color: rgba(200,160,100,.65);
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .hero-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(200,160,64,.40); }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+      background: rgba(200,160,64,.15); color: var(--gold);
+      border: 1px solid rgba(200,160,64,.25); letter-spacing: .5px;
+    }
+    .hero-actions { display: flex; gap: 10px; align-items: center; }
+
+    /* ══════════════════════════════════════
+       SETTINGS LAYOUT
+    ══════════════════════════════════════ */
+    .settings-layout {
+      display: flex; flex: 1; min-height: 0;
+      padding: 0; gap: 0;
+    }
+
+    /* ── Sidebar Nav ── */
+    .settings-nav {
+      width: 260px; flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 20px 0 28px;
+      position: sticky; top: 0; height: fit-content;
+      animation: slideRight .4s ease both;
+    }
+    .snav-group { margin-bottom: 6px; }
+    .snav-label {
+      padding: 10px 22px 4px;
+      font-size: 9px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ink-4);
+    }
+    .snav-item {
+      display: flex; align-items: center; gap: 11px;
+      padding: 10px 20px; margin: 2px 10px; border-radius: var(--r-sm);
+      font-size: 13px; font-weight: 500; color: var(--ink-3);
+      cursor: pointer; transition: all var(--t);
+      border: 1px solid transparent; position: relative;
+    }
+    .snav-item:hover { background: var(--gold-lt); color: var(--ink-2); border-color: rgba(200,160,64,.20); }
+    .snav-item.active {
+      background: linear-gradient(135deg, var(--gold-lt), rgba(200,160,64,.12));
+      color: var(--gold-ddk); border-color: rgba(200,160,64,.30);
+      font-weight: 600;
+    }
+    .snav-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0;
+      background: var(--surface-2); color: var(--ink-3);
+      transition: all var(--t);
+    }
+    .snav-item:hover .snav-icon { background: rgba(200,160,64,.15); color: var(--gold-dk); }
+    .snav-item.active .snav-icon { background: linear-gradient(135deg,var(--gold),var(--gold-dk)); color: #fff; box-shadow: 0 3px 10px var(--gold-glow); }
+    .snav-text { flex: 1; }
+    .snav-badge {
+      font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 20px;
+      background: var(--rose-lt); color: var(--rose-dk);
+    }
+    .snav-divider { height: 1px; background: var(--border-lt); margin: 8px 20px; }
+
+    /* ── Settings Content ── */
+    .settings-content {
+      flex: 1; min-width: 0;
+      padding: 32px 36px 48px;
+      animation: fadeIn .3s ease both;
+    }
+    @media(max-width:900px){
+      .settings-layout{flex-direction:column}
+      .settings-nav{width:100%;position:static;border-right:none;border-bottom:1px solid var(--border);padding:14px 0 10px;display:flex;flex-wrap:wrap;gap:4px;padding:12px}
+      .snav-group{display:contents}
+      .snav-label{display:none}
+      .snav-item{margin:0;padding:8px 14px;flex-direction:row;gap:7px}
+      .snav-icon{width:26px;height:26px;font-size:11px}
+      .snav-text{font-size:12px}
+      .snav-divider{display:none}
+      .settings-content{padding:20px 16px 40px}
+    }
+
+    /* ── Section ── */
+    .settings-section { display: none; }
+    .settings-section.active { display: block; animation: fadeUp .3s ease both; }
+
+    .section-title {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700; color: var(--ink);
+      margin-bottom: 4px; display: flex; align-items: center; gap: 10px;
+    }
+    .section-title i { font-size: 18px; color: var(--gold-dk); }
+    .section-sub { font-size: 13px; color: var(--ink-3); margin-bottom: 28px; }
+
+    /* ── Setting Cards ── */
+    .setting-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); box-shadow: var(--shadow-sm);
+      margin-bottom: 20px; overflow: hidden;
+      transition: box-shadow var(--t);
+    }
+    .setting-card:hover { box-shadow: var(--shadow); }
+
+    .sc-head {
+      padding: 18px 24px; border-bottom: 1px solid var(--border-lt);
+      display: flex; align-items: center; gap: 14px;
+      background: linear-gradient(135deg, var(--surface), var(--surface-2));
+    }
+    .sc-head-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .sc-head-icon.gold  { background: var(--gold-lt); color: var(--gold-dk); }
+    .sc-head-icon.rose  { background: var(--rose-lt); color: var(--rose-dk); }
+    .sc-head-icon.blue  { background: var(--blue-lt); color: var(--blue); }
+    .sc-head-icon.green { background: var(--green-lt); color: var(--green); }
+    .sc-head-icon.dark  { background: #1c1409; color: var(--gold); }
+
+    .sc-title {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 16px; font-weight: 700; color: var(--ink);
+    }
+    .sc-sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+    .sc-body { padding: 0; }
+
+    /* ── Setting Row ── */
+    .srow {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; border-bottom: 1px solid var(--border-lt);
+      gap: 16px; transition: background var(--t);
+    }
+    .srow:last-child { border-bottom: none; }
+    .srow:hover { background: #fdf8f0; }
+    .srow-left { flex: 1; min-width: 0; }
+    .srow-label {
+      font-size: 13.5px; font-weight: 600; color: var(--ink-2); margin-bottom: 3px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .srow-label .tag {
+      font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 20px;
+      letter-spacing: .5px;
+    }
+    .tag-new   { background: var(--green-lt); color: var(--green); }
+    .tag-pro   { background: var(--gold-lt);  color: var(--gold-dk); }
+    .tag-beta  { background: var(--blue-lt);  color: var(--blue); }
+    .srow-desc { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+    .srow-right { flex-shrink: 0; }
+
+    /* ── Toggle Switch ── */
+    .toggle {
+      position: relative; width: 46px; height: 26px; cursor: pointer;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      display: block; width: 46px; height: 26px; border-radius: 26px;
+      background: var(--border); transition: background .25s ease;
+      cursor: pointer;
+    }
+    .toggle input:checked + .toggle-track { background: var(--gold); }
+    .toggle-track::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px; border-radius: 50%; background: #fff;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,.18);
+    }
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(20px);
+      box-shadow: 0 1px 6px rgba(200,160,64,.30);
+    }
+    .toggle input:focus + .toggle-track { outline: 2px solid var(--gold-glow); }
+
+    /* ── Select ── */
+    .s-select {
+      padding: 8px 32px 8px 12px; border: 1.5px solid var(--border);
+      border-radius: var(--r-sm); background: var(--surface);
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink-2);
+      cursor: pointer; outline: none; transition: border-color var(--t);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 11px center; min-width: 160px;
+    }
+    .s-select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+
+    /* ── Text Input ── */
+    .s-input {
+      padding: 9px 14px; border: 1.5px solid var(--border);
+      border-radius: var(--r-sm); background: var(--surface);
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink);
+      outline: none; transition: all var(--t); min-width: 220px;
+    }
+    .s-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); background: #fff; }
+    .s-input::placeholder { color: var(--ink-4); }
+
+    /* ── Color Picker Row ── */
+    .color-swatches { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .swatch {
+      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+      border: 2.5px solid transparent; transition: all var(--t);
+      position: relative; flex-shrink: 0;
+    }
+    .swatch:hover { transform: scale(1.15); }
+    .swatch.sel {
+      border-color: var(--ink-2);
+      box-shadow: 0 0 0 3px rgba(24,18,12,.12);
+    }
+    .swatch.sel::after {
+      content: '✓'; position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #fff;
+    }
+
+    /* ── Slider ── */
+    .s-slider-wrap { display: flex; align-items: center; gap: 12px; min-width: 200px; }
+    .s-slider {
+      -webkit-appearance: none; appearance: none;
+      width: 140px; height: 5px; border-radius: 5px;
+      background: linear-gradient(to right, var(--gold) 0%, var(--gold) var(--val, 70%), var(--border) var(--val, 70%), var(--border) 100%);
+      outline: none; cursor: pointer;
+    }
+    .s-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+      cursor: pointer; box-shadow: 0 2px 8px var(--gold-glow);
+      border: 2px solid #fff;
+    }
+    .s-slider-val { font-size: 12px; font-weight: 700; color: var(--gold-dk); min-width: 30px; }
+
+    /* ── Upload Zone ── */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: var(--r-sm);
+      padding: 20px 24px; text-align: center; cursor: pointer;
+      transition: all var(--t); background: var(--surface-2);
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    }
+    .upload-zone:hover { border-color: var(--gold); background: var(--gold-lt); }
+    .upload-zone input { display: none; }
+    .upload-icon { font-size: 24px; color: var(--gold); flex-shrink: 0; }
+    .upload-text { text-align: left; }
+    .upload-text p { font-size: 13px; font-weight: 600; color: var(--ink-2); margin-bottom: 2px; }
+    .upload-text span { font-size: 11.5px; color: var(--ink-3); }
+
+    /* ── Avatar Preview ── */
+    .avatar-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px 24px; }
+    .avatar-preview {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dk));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700;
+      color: #fff; border: 3px solid rgba(200,160,64,.30);
+      box-shadow: 0 4px 16px rgba(201,123,132,.25); flex-shrink: 0;
+    }
+    .avatar-info { flex: 1; }
+    .avatar-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+    .avatar-role { font-size: 12px; color: var(--ink-3); }
+    .avatar-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+    /* ── Form Grid ── */
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 22px; padding: 20px 24px; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px 18px; padding: 20px 24px; }
+    @media(max-width:700px){ .form-grid-2,.form-grid-3 { grid-template-columns:1fr; } }
+    .fg { display: flex; flex-direction: column; gap: 6px; }
+    .fg.full { grid-column: 1/-1; }
+    .flbl { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--ink-3); }
+    .finp,.ftxt,.fsel {
+      padding: 10px 14px; border: 1.5px solid var(--border);
+      border-radius: 10px; background: var(--surface);
+      font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--ink);
+      outline: none; transition: all var(--t); width: 100%;
+    }
+    .finp:focus,.ftxt:focus,.fsel:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); background: #fff; }
+    .finp::placeholder,.ftxt::placeholder { color: var(--ink-4); }
+    .ftxt { resize: vertical; min-height: 80px; }
+    .fsel { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all var(--t); border: none; white-space: nowrap;
+    }
+    .btn-gold { background: linear-gradient(135deg,var(--gold),var(--gold-dk)); color: #fff; box-shadow: 0 3px 12px var(--gold-glow); }
+    .btn-gold:hover { box-shadow: 0 6px 20px rgba(200,160,64,.42); transform: translateY(-1px); }
+    .btn-rose { background: linear-gradient(135deg,var(--rose),var(--rose-dk)); color: #fff; box-shadow: 0 3px 12px rgba(201,123,132,.25); }
+    .btn-rose:hover { box-shadow: 0 6px 20px rgba(201,123,132,.38); transform: translateY(-1px); }
+    .btn-out { background: transparent; border: 1.5px solid var(--border); color: var(--ink-2); }
+    .btn-out:hover { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
+    .btn-danger { background: transparent; border: 1.5px solid #f48fb1; color: #c62828; }
+    .btn-danger:hover { background: #fce4ec; }
+    .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 8px; }
+
+    /* ── Card Footer ── */
+    .sc-footer {
+      padding: 14px 24px; border-top: 1px solid var(--border-lt);
+      background: var(--surface-2); display: flex; align-items: center;
+      justify-content: flex-end; gap: 10px; flex-wrap: wrap;
+    }
+
+    /* ── Toast-style save indicator ── */
+    .save-indicator {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: var(--green);
+      background: var(--green-lt); padding: 6px 12px; border-radius: 20px;
+      opacity: 0; transition: opacity .3s ease; pointer-events: none;
+    }
+    .save-indicator.show { opacity: 1; }
+
+    /* ── Plan Banner ── */
+    .plan-banner {
+      background: linear-gradient(135deg, #1c1409 0%, #2a1c0a 100%);
+      border-radius: var(--r); padding: 22px 26px; margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+      position: relative; overflow: hidden;
+    }
+    .plan-banner::before {
+      content: ''; position: absolute; right: -40px; top: -40px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,160,64,.15), transparent 70%);
+    }
+    .plan-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+      color: #fff; padding: 4px 12px; border-radius: 20px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: .5px;
+      margin-bottom: 8px;
+    }
+    .plan-name {
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;
+      color: #fff; margin-bottom: 4px;
+    }
+    .plan-sub { font-size: 12.5px; color: rgba(200,160,100,.65); }
+    .plan-right { position: relative; z-index: 1; }
+
+    /* ── Danger Zone ── */
+    .danger-zone {
+      border: 1.5px solid #f48fb1; border-radius: var(--r); overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .dz-head {
+      padding: 14px 22px; background: #fce4ec;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .dz-head i { color: #c62828; font-size: 16px; }
+    .dz-head span {
+      font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: #c62828;
+    }
+
+    /* ── Notification pills ── */
+    .notif-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 20px; font-size: 11.5px; font-weight: 600;
+      border: 1.5px solid var(--border); cursor: pointer; transition: all var(--t);
+      background: var(--surface); color: var(--ink-3);
+    }
+    .notif-pill.active { border-color: var(--gold); background: var(--gold-lt); color: var(--gold-dk); }
+    .notif-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ── API Key ── */
+    .api-key-row {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .api-key-display {
+      flex: 1; padding: 10px 14px; border: 1.5px solid var(--border);
+      border-radius: var(--r-sm); background: var(--surface-2);
+      font-family: 'DM Mono', 'Courier New', monospace; font-size: 12px;
+      color: var(--ink-3); letter-spacing: 1px; min-width: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* ── Staff permission table ── */
+    .perm-table { width: 100%; border-collapse: collapse; }
+    .perm-table th {
+      padding: 10px 20px; text-align: left; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--ink-3);
+      background: var(--surface-2); border-bottom: 1px solid var(--border);
+    }
+    .perm-table th:first-child { padding-left: 24px; }
+    .perm-table td {
+      padding: 13px 20px; border-bottom: 1px solid var(--border-lt);
+      font-size: 13px; color: var(--ink-2); vertical-align: middle;
+    }
+    .perm-table td:first-child { padding-left: 24px; font-weight: 600; }
+    .perm-table tr:last-child td { border-bottom: none; }
+    .perm-table tbody tr:hover td { background: #fdf8f0; }
+
+    /* ── Appearance preview ── */
+    .theme-options { display: flex; gap: 12px; flex-wrap: wrap; padding: 20px 24px; }
+    .theme-opt {
+      flex: 1; min-width: 120px; max-width: 160px; border-radius: var(--r-sm);
+      border: 2px solid var(--border); overflow: hidden; cursor: pointer;
+      transition: all var(--t);
+    }
+    .theme-opt:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .theme-opt.sel { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+    .theme-preview { height: 70px; position: relative; }
+    .theme-preview .tp-nav { position: absolute; top: 0; left: 0; bottom: 0; width: 28px; }
+    .theme-preview .tp-content { position: absolute; top: 0; left: 28px; right: 0; bottom: 0; }
+    .theme-label { padding: 8px 10px; font-size: 11.5px; font-weight: 600; color: var(--ink-2); text-align: center; }
+    .theme-opt.sel .theme-label { color: var(--gold-dk); }
+
+    /* ── Breadcrumb ── */
+    .kc-bc {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--ink-3);
+      padding: 16px 40px 0; animation: fadeDown .3s ease both;
+    }
+    .kc-bc a { color: var(--gold-dk); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; transition: opacity var(--t); }
+    .kc-bc a:hover { opacity: .7; }
+    .kc-bc .sep { font-size: 9px; color: var(--ink-4); }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface-2); }
+    ::-webkit-scrollbar-thumb { background: rgba(200,160,64,.30); border-radius: 99px; }
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span>Settings</span>
+    </nav>
+
+    <!-- Hero -->
+    <div class="settings-hero">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-icon"><i class="fa-solid fa-gear"></i></div>
+          <div>
+            <div class="hero-title">Settings</div>
+            <div class="hero-sub">
+              <span>Configure your salon admin panel</span>
+              <span class="hero-dot"></span>
+              <span class="hero-badge"><i class="fa-solid fa-crown"></i> KCOZM Pro</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-out" style="border-color:rgba(200,160,64,.35);color:rgba(200,160,100,.80);background:rgba(200,160,64,.08)" onclick="saveAll()">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Save All Changes
+          </button>
+          <div class="save-indicator" id="saveInd"><i class="fa-solid fa-circle-check"></i> Saved</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layout -->
+    <div class="settings-layout">
+
+      <!-- Sidebar Nav -->
+      <nav class="settings-nav">
+        <div class="snav-group">
+          <div class="snav-label">Account</div>
+          <div class="snav-item active" onclick="switchTab(this,'profile')">
+            <div class="snav-icon"><i class="fa-solid fa-user"></i></div>
+            <span class="snav-text">Profile</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'business')">
+            <div class="snav-icon"><i class="fa-solid fa-store"></i></div>
+            <span class="snav-text">Business Info</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'billing')">
+            <div class="snav-icon"><i class="fa-solid fa-credit-card"></i></div>
+            <span class="snav-text">Billing & Plan</span>
+          </div>
+        </div>
+        <div class="snav-divider"></div>
+        <div class="snav-group">
+          <div class="snav-label">Appearance</div>
+          <div class="snav-item" onclick="switchTab(this,'appearance')">
+            <div class="snav-icon"><i class="fa-solid fa-palette"></i></div>
+            <span class="snav-text">Appearance</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'notifications')">
+            <div class="snav-icon"><i class="fa-solid fa-bell"></i></div>
+            <span class="snav-text">Notifications</span>
+            <span class="snav-badge">3</span>
+          </div>
+        </div>
+        <div class="snav-divider"></div>
+        <div class="snav-group">
+          <div class="snav-label">Operations</div>
+          <div class="snav-item" onclick="switchTab(this,'appointments')">
+            <div class="snav-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <span class="snav-text">Appointments</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'payments')">
+            <div class="snav-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <span class="snav-text">Payments</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'staff')">
+            <div class="snav-icon"><i class="fa-solid fa-user-tie"></i></div>
+            <span class="snav-text">Staff & Roles</span>
+          </div>
+        </div>
+        <div class="snav-divider"></div>
+        <div class="snav-group">
+          <div class="snav-label">System</div>
+          <div class="snav-item" onclick="switchTab(this,'integrations')">
+            <div class="snav-icon"><i class="fa-solid fa-plug"></i></div>
+            <span class="snav-text">Integrations</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'security')">
+            <div class="snav-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <span class="snav-text">Security</span>
+          </div>
+          <div class="snav-item" onclick="switchTab(this,'danger')">
+            <div class="snav-icon" style="background:#fce4ec;color:#c62828"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <span class="snav-text" style="color:#c62828">Danger Zone</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="settings-content">
+
+        <!-- ══ PROFILE ══ -->
+        <div class="settings-section active" id="sec-profile">
+          <div class="section-title"><i class="fa-solid fa-user"></i> My Profile</div>
+          <div class="section-sub">Manage your personal account information and preferences.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon rose"><i class="fa-solid fa-id-card"></i></div>
+              <div>
+                <div class="sc-title">Profile Photo & Name</div>
+                <div class="sc-sub">Your display name and avatar across the admin panel</div>
+              </div>
+            </div>
+            <div class="avatar-row">
+              <div class="avatar-preview" id="avatarPreview">A</div>
+              <div class="avatar-info">
+                <div class="avatar-name">Salon Admin</div>
+                <div class="avatar-role">Administrator · admin@kcozm.com</div>
+                <div class="avatar-actions">
+                  <button class="btn btn-out btn-sm" onclick="document.getElementById('avatarUpload').click()"><i class="fa-solid fa-camera"></i> Change Photo</button>
+                  <button class="btn btn-out btn-sm" style="color:var(--ink-3)"><i class="fa-solid fa-trash"></i> Remove</button>
+                  <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="handleAvatar(this)">
+                </div>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="fg"><label class="flbl">First Name</label><input type="text" class="finp" value="Salon" placeholder="First name"></div>
+              <div class="fg"><label class="flbl">Last Name</label><input type="text" class="finp" value="Admin" placeholder="Last name"></div>
+              <div class="fg"><label class="flbl">Display Name</label><input type="text" class="finp" value="Admin" placeholder="Display name"></div>
+              <div class="fg"><label class="flbl">Role</label><input type="text" class="finp" value="Administrator" placeholder="Your role" readonly style="background:var(--surface-2);color:var(--ink-3)"></div>
+              <div class="fg full"><label class="flbl">Email Address</label><input type="email" class="finp" value="admin@kcozm.com" placeholder="Email"></div>
+              <div class="fg"><label class="flbl">Phone Number</label><input type="tel" class="finp" value="+91 98765 43210" placeholder="Phone"></div>
+              <div class="fg"><label class="flbl">Language</label>
+                <select class="fsel"><option selected>English (India)</option><option>Hindi</option><option>Marathi</option></select>
+              </div>
+            </div>
+            <div class="sc-footer">
+              <button class="btn btn-out" onclick="KcozmAdmin.showToast('Changes discarded','info')">Discard</button>
+              <button class="btn btn-gold" onclick="KcozmAdmin.showToast('Profile updated!','success')"><i class="fa-solid fa-check"></i> Save Profile</button>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-lock"></i></div>
+              <div><div class="sc-title">Change Password</div><div class="sc-sub">Keep your account secure with a strong password</div></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="fg full"><label class="flbl">Current Password</label><input type="password" class="finp" placeholder="Enter current password"></div>
+              <div class="fg"><label class="flbl">New Password</label><input type="password" class="finp" placeholder="New password" id="newPwd" oninput="checkPwd(this.value)"></div>
+              <div class="fg"><label class="flbl">Confirm New Password</label><input type="password" class="finp" placeholder="Repeat new password"></div>
+              <div class="fg full">
+                <div style="display:flex;gap:6px;margin-top:2px" id="pwdStrength">
+                  <div style="height:4px;flex:1;border-radius:4px;background:var(--border);transition:background .3s" id="ps1"></div>
+                  <div style="height:4px;flex:1;border-radius:4px;background:var(--border);transition:background .3s" id="ps2"></div>
+                  <div style="height:4px;flex:1;border-radius:4px;background:var(--border);transition:background .3s" id="ps3"></div>
+                  <div style="height:4px;flex:1;border-radius:4px;background:var(--border);transition:background .3s" id="ps4"></div>
+                </div>
+                <div style="font-size:11px;color:var(--ink-3);margin-top:4px" id="pwdLabel">Enter a new password</div>
+              </div>
+            </div>
+            <div class="sc-footer">
+              <button class="btn btn-rose" onclick="KcozmAdmin.showToast('Password updated!','success')"><i class="fa-solid fa-key"></i> Update Password</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ BUSINESS ══ -->
+        <div class="settings-section" id="sec-business">
+          <div class="section-title"><i class="fa-solid fa-store"></i> Business Information</div>
+          <div class="section-sub">Your salon's public details, branding and contact information.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-image"></i></div>
+              <div><div class="sc-title">Salon Logo & Branding</div><div class="sc-sub">Upload your salon logo and set brand colours</div></div>
+            </div>
+            <div style="padding:20px 24px">
+              <div class="upload-zone" onclick="document.getElementById('logoUpload').click()">
+                <input type="file" id="logoUpload" accept="image/*">
+                <div class="upload-icon"><i class="fa-solid fa-image"></i></div>
+                <div class="upload-text">
+                  <p>Upload Salon Logo</p>
+                  <span>PNG, SVG or JPG · Max 2MB · Recommended 400×120px</span>
+                </div>
+                <button class="btn btn-out btn-sm" style="margin-left:auto">Browse</button>
+              </div>
+              <div style="margin-top:18px">
+                <div class="flbl" style="margin-bottom:10px">Brand Accent Colour</div>
+                <div class="color-swatches">
+                  <div class="swatch sel" style="background:#c8a040" title="Gold" onclick="selSwatch(this)"></div>
+                  <div class="swatch" style="background:#c97b84" title="Rose" onclick="selSwatch(this)"></div>
+                  <div class="swatch" style="background:#2196f3" title="Blue" onclick="selSwatch(this)"></div>
+                  <div class="swatch" style="background:#4caf50" title="Green" onclick="selSwatch(this)"></div>
+                  <div class="swatch" style="background:#9c27b0" title="Purple" onclick="selSwatch(this)"></div>
+                  <div class="swatch" style="background:#ff5722" title="Orange" onclick="selSwatch(this)"></div>
+                  <div class="swatch" style="background:#1c1409" title="Dark" onclick="selSwatch(this)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-building"></i></div>
+              <div><div class="sc-title">Salon Details</div><div class="sc-sub">Basic information about your salon</div></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="fg full"><label class="flbl">Salon Name <span style="color:var(--rose-dk)">*</span></label><input type="text" class="finp" value="KCOZM — The Luxury Salon"></div>
+              <div class="fg"><label class="flbl">Business Type</label>
+                <select class="fsel"><option selected>Luxury Salon</option><option>Unisex Salon</option><option>Bridal Studio</option><option>Spa & Wellness</option></select>
+              </div>
+              <div class="fg"><label class="flbl">Registration No.</label><input type="text" class="finp" value="MH29AB2021KC01" placeholder="Business registration number"></div>
+              <div class="fg"><label class="flbl">GST Number</label><input type="text" class="finp" placeholder="27AAAAA0000A1Z5"></div>
+              <div class="fg"><label class="flbl">Contact Phone</label><input type="tel" class="finp" value="+91 98765 43210"></div>
+              <div class="fg"><label class="flbl">Contact Email</label><input type="email" class="finp" value="info@kcozm.com"></div>
+              <div class="fg"><label class="flbl">Website</label><input type="url" class="finp" value="https://kcozm.com" placeholder="https://"></div>
+              <div class="fg"><label class="flbl">City / State</label><input type="text" class="finp" value="Mumbai, Maharashtra"></div>
+              <div class="fg full"><label class="flbl">Full Address</label><textarea class="ftxt" rows="2">Shop 12, Luxury Plaza, Bandra West, Mumbai – 400050</textarea></div>
+            </div>
+            <div class="sc-footer">
+              <button class="btn btn-gold" onclick="KcozmAdmin.showToast('Business info saved!','success')"><i class="fa-solid fa-check"></i> Save Changes</button>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon green"><i class="fa-solid fa-clock"></i></div>
+              <div><div class="sc-title">Operating Hours</div><div class="sc-sub">Set your weekly schedule and holiday hours</div></div>
+            </div>
+            <div class="sc-body" id="hoursGrid"></div>
+            <div class="sc-footer">
+              <button class="btn btn-gold" onclick="KcozmAdmin.showToast('Hours saved!','success')"><i class="fa-solid fa-check"></i> Save Hours</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ APPEARANCE ══ -->
+        <div class="settings-section" id="sec-appearance">
+          <div class="section-title"><i class="fa-solid fa-palette"></i> Appearance</div>
+          <div class="section-sub">Customise the look and feel of your admin panel.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon dark"><i class="fa-solid fa-swatchbook"></i></div>
+              <div><div class="sc-title">Theme</div><div class="sc-sub">Choose between light, dark or system preference</div></div>
+            </div>
+            <div class="theme-options">
+              <div class="theme-opt sel" onclick="selTheme(this,'light')">
+                <div class="theme-preview"><div class="tp-nav" style="background:#fdf8ee;border-right:1px solid #f0e8d0"></div><div class="tp-content" style="background:#fff"></div></div>
+                <div class="theme-label">Light</div>
+              </div>
+              <div class="theme-opt" onclick="selTheme(this,'dark')">
+                <div class="theme-preview"><div class="tp-nav" style="background:#1c1409;border-right:1px solid rgba(200,160,64,.20)"></div><div class="tp-content" style="background:#13080e"></div></div>
+                <div class="theme-label">Dark</div>
+              </div>
+              <div class="theme-opt" onclick="selTheme(this,'system')">
+                <div class="theme-preview" style="background:linear-gradient(135deg,#fff 50%,#1c1409 50%)"></div>
+                <div class="theme-label">System</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-text-height"></i></div>
+              <div><div class="sc-title">Typography & Density</div><div class="sc-sub">Adjust font size and interface density</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label">Font Size</div>
+                  <div class="srow-desc">Base font size for the admin interface</div>
+                </div>
+                <div class="srow-right">
+                  <div class="s-slider-wrap">
+                    <input type="range" class="s-slider" min="12" max="18" value="14" oninput="updateSlider(this,'fontSize')">
+                    <span class="s-slider-val" id="fontSize">14px</span>
+                  </div>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label">Interface Density</div>
+                  <div class="srow-desc">Compact mode reduces padding throughout the UI</div>
+                </div>
+                <div class="srow-right">
+                  <select class="s-select">
+                    <option>Comfortable</option>
+                    <option selected>Default</option>
+                    <option>Compact</option>
+                  </select>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label">Sidebar Default State</div>
+                  <div class="srow-desc">Choose whether sidebar starts expanded or collapsed</div>
+                </div>
+                <div class="srow-right">
+                  <select class="s-select">
+                    <option selected>Expanded</option>
+                    <option>Collapsed</option>
+                    <option>Remember last</option>
+                  </select>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label">Reduce Motion</div>
+                  <div class="srow-desc">Disable animations for accessibility or performance</div>
+                </div>
+                <div class="srow-right">
+                  <label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ NOTIFICATIONS ══ -->
+        <div class="settings-section" id="sec-notifications">
+          <div class="section-title"><i class="fa-solid fa-bell"></i> Notifications</div>
+          <div class="section-sub">Control which alerts and updates you receive and how.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon blue"><i class="fa-solid fa-envelope"></i></div>
+              <div><div class="sc-title">Email Notifications</div><div class="sc-sub">Receive updates to admin@kcozm.com</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">New Appointments <span class="tag tag-new">New</span></div><div class="srow-desc">Get notified when a client books an appointment</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Appointment Cancellations</div><div class="srow-desc">Alert when a client cancels their booking</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Customer Reviews</div><div class="srow-desc">Notify when a new review is submitted</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">New Customer Registration</div><div class="srow-desc">When a new client registers on the portal</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Payment Received</div><div class="srow-desc">Email confirmation for every payment</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Weekly Report Digest</div><div class="srow-desc">Summary of the week's performance every Monday</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon rose"><i class="fa-solid fa-mobile"></i></div>
+              <div><div class="sc-title">Push & SMS Notifications</div><div class="sc-sub">Real-time alerts on your devices</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Browser Push Notifications</div><div class="srow-desc">In-browser alerts even when the tab is in the background</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">SMS Reminders to Clients <span class="tag tag-pro">Pro</span></div><div class="srow-desc">Automatically send appointment reminders via SMS</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">WhatsApp Notifications <span class="tag tag-beta">Beta</span></div><div class="srow-desc">Send booking confirmations via WhatsApp Business</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon green"><i class="fa-solid fa-clock"></i></div>
+              <div><div class="sc-title">Notification Timing</div><div class="sc-sub">When and how often to receive notifications</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Appointment Reminder Lead Time</div><div class="srow-desc">How many hours before appointment to send reminder</div></div>
+                <div class="srow-right">
+                  <select class="s-select"><option>1 hour before</option><option selected>2 hours before</option><option>24 hours before</option><option>48 hours before</option></select>
+                </div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Quiet Hours</div><div class="srow-desc">Mute notifications during these hours</div></div>
+                <div class="srow-right" style="display:flex;gap:8px;align-items:center">
+                  <input type="time" class="s-input" value="22:00" style="min-width:120px">
+                  <span style="font-size:12px;color:var(--ink-3)">to</span>
+                  <input type="time" class="s-input" value="08:00" style="min-width:120px">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ APPOINTMENTS ══ -->
+        <div class="settings-section" id="sec-appointments">
+          <div class="section-title"><i class="fa-solid fa-calendar-check"></i> Appointment Settings</div>
+          <div class="section-sub">Configure how bookings are managed, confirmed and tracked.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-calendar-plus"></i></div>
+              <div><div class="sc-title">Booking Preferences</div><div class="sc-sub">Control how appointments are booked and managed</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Auto-Confirm Bookings</div><div class="srow-desc">Automatically confirm appointments without manual approval</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Allow Same-Day Booking</div><div class="srow-desc">Clients can book appointments for the same day</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Minimum Advance Booking</div><div class="srow-desc">Minimum time required before booking is allowed</div></div>
+                <div class="srow-right"><select class="s-select"><option>No minimum</option><option selected>1 hour</option><option>2 hours</option><option>24 hours</option></select></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Maximum Advance Booking</div><div class="srow-desc">How far in advance clients can book</div></div>
+                <div class="srow-right"><select class="s-select"><option>1 week</option><option selected>1 month</option><option>3 months</option><option>6 months</option></select></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Slot Interval</div><div class="srow-desc">Time gap between available appointment slots</div></div>
+                <div class="srow-right"><select class="s-select"><option>15 min</option><option selected>30 min</option><option>45 min</option><option>60 min</option></select></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Buffer Time Between Appointments</div><div class="srow-desc">Extra time after each appointment for cleanup</div></div>
+                <div class="srow-right"><select class="s-select"><option selected>No buffer</option><option>10 min</option><option>15 min</option><option>30 min</option></select></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Cancellation Policy</div><div class="srow-desc">Allow cancellation up to how many hours before appointment</div></div>
+                <div class="srow-right"><select class="s-select"><option>Anytime</option><option selected>2 hours before</option><option>24 hours before</option><option>No cancellation</option></select></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PAYMENTS ══ -->
+        <div class="settings-section" id="sec-payments">
+          <div class="section-title"><i class="fa-solid fa-indian-rupee-sign"></i> Payment Settings</div>
+          <div class="section-sub">Configure payment methods, currency and invoicing.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon green"><i class="fa-solid fa-wallet"></i></div>
+              <div><div class="sc-title">Payment Methods</div><div class="sc-sub">Enable or disable payment options for your clients</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label"><i class="fa-solid fa-mobile-screen" style="color:#2e7d32;font-size:13px"></i> UPI / QR Code</div><div class="srow-desc">Accept payments via GPay, PhonePe, Paytm, BHIM</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label"><i class="fa-solid fa-credit-card" style="color:#1565c0;font-size:13px"></i> Credit / Debit Cards</div><div class="srow-desc">Accept card payments via Razorpay or Stripe</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label"><i class="fa-solid fa-money-bill" style="color:#2e7d32;font-size:13px"></i> Cash on Arrival</div><div class="srow-desc">Allow clients to pay in cash at the salon</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label"><i class="fa-solid fa-id-card" style="color:var(--gold-dk);font-size:13px"></i> Loyalty Points Redemption</div><div class="srow-desc">Allow clients to redeem loyalty points as payment</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-file-invoice"></i></div>
+              <div><div class="sc-title">Invoicing & Tax</div><div class="sc-sub">Configure invoice settings and GST details</div></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="fg"><label class="flbl">Currency</label>
+                <select class="fsel"><option selected>₹ Indian Rupee (INR)</option><option>$ US Dollar (USD)</option></select>
+              </div>
+              <div class="fg"><label class="flbl">GST Rate</label>
+                <select class="fsel"><option>None</option><option selected>18% (Standard)</option><option>12%</option><option>5%</option></select>
+              </div>
+              <div class="fg"><label class="flbl">Invoice Prefix</label><input type="text" class="finp" value="KCZM" placeholder="e.g. INV, KCZM"></div>
+              <div class="fg"><label class="flbl">Invoice Starting Number</label><input type="number" class="finp" value="1001" placeholder="1001"></div>
+              <div class="fg full"><label class="flbl">Invoice Footer Note</label><textarea class="ftxt" rows="2">Thank you for choosing KCOZM — The Luxury Salon. We hope to see you again!</textarea></div>
+            </div>
+            <div class="sc-footer">
+              <button class="btn btn-gold" onclick="KcozmAdmin.showToast('Payment settings saved!','success')"><i class="fa-solid fa-check"></i> Save Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ STAFF ══ -->
+        <div class="settings-section" id="sec-staff">
+          <div class="section-title"><i class="fa-solid fa-user-tie"></i> Staff & Role Permissions</div>
+          <div class="section-sub">Control what each staff role can access and modify.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon blue"><i class="fa-solid fa-shield-halved"></i></div>
+              <div><div class="sc-title">Role Permissions Matrix</div><div class="sc-sub">Define access levels for each role in your salon</div></div>
+            </div>
+            <div class="sc-body">
+              <table class="perm-table">
+                <thead>
+                  <tr>
+                    <th>Permission</th>
+                    <th style="text-align:center">Admin</th>
+                    <th style="text-align:center">Manager</th>
+                    <th style="text-align:center">Stylist</th>
+                    <th style="text-align:center">Receptionist</th>
+                  </tr>
+                </thead>
+                <tbody id="permTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon rose"><i class="fa-solid fa-users-gear"></i></div>
+              <div><div class="sc-title">Staff General Settings</div><div class="sc-sub">Configure staff-related preferences</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Allow Staff Self-Scheduling</div><div class="srow-desc">Staff can set their own availability and working hours</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Show Staff to Clients</div><div class="srow-desc">Clients can choose a specific staff member when booking</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Commission Tracking</div><div class="srow-desc">Track individual staff service commissions</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ INTEGRATIONS ══ -->
+        <div class="settings-section" id="sec-integrations">
+          <div class="section-title"><i class="fa-solid fa-plug"></i> Integrations</div>
+          <div class="section-sub">Connect third-party services and manage your API keys.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon dark"><i class="fa-solid fa-key"></i></div>
+              <div><div class="sc-title">API Keys</div><div class="sc-sub">Use these keys to connect external services to KCOZM</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow" style="flex-direction:column;align-items:flex-start;gap:10px">
+                <div><div class="srow-label">Public API Key</div><div class="srow-desc">Use this for read-only operations from your website or app</div></div>
+                <div class="api-key-row">
+                  <div class="api-key-display" id="pubKey">pk_live_kczm_••••••••••••••••••••••••••••••••</div>
+                  <button class="btn btn-out btn-sm" onclick="toggleKey('pubKey','pk_live_kczm_a8f2c1e9d4b7f30e5a6c2d9')"><i class="fa-solid fa-eye"></i></button>
+                  <button class="btn btn-out btn-sm" onclick="copyKey('pk_live_kczm_a8f2c1e9d4b7f30e5a6c2d9')"><i class="fa-solid fa-copy"></i></button>
+                </div>
+              </div>
+              <div class="srow" style="flex-direction:column;align-items:flex-start;gap:10px">
+                <div><div class="srow-label">Secret API Key</div><div class="srow-desc">Keep this confidential — only use server-side</div></div>
+                <div class="api-key-row">
+                  <div class="api-key-display" id="secKey">sk_live_kczm_••••••••••••••••••••••••••••••••</div>
+                  <button class="btn btn-out btn-sm" onclick="toggleKey('secKey','sk_live_kczm_9f3a7e1c5d8b2f4a6e0c1d9')"><i class="fa-solid fa-eye"></i></button>
+                  <button class="btn btn-out btn-sm" onclick="copyKey('sk_live_kczm_9f3a7e1c5d8b2f4a6e0c1d9')"><i class="fa-solid fa-copy"></i></button>
+                  <button class="btn btn-rose btn-sm" onclick="KcozmAdmin.showToast('New key generated!','success')"><i class="fa-solid fa-rotate"></i> Regenerate</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon green"><i class="fa-brands fa-whatsapp" style="font-size:17px"></i></div>
+              <div><div class="sc-title">Connected Services</div><div class="sc-sub">Manage external service integrations</div></div>
+            </div>
+            <div class="sc-body" id="integrationsBody"></div>
+          </div>
+        </div>
+
+        <!-- ══ SECURITY ══ -->
+        <div class="settings-section" id="sec-security">
+          <div class="section-title"><i class="fa-solid fa-shield-halved"></i> Security</div>
+          <div class="section-sub">Protect your account with advanced security settings.</div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-shield-halved"></i></div>
+              <div><div class="sc-title">Authentication</div><div class="sc-sub">Secure your account with additional verification steps</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Two-Factor Authentication (2FA)</div><div class="srow-desc">Require a verification code when signing in from a new device</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox"><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Login Notifications</div><div class="srow-desc">Receive an email whenever your account is accessed</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Session Timeout</div><div class="srow-desc">Automatically log out after a period of inactivity</div></div>
+                <div class="srow-right"><select class="s-select"><option>Never</option><option>30 minutes</option><option selected>2 hours</option><option>8 hours</option></select></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Allowed IP Addresses</div><div class="srow-desc">Restrict admin access to specific IP ranges</div></div>
+                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="KcozmAdmin.showToast('Feature coming soon','info')"><i class="fa-solid fa-plus"></i> Add IP</button></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon blue"><i class="fa-solid fa-list-check"></i></div>
+              <div><div class="sc-title">Activity Log</div><div class="sc-sub">Recent account activity and access events</div></div>
+            </div>
+            <div class="sc-body" id="activityLog"></div>
+            <div class="sc-footer">
+              <button class="btn btn-out" onclick="KcozmAdmin.showToast('Log exported','success')"><i class="fa-solid fa-file-export"></i> Export Log</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ BILLING ══ -->
+        <div class="settings-section" id="sec-billing">
+          <div class="section-title"><i class="fa-solid fa-credit-card"></i> Billing & Plan</div>
+          <div class="section-sub">Manage your subscription plan and payment details.</div>
+
+          <div class="plan-banner">
+            <div style="position:relative;z-index:1">
+              <div class="plan-badge"><i class="fa-solid fa-crown"></i> CURRENT PLAN</div>
+              <div class="plan-name">KCOZM Pro</div>
+              <div class="plan-sub">Unlimited appointments · 5 staff · All features · ₹1,499/month</div>
+            </div>
+            <div class="plan-right">
+              <button class="btn" style="background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;box-shadow:0 4px 16px var(--gold-glow)">
+                <i class="fa-solid fa-rocket"></i> Upgrade to Enterprise
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-card">
+            <div class="sc-head">
+              <div class="sc-head-icon gold"><i class="fa-solid fa-receipt"></i></div>
+              <div><div class="sc-title">Billing Details</div><div class="sc-sub">Manage payment method and invoice address</div></div>
+            </div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Payment Method</div><div class="srow-desc"><i class="fa-brands fa-cc-visa" style="color:#1565c0;font-size:16px"></i> &nbsp;Visa ending in 4242 · Expires 08/26</div></div>
+                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="KcozmAdmin.showToast('Update card coming soon','info')"><i class="fa-solid fa-pen"></i> Update</button></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Next Billing Date</div><div class="srow-desc">Your plan renews automatically on this date</div></div>
+                <div class="srow-right"><span style="font-size:13px;font-weight:600;color:var(--ink-2)">April 1, 2026</span></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left"><div class="srow-label">Auto-Renewal</div><div class="srow-desc">Automatically renew your subscription each month</div></div>
+                <div class="srow-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-track"></span></label></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ DANGER ══ -->
+        <div class="settings-section" id="sec-danger">
+          <div class="section-title" style="color:#c62828"><i class="fa-solid fa-triangle-exclamation" style="color:#c62828"></i> Danger Zone</div>
+          <div class="section-sub">These actions are irreversible. Please proceed with extreme caution.</div>
+
+          <div class="danger-zone">
+            <div class="dz-head"><i class="fa-solid fa-triangle-exclamation"></i><span>Irreversible Actions</span></div>
+            <div class="sc-body">
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label" style="color:#c62828">Reset All Settings</div>
+                  <div class="srow-desc">Restore all settings to their factory defaults. This cannot be undone.</div>
+                </div>
+                <div class="srow-right"><button class="btn btn-danger btn-sm" onclick="confirmDanger('reset')"><i class="fa-solid fa-rotate-left"></i> Reset Settings</button></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label" style="color:#c62828">Export All Data</div>
+                  <div class="srow-desc">Download a complete backup of all your salon data as a ZIP archive.</div>
+                </div>
+                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="KcozmAdmin.showToast('Preparing your data export…','info')"><i class="fa-solid fa-file-export"></i> Export Data</button></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label" style="color:#c62828">Delete All Appointments</div>
+                  <div class="srow-desc">Permanently delete all appointment history. This cannot be undone.</div>
+                </div>
+                <div class="srow-right"><button class="btn btn-danger btn-sm" onclick="confirmDanger('appointments')"><i class="fa-solid fa-trash"></i> Delete All</button></div>
+              </div>
+              <div class="srow">
+                <div class="srow-left">
+                  <div class="srow-label" style="color:#c62828">Delete Account</div>
+                  <div class="srow-desc">Permanently delete your KCOZM account and all associated data. This is irreversible.</div>
+                </div>
+                <div class="srow-right"><button class="btn btn-danger btn-sm" onclick="confirmDanger('account')"><i class="fa-solid fa-skull-crossbones"></i> Delete Account</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /settings-content -->
+    </div><!-- /settings-layout -->
+
+  </div>
+</div>
+
+<script src="../../js/shared-components.js"></script>
+<script>
+  KcozmAdmin.init({ activePage:'settings', pageTitle:'Settings', depth:'../../' });
+
+  /* ── Tab switching ── */
+  function switchTab(el, section) {
+    document.querySelectorAll('.snav-item').forEach(function(i){ i.classList.remove('active'); });
+    document.querySelectorAll('.settings-section').forEach(function(s){ s.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('sec-'+section).classList.add('active');
+  }
+
+  /* ── Save All ── */
+  function saveAll() {
+    var ind = document.getElementById('saveInd');
+    KcozmAdmin.showToast('All settings saved!','success');
+    ind.classList.add('show');
+    setTimeout(function(){ ind.classList.remove('show'); }, 3000);
+  }
+
+  /* ── Password Strength ── */
+  function checkPwd(v) {
+    var strength = 0;
+    if (v.length >= 8) strength++;
+    if (/[A-Z]/.test(v)) strength++;
+    if (/[0-9]/.test(v)) strength++;
+    if (/[^A-Za-z0-9]/.test(v)) strength++;
+    var colors = ['#f44336','#ff9800','#ffc107','#4caf50'];
+    var labels = ['Too weak','Fair — add numbers','Good — add symbols','Strong password ✓'];
+    for (var i=1; i<=4; i++) {
+      var el = document.getElementById('ps'+i);
+      el.style.background = i <= strength ? colors[strength-1] : 'var(--border)';
+    }
+    document.getElementById('pwdLabel').textContent = v.length ? labels[strength-1]||labels[0] : 'Enter a new password';
+    document.getElementById('pwdLabel').style.color = v.length ? colors[strength-1] : 'var(--ink-3)';
+  }
+
+  /* ── Avatar ── */
+  function handleAvatar(input) {
+    if (!input.files[0]) return;
+    var r = new FileReader();
+    r.onload = function(e) {
+      var av = document.getElementById('avatarPreview');
+      av.innerHTML = '<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+    };
+    r.readAsDataURL(input.files[0]);
+  }
+
+  /* ── Color swatch ── */
+  function selSwatch(el) {
+    document.querySelectorAll('.swatch').forEach(function(s){ s.classList.remove('sel'); });
+    el.classList.add('sel');
+    KcozmAdmin.showToast('Brand colour updated!','success');
+  }
+
+  /* ── Theme ── */
+  function selTheme(el, mode) {
+    document.querySelectorAll('.theme-opt').forEach(function(t){ t.classList.remove('sel'); });
+    el.classList.add('sel');
+    if (mode === 'dark') { document.body.classList.add('dark-mode'); localStorage.setItem('kc-dark','1'); }
+    else { document.body.classList.remove('dark-mode'); localStorage.setItem('kc-dark','0'); }
+    KcozmAdmin.showToast('Theme set to '+mode,'success');
+  }
+
+  /* ── Slider ── */
+  function updateSlider(input, labelId) {
+    var val = input.value;
+    document.getElementById(labelId).textContent = val + 'px';
+    var pct = ((val - input.min) / (input.max - input.min) * 100) + '%';
+    input.style.setProperty('--val', pct);
+  }
+
+  /* ── Notification pills ── */
+  document.querySelectorAll('.notif-pill').forEach(function(p) {
+    p.addEventListener('click', function(){ this.classList.toggle('active'); });
+  });
+
+  /* ── API Key toggle ── */
+  var keyVisible = {};
+  function toggleKey(id, real) {
+    keyVisible[id] = !keyVisible[id];
+    document.getElementById(id).textContent = keyVisible[id] ? real : id.replace('Key','').toLowerCase()+'_live_kczm_' + '•'.repeat(32);
+  }
+  function copyKey(val) {
+    navigator.clipboard.writeText(val).then(function(){ KcozmAdmin.showToast('API key copied!','success'); });
+  }
+
+  /* ── Danger confirm ── */
+  function confirmDanger(type) {
+    var msgs = { reset:'Reset all settings to default?', appointments:'Delete ALL appointment history?', account:'Permanently delete your account?' };
+    if (confirm(msgs[type] + '\n\nThis action CANNOT be undone.')) {
+      KcozmAdmin.showToast(type==='account'?'Account deletion requested — check email':'Action completed','success');
+    }
+  }
+
+  /* ── Operating Hours Grid ── */
+  var days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  var defaultOpen = [true,true,true,true,true,true,false];
+  var hoursGrid = document.getElementById('hoursGrid');
+  if (hoursGrid) {
+    hoursGrid.innerHTML = days.map(function(d,i){
+      return '<div class="srow">'
+        +'<div class="srow-left" style="min-width:110px"><div class="srow-label">'+d+'</div></div>'
+        +'<div class="srow-right" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
+          +'<label class="toggle"><input type="checkbox" '+(defaultOpen[i]?'checked':'')+" onchange=\"toggleDay(this,"+i+")\"><span class=\"toggle-track\"></span></label>"
+          +'<span style="font-size:12px;font-weight:600;color:var(--ink-3);min-width:36px" id="day-lbl-'+i+'">'+(defaultOpen[i]?'Open':'Closed')+'</span>'
+          +'<input type="time" class="s-input" value="10:00" id="open-'+i+'" style="min-width:100px;'+(defaultOpen[i]?'':'opacity:.35;pointer-events:none')+'">'
+          +'<span style="font-size:12px;color:var(--ink-3)">to</span>'
+          +'<input type="time" class="s-input" value="20:00" id="close-'+i+'" style="min-width:100px;'+(defaultOpen[i]?'':'opacity:.35;pointer-events:none')+'">'
+        +'</div>'
+      +'</div>';
+    }).join('');
+  }
+  function toggleDay(cb, i) {
+    var open = cb.checked;
+    document.getElementById('day-lbl-'+i).textContent = open ? 'Open' : 'Closed';
+    document.getElementById('open-'+i).style.cssText += open?'opacity:1;pointer-events:auto':'opacity:.35;pointer-events:none';
+    document.getElementById('close-'+i).style.cssText += open?'opacity:1;pointer-events:auto':'opacity:.35;pointer-events:none';
+  }
+
+  /* ── Permissions Table ── */
+  var PERMS = [
+    ['View Dashboard',        true,  true,  true,  true ],
+    ['Manage Appointments',   true,  true,  true,  true ],
+    ['Manage Services',       true,  true,  false, false],
+    ['Manage Staff',          true,  true,  false, false],
+    ['Manage Customers',      true,  true,  false, true ],
+    ['View Reports',          true,  true,  false, false],
+    ['Manage Products',       true,  true,  true,  false],
+    ['Process Payments',      true,  true,  true,  true ],
+    ['Manage Settings',       true,  false, false, false],
+    ['Delete Records',        true,  false, false, false],
+  ];
+  var permTable = document.getElementById('permTable');
+  if (permTable) {
+    permTable.innerHTML = PERMS.map(function(row){
+      return '<tr><td>'+row[0]+'</td>'
+        + [1,2,3,4].map(function(j){
+            return '<td style="text-align:center">'
+              +(row[j]
+                ?'<i class="fa-solid fa-circle-check" style="color:var(--gold-dk);font-size:15px"></i>'
+                :'<i class="fa-solid fa-circle-xmark" style="color:var(--border);font-size:15px"></i>')
+              +'</td>';
+          }).join('')
+        +'</tr>';
+    }).join('');
+  }
+
+  /* ── Integrations ── */
+  var INTEGRATIONS = [
+    { name:'WhatsApp Business', icon:'fa-brands fa-whatsapp', color:'#25D366', status:'connected', desc:'Sending booking confirmations' },
+    { name:'Razorpay',          icon:'fa-solid fa-bolt',      color:'#2d8cf0', status:'connected', desc:'Payment gateway active' },
+    { name:'Google Calendar',   icon:'fa-brands fa-google',   color:'#ea4335', status:'disconnected', desc:'Sync appointments to calendar' },
+    { name:'Mailchimp',         icon:'fa-solid fa-envelope',  color:'#ffe01b', status:'disconnected', desc:'Email marketing campaigns' },
+  ];
+  var intBody = document.getElementById('integrationsBody');
+  if (intBody) {
+    intBody.innerHTML = INTEGRATIONS.map(function(ig){
+      var connected = ig.status === 'connected';
+      return '<div class="srow">'
+        +'<div class="srow-left" style="display:flex;align-items:center;gap:12px">'
+          +'<div style="width:38px;height:38px;border-radius:9px;background:'+ig.color+'22;border:1px solid '+ig.color+'44;display:flex;align-items:center;justify-content:center;font-size:16px;color:'+ig.color+'"><i class="'+ig.icon+'"></i></div>'
+          +'<div><div class="srow-label">'+ig.name+'</div><div class="srow-desc">'+ig.desc+'</div></div>'
+        +'</div>'
+        +'<div class="srow-right" style="display:flex;align-items:center;gap:10px">'
+          +'<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:'+(connected?'#e8f5e9':'var(--surface-2)')+';color:'+(connected?'#2e7d32':'var(--ink-3)')+'">'
+            +'<i class="fa-solid fa-circle" style="font-size:6px"></i> '+(connected?'Connected':'Disconnected')
+          +'</span>'
+          +'<button class="btn btn-out btn-sm" onclick="KcozmAdmin.showToast(\''+(connected?'Disconnected from ':'Connecting to ')+ig.name+'…\','+(connected?'\'info\'':'\'success\'')+')">'+( connected?'Disconnect':'Connect')+'</button>'
+        +'</div>'
+      +'</div>';
+    }).join('');
+  }
+
+  /* ── Activity Log ── */
+  var ACTIVITY = [
+    { icon:'fa-right-to-bracket', color:'#2e7d32', event:'Successful login', detail:'Chrome · Mumbai, India', time:'Today 9:14 AM' },
+    { icon:'fa-pen',              color:'var(--gold-dk)', event:'Profile updated', detail:'Changed phone number', time:'Today 9:01 AM' },
+    { icon:'fa-key',              color:'#1565c0', event:'Password changed', detail:'Secure update', time:'Mar 12 · 3:20 PM' },
+    { icon:'fa-right-to-bracket', color:'#2e7d32', event:'Successful login', detail:'Safari · Mumbai, India', time:'Mar 12 · 10:55 AM' },
+    { icon:'fa-triangle-exclamation', color:'#c62828', event:'Failed login attempt', detail:'Unknown device · Pune', time:'Mar 10 · 7:42 PM' },
+  ];
+  var actLog = document.getElementById('activityLog');
+  if (actLog) {
+    actLog.innerHTML = ACTIVITY.map(function(a){
+      return '<div class="srow">'
+        +'<div class="srow-left" style="display:flex;align-items:center;gap:12px">'
+          +'<div style="width:36px;height:36px;border-radius:9px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:'+a.color+';flex-shrink:0"><i class="fa-solid '+a.icon+'"></i></div>'
+          +'<div><div class="srow-label">'+a.event+'</div><div class="srow-desc">'+a.detail+'</div></div>'
+        +'</div>'
+        +'<div class="srow-right" style="font-size:12px;color:var(--ink-3);white-space:nowrap">'+a.time+'</div>'
+      +'</div>';
+    }).join('');
+  }
+</script>
+</body>
+</html>

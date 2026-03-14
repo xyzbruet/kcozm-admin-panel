@@ -606,16 +606,17 @@
     ]},
     { sec:'SALON', items:[
       { slug:'services', label:'Services', icon:'fa-scissors', badge:null, children:[
-        { slug:'services',     label:'All Services',       icon:'fa-list',               href:'pages/ui-features/service.html'      },
-        { slug:'categorylist', label:'Service Categories', icon:'fa-tags',               href:'pages/ui-features/categorylist.html' },
-        { slug:'styling',      label:'Styling',            icon:'fa-wand-magic-sparkles', href:'pages/ui-features/styling.html'     },
-        { slug:'loyalty',      label:'Loyalty Cards',      icon:'fa-id-card',            href:'pages/ui-features/loyalty.html'      }
+        { slug:'services',            label:'All Services',       icon:'fa-list',               href:'pages/ui-features/service.html'            },
+        { slug:'categorylist',        label:'Categories',         icon:'fa-folder',             href:'pages/ui-features/categorylist.html'        },
+        { slug:'service_categories',  label:'Sub-Categories',     icon:'fa-folder-open',        href:'pages/ui-features/service_categories.html'  },
+        { slug:'styling',             label:'Styling',            icon:'fa-wand-magic-sparkles', href:'pages/ui-features/styling.html'            },
+        { slug:'loyalty',             label:'Loyalty Cards',      icon:'fa-id-card',            href:'pages/ui-features/loyalty.html'             }
       ]},
       { slug:'products', label:'Products', icon:'fa-bottle-droplet', href:'pages/ui-features/e_shop.html', badge:null },
       { slug:'staff', label:'Staff', icon:'fa-user-tie', badge:null, children:[
-        { slug:'staff-list',     label:'All Staff',  icon:'fa-users',         href:'pages/ui-features/staff.html' },
-        { slug:'staff-roles',    label:'Roles',      icon:'fa-shield-halved', href:'#' },
-        { slug:'staff-schedule', label:'Schedules',  icon:'fa-calendar-days', href:'#' }
+        { slug:'staff-list',     label:'All Staff',  icon:'fa-users',         href:'pages/ui-features/staff.html'          },
+        { slug:'staff-roles',    label:'Roles',      icon:'fa-shield-halved', href:'pages/ui-features/staff-roles.html'    },
+        { slug:'staff-schedule', label:'Schedules',  icon:'fa-calendar-days', href:'pages/ui-features/staff-schedule.html' }
       ]}
     ]},
     { sec:'BUSINESS', items:[
@@ -631,7 +632,7 @@
       ]}
     ]},
     { sec:'SYSTEM', items:[
-      { slug:'settings', label:'Settings', icon:'fa-gear',               href:'#',                        badge:null },
+      { slug:'settings', label:'Settings', icon:'fa-gear',               href:'pages/ui-features/settings.html',  badge:null },
       { slug:'logout',   label:'Logout',   icon:'fa-right-from-bracket', href:'pages/samples/login.html', badge:null, danger:true }
     ]}
   ];
@@ -771,7 +772,7 @@
       +  '<div class="kc-nb-pdrop">'
       +    '<div class="kc-nb-pdhead"><div class="kc-nb-pdname">Salon Admin</div><div class="kc-nb-pdemail">admin@kcozm.com</div></div>'
       +    '<a class="kc-nb-pdi" href="'+root+'pages/ui-features/admin-profile.html"><i class="fa-solid fa-user"></i> My Profile</a>'
-      +    '<a class="kc-nb-pdi" href="#"><i class="fa-solid fa-gear"></i> Settings</a>'
+      +    '<a class="kc-nb-pdi" href="'+root+'pages/ui-features/settings.html"><i class="fa-solid fa-gear"></i> Settings</a>'
       +    '<a class="kc-nb-pdi" href="#"><i class="fa-solid fa-key"></i> Change Password</a>'
       +    '<div class="kc-pd-hr"></div>'
       +    '<a class="kc-nb-pdi red" href="'+root+'pages/samples/login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>'

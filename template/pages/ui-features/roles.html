@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Roles</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
+      --pk:#e91e63; --pk-dk:#c2185b; --pk-lt:#fce4ec;
+      --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060;
+      --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
+      --r-sm:8px; --r-md:14px; --r-lg:20px;
+      --shadow:0 2px 24px rgba(26,18,8,.08); --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
+    .main-panel{min-width:0;overflow-x:hidden}
+    .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
+
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:10px}
+
+    /* Layout: two columns */
+    .kc-layout{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start}
+    @media(max-width:960px){.kc-layout{grid-template-columns:1fr}}
+
+    /* Card */
+    .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .45s ease both;margin-bottom:28px}
+    .kc-card-head{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .kc-head-left{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
+    .kc-head-right{display:flex;align-items:center;gap:10px}
+
+    .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--gold-glow);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
+    .kc-btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
+    .kc-btn-out{padding:9px 18px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--t);white-space:nowrap}
+    .kc-btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+
+    /* Roles list */
+    .kc-roles-list{padding:16px}
+    .kc-role-item{border:1.5px solid var(--border);border-radius:var(--r-md);padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:all var(--t);animation:fadeUp .35s ease both;position:relative}
+    .kc-role-item:last-child{margin-bottom:0}
+    .kc-role-item:hover,.kc-role-item.active{border-color:var(--gold);background:var(--gold-lt)}
+    .kc-role-item.active{box-shadow:0 0 0 3px var(--gold-glow)}
+    .kc-ri-top{display:flex;align-items:center;gap:14px}
+    .kc-ri-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .kc-ri-name{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--ink)}
+    .kc-ri-desc{font-size:12px;color:var(--ink-3);margin-top:2px}
+    .kc-ri-meta{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .kc-ri-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;font-size:11.5px;font-weight:600;background:var(--surface-2);border:1px solid var(--border);color:var(--ink-2)}
+    .kc-ri-acts{position:absolute;top:16px;right:16px;display:flex;gap:6px}
+    .kc-ri-btn{width:30px;height:30px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:12px;transition:all var(--t)}
+    .kc-ri-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-ri-btn.danger:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+
+    /* Permissions panel */
+    .kc-perms-panel{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .5s .1s ease both;position:sticky;top:24px}
+    .kc-pp-head{padding:18px 20px;border-bottom:1px solid var(--border);background:var(--gold-lt)}
+    .kc-pp-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--gold-dk)}
+    .kc-pp-sub{font-size:12px;color:var(--ink-3);margin-top:2px}
+    .kc-pp-body{padding:16px}
+    .kc-perm-group{margin-bottom:20px}
+    .kc-perm-group:last-child{margin-bottom:0}
+    .kc-pg-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:10px}
+    .kc-perm-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+    .kc-perm-row:last-child{border-bottom:none}
+    .kc-perm-name{font-size:13px;font-weight:500;color:var(--ink-2)}
+    /* Toggle */
+    .kc-toggle{position:relative;width:36px;height:20px;flex-shrink:0}
+    .kc-toggle input{opacity:0;width:0;height:0;position:absolute}
+    .kc-toggle-track{display:block;width:36px;height:20px;border-radius:20px;background:var(--border);cursor:pointer;transition:background var(--t)}
+    .kc-toggle input:checked+.kc-toggle-track{background:var(--gold)}
+    .kc-toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform var(--t);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+    .kc-toggle input:checked+.kc-toggle-track::after{transform:translateX(16px)}
+    .kc-pp-foot{padding:14px 16px;border-top:1px solid var(--border)}
+
+    /* Modal */
+    .kc-modal-ov{display:none;position:fixed;inset:0;background:rgba(26,18,8,.55);z-index:2000;backdrop-filter:blur(3px);align-items:center;justify-content:center}
+    .kc-modal-ov.show{display:flex}
+    .kc-modal{background:var(--surface);border-radius:var(--r-lg);width:min(480px,95vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(26,18,8,.22);animation:popIn .22s ease both}
+    .kc-modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .kc-modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--ink)}
+    .kc-modal-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
+    .kc-modal-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+    .kc-modal-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+    .kc-field{display:flex;flex-direction:column;gap:5px}
+    .kc-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-inp{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;transition:all var(--t)}
+    .kc-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-inp::placeholder{color:var(--ink-3)}
+    .kc-modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+  </style>
+</head>
+<body>
+
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Staff</span>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Roles</span>
+      </nav>
+
+      <div class="kc-layout">
+
+        <!-- Roles list -->
+        <div>
+          <div class="kc-card">
+            <div class="kc-card-head">
+              <div class="kc-head-left">
+                <div class="kc-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="kc-title">Staff Roles <small>Define roles &amp; access levels</small></div>
+              </div>
+              <div class="kc-head-right">
+                <button class="kc-btn-gold" onclick="openModal()"><i class="fa-solid fa-plus"></i> New Role</button>
+              </div>
+            </div>
+
+            <div class="kc-roles-list" id="rolesList"></div>
+          </div>
+        </div>
+
+        <!-- Permissions panel -->
+        <div>
+          <div class="kc-perms-panel">
+            <div class="kc-pp-head">
+              <div class="kc-pp-title" id="ppTitle">Senior Stylist</div>
+              <div class="kc-pp-sub" id="ppSub">6 members · Full service access</div>
+            </div>
+            <div class="kc-pp-body" id="ppBody">
+              <!-- injected by JS -->
+            </div>
+            <div class="kc-pp-foot">
+              <button class="kc-btn-gold" style="width:100%;justify-content:center" onclick="KcozmAdmin.showToast('Permissions saved!','success')">
+                <i class="fa-solid fa-floppy-disk"></i> Save Permissions
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- New Role Modal -->
+  <div class="kc-modal-ov" id="modalOv" onclick="if(event.target===this)closeModal()">
+    <div class="kc-modal">
+      <div class="kc-modal-head">
+        <div class="kc-modal-title">Create New Role</div>
+        <button class="kc-modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="kc-modal-body">
+        <div class="kc-field"><label class="kc-lbl">Role Name</label><input class="kc-inp" type="text" placeholder="e.g. Junior Stylist"></div>
+        <div class="kc-field"><label class="kc-lbl">Description</label><input class="kc-inp" type="text" placeholder="Brief description of this role"></div>
+        <div class="kc-field"><label class="kc-lbl">Base on existing role</label>
+          <select class="kc-inp">
+            <option value="">Start from scratch</option>
+            <option>Senior Stylist</option><option>Hair Stylist</option>
+            <option>Makeup Artist</option><option>Receptionist</option>
+          </select>
+        </div>
+      </div>
+      <div class="kc-modal-foot">
+        <button class="kc-btn-out" onclick="closeModal()">Cancel</button>
+        <button class="kc-btn-gold" onclick="closeModal();KcozmAdmin.showToast('Role created successfully!','success')">
+          <i class="fa-solid fa-shield-halved"></i> Create Role
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({ activePage:'staff-roles', pageTitle:'Roles', depth:'../../' });
+
+    const ROLES=[
+      {id:1, name:'Senior Stylist',  desc:'Lead stylist with full booking access',   icon:'fa-scissors',   color:'#c8a040', members:4, perms:'full'},
+      {id:2, name:'Hair Stylist',    desc:'Standard styling and colour services',     icon:'fa-wand-magic', color:'#e91e63', members:6, perms:'medium'},
+      {id:3, name:'Makeup Artist',   desc:'Makeup &amp; bridal beauty services',      icon:'fa-paintbrush', color:'#9c27b0', members:3, perms:'medium'},
+      {id:4, name:'Nail Technician', desc:'Nail art and treatment specialist',        icon:'fa-hand-sparkles',color:'#ff5722',members:2, perms:'limited'},
+      {id:5, name:'Skin Therapist',  desc:'Facials, cleanup and skin treatments',     icon:'fa-spa',        color:'#4caf50', members:2, perms:'limited'},
+      {id:6, name:'Receptionist',    desc:'Front desk, bookings and customer service',icon:'fa-headset',    color:'#2196f3', members:2, perms:'receptionist'},
+      {id:7, name:'Manager',         desc:'Full admin access to all features',        icon:'fa-crown',      color:'#795548', members:1, perms:'admin'},
+    ];
+
+    const PERMISSIONS={
+      full:[
+        {group:'Appointments',items:['View appointments','Create appointments','Edit appointments','Cancel appointments','Export schedule']},
+        {group:'Customers',items:['View customer profiles','Contact customers','View history']},
+        {group:'Services',items:['View services','Edit service notes']},
+        {group:'Reports',items:['View own performance report']}
+      ],
+      admin:[
+        {group:'Appointments',items:['View all appointments','Create appointments','Edit appointments','Cancel appointments','Export schedule']},
+        {group:'Customers',items:['View all customers','Edit customer profiles','Delete customers','Export customer data']},
+        {group:'Staff',items:['View staff','Add/edit staff','Manage roles','View payroll']},
+        {group:'Reports',items:['View all reports','Export reports','Financial reports']}
+      ],
+      receptionist:[
+        {group:'Appointments',items:['View appointments','Create appointments','Edit appointments']},
+        {group:'Customers',items:['View customers','Contact customers']},
+        {group:'Services',items:['View services']}
+      ],
+      medium:[
+        {group:'Appointments',items:['View own appointments','Create appointments']},
+        {group:'Customers',items:['View customer profiles']},
+        {group:'Services',items:['View services']}
+      ],
+      limited:[
+        {group:'Appointments',items:['View own appointments']},
+        {group:'Customers',items:['View customer name &amp; phone']}
+      ]
+    };
+
+    let activeRole=1;
+
+    function renderRoles(){
+      document.getElementById('rolesList').innerHTML=ROLES.map((r,i)=>`
+        <div class="kc-role-item${r.id===activeRole?' active':''}" style="animation-delay:${i*.05}s" onclick="selectRole(${r.id})">
+          <div class="kc-ri-acts">
+            <button class="kc-ri-btn" onclick="event.stopPropagation()" title="Edit"><i class="fa-solid fa-pen"></i></button>
+            <button class="kc-ri-btn danger" onclick="event.stopPropagation()" title="Delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+          <div class="kc-ri-top">
+            <div class="kc-ri-icon" style="background:${r.color}22;color:${r.color}"><i class="fa-solid ${r.icon}"></i></div>
+            <div>
+              <div class="kc-ri-name">${r.name}</div>
+              <div class="kc-ri-desc">${r.desc}</div>
+            </div>
+          </div>
+          <div class="kc-ri-meta">
+            <span class="kc-ri-chip"><i class="fa-solid fa-users" style="font-size:10px"></i> ${r.members} members</span>
+            <span class="kc-ri-chip" style="color:${r.color};border-color:${r.color}44;background:${r.color}11">
+              <i class="fa-solid fa-shield-halved" style="font-size:10px"></i>
+              ${r.perms==='admin'?'Full Admin':r.perms==='full'?'Full Service':r.perms==='medium'?'Medium':'Limited'} Access
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPermissions(role){
+      const perms=PERMISSIONS[role.perms]||PERMISSIONS.limited;
+      const defaultOn=(role.perms==='admin'||role.perms==='full');
+      document.getElementById('ppTitle').textContent=role.name;
+      document.getElementById('ppSub').textContent=`${role.members} member${role.members!==1?'s':''} · ${role.name} access`;
+      document.getElementById('ppBody').innerHTML=perms.map(g=>`
+        <div class="kc-perm-group">
+          <div class="kc-pg-label">${g.group}</div>
+          ${g.items.map((item,j)=>`
+            <div class="kc-perm-row">
+              <span class="kc-perm-name">${item}</span>
+              <label class="kc-toggle">
+                <input type="checkbox" ${defaultOn||j===0?'checked':''}>
+                <span class="kc-toggle-track"></span>
+              </label>
+            </div>
+          `).join('')}
+        </div>
+      `).join('');
+    }
+
+    function selectRole(id){
+      activeRole=id;
+      renderRoles();
+      const role=ROLES.find(r=>r.id===id);
+      if(role) renderPermissions(role);
+    }
+
+    function openModal(){document.getElementById('modalOv').classList.add('show');document.body.style.overflow='hidden';}
+    function closeModal(){document.getElementById('modalOv').classList.remove('show');document.body.style.overflow='';}
+
+    renderRoles();
+    renderPermissions(ROLES[0]);
+  </script>
+</body>
+</html>

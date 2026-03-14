@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – All Staff</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
+      --pk:#e91e63; --pk-dk:#c2185b; --pk-lt:#fce4ec;
+      --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060;
+      --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
+      --r-sm:8px; --r-md:14px; --r-lg:20px;
+      --shadow:0 2px 24px rgba(26,18,8,.08); --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
+    .main-panel{min-width:0;overflow-x:hidden}
+    .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
+
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+    /* Breadcrumb */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:10px}
+
+    /* Stats */
+    .kc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    @media(max-width:900px){.kc-stats{grid-template-columns:repeat(2,1fr)}}
+    .kc-stat{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);padding:20px 22px;position:relative;overflow:hidden;animation:fadeUp .45s ease both}
+    .kc-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+    .kc-stat:nth-child(1)::before{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
+    .kc-stat:nth-child(2)::before{background:linear-gradient(90deg,#4caf50,#2e7d32)}
+    .kc-stat:nth-child(3)::before{background:linear-gradient(90deg,var(--pk),var(--pk-dk))}
+    .kc-stat:nth-child(4)::before{background:linear-gradient(90deg,#2196f3,#1565c0)}
+    .kc-stat-icon{position:absolute;right:18px;top:18px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+    .kc-stat:nth-child(1) .kc-stat-icon{background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-stat:nth-child(2) .kc-stat-icon{background:#e8f5e9;color:#2e7d32}
+    .kc-stat:nth-child(3) .kc-stat-icon{background:var(--pk-lt);color:var(--pk-dk)}
+    .kc-stat:nth-child(4) .kc-stat-icon{background:#e3f2fd;color:#1565c0}
+    .kc-stat-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:10px}
+    .kc-stat-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--ink);line-height:1}
+    .kc-stat-sub{display:flex;align-items:center;gap:5px;margin-top:8px;font-size:12px;color:var(--ink-3)}
+    .up{color:#2e7d32;font-weight:600}
+
+    /* Card */
+    .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .5s .05s ease both;margin-bottom:28px}
+    .kc-card-head{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .kc-head-left{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
+    .kc-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--gold-glow);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
+    .kc-btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
+    .kc-btn-out{padding:9px 18px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--t);white-space:nowrap}
+    .kc-btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+
+    /* Toolbar */
+    .kc-toolbar{padding:14px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface-2)}
+    .kc-search-wrap{position:relative;flex:1;min-width:200px;max-width:300px}
+    .kc-search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
+    .kc-search{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;transition:all var(--t)}
+    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+    .kc-search::placeholder{color:var(--ink-3)}
+    .kc-filter-tabs{display:flex;gap:4px;flex-wrap:wrap}
+    .kc-ftab{padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);font-size:12.5px;font-weight:600;color:var(--ink-3);cursor:pointer;background:var(--surface);transition:all var(--t);white-space:nowrap}
+    .kc-ftab.active,.kc-ftab:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-stat-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-3);background:var(--surface);border:1px solid var(--border);padding:6px 16px;border-radius:50px;margin-left:auto;white-space:nowrap}
+    .kc-stat-pill strong{color:var(--gold-dk);font-size:14px}
+
+    /* Staff grid */
+    .kc-staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;padding:24px 26px}
+
+    /* Staff card */
+    .kc-scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:box-shadow var(--t),transform var(--t);animation:fadeUp .4s ease both;cursor:pointer}
+    .kc-scard:hover{box-shadow:0 8px 32px rgba(26,18,8,.12);transform:translateY(-3px)}
+    .kc-scard-top{height:80px;position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:0}
+    .kc-scard-av{width:72px;height:72px;border-radius:50%;border:4px solid var(--surface);box-shadow:0 4px 16px rgba(26,18,8,.14);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;position:absolute;bottom:-36px;left:50%;transform:translateX(-50%)}
+    .kc-scard-body{padding:44px 20px 20px;text-align:center}
+    .kc-scard-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--ink);margin-bottom:4px}
+    .kc-scard-role{font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:12px}
+    .kc-scard-badges{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .kc-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:50px;font-size:11px;font-weight:600}
+    .kc-badge.active {background:#e8f5e9;color:#2e7d32}
+    .kc-badge.leave  {background:#fff3e0;color:#e65100}
+    .kc-badge.vip    {background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-badge.new    {background:var(--pk-lt);color:var(--pk-dk)}
+    .kc-scard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;border-top:1px solid var(--border);padding-top:14px}
+    .kc-ss{text-align:center}
+    .kc-ss-val{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--ink)}
+    .kc-ss-lbl{font-size:10px;color:var(--ink-3);margin-top:2px}
+    .kc-scard-acts{display:flex;gap:8px}
+    .kc-sact{flex:1;padding:8px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all var(--t)}
+    .kc-sact:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-sact.danger:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+
+    /* Pagination */
+    .kc-pag{padding:16px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .kc-pag-info{font-size:13px;color:var(--ink-3)}
+    .kc-pag-btns{display:flex;gap:4px}
+    .kc-pag-btn{min-width:34px;height:34px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all var(--t)}
+    .kc-pag-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-pag-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border-color:transparent}
+
+    /* Modal */
+    .kc-modal-ov{display:none;position:fixed;inset:0;background:rgba(26,18,8,.55);z-index:2000;backdrop-filter:blur(3px);align-items:center;justify-content:center}
+    .kc-modal-ov.show{display:flex}
+    .kc-modal{background:var(--surface);border-radius:var(--r-lg);width:min(520px,95vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(26,18,8,.22);animation:popIn .22s ease both}
+    .kc-modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .kc-modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--ink)}
+    .kc-modal-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
+    .kc-modal-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+    .kc-modal-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+    .kc-field{display:flex;flex-direction:column;gap:5px}
+    .kc-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-inp{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;transition:all var(--t)}
+    .kc-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-inp::placeholder{color:var(--ink-3)}
+    .kc-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .kc-modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+  </style>
+</head>
+<body>
+
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Staff</span>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>All Staff</span>
+      </nav>
+
+      <!-- Stats -->
+      <div class="kc-stats">
+        <div class="kc-stat" style="animation-delay:.0s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-users"></i></div>
+          <div class="kc-stat-label">Total Staff</div>
+          <div class="kc-stat-val">18</div>
+          <div class="kc-stat-sub"><span class="up"><i class="fa-solid fa-arrow-up"></i> 2</span>&nbsp;new this month</div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.07s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="kc-stat-label">Active Today</div>
+          <div class="kc-stat-val">14</div>
+          <div class="kc-stat-sub" style="color:#2e7d32"><i class="fa-solid fa-circle" style="font-size:7px"></i>&nbsp;On duty</div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.14s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+          <div class="kc-stat-label">On Leave</div>
+          <div class="kc-stat-val">4</div>
+          <div class="kc-stat-sub" style="color:var(--ink-3)">Back this week</div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.21s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-star"></i></div>
+          <div class="kc-stat-label">Avg Rating</div>
+          <div class="kc-stat-val">4.7</div>
+          <div class="kc-stat-sub"><span class="up"><i class="fa-solid fa-arrow-up"></i> 0.2</span>&nbsp;vs last month</div>
+        </div>
+      </div>
+
+      <!-- Main card -->
+      <div class="kc-card">
+        <div class="kc-card-head">
+          <div class="kc-head-left">
+            <div class="kc-icon-wrap"><i class="fa-solid fa-users"></i></div>
+            <div class="kc-title">All Staff <small>Manage your salon team members</small></div>
+          </div>
+          <div class="kc-head-right">
+            <button class="kc-btn-out"><i class="fa-solid fa-file-export"></i> Export</button>
+            <button class="kc-btn-gold" onclick="openModal()"><i class="fa-solid fa-plus"></i> Add Staff</button>
+          </div>
+        </div>
+
+        <div class="kc-toolbar">
+          <div class="kc-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="kc-search" id="searchInput" placeholder="Search staff…" oninput="handleSearch(this.value)">
+          </div>
+          <div class="kc-filter-tabs">
+            <button class="kc-ftab active" onclick="setFilter(this,'all')">All</button>
+            <button class="kc-ftab" onclick="setFilter(this,'active')">Active</button>
+            <button class="kc-ftab" onclick="setFilter(this,'leave')">On Leave</button>
+            <button class="kc-ftab" onclick="setFilter(this,'Stylist')">Stylists</button>
+            <button class="kc-ftab" onclick="setFilter(this,'Makeup')">Makeup</button>
+          </div>
+          <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">8</strong></div>
+        </div>
+
+        <!-- Staff Grid -->
+        <div class="kc-staff-grid" id="staffGrid"></div>
+
+        <div class="kc-pag">
+          <div class="kc-pag-info" id="pagInfo">Showing 1–8 of 8</div>
+          <div class="kc-pag-btns">
+            <button class="kc-pag-btn">‹</button>
+            <button class="kc-pag-btn active">1</button>
+            <button class="kc-pag-btn">2</button>
+            <button class="kc-pag-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Add Staff Modal -->
+  <div class="kc-modal-ov" id="modalOv" onclick="if(event.target===this)closeModal()">
+    <div class="kc-modal">
+      <div class="kc-modal-head">
+        <div class="kc-modal-title">Add New Staff</div>
+        <button class="kc-modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="kc-modal-body">
+        <div class="kc-row2">
+          <div class="kc-field"><label class="kc-lbl">First Name</label><input class="kc-inp" type="text" placeholder="e.g. Aisha"></div>
+          <div class="kc-field"><label class="kc-lbl">Last Name</label><input class="kc-inp" type="text" placeholder="e.g. Khan"></div>
+        </div>
+        <div class="kc-field"><label class="kc-lbl">Role / Designation</label>
+          <select class="kc-inp">
+            <option value="">Select role…</option>
+            <option>Senior Stylist</option><option>Hair Stylist</option>
+            <option>Makeup Artist</option><option>Nail Technician</option>
+            <option>Skin Therapist</option><option>Receptionist</option><option>Manager</option>
+          </select>
+        </div>
+        <div class="kc-row2">
+          <div class="kc-field"><label class="kc-lbl">Phone</label><input class="kc-inp" type="tel" placeholder="+91 98XXX XXXXX"></div>
+          <div class="kc-field"><label class="kc-lbl">Email</label><input class="kc-inp" type="email" placeholder="staff@kcozm.com"></div>
+        </div>
+        <div class="kc-row2">
+          <div class="kc-field"><label class="kc-lbl">Branch</label>
+            <select class="kc-inp">
+              <option>Pune West</option><option>Mumbai Andheri</option><option>Nagpur Central</option>
+            </select>
+          </div>
+          <div class="kc-field"><label class="kc-lbl">Joining Date</label><input class="kc-inp" type="date"></div>
+        </div>
+        <div class="kc-field"><label class="kc-lbl">Specialisations</label><input class="kc-inp" type="text" placeholder="e.g. Bridal, Keratin, Nail Art"></div>
+      </div>
+      <div class="kc-modal-foot">
+        <button class="kc-btn-out" onclick="closeModal()">Cancel</button>
+        <button class="kc-btn-gold" onclick="closeModal();KcozmAdmin.showToast('Staff member added successfully!','success')">
+          <i class="fa-solid fa-user-plus"></i> Add Staff
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({ activePage:'staff-list', pageTitle:'All Staff', depth:'../../' });
+
+    const COLORS=['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5'];
+    const STAFF=[
+      {id:1, name:'Aisha Khan',    role:'Senior Stylist',   status:'active',branch:'Pune West',    appts:142,rating:'4.9',exp:'6 yrs',speciality:'Bridal, Colour'},
+      {id:2, name:'Preethi Nair',  role:'Makeup Artist',    status:'active',branch:'Pune West',    appts:118,rating:'4.8',exp:'4 yrs',speciality:'Bridal Makeup'},
+      {id:3, name:'Roshni Gupta',  role:'Hair Stylist',     status:'active',branch:'Mumbai Andheri',appts:96, rating:'4.7',exp:'3 yrs',speciality:'Keratin, Colour'},
+      {id:4, name:'Sonal Mehta',   role:'Skin Therapist',   status:'active',branch:'Pune West',    appts:104,rating:'4.8',exp:'5 yrs',speciality:'Facials, Cleanup'},
+      {id:5, name:'Divya Sharma',  role:'Nail Technician',  status:'leave', branch:'Nagpur Central',appts:78, rating:'4.6',exp:'2 yrs',speciality:'Nail Art, Gel'},
+      {id:6, name:'Kavita Pillai', role:'Senior Stylist',   status:'active',branch:'Mumbai Andheri',appts:131,rating:'4.9',exp:'7 yrs',speciality:'Bridal, Highlights'},
+      {id:7, name:'Tanvi Joshi',   role:'Receptionist',     status:'active',branch:'Pune West',    appts:0,  rating:'4.5',exp:'1 yr', speciality:'Customer Service'},
+      {id:8, name:'Meghna Rao',    role:'Makeup Artist',    status:'leave', branch:'Pune West',    appts:89, rating:'4.7',exp:'3 yrs',speciality:'Editorial, Bridal'},
+    ];
+
+    let currentFilter='all', currentSearch='';
+
+    function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
+
+    function renderGrid(data){
+      const grid=document.getElementById('staffGrid');
+      document.getElementById('totalCount').textContent=data.length;
+      document.getElementById('pagInfo').textContent=`Showing 1–${data.length} of ${data.length}`;
+      if(!data.length){
+        grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--ink-3);font-size:14px"><i class="fa-solid fa-users-slash" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:12px"></i>No staff members found</div>';
+        return;
+      }
+      grid.innerHTML=data.map((s,i)=>{
+        const av=COLORS[i%COLORS.length];
+        const statusBadge=s.status==='active'
+          ?'<span class="kc-badge active"><i class="fa-solid fa-circle" style="font-size:6px"></i> Active</span>'
+          :'<span class="kc-badge leave"><i class="fa-solid fa-umbrella-beach" style="font-size:10px"></i> On Leave</span>';
+        const bg=s.status==='active'
+          ?`linear-gradient(135deg, ${av}22, ${av}44)`
+          :`linear-gradient(135deg, #f0ebe4, #e8e2da)`;
+        return `<div class="kc-scard" style="animation-delay:${i*.05}s" onclick="KcozmAdmin.showToast('Viewing ${s.name}','info')">
+          <div class="kc-scard-top" style="background:${bg}">
+            <div class="kc-scard-av" style="background:${av}">${initials(s.name)}</div>
+          </div>
+          <div class="kc-scard-body">
+            <div class="kc-scard-name">${s.name}</div>
+            <div class="kc-scard-role">${s.role} · ${s.branch}</div>
+            <div class="kc-scard-badges">${statusBadge}</div>
+            <div style="font-size:11px;color:var(--ink-3);margin-bottom:14px;line-height:1.5">${s.speciality}</div>
+            <div class="kc-scard-stats">
+              <div class="kc-ss"><div class="kc-ss-val">${s.appts}</div><div class="kc-ss-lbl">Appts</div></div>
+              <div class="kc-ss"><div class="kc-ss-val">★${s.rating}</div><div class="kc-ss-lbl">Rating</div></div>
+              <div class="kc-ss"><div class="kc-ss-val">${s.exp}</div><div class="kc-ss-lbl">Exp</div></div>
+            </div>
+            <div class="kc-scard-acts">
+              <button class="kc-sact" onclick="event.stopPropagation()"><i class="fa-solid fa-pen"></i> Edit</button>
+              <button class="kc-sact" onclick="event.stopPropagation()"><i class="fa-solid fa-calendar-days"></i> Schedule</button>
+              <button class="kc-sact danger" onclick="event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function applyFilters(){
+      let data=STAFF;
+      if(currentFilter==='active')  data=data.filter(s=>s.status==='active');
+      else if(currentFilter==='leave') data=data.filter(s=>s.status==='leave');
+      else if(currentFilter!=='all') data=data.filter(s=>s.role.includes(currentFilter));
+      if(currentSearch) data=data.filter(s=>s.name.toLowerCase().includes(currentSearch)||s.role.toLowerCase().includes(currentSearch));
+      renderGrid(data);
+    }
+
+    function setFilter(el,f){
+      document.querySelectorAll('.kc-ftab').forEach(b=>b.classList.remove('active'));
+      el.classList.add('active'); currentFilter=f; applyFilters();
+    }
+    function handleSearch(v){ currentSearch=v.toLowerCase(); applyFilters(); }
+
+    function openModal(){document.getElementById('modalOv').classList.add('show');document.body.style.overflow='hidden';}
+    function closeModal(){document.getElementById('modalOv').classList.remove('show');document.body.style.overflow='';}
+
+    renderGrid(STAFF);
+  </script>
+</body>
+</html>

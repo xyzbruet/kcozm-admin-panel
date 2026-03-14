@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM — Service Sub-Categories</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+
+  <style>
+    :root {
+      /* ── Core brand palette ── */
+      --gold:        #c8a040;
+      --gold-dk:     #9a7020;
+      --gold-ddk:    #7a5010;
+      --gold-lt:     #fdf6e8;
+      --gold-mid:    #fdf0d0;
+      --gold-glow:   rgba(200,160,64,.18);
+
+      --rose:        #c97b84;
+      --rose-dk:     #a85560;
+      --rose-lt:     #fdf0f2;
+
+      --ink:         #18120f;
+      --ink-2:       #3d3028;
+      --ink-3:       #907860;
+      --ink-4:       #c4b098;
+
+      --surface:     #ffffff;
+      --surface-2:   #faf8f6;
+      --surface-3:   #f4f0eb;
+      --border:      #ebe5de;
+      --border-lt:   #f2ede6;
+
+      --shadow-sm:   0 1px 6px rgba(24,18,12,.06);
+      --shadow:      0 2px 24px rgba(24,18,12,.08);
+      --shadow-md:   0 6px 32px rgba(24,18,12,.11);
+      --shadow-lg:   0 12px 48px rgba(24,18,12,.14);
+
+      --r:     14px;
+      --r-sm:  9px;
+      --t:     .2s ease;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'DM Sans',sans-serif; background:var(--surface-2); color:var(--ink); line-height:1.5; }
+    a { text-decoration:none; }
+
+    .main-panel { min-width:0; overflow-x:hidden; }
+    .kc-page-content { padding:32px 32px 48px; flex:1; width:100%; min-width:0; }
+    @media(max-width:640px){ .kc-page-content { padding:18px 16px 40px; } }
+
+    /* ── Animations ── */
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(16px)}  to{opacity:1;transform:none} }
+    @keyframes popIn    { from{opacity:0;transform:scale(.94)}        to{opacity:1;transform:scale(1)} }
+    @keyframes rowIn    { from{opacity:0;transform:translateX(-8px)}  to{opacity:1;transform:none} }
+
+    /* ══════════════════════════════════════
+       PAGE HERO HEADER
+    ══════════════════════════════════════ */
+    .page-hero {
+      background: linear-gradient(135deg, var(--gold-lt) 0%, rgba(201,123,132,.09) 100%);
+      border: 1px solid rgba(200,160,64,.22);
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      animation: fadeDown .4s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; right: -60px; top: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,160,64,.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-hero-left { display: flex; align-items: center; gap: 18px; }
+    .page-hero-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: #fff; flex-shrink: 0;
+      box-shadow: 0 4px 16px var(--gold-glow);
+    }
+    .page-hero-title {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 700; color: var(--ink);
+      line-height: 1.2; margin-bottom: 4px;
+    }
+    .page-hero-sub {
+      font-size: 13px; color: var(--ink-3); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .page-hero-sub .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-4); }
+    .page-hero-right { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    /* ── Breadcrumb ── */
+    .kc-bc {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--ink-3); margin-bottom: 20px;
+      animation: fadeDown .35s ease both;
+    }
+    .kc-bc a {
+      color: var(--gold-dk); font-weight: 600;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: opacity var(--t);
+    }
+    .kc-bc a:hover { opacity: .7; }
+    .kc-bc .sep { font-size: 9px; color: var(--ink-4); }
+
+    /* ══════════════════════════════════════
+       3-LEVEL NAV STRIP
+    ══════════════════════════════════════ */
+    .level-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeDown .4s .05s ease both;
+    }
+    @media(max-width:600px){ .level-nav { grid-template-columns: 1fr; } }
+
+    .ln-item {
+      display: flex; flex-direction: column;
+      padding: 18px 20px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      text-decoration: none;
+      transition: background var(--t);
+      position: relative; overflow: hidden;
+    }
+    .ln-item:last-child { border-right: none; }
+    .ln-item::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 3px;
+      background: transparent; transition: background var(--t);
+    }
+    .ln-item.active {
+      background: linear-gradient(135deg, rgba(201,123,132,.07), rgba(200,160,64,.07));
+    }
+    .ln-item.active::after { background: linear-gradient(90deg, var(--rose), var(--gold)); }
+    .ln-item:hover:not(.active) { background: var(--gold-lt); }
+
+    .ln-step {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ink-3);
+      display: flex; align-items: center; gap: 5px; margin-bottom: 6px;
+    }
+    .ln-item.active .ln-step { color: var(--rose-dk); }
+    .ln-count {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 700;
+      color: var(--border); line-height: 1;
+      position: absolute; right: 16px; top: 14px;
+      transition: color var(--t);
+    }
+    .ln-item.active .ln-count { color: rgba(201,123,132,.22); }
+    .ln-name {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700; color: var(--ink);
+      margin-bottom: 3px;
+    }
+    .ln-item.active .ln-name { color: var(--rose-dk); }
+    .ln-desc { font-size: 11.5px; color: var(--ink-3); }
+
+    /* ══════════════════════════════════════
+       STAT CARDS
+    ══════════════════════════════════════ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 28px;
+    }
+    @media(max-width:900px){ .stats-row { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:500px){ .stats-row { grid-template-columns: 1fr; } }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 22px;
+      position: relative; overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp .45s ease both;
+      transition: box-shadow var(--t), transform var(--t);
+    }
+    .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .stat-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .stat-card:nth-child(1)::before { background: linear-gradient(90deg,var(--gold),var(--gold-dk)); }
+    .stat-card:nth-child(2)::before { background: linear-gradient(90deg,var(--rose),var(--rose-dk)); }
+    .stat-card:nth-child(3)::before { background: linear-gradient(90deg,#2196f3,#1565c0); }
+    .stat-card:nth-child(4)::before { background: linear-gradient(90deg,#4caf50,#2e7d32); }
+
+    .stat-icon {
+      position: absolute; right: 18px; top: 18px;
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .stat-card:nth-child(1) .stat-icon { background:var(--gold-lt); color:var(--gold-dk); }
+    .stat-card:nth-child(2) .stat-icon { background:var(--rose-lt); color:var(--rose-dk); }
+    .stat-card:nth-child(3) .stat-icon { background:#e3f2fd; color:#1565c0; }
+    .stat-card:nth-child(4) .stat-icon { background:#e8f5e9; color:#2e7d32; }
+
+    .stat-label {
+      font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--ink-3); margin-bottom: 8px;
+    }
+    .stat-value {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 30px; font-weight: 700; color: var(--ink); line-height: 1;
+    }
+    .stat-sub { font-size: 11.5px; color: var(--ink-3); margin-top: 6px; }
+
+    /* ══════════════════════════════════════
+       MAIN CARD
+    ══════════════════════════════════════ */
+    .kc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 28px;
+      animation: fadeUp .5s .05s ease both;
+    }
+    .card-head {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    }
+    .head-left { display: flex; align-items: center; gap: 14px; }
+    .head-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--rose-lt);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .head-icon i { color: var(--rose-dk); }
+    .head-title {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 700; color: var(--ink);
+    }
+    .head-sub { font-size: 12px; color: var(--ink-3); margin-top: 3px; }
+    .head-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all var(--t); border: none; white-space: nowrap;
+      text-decoration: none;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+      color: #fff; box-shadow: 0 3px 12px var(--gold-glow);
+    }
+    .btn-gold:hover { box-shadow: 0 6px 20px rgba(200,160,64,.42); transform: translateY(-1px); color: #fff; }
+    .btn-rose {
+      background: linear-gradient(135deg, var(--rose), var(--rose-dk));
+      color: #fff; box-shadow: 0 3px 12px rgba(201,123,132,.25);
+    }
+    .btn-rose:hover { box-shadow: 0 6px 20px rgba(201,123,132,.38); transform: translateY(-1px); color: #fff; }
+    .btn-out {
+      background: transparent; border: 1.5px solid var(--border);
+      color: var(--ink-2);
+    }
+    .btn-out:hover { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
+
+    /* ── Search ── */
+    .search-wrap { position: relative; }
+    .search-wrap i {
+      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+      color: var(--ink-3); font-size: 12px; pointer-events: none;
+    }
+    .search-input {
+      padding: 9px 16px 9px 36px;
+      border: 1.5px solid var(--border); border-radius: 50px;
+      background: var(--surface-2); font-family: 'DM Sans', sans-serif;
+      font-size: 13px; color: var(--ink); width: 220px; outline: none;
+      transition: all var(--t);
+    }
+    .search-input:focus {
+      border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow);
+      background: #fff; width: 260px;
+    }
+    .search-input::placeholder { color: var(--ink-3); }
+
+    /* ══════════════════════════════════════
+       FILTER TOOLBAR
+    ══════════════════════════════════════ */
+    .toolbar {
+      padding: 14px 28px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      background: var(--surface-2);
+    }
+    .chip {
+      padding: 6px 14px; border-radius: 50px;
+      border: 1.5px solid var(--border);
+      font-size: 12px; font-weight: 600; color: var(--ink-3);
+      cursor: pointer; background: var(--surface);
+      transition: all var(--t); white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .chip:hover, .chip.active { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
+    .chip.ladies.active  { border-color: var(--rose); color: var(--rose-dk); background: var(--rose-lt); }
+    .chip.gents.active   { border-color: #1565c0; color: #1565c0; background: #e3f2fd; }
+    .chip.bridal.active  { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
+    .chip.kids.active    { border-color: #2e7d32; color: #2e7d32; background: #e8f5e9; }
+
+    .toolbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .count-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; color: var(--ink-3);
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 6px 14px; border-radius: 50px;
+    }
+    .count-pill strong { color: var(--gold-dk); font-size: 14px; }
+
+    /* ══════════════════════════════════════
+       INLINE ADD FORM
+    ══════════════════════════════════════ */
+    .inline-form {
+      padding: 28px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--gold-lt), rgba(201,123,132,.05));
+      display: none;
+    }
+    .inline-form.open { display: block; animation: fadeUp .25s ease both; }
+    .form-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+    }
+    .form-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dk));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; color: #fff;
+    }
+    .form-title {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700; color: var(--ink);
+    }
+    .form-title small {
+      display: block; font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 400; color: var(--ink-3); margin-top: 2px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 24px; }
+    @media(max-width:720px){ .form-grid { grid-template-columns: 1fr; } }
+    .fg { display: flex; flex-direction: column; gap: 6px; }
+    .fg.full { grid-column: 1/-1; }
+    .flbl {
+      font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .8px; color: var(--ink-3);
+    }
+    .finp, .fsel {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      background: var(--surface); font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px; color: var(--ink); outline: none;
+      transition: all var(--t); width: 100%;
+    }
+    .finp:focus, .fsel:focus {
+      border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); background: #fff;
+    }
+    .finp::placeholder { color: var(--ink-4); }
+    .fsel {
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+    }
+    .file-zone {
+      border: 2px dashed var(--border); border-radius: 10px; padding: 22px;
+      text-align: center; cursor: pointer; transition: all var(--t);
+      background: var(--surface); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; min-height: 90px;
+    }
+    .file-zone:hover { border-color: var(--gold); background: var(--gold-lt); }
+    .file-zone input { display: none; }
+    .file-zone .fz-icon { font-size: 22px; color: var(--gold); margin-bottom: 7px; }
+    .file-zone p { font-size: 12px; color: var(--ink-3); }
+    .form-foot {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 10px; margin-top: 20px; padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ══════════════════════════════════════
+       TABLE
+    ══════════════════════════════════════ */
+    .tbl-wrap { overflow-x: auto; }
+    table.tbl { width: 100%; border-collapse: collapse; }
+    .tbl th {
+      padding: 12px 20px; text-align: left;
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.2px; color: var(--ink-3);
+      background: var(--surface-2); border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .tbl th:first-child { padding-left: 28px; }
+    .tbl th:last-child  { padding-right: 28px; text-align: right; }
+    .tbl td {
+      padding: 15px 20px; border-bottom: 1px solid var(--border-lt);
+      font-size: 13.5px; color: var(--ink-2); vertical-align: middle;
+      transition: background var(--t);
+    }
+    .tbl td:first-child { padding-left: 28px; }
+    .tbl td:last-child  { padding-right: 28px; text-align: right; }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl tbody tr { animation: rowIn .3s ease both; }
+    .tbl tbody tr:hover td { background: #fdf8f0; }
+
+    /* Serial number */
+    .serial {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--ink-3);
+    }
+
+    /* Thumbnail placeholder */
+    .thumb-ph {
+      width: 56px; height: 46px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; border: 1px solid var(--border); flex-shrink: 0;
+    }
+
+    /* Sub-category name cell */
+    .cell-name { font-weight: 600; color: var(--ink); font-size: 13.5px; }
+    .cell-path {
+      display: flex; align-items: center; gap: 5px;
+      margin-top: 4px; flex-wrap: wrap;
+    }
+    .path-seg {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 2px 8px; border-radius: 20px;
+      font-size: 10.5px; font-weight: 600;
+    }
+    .path-arrow { color: var(--ink-4); font-size: 8px; }
+
+    /* Parent category badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11.5px; font-weight: 700;
+      padding: 5px 12px; border-radius: 20px;
+    }
+    .badge.rose   { background: var(--rose-lt); color: var(--rose-dk); }
+    .badge.blue   { background: #e3f2fd; color: #1565c0; }
+    .badge.gold   { background: var(--gold-lt); color: var(--gold-dk); }
+    .badge.green  { background: #e8f5e9; color: #2e7d32; }
+
+    /* Service count */
+    .svc-count {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1;
+    }
+    .svc-count-lbl { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+    /* Status pill */
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11.5px; font-weight: 700; padding: 5px 12px; border-radius: 20px;
+    }
+    .status-pill.active   { background: #e8f5e9; color: #2e7d32; }
+    .status-pill.inactive { background: #fce4ec; color: #c62828; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* Row actions */
+    .row-acts { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+    .act {
+      width: 33px; height: 33px; border-radius: 9px;
+      border: 1.5px solid var(--border); background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 12.5px; color: var(--ink-3);
+      transition: all var(--t);
+    }
+    .act:hover { transform: scale(1.08); }
+    .act.view:hover { background: #e3f2fd; border-color: #90caf9; color: #1565c0; }
+    .act.edit:hover { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
+    .act.del:hover  { background: #fce4ec; border-color: #f48fb1; color: #c62828; }
+
+    /* ══════════════════════════════════════
+       EXPAND ROW (linked services)
+    ══════════════════════════════════════ */
+    .expand-row { display: none; background: var(--surface-2); }
+    .expand-row.open { display: table-row; }
+    .expand-inner {
+      padding: 18px 28px 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .expand-title {
+      font-size: 10.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--ink-3); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .expand-title a {
+      margin-left: auto; font-size: 11px; color: var(--gold-dk);
+      font-weight: 600; display: flex; align-items: center; gap: 4px;
+    }
+    .expand-title a:hover { opacity: .75; }
+    .svcs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 8px;
+    }
+    .svc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 9px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12.5px; font-weight: 500; color: var(--ink-2);
+      transition: all var(--t);
+    }
+    .svc-card i { font-size: 11px; color: var(--gold-dk); flex-shrink: 0; }
+    .svc-card:hover { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
+
+    /* ══════════════════════════════════════
+       EMPTY STATE
+    ══════════════════════════════════════ */
+    .empty-state {
+      padding: 64px 20px; text-align: center; display: none;
+    }
+    .empty-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--rose-lt);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .empty-ring i { color: var(--rose-dk); font-size: 30px; opacity: .5; }
+    .empty-state h6 {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 20px; color: var(--ink); margin-bottom: 8px;
+    }
+    .empty-state p { font-size: 13px; color: var(--ink-3); }
+
+    /* ══════════════════════════════════════
+       PAGINATION
+    ══════════════════════════════════════ */
+    .pag {
+      padding: 16px 28px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .pag-info { font-size: 13px; color: var(--ink-3); }
+    .pag-btns { display: flex; gap: 4px; }
+    .pag-btn {
+      min-width: 34px; height: 34px; padding: 0 10px;
+      border-radius: 8px; border: 1.5px solid var(--border);
+      background: var(--surface); font-size: 13px; font-weight: 600;
+      color: var(--ink-2); cursor: pointer; transition: all var(--t);
+    }
+    .pag-btn:hover { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
+    .pag-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
+      color: #fff; border-color: transparent;
+    }
+
+    /* ══════════════════════════════════════
+       DELETE MODAL
+    ══════════════════════════════════════ */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(24,18,12,.55);
+      backdrop-filter: blur(6px);
+      z-index: 9000; display: none;
+      align-items: center; justify-content: center;
+    }
+    .overlay.show { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 20px;
+      padding: 40px 36px 30px; width: 100%; max-width: 380px;
+      text-align: center;
+      box-shadow: 0 32px 80px rgba(24,18,12,.26);
+      animation: popIn .22s ease both;
+    }
+    .modal-ring {
+      width: 68px; height: 68px; border-radius: 50%;
+      background: var(--rose-lt);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .modal-ring i { color: var(--rose-dk); font-size: 28px; }
+    .modal h5 {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-size: 22px; color: var(--ink); margin-bottom: 10px;
+    }
+    .modal p { font-size: 13.5px; color: var(--ink-3); margin-bottom: 26px; line-height: 1.6; }
+    .modal-row { display: flex; gap: 10px; }
+    .m-cancel {
+      flex: 1; padding: 11px; border: 1.5px solid var(--border);
+      border-radius: 10px; background: var(--surface);
+      font-family: 'DM Sans', sans-serif; font-size: 13.5px;
+      font-weight: 600; color: var(--ink-2); cursor: pointer;
+      transition: background var(--t);
+    }
+    .m-cancel:hover { background: var(--surface-2); }
+    .m-confirm {
+      flex: 1; padding: 11px; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dk));
+      font-family: 'DM Sans', sans-serif; font-size: 13.5px;
+      font-weight: 600; color: #fff; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(201,123,132,.30);
+      transition: opacity var(--t), transform var(--t);
+    }
+    .m-confirm:hover { opacity: .88; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <!-- Breadcrumb -->
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <a href="categorylist.html">Categories</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Sub-Categories</span>
+      </nav>
+
+      <!-- Page Hero -->
+      <div class="page-hero">
+        <div class="page-hero-left">
+          <div class="page-hero-icon"><i class="fa-solid fa-folder-tree"></i></div>
+          <div>
+            <div class="page-hero-title">Service Sub-Categories</div>
+            <div class="page-hero-sub">
+              <span>Organise services into structured groups</span>
+              <span class="dot"></span>
+              <span>Level 2 of 3</span>
+              <span class="dot"></span>
+              <span id="heroCount">16 sub-categories</span>
+            </div>
+          </div>
+        </div>
+        <div class="page-hero-right">
+          <a href="categorylist.html" class="btn btn-out"><i class="fa-solid fa-folder"></i> View Categories</a>
+          <a href="service.html" class="btn btn-gold"><i class="fa-solid fa-scissors"></i> View Services</a>
+        </div>
+      </div>
+
+      <!-- 3-Level Nav Strip -->
+      <div class="level-nav">
+        <a class="ln-item" href="categorylist.html">
+          <span class="ln-count">4</span>
+          <div class="ln-step"><i class="fa-solid fa-folder"></i> Level 1</div>
+          <div class="ln-name">Categories</div>
+          <div class="ln-desc">Ladies, Gents, Bridal, Kids</div>
+        </a>
+        <a class="ln-item active" href="service_categories.html">
+          <span class="ln-count">16</span>
+          <div class="ln-step"><i class="fa-solid fa-folder-open"></i> Level 2 — You are here</div>
+          <div class="ln-name">Sub-Categories</div>
+          <div class="ln-desc">Facials, Hair Styling, Beard…</div>
+        </a>
+        <a class="ln-item" href="service.html">
+          <span class="ln-count">18</span>
+          <div class="ln-step"><i class="fa-solid fa-scissors"></i> Level 3</div>
+          <div class="ln-name">Services</div>
+          <div class="ln-desc">Gold Facial, Keratin, Bridal Makeup…</div>
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card" style="animation-delay:.00s">
+          <div class="stat-icon"><i class="fa-solid fa-folder-tree"></i></div>
+          <div class="stat-label">Total Sub-Categories</div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-sub">Across all categories</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.07s">
+          <div class="stat-icon"><i class="fa-solid fa-venus"></i></div>
+          <div class="stat-label">Ladies</div>
+          <div class="stat-value" id="statLadies">0</div>
+          <div class="stat-sub">Most diverse category</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.14s">
+          <div class="stat-icon"><i class="fa-solid fa-scissors"></i></div>
+          <div class="stat-label">Services Linked</div>
+          <div class="stat-value" id="statServices">0</div>
+          <div class="stat-sub">Across all sub-categories</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.21s">
+          <div class="stat-icon"><i class="fa-solid fa-heart"></i></div>
+          <div class="stat-label">Bridal</div>
+          <div class="stat-value" id="statBridal">0</div>
+          <div class="stat-sub">Premium tier</div>
+        </div>
+      </div>
+
+      <!-- Main Card -->
+      <div class="kc-card">
+        <div class="card-head">
+          <div class="head-left">
+            <div class="head-icon"><i class="fa-solid fa-folder-tree"></i></div>
+            <div>
+              <div class="head-title">Service Sub-Categories</div>
+              <div class="head-sub">Each sub-category belongs to a Category and groups individual services</div>
+            </div>
+          </div>
+          <div class="head-right">
+            <div class="search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="search-input" id="catSearch" placeholder="Search sub-categories…" oninput="handleSearch(this.value)">
+            </div>
+            <button class="btn btn-rose" id="toggleAdd">
+              <i class="fa-solid fa-plus"></i> Add Sub-Category
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Toolbar -->
+        <div class="toolbar">
+          <button class="chip active" onclick="setFilter(this,'all')">All</button>
+          <button class="chip ladies" onclick="setFilter(this,'Ladies')"><i class="fa-solid fa-venus" style="font-size:10px"></i> Ladies</button>
+          <button class="chip gents"  onclick="setFilter(this,'Gents')"><i class="fa-solid fa-mars" style="font-size:10px"></i> Gents</button>
+          <button class="chip bridal" onclick="setFilter(this,'Bridal')"><i class="fa-solid fa-heart" style="font-size:10px"></i> Bridal</button>
+          <button class="chip kids"   onclick="setFilter(this,'Kids')"><i class="fa-solid fa-child" style="font-size:10px"></i> Kids</button>
+          <div class="toolbar-right">
+            <div class="count-pill">Showing &nbsp;<strong id="showCount">0</strong></div>
+          </div>
+        </div>
+
+        <!-- Inline Add Form -->
+        <div class="inline-form" id="addForm">
+          <div class="form-header">
+            <div class="form-icon"><i class="fa-solid fa-folder-plus"></i></div>
+            <div>
+              <div class="form-title">Add New Sub-Category
+                <small>Group services under a parent category</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="fg">
+              <label class="flbl">Sub-Category Name <span style="color:var(--rose-dk)">*</span></label>
+              <input type="text" class="finp" id="catName" placeholder="e.g. Hair Styling, Bridal Makeup…">
+            </div>
+            <div class="fg">
+              <label class="flbl">Parent Category <span style="color:var(--rose-dk)">*</span></label>
+              <select class="fsel" id="catParent">
+                <option value="">Select Category</option>
+                <option>Ladies</option>
+                <option>Gents</option>
+                <option>Bridal</option>
+                <option>Kids</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="flbl">Display Order</label>
+              <input type="number" class="finp" id="catOrder" placeholder="e.g. 1" min="1">
+            </div>
+            <div class="fg">
+              <label class="flbl">Status</label>
+              <select class="fsel" id="catStatus">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+            <div class="fg full">
+              <label class="flbl">Banner Image</label>
+              <div class="file-zone" id="fileZone" onclick="document.getElementById('catBanner').click()">
+                <input type="file" id="catBanner" accept="image/*">
+                <div class="fz-icon"><i class="fa-solid fa-image"></i></div>
+                <p>Click to upload banner — PNG, JPG up to 5MB</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-foot">
+            <button class="btn btn-out" id="cancelAdd">Cancel</button>
+            <button class="btn btn-rose" id="saveAdd"><i class="fa-solid fa-check"></i> Save Sub-Category</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th style="width:52px">#</th>
+                <th style="width:70px">Banner</th>
+                <th>Sub-Category</th>
+                <th>Parent Category</th>
+                <th>Services</th>
+                <th style="width:110px">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="catTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="empty-state" id="catEmpty">
+          <div class="empty-ring"><i class="fa-solid fa-folder-open"></i></div>
+          <h6>No sub-categories found</h6>
+          <p>Try a different filter or click <strong>Add Sub-Category</strong>.</p>
+        </div>
+
+        <div class="pag">
+          <div class="pag-info" id="pagInfo">Showing all sub-categories</div>
+          <div class="pag-btns">
+            <button class="pag-btn">‹</button>
+            <button class="pag-btn active">1</button>
+            <button class="pag-btn">2</button>
+            <button class="pag-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="overlay" id="delOverlay">
+    <div class="modal">
+      <div class="modal-ring"><i class="fa-solid fa-trash-can"></i></div>
+      <h5>Delete Sub-Category?</h5>
+      <p>This sub-category and its link to services will be removed. The individual services won't be deleted.</p>
+      <div class="modal-row">
+        <button class="m-cancel" onclick="closeDelModal()">Cancel</button>
+        <button class="m-confirm" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({ activePage:'service_categories', pageTitle:'Sub-Categories', depth:'../../' });
+
+    /* ── DATA ── */
+    var CATS = [
+      { id:1,  name:'Facials',         parent:'Ladies', count:5, status:'active',   services:['Gold Facial','Diamond Facial','Cleanup','Fruit Facial','Anti-Tan Facial'] },
+      { id:2,  name:'Hair Styling',    parent:'Ladies', count:6, status:'active',   services:['Hair Colour','Highlights','Keratin Treatment','Smoothening','Blow Dry','Hair Spa'] },
+      { id:3,  name:'Nail Care',       parent:'Ladies', count:4, status:'active',   services:['Manicure','Pedicure','Nail Art','Gel Nails'] },
+      { id:4,  name:'Styling',         parent:'Ladies', count:3, status:'active',   services:['Saree Draping','Lehenga Draping','Dupatta Setting'] },
+      { id:5,  name:'Mehendi',         parent:'Ladies', count:3, status:'active',   services:['Bridal Mehendi','Simple Mehendi','Arabic Mehendi'] },
+      { id:6,  name:'Waxing',          parent:'Ladies', count:4, status:'active',   services:['Full Body Wax','Arms Wax','Legs Wax','Bikini Wax'] },
+      { id:7,  name:'Hair',            parent:'Gents',  count:3, status:'active',   services:['Haircut','Hair Wash','Hair Colour'] },
+      { id:8,  name:'Beard',           parent:'Gents',  count:4, status:'active',   services:['Beard Trim','Beard Shape','Beard Colour','Beard Spa'] },
+      { id:9,  name:'Shaving',         parent:'Gents',  count:2, status:'active',   services:['Clean Shave','Luxury Shave'] },
+      { id:10, name:'Head Massage',    parent:'Gents',  count:2, status:'active',   services:['Oil Head Massage','Dry Head Massage'] },
+      { id:11, name:'Full Bridal',     parent:'Bridal', count:3, status:'active',   services:['Bridal Makeup','Hair Styling','Saree Draping'] },
+      { id:12, name:'Pre-Bridal',      parent:'Bridal', count:4, status:'active',   services:['Bridal Trial','Facial','Body Polishing','Threading'] },
+      { id:13, name:'Reception',       parent:'Bridal', count:3, status:'active',   services:['Reception Makeup','Hair Set','Draping'] },
+      { id:14, name:'Engagement',      parent:'Bridal', count:3, status:'inactive', services:['Engagement Makeup','Light Styling','Mehendi'] },
+      { id:15, name:'Kids Haircut',    parent:'Kids',   count:2, status:'active',   services:['Boy Haircut','Girl Haircut'] },
+      { id:16, name:'Kids Nail Art',   parent:'Kids',   count:2, status:'active',   services:['Basic Nail Art','Glitter Nails'] },
+    ];
+
+    var CAT_META = {
+      Ladies:{ cls:'rose', icon:'fa-venus',  bg:'linear-gradient(135deg,rgba(201,123,132,.18),rgba(201,123,132,.08))' },
+      Gents: { cls:'blue', icon:'fa-mars',   bg:'linear-gradient(135deg,rgba(33,150,243,.15),rgba(33,150,243,.06))'  },
+      Bridal:{ cls:'gold', icon:'fa-heart',  bg:'linear-gradient(135deg,rgba(200,160,64,.18),rgba(200,160,64,.08))'  },
+      Kids:  { cls:'green',icon:'fa-child',  bg:'linear-gradient(135deg,rgba(76,175,80,.15),rgba(76,175,80,.06))'    }
+    };
+
+    var activeFilter = 'all', activeSearch = '', expandedId = null, pendingDelId = null;
+
+    function getFiltered() {
+      var d = CATS;
+      if (activeFilter !== 'all') d = d.filter(function(c){ return c.parent === activeFilter; });
+      if (activeSearch) d = d.filter(function(c){ return c.name.toLowerCase().indexOf(activeSearch) >= 0 || c.parent.toLowerCase().indexOf(activeSearch) >= 0; });
+      return d;
+    }
+
+    function render() {
+      var data   = getFiltered();
+      var tbody  = document.getElementById('catTbody');
+      var empty  = document.getElementById('catEmpty');
+      document.getElementById('showCount').textContent = data.length;
+      document.getElementById('pagInfo').textContent   = 'Showing ' + data.length + ' sub-categor' + (data.length !== 1 ? 'ies' : 'y');
+      updateStats();
+
+      if (!data.length) {
+        tbody.innerHTML = ''; empty.style.display = 'block'; return;
+      }
+      empty.style.display = 'none';
+
+      var html = '';
+      data.forEach(function(c, i) {
+        var m     = CAT_META[c.parent] || CAT_META.Ladies;
+        var isExp = expandedId === c.id;
+        var active= c.status === 'active';
+
+        html += '<tr style="animation-delay:' + (i * .04) + 's" id="row-' + c.id + '">'
+          + '<td><span class="serial">' + String(i+1).padStart(2,'0') + '</span></td>'
+          + '<td>'
+            + '<div class="thumb-ph" style="background:' + m.bg + ';color:var(--' + (m.cls==='blue'?'':'') + ')">'
+              + '<i class="fa-solid ' + m.icon + '" style="color:' + (m.cls==='blue'?'#1565c0':m.cls==='green'?'#2e7d32':m.cls==='gold'?'var(--gold-dk)':'var(--rose-dk)') + '"></i>'
+            + '</div>'
+          + '</td>'
+          + '<td>'
+            + '<div class="cell-name">' + c.name + '</div>'
+            + '<div class="cell-path">'
+              + '<span class="path-seg" style="background:var(--gold-lt);color:var(--gold-dk)"><i class="fa-solid fa-folder" style="font-size:9px"></i> ' + c.parent + '</span>'
+              + '<i class="fa-solid fa-chevron-right path-arrow"></i>'
+              + '<span class="path-seg" style="background:var(--rose-lt);color:var(--rose-dk)"><i class="fa-solid fa-folder-open" style="font-size:9px"></i> ' + c.name + '</span>'
+            + '</div>'
+          + '</td>'
+          + '<td><span class="badge ' + m.cls + '"><i class="fa-solid ' + m.icon + '" style="font-size:9px"></i> ' + c.parent + '</span></td>'
+          + '<td>'
+            + '<div class="svc-count">' + c.count + '</div>'
+            + '<div class="svc-count-lbl">services</div>'
+          + '</td>'
+          + '<td>'
+            + '<span class="status-pill ' + c.status + '">'
+              + '<span class="status-dot"></span>'
+              + (active ? 'Active' : 'Inactive')
+            + '</span>'
+          + '</td>'
+          + '<td><div class="row-acts">'
+            + '<button class="act view" title="View services" onclick="toggleExpand(' + c.id + ')" style="' + (isExp ? 'background:#e3f2fd;border-color:#90caf9;color:#1565c0' : '') + '">'
+              + '<i class="fa-solid ' + (isExp ? 'fa-chevron-up' : 'fa-eye') + '"></i>'
+            + '</button>'
+            + '<button class="act edit" title="Edit" onclick="editCat(' + c.id + ')"><i class="fa-solid fa-pen"></i></button>'
+            + '<button class="act del"  title="Delete" onclick="openDelModal(' + c.id + ')"><i class="fa-solid fa-trash"></i></button>'
+          + '</div></td>'
+        + '</tr>';
+
+        /* Expand row */
+        html += '<tr class="expand-row' + (isExp ? ' open' : '') + '" id="exp-' + c.id + '">'
+          + '<td colspan="7"><div class="expand-inner">'
+            + '<div class="expand-title">'
+              + '<i class="fa-solid fa-link" style="color:var(--gold-dk)"></i>'
+              + 'Services linked to <strong>' + c.name + '</strong> (' + c.services.length + ')'
+              + '<a href="service.html">Manage on Services page <i class="fa-solid fa-arrow-right" style="font-size:9px"></i></a>'
+            + '</div>'
+            + '<div class="svcs-grid">'
+              + c.services.map(function(s){
+                  return '<div class="svc-card"><i class="fa-solid fa-scissors"></i>' + s + '</div>';
+                }).join('')
+            + '</div>'
+          + '</div></td>'
+        + '</tr>';
+      });
+      tbody.innerHTML = html;
+    }
+
+    function updateStats() {
+      document.getElementById('statTotal').textContent    = CATS.length;
+      document.getElementById('statLadies').textContent   = CATS.filter(function(c){ return c.parent==='Ladies'; }).length;
+      document.getElementById('statBridal').textContent   = CATS.filter(function(c){ return c.parent==='Bridal'; }).length;
+      document.getElementById('statServices').textContent = CATS.reduce(function(a,c){ return a+c.count; }, 0);
+      document.getElementById('heroCount').textContent    = CATS.length + ' sub-categories';
+    }
+
+    render();
+
+    /* ── Expand ── */
+    function toggleExpand(id) {
+      expandedId = expandedId === id ? null : id; render();
+    }
+
+    /* ── Filter ── */
+    function setFilter(el, f) {
+      document.querySelectorAll('.chip').forEach(function(b){ b.classList.remove('active'); });
+      el.classList.add('active'); activeFilter = f; render();
+    }
+    function handleSearch(q) { activeSearch = q.toLowerCase(); render(); }
+
+    /* ── Form ── */
+    document.getElementById('toggleAdd').addEventListener('click', function(){
+      var form = document.getElementById('addForm'), open = form.classList.contains('open');
+      form.classList.toggle('open');
+      this.innerHTML = open ? '<i class="fa-solid fa-plus"></i> Add Sub-Category' : '<i class="fa-solid fa-xmark"></i> Close';
+    });
+    document.getElementById('cancelAdd').addEventListener('click', function(){
+      document.getElementById('addForm').classList.remove('open');
+      document.getElementById('toggleAdd').innerHTML = '<i class="fa-solid fa-plus"></i> Add Sub-Category';
+      resetForm();
+    });
+    document.getElementById('saveAdd').addEventListener('click', function(){
+      var name   = document.getElementById('catName').value.trim();
+      var parent = document.getElementById('catParent').value;
+      var status = document.getElementById('catStatus').value;
+      if (!name)   { KcozmAdmin.showToast('Please enter a sub-category name','error'); return; }
+      if (!parent) { KcozmAdmin.showToast('Please select a parent category','error');  return; }
+      CATS.push({ id:Date.now(), name:name, parent:parent, count:0, status:status, services:[] });
+      render();
+      document.getElementById('addForm').classList.remove('open');
+      document.getElementById('toggleAdd').innerHTML = '<i class="fa-solid fa-plus"></i> Add Sub-Category';
+      resetForm();
+      KcozmAdmin.showToast('"' + name + '" sub-category added to ' + parent + '!', 'success');
+    });
+
+    function resetForm() {
+      ['catName','catOrder'].forEach(function(id){ document.getElementById(id).value = ''; });
+      document.getElementById('catParent').value = '';
+      document.getElementById('catStatus').value = 'active';
+    }
+
+    function editCat(id) {
+      var c = CATS.find(function(x){ return x.id===id; }); if(!c) return;
+      document.getElementById('catName').value   = c.name;
+      document.getElementById('catParent').value = c.parent;
+      document.getElementById('catStatus').value = c.status;
+      CATS = CATS.filter(function(x){ return x.id !== id; });
+      document.getElementById('addForm').classList.add('open');
+      document.getElementById('toggleAdd').innerHTML = '<i class="fa-solid fa-xmark"></i> Close';
+      KcozmAdmin.showToast('Editing "' + c.name + '" — save to update','info');
+    }
+
+    /* ── Delete ── */
+    function openDelModal(id)  { pendingDelId = id; document.getElementById('delOverlay').classList.add('show'); }
+    function closeDelModal()   { document.getElementById('delOverlay').classList.remove('show'); pendingDelId = null; }
+    function confirmDelete() {
+      if (pendingDelId === null) return;
+      var c = CATS.find(function(x){ return x.id === pendingDelId; });
+      CATS = CATS.filter(function(x){ return x.id !== pendingDelId; });
+      closeDelModal(); expandedId = null; render();
+      KcozmAdmin.showToast((c ? c.name : 'Sub-category') + ' deleted.','success');
+    }
+    document.getElementById('delOverlay').addEventListener('click',function(e){ if(e.target===this) closeDelModal(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDelModal(); });
+  </script>
+</body>
+</html>
