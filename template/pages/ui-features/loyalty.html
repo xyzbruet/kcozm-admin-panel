@@ -4,182 +4,834 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>KCOZM — Loyalty Cards</title>
-  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+
   <style>
-    .kc-page{padding:24px 28px 32px}
-    .kc-anim{opacity:0;transform:translateY(14px);animation:kcRise .4s ease forwards}
-    @keyframes kcRise{to{opacity:1;transform:none}}
-    .kc-pg-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-page);overflow:hidden}
-    .kc-pg-head{padding:20px 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
-    .kc-pg-title-wrap{display:flex;align-items:center;gap:12px}
-    .kc-pg-icon{width:40px;height:40px;border-radius:11px;background:var(--gold-lt);color:var(--gold-dk);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-    .kc-pg-title{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--ink)}
-    .kc-pg-sub{font-size:12px;color:var(--ink-3);margin-top:1px}
-    .kc-pg-actions{display:flex;align-items:center;gap:10px}
+    :root {
+      --gold:#c8a040; --gold-dk:#9a7020; --gold-lt:#fdf6e8; --gold-glow:rgba(200,160,64,.18);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#18120f; --ink-2:#3d3028; --ink-3:#907860;
+      --surface:#fff; --surface-2:#faf8f6; --border:#ebe5de;
+      --shadow:0 2px 24px rgba(24,18,12,.08);
+      --r:14px; --t:.2s ease;
+      --silver-1:#4a5568; --silver-2:#2d3748;
+      --gold-1:#92652a;   --gold-2:#5c3d10;
+      --plat-1:#1a2a3a;   --plat-2:#0d1520;
+      --rose-1:#8b3a4a;   --rose-2:#5a1f2a;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink)}
+    .main-panel{min-width:0;overflow-x:hidden}
+    .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+    @keyframes shine   {0%{left:-120%}100%{left:120%}}
+
+    /* ══ BREADCRUMB ══ */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:10px}
+
+    /* ══ STATS ══ */
+    .kc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    @media(max-width:860px){.kc-stats{grid-template-columns:repeat(2,1fr)}}
+    .kc-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px;position:relative;overflow:hidden;animation:fadeUp .45s ease both}
+    .kc-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+    .kc-stat:nth-child(1)::before{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
+    .kc-stat:nth-child(2)::before{background:linear-gradient(90deg,#4caf50,#2e7d32)}
+    .kc-stat:nth-child(3)::before{background:linear-gradient(90deg,var(--rose),var(--rose-dk))}
+    .kc-stat:nth-child(4)::before{background:linear-gradient(90deg,#2196f3,#1565c0)}
+    .kc-stat-icon{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+    .kc-stat:nth-child(1) .kc-stat-icon{background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-stat:nth-child(2) .kc-stat-icon{background:#e8f5e9;color:#2e7d32}
+    .kc-stat:nth-child(3) .kc-stat-icon{background:var(--rose-lt);color:var(--rose-dk)}
+    .kc-stat:nth-child(4) .kc-stat-icon{background:#e3f2fd;color:#1565c0}
+    .kc-stat-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:8px}
+    .kc-stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--ink);line-height:1}
+    .kc-stat-sub{font-size:11.5px;color:var(--ink-3);margin-top:6px;display:flex;align-items:center;gap:4px}
+    .up{color:#2e7d32;font-weight:600}
+
+    /* ══ SHARED CARD SHELL ══ */
+    .kc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .5s .05s ease both;margin-bottom:28px}
+    .kc-card-head{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .kc-head-left{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:11px;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--ink)}
+    .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
+    .kc-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    /* Buttons */
+    .kc-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;text-decoration:none;white-space:nowrap}
+    .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;box-shadow:0 3px 12px var(--gold-glow)}
+    .kc-btn-gold:hover{box-shadow:0 6px 20px rgba(200,160,64,.42);transform:translateY(-1px);color:#fff}
+    .kc-btn-rose{background:linear-gradient(135deg,var(--rose),var(--rose-dk));color:#fff;box-shadow:0 3px 12px rgba(201,123,132,.25)}
+    .kc-btn-rose:hover{box-shadow:0 6px 20px rgba(201,123,132,.38);transform:translateY(-1px);color:#fff}
+    .kc-btn-out{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
+    .kc-btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+
+    /* Search */
     .kc-search-wrap{position:relative}
-    .kc-search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
-    .kc-search{padding:9px 16px 9px 36px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface-2);font-family:"DM Sans",sans-serif;font-size:13px;color:var(--ink);width:220px;outline:none}
-    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
-    .kc-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;border:none;text-decoration:none}
-    .kc-btn-gold{background:linear-gradient(135deg,#c8a040,#9a7020);color:#fff;box-shadow:0 3px 12px rgba(200,160,64,.28)}
-    .kc-btn-gold:hover{box-shadow:0 5px 18px rgba(200,160,64,.40);transform:translateY(-1px);color:#fff}
-    .kc-btn-rose{background:linear-gradient(135deg,#c97b84,#a85560);color:#fff;box-shadow:0 3px 12px rgba(201,123,132,.25)}
-    .kc-btn-rose:hover{box-shadow:0 5px 18px rgba(201,123,132,.38);transform:translateY(-1px);color:#fff}
-    .kc-btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
-    .kc-btn-outline:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:12px;pointer-events:none}
+    .kc-search{padding:9px 16px 9px 36px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);width:220px;outline:none;transition:all var(--t)}
+    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff;width:260px}
+    .kc-search::placeholder{color:var(--ink-3)}
 
-    /* Loyalty card grid */
-    .kc-lc-grid{padding:22px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-
-    .kc-lc{border-radius:16px;overflow:hidden;position:relative;box-shadow:0 4px 20px rgba(24,18,12,.10);transition:transform .2s,box-shadow .2s;cursor:pointer}
-    .kc-lc:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(24,18,12,.15)}
-    .kc-lc-bg{padding:22px 20px 18px;background:linear-gradient(135deg,#1d1108 0%,#2a1a08 60%,#1a1006 100%);position:relative;overflow:hidden}
-    .kc-lc-bg::before{content:'';position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(200,160,64,.20) 0%,transparent 70%);pointer-events:none}
-    .kc-lc-brand{font-family:"Cormorant Garamond",serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(200,160,64,.75);margin-bottom:10px}
-    .kc-lc-heading{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.2}
-    .kc-lc-points{font-size:12px;color:rgba(238,218,185,.55);margin-bottom:14px}
-    .kc-lc-bar-wrap{height:4px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden}
-    .kc-lc-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#c8a040,#e8c060)}
-    .kc-lc-body{padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px}
-    .kc-lc-desc{font-size:12.5px;color:var(--ink-3);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px}
-    .kc-lc-footer{display:flex;align-items:center;justify-content:space-between}
-    .kc-lc-badge{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--gold-lt);color:var(--gold-dk)}
-    .kc-lc-actions{display:flex;gap:6px}
-    .kc-act-btn{width:30px;height:30px;border-radius:8px;border:none;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;transition:all .15s}
-    .kc-act-btn.edit{background:#e8f5e9;color:#2e7d32}
-    .kc-act-btn.delete{background:#fce4ec;color:#c62828}
-    .kc-act-btn:hover{transform:scale(1.10)}
-
-    /* Inline form */
-    .kc-inline{padding:22px 24px;border-bottom:1px solid var(--border);background:var(--surface-2);display:none}
-    .kc-inline.open{display:block}
-    .kc-if-title{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:10px}
-    .kc-form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
-    @media(max-width:720px){.kc-form-row{grid-template-columns:1fr}}
-    .kc-fg{display:flex;flex-direction:column;gap:7px}
+    /* ══ INLINE FORM ══ */
+    .kc-inline{padding:26px;border-bottom:1px solid var(--border);background:var(--gold-lt);display:none}
+    .kc-inline.open{display:block;animation:fadeUp .25s ease both}
+    .kc-if-header{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+    .kc-if-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+    .kc-if-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)}
+    .kc-tier-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+    .kc-tier-chip{padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--ink-3);transition:all var(--t)}
+    .kc-tier-chip.sel{border-color:transparent;color:#fff}
+    .kc-tier-chip[data-t="silver"].sel{background:linear-gradient(135deg,var(--silver-1),var(--silver-2))}
+    .kc-tier-chip[data-t="gold"].sel  {background:linear-gradient(135deg,var(--gold-1),var(--gold-2))}
+    .kc-tier-chip[data-t="plat"].sel  {background:linear-gradient(135deg,var(--plat-1),var(--plat-2))}
+    .kc-tier-chip[data-t="rose"].sel  {background:linear-gradient(135deg,var(--rose-1),var(--rose-2))}
+    .kc-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px}
+    @media(max-width:720px){.kc-form-grid{grid-template-columns:1fr}}
+    .kc-fg{display:flex;flex-direction:column;gap:6px}
     .kc-fg.full{grid-column:1/-1}
-    .kc-label{font-size:12.5px;font-weight:600;color:var(--ink-2)}
-    .kc-input,.kc-textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:"DM Sans",sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color .18s;width:100%}
-    .kc-input:focus,.kc-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
-    .kc-textarea{resize:vertical;min-height:80px}
-    .kc-form-footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding-top:18px;border-top:1px solid var(--border);margin-top:18px}
+    .kc-flbl{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-finp,.kc-ftxt{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:all var(--t);width:100%}
+    .kc-finp:focus,.kc-ftxt:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp::placeholder,.kc-ftxt::placeholder{color:var(--ink-3)}
+    .kc-ftxt{resize:vertical;min-height:80px}
+    .kc-form-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
 
-    .kc-pg-info{font-size:12.5px;color:var(--ink-3);padding:16px 24px;border-top:1px solid var(--border)}
-    .kc-empty{padding:52px 20px;text-align:center}
+    /* ══ LOYALTY CARD GRID ══ */
+    .kc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px;padding:28px}
+    @media(max-width:760px){.kc-grid{grid-template-columns:1fr;padding:16px}}
+
+    /* The card — bigger, richer */
+    .lc-wrap{border-radius:20px;overflow:hidden;box-shadow:0 8px 28px rgba(24,18,12,.14);transition:transform var(--t),box-shadow var(--t);cursor:pointer;animation:fadeUp .4s ease both;position:relative}
+    .lc-wrap:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(24,18,12,.20)}
+
+    /* Card face */
+    .lc-face{padding:28px 26px 24px;position:relative;overflow:hidden;min-height:220px;display:flex;flex-direction:column;justify-content:space-between}
+    /* Shine sweep on hover */
+    .lc-face::before{content:'';position:absolute;top:0;left:-120%;width:60%;height:100%;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.10) 50%,transparent 60%);transition:left .6s ease;pointer-events:none;z-index:1}
+    .lc-wrap:hover .lc-face::before{left:120%}
+    /* glow orbs */
+    .lc-orb1{position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12) 0%,transparent 70%);pointer-events:none}
+    .lc-orb2{position:absolute;left:-30px;bottom:-50px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.07) 0%,transparent 70%);pointer-events:none}
+
+    /* Tier gradients */
+    .lc-face.silver{background:linear-gradient(135deg,#4a5568 0%,#2d3748 60%,#1a202c 100%)}
+    .lc-face.gold  {background:linear-gradient(135deg,#92652a 0%,#6b4c1e 50%,#4a3010 100%)}
+    .lc-face.plat  {background:linear-gradient(135deg,#1e3a5f 0%,#0f2040 60%,#081525 100%)}
+    .lc-face.rose  {background:linear-gradient(135deg,#8b3a4a 0%,#6b2535 60%,#4a1525 100%)}
+
+    .lc-top-row{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;position:relative;z-index:2}
+    .lc-brand-col{}
+    .lc-brand-name{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+    .lc-brand-tagline{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.30);margin-top:2px}
+    .lc-chip-col{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+    .lc-chip{width:42px;height:32px;border-radius:6px;background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.18);position:relative;overflow:hidden}
+    .lc-chip::after{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;border:1.5px solid rgba(255,255,255,.30)}
+    .lc-tier-badge{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.12);color:rgba(255,255,255,.70);border:1px solid rgba(255,255,255,.16)}
+
+    .lc-mid{position:relative;z-index:2;margin-bottom:18px}
+    .lc-tier-name{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:6px}
+    .lc-pts-row{display:flex;align-items:center;gap:10px}
+    .lc-pts-val{font-size:13px;font-weight:600;color:rgba(255,255,255,.55)}
+    .lc-pts-divider{width:1px;height:12px;background:rgba(255,255,255,.20)}
+    .lc-discount{font-size:13px;font-weight:700;color:rgba(255,255,255,.80)}
+
+    .lc-bottom{position:relative;z-index:2}
+    .lc-bar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .lc-bar-lbl{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.38)}
+    .lc-bar-pct{font-size:11px;font-weight:700;color:rgba(255,255,255,.65)}
+    .lc-track{height:5px;background:rgba(255,255,255,.12);border-radius:5px;overflow:hidden}
+    .lc-fill{height:100%;border-radius:5px;transition:width .7s ease}
+    .lc-face.silver .lc-fill{background:linear-gradient(90deg,#a0aec0,#e2e8f0)}
+    .lc-face.gold   .lc-fill{background:linear-gradient(90deg,#c8a040,#f5d070)}
+    .lc-face.plat   .lc-fill{background:linear-gradient(90deg,#4a90d9,#90caf9)}
+    .lc-face.rose   .lc-fill{background:linear-gradient(90deg,var(--rose),#f48fb1)}
+    .lc-members-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+    .lc-members{font-size:10px;font-weight:600;color:rgba(255,255,255,.40);display:flex;align-items:center;gap:5px}
+    .lc-card-no{font-size:10px;font-weight:600;color:rgba(255,255,255,.30);letter-spacing:1px}
+
+    /* Card body */
+    .lc-body{padding:20px 26px 22px;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 20px 20px}
+    .lc-desc{font-size:13px;color:var(--ink-3);line-height:1.65;margin-bottom:16px}
+    .lc-perks-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+    .lc-perk{font-size:10.5px;font-weight:600;padding:4px 11px;border-radius:20px;background:var(--gold-lt);color:var(--gold-dk);border:1px solid rgba(200,160,64,.22)}
+    .lc-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:14px}
+    .lc-footer-stat{text-align:center}
+    .lc-footer-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink);line-height:1}
+    .lc-footer-lbl{font-size:10px;color:var(--ink-3);margin-top:3px}
+    .lc-footer-divider{width:1px;height:36px;background:var(--border)}
+    .lc-acts{display:flex;gap:7px}
+    .lc-act-btn{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all var(--t);color:var(--ink-3)}
+    .lc-act-btn:hover{transform:scale(1.08)}
+    .lc-act-btn.edit:hover{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+    .lc-act-btn.del:hover {background:#fce4ec;border-color:#f48fb1;color:#c62828}
+
+    /* ══ EMPTY STATE ══ */
+    .kc-empty{padding:64px 20px;text-align:center;display:none}
+    .kc-empty-ring{width:80px;height:80px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+    .kc-empty-ring i{color:var(--gold-dk);font-size:32px;opacity:.5}
+    .kc-empty h6{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:8px}
+    .kc-empty p{font-size:13px;color:var(--ink-3)}
+
+    /* ══ INFO BAR ══ */
+    .kc-info-bar{padding:14px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--surface-2)}
+    .kc-info-bar span{font-size:12.5px;color:var(--ink-3)}
+    .kc-info-bar strong{color:var(--gold-dk)}
+
+    /* ══ CUSTOMER TABLE ══ */
+    .kc-toolbar{padding:14px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface-2)}
+    .kc-filter-tabs{display:flex;gap:4px;flex-wrap:wrap}
+    .kc-ftab{padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);font-size:12px;font-weight:600;color:var(--ink-3);cursor:pointer;background:var(--surface);transition:all var(--t);white-space:nowrap}
+    .kc-ftab.active,.kc-ftab:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-sort-sel{padding:8px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-2);background:var(--surface);outline:none;cursor:pointer;transition:border-color var(--t)}
+    .kc-sort-sel:focus{border-color:var(--gold)}
+    .kc-stat-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-3);background:var(--surface);border:1px solid var(--border);padding:6px 14px;border-radius:50px;margin-left:auto;white-space:nowrap}
+    .kc-stat-pill strong{color:var(--gold-dk);font-size:14px}
+
+    .kc-tbl-wrap{overflow-x:auto}
+    table.kc-tbl{width:100%;border-collapse:collapse}
+    .kc-tbl th{padding:12px 20px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
+    .kc-tbl th:first-child{padding-left:26px}
+    .kc-tbl th:last-child{padding-right:26px;text-align:right}
+    .kc-tbl td{padding:14px 20px;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--ink-2);vertical-align:middle;transition:background var(--t)}
+    .kc-tbl td:first-child{padding-left:26px}
+    .kc-tbl td:last-child{padding-right:26px;text-align:right}
+    .kc-tbl tr:last-child td{border-bottom:none}
+    .kc-tbl tbody tr:hover td{background:#fdf8f0;cursor:pointer}
+
+    /* Customer cell */
+    .kc-cust{display:flex;align-items:center;gap:12px}
+    .kc-av{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:#fff}
+    .kc-cname{font-weight:600;color:var(--ink);font-size:13.5px}
+    .kc-cemail{font-size:11.5px;color:var(--ink-3);margin-top:1px}
+
+    /* Tier badge in table */
+    .kc-tier-badge-tbl{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:50px;font-size:11px;font-weight:700}
+    .kc-tier-badge-tbl.silver{background:#edf2f7;color:#4a5568}
+    .kc-tier-badge-tbl.gold  {background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-tier-badge-tbl.plat  {background:#e3f2fd;color:#1565c0}
+    .kc-tier-badge-tbl.rose  {background:var(--rose-lt);color:var(--rose-dk)}
+
+    /* Points bar */
+    .kc-pts-wrap{min-width:140px}
+    .kc-pts-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+    .kc-pts-num{font-size:13px;font-weight:700;color:var(--ink)}
+    .kc-pts-max{font-size:11px;color:var(--ink-3)}
+    .kc-pts-track{height:5px;background:var(--border);border-radius:5px;overflow:hidden}
+    .kc-pts-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold),#e8c060)}
+    .kc-pts-fill.silver-fill{background:linear-gradient(90deg,#a0aec0,#cbd5e0)}
+    .kc-pts-fill.plat-fill  {background:linear-gradient(90deg,#4a90d9,#90caf9)}
+    .kc-pts-fill.rose-fill  {background:linear-gradient(90deg,var(--rose),#f48fb1)}
+
+    /* Redemption history */
+    .kc-redeem{display:flex;flex-direction:column;gap:3px;min-width:160px}
+    .kc-redeem-last{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+    .kc-redeem-date{font-size:11px;color:var(--ink-3)}
+    .kc-redeem-badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px}
+    .kc-redeem-badge.redeemed{background:#e8f5e9;color:#2e7d32}
+    .kc-redeem-badge.pending {background:#fff3e0;color:#e65100}
+    .kc-redeem-badge.none    {background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)}
+
+    /* Total redeemed */
+    .kc-total-red{font-size:13.5px;font-weight:700;color:var(--rose-dk)}
+
+    /* Row actions */
+    .kc-row-acts{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+    .kc-row-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:12.5px;transition:all var(--t)}
+    .kc-row-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-row-btn.danger:hover{border-color:var(--rose);color:var(--rose-dk);background:var(--rose-lt)}
+
+    /* Pagination */
+    .kc-pag{padding:16px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .kc-pag-info{font-size:13px;color:var(--ink-3)}
+    .kc-pag-btns{display:flex;gap:4px}
+    .kc-pag-btn{min-width:34px;height:34px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all var(--t)}
+    .kc-pag-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-pag-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border-color:transparent}
+
+    /* Redeem modal */
+    .kc-overlay{position:fixed;inset:0;background:rgba(24,18,12,.55);backdrop-filter:blur(6px);z-index:9000;display:none;align-items:center;justify-content:center}
+    .kc-overlay.show{display:flex}
+    .kc-modal{background:var(--surface);border-radius:20px;padding:40px 36px 30px;width:100%;max-width:400px;text-align:center;box-shadow:0 32px 80px rgba(24,18,12,.26);animation:popIn .22s ease both}
+    .kc-modal-ring{width:68px;height:68px;border-radius:50%;background:var(--rose-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+    .kc-modal-ring i{color:var(--rose-dk);font-size:28px}
+    .kc-modal h5{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);margin-bottom:10px}
+    .kc-modal p{font-size:13.5px;color:var(--ink-3);margin-bottom:26px;line-height:1.6}
+    .kc-modal-row{display:flex;gap:10px}
+    .kc-btn-mcancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:background var(--t)}
+    .kc-btn-mcancel:hover{background:var(--surface-2)}
+    .kc-btn-mconfirm{flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--rose),var(--rose-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(201,123,132,.30);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-mconfirm:hover{opacity:.88;transform:translateY(-1px)}
+
+    /* Delete modal variant */
+    .kc-modal.del-modal .kc-modal-ring{background:var(--rose-lt)}
+    .kc-modal.del-modal .kc-modal-ring i{color:var(--rose-dk)}
+
+    /* Reward modal variant */
+    .kc-modal.reward-modal .kc-modal-ring{background:var(--gold-lt)}
+    .kc-modal.reward-modal .kc-modal-ring i{color:var(--gold-dk)}
+    .reward-inp{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);text-align:center;outline:none;margin-bottom:12px;background:var(--surface-2);transition:all var(--t)}
+    .reward-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
   </style>
 </head>
 <body>
-  <div class="main-panel">
-    <div class="kc-page">
-      <div class="kc-pg-card kc-anim" style="animation-delay:.05s">
 
-        <div class="kc-pg-head">
-          <div class="kc-pg-title-wrap">
-            <div class="kc-pg-icon"><i class="fa-solid fa-id-card"></i></div>
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <!-- Breadcrumb -->
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Loyalty Cards</span>
+      </nav>
+
+      <!-- Stats -->
+      <div class="kc-stats">
+        <div class="kc-stat" style="animation-delay:.00s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-id-card"></i></div>
+          <div class="kc-stat-lbl">Total Tiers</div>
+          <div class="kc-stat-val" id="statTiers">3</div>
+          <div class="kc-stat-sub">Active programmes</div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.07s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-users"></i></div>
+          <div class="kc-stat-lbl">Members Enrolled</div>
+          <div class="kc-stat-val" id="statMembers">12</div>
+          <div class="kc-stat-sub"><span class="up"><i class="fa-solid fa-arrow-up"></i> 3</span> this month</div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.14s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-crown"></i></div>
+          <div class="kc-stat-lbl">Points Issued</div>
+          <div class="kc-stat-val" id="statIssued">8.4K</div>
+          <div class="kc-stat-sub">Total across all members</div>
+        </div>
+        <div class="kc-stat" style="animation-delay:.21s">
+          <div class="kc-stat-icon"><i class="fa-solid fa-gift"></i></div>
+          <div class="kc-stat-lbl">Total Redeemed</div>
+          <div class="kc-stat-val" id="statRedeemed">2.1K</div>
+          <div class="kc-stat-sub">Points redeemed this month</div>
+        </div>
+      </div>
+
+      <!-- ══════════ LOYALTY CARD TIERS ══════════ -->
+      <div class="kc-card">
+        <div class="kc-card-head">
+          <div class="kc-head-left">
+            <div class="kc-icon-wrap"><i class="fa-solid fa-id-card"></i></div>
             <div>
-              <div class="kc-pg-title">Loyalty Cards</div>
-              <div class="kc-pg-sub">Create and manage client loyalty programmes</div>
+              <div class="kc-title">Loyalty Tiers <small>Create &amp; manage your loyalty programme cards</small></div>
             </div>
           </div>
-          <div class="kc-pg-actions">
+          <div class="kc-head-right">
             <div class="kc-search-wrap">
               <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" class="kc-search" placeholder="Search cards…" id="lcSearch">
+              <input type="text" class="kc-search" id="lcSearch" placeholder="Search tiers…">
             </div>
-            <button class="kc-btn kc-btn-gold" id="toggleLC"><i class="fa-solid fa-plus"></i> New Card</button>
+            <button class="kc-btn kc-btn-gold" id="toggleLC">
+              <i class="fa-solid fa-plus"></i> New Tier
+            </button>
           </div>
         </div>
 
         <!-- Inline form -->
         <div class="kc-inline" id="lcForm">
-          <div class="kc-if-title"><i class="fa-solid fa-id-card-clip" style="color:var(--gold-dk)"></i> Create Loyalty Card</div>
-          <div class="kc-form-row">
-            <div class="kc-fg">
-              <label class="kc-label">Card Heading</label>
-              <input type="text" class="kc-input" id="lcHeading" placeholder="e.g. Gold Member, Platinum Elite…">
-            </div>
-            <div class="kc-fg">
-              <label class="kc-label">Points Required</label>
-              <input type="number" class="kc-input" id="lcPoints" placeholder="e.g. 500">
-            </div>
-            <div class="kc-fg full">
-              <label class="kc-label">Card Description</label>
-              <textarea class="kc-textarea" id="lcDesc" placeholder="Describe the benefits and rewards for this loyalty tier…"></textarea>
+          <div class="kc-if-header">
+            <div class="kc-if-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+            <div class="kc-if-title">Create Loyalty Tier</div>
+          </div>
+          <div style="margin-bottom:16px">
+            <div class="kc-flbl" style="margin-bottom:8px">Card Theme</div>
+            <div class="kc-tier-row">
+              <button class="kc-tier-chip sel" data-t="silver"><i class="fa-solid fa-medal"></i> Silver</button>
+              <button class="kc-tier-chip"     data-t="gold">  <i class="fa-solid fa-trophy"></i> Gold</button>
+              <button class="kc-tier-chip"     data-t="plat">  <i class="fa-solid fa-crown"></i> Platinum</button>
+              <button class="kc-tier-chip"     data-t="rose">  <i class="fa-solid fa-heart"></i> Rose</button>
             </div>
           </div>
-          <div class="kc-form-footer">
-            <button class="kc-btn kc-btn-outline" id="cancelLC">Cancel</button>
-            <button class="kc-btn kc-btn-rose" id="saveLC"><i class="fa-solid fa-check"></i> Create Card</button>
+          <div class="kc-form-grid">
+            <div class="kc-fg">
+              <label class="kc-flbl">Card Heading <span style="color:var(--rose-dk)">*</span></label>
+              <input type="text" class="kc-finp" id="lcHeading" placeholder="e.g. Gold Member, Platinum Elite…">
+            </div>
+            <div class="kc-fg">
+              <label class="kc-flbl">Points Required <span style="color:var(--rose-dk)">*</span></label>
+              <input type="number" class="kc-finp" id="lcPoints" placeholder="e.g. 500" min="0">
+            </div>
+            <div class="kc-fg">
+              <label class="kc-flbl">Discount / Benefit</label>
+              <input type="text" class="kc-finp" id="lcDiscount" placeholder="e.g. 12% off all services">
+            </div>
+            <div class="kc-fg">
+              <label class="kc-flbl">Perk Tags <span style="font-size:10px;font-weight:400;text-transform:none;letter-spacing:0">(comma separated)</span></label>
+              <input type="text" class="kc-finp" id="lcPerks" placeholder="e.g. 10% off, Free facial">
+            </div>
+            <div class="kc-fg full">
+              <label class="kc-flbl">Description <span style="color:var(--rose-dk)">*</span></label>
+              <textarea class="kc-ftxt" id="lcDesc" placeholder="Describe the benefits and rewards for this loyalty tier…"></textarea>
+            </div>
+          </div>
+          <div class="kc-form-foot">
+            <button class="kc-btn kc-btn-out" id="cancelLC">Cancel</button>
+            <button class="kc-btn kc-btn-rose" id="saveLC"><i class="fa-solid fa-check"></i> Create Tier</button>
           </div>
         </div>
 
         <!-- Cards grid -->
-        <div class="kc-lc-grid" id="lcGrid"></div>
-        <div class="kc-pg-info" id="lcInfo"></div>
+        <div class="kc-grid" id="lcGrid"></div>
+        <div class="kc-empty" id="lcEmpty">
+          <div class="kc-empty-ring"><i class="fa-solid fa-id-card"></i></div>
+          <h6>No loyalty tiers yet</h6>
+          <p>Click <strong>New Tier</strong> to create your first loyalty programme.</p>
+        </div>
+        <div class="kc-info-bar">
+          <span><strong id="lcCount">3</strong> tier<span id="lcPlural">s</span> configured</span>
+          <span style="font-size:11px;color:var(--ink-3)">Click a card to view enrolled members</span>
+        </div>
+      </div>
 
+      <!-- ══════════ CUSTOMER LIST ══════════ -->
+      <div class="kc-card" style="animation-delay:.15s">
+        <div class="kc-card-head">
+          <div class="kc-head-left">
+            <div class="kc-icon-wrap" style="background:var(--rose-lt)">
+              <i class="fa-solid fa-users" style="color:var(--rose-dk)"></i>
+            </div>
+            <div>
+              <div class="kc-title">Member List <small>All customers with their loyalty points &amp; redemption history</small></div>
+            </div>
+          </div>
+          <div class="kc-head-right">
+            <div class="kc-search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="kc-search" id="custSearch" placeholder="Search members…" oninput="filterMembers(this.value)">
+            </div>
+            <button class="kc-btn kc-btn-out" onclick="KcozmAdmin.showToast('Exporting member list…','info')">
+              <i class="fa-solid fa-file-export"></i> Export
+            </button>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="kc-toolbar">
+          <div class="kc-filter-tabs">
+            <button class="kc-ftab active" onclick="setMemberFilter(this,'all')">All Members</button>
+            <button class="kc-ftab" onclick="setMemberFilter(this,'silver')"><i class="fa-solid fa-medal" style="font-size:10px"></i> Silver</button>
+            <button class="kc-ftab" onclick="setMemberFilter(this,'gold')">  <i class="fa-solid fa-trophy" style="font-size:10px"></i> Gold</button>
+            <button class="kc-ftab" onclick="setMemberFilter(this,'plat')">  <i class="fa-solid fa-crown" style="font-size:10px"></i> Platinum</button>
+            <button class="kc-ftab" onclick="setMemberFilter(this,'rose')">  <i class="fa-solid fa-heart" style="font-size:10px"></i> Rose</button>
+          </div>
+          <select class="kc-sort-sel" onchange="sortMembers(this.value)">
+            <option value="name">Sort by Name</option>
+            <option value="points_desc">Most Points</option>
+            <option value="points_asc">Least Points</option>
+            <option value="redeemed_desc">Most Redeemed</option>
+            <option value="recent">Most Recent</option>
+          </select>
+          <div class="kc-stat-pill">Members &nbsp;<strong id="memberCount">12</strong></div>
+        </div>
+
+        <!-- Table -->
+        <div class="kc-tbl-wrap">
+          <table class="kc-tbl">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Tier</th>
+                <th>Points Balance</th>
+                <th>Total Earned</th>
+                <th>Total Redeemed</th>
+                <th>Last Redemption</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="memberTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="kc-pag">
+          <div class="kc-pag-info" id="memberPagInfo">Showing 1–12 of 12</div>
+          <div class="kc-pag-btns">
+            <button class="kc-pag-btn">‹</button>
+            <button class="kc-pag-btn active">1</button>
+            <button class="kc-pag-btn">2</button>
+            <button class="kc-pag-btn">›</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Delete Tier Modal -->
+  <div class="kc-overlay" id="delOverlay">
+    <div class="kc-modal del-modal">
+      <div class="kc-modal-ring"><i class="fa-solid fa-trash-can"></i></div>
+      <h5>Delete This Tier?</h5>
+      <p>This loyalty tier will be permanently removed. Existing members will retain their points balance.</p>
+      <div class="kc-modal-row">
+        <button class="kc-btn-mcancel" onclick="closeDelModal()">Cancel</button>
+        <button class="kc-btn-mconfirm" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Redeem Points Modal -->
+  <div class="kc-overlay" id="redeemOverlay">
+    <div class="kc-modal reward-modal">
+      <div class="kc-modal-ring"><i class="fa-solid fa-gift"></i></div>
+      <h5>Redeem Points</h5>
+      <p id="redeemSubtitle">Redeeming points for <strong id="redeemName"></strong></p>
+      <input type="number" class="reward-inp" id="redeemAmt" placeholder="Enter points to redeem" min="1">
+      <div class="kc-modal-row">
+        <button class="kc-btn-mcancel" onclick="closeRedeemModal()">Cancel</button>
+        <button class="kc-btn-mconfirm" style="background:linear-gradient(135deg,var(--gold),var(--gold-dk));box-shadow:0 4px 14px var(--gold-glow)" onclick="confirmRedeem()">
+          <i class="fa-solid fa-check"></i> Redeem
+        </button>
       </div>
     </div>
   </div>
 
   <script src="../../js/shared-components.js"></script>
   <script>
-    KcozmAdmin.init({ activePage:'more-pages', depth:'../../' });
+    KcozmAdmin.init({ activePage:'more-pages', pageTitle:'Loyalty Cards', depth:'../../' });
 
-    var cards = JSON.parse(localStorage.getItem('kc_loyalty')) || [
-      {id:1,heading:'Silver Member',points:200,desc:'Enjoy 5% off on all services. Free consultations and priority booking for our valued Silver members.',pct:33},
-      {id:2,heading:'Gold Member',points:500,desc:'Exclusive 12% discount, complimentary hair wash on every visit, and birthday special treatment.',pct:65},
-      {id:3,heading:'Platinum Elite',points:1000,desc:'Premium 20% discount on all services, free monthly facial, personal stylist assignment, and VIP lounge access.',pct:90}
+    /* ══════════════════════════════════════
+       TIER DATA
+    ══════════════════════════════════════ */
+    var TIERS = [
+      { id:1, tier:'silver', heading:'Silver Member',   points:200,  pct:33, discount:'5% off all services',
+        desc:'Enjoy 5% off on all services. Free consultations and priority booking for our valued Silver members. Earn 1 point for every ₹100 spent.',
+        perks:['5% off','Free consult','Priority booking'], members:5 },
+      { id:2, tier:'gold',   heading:'Gold Member',     points:500,  pct:65, discount:'12% off all services',
+        desc:'Exclusive 12% discount, complimentary hair wash on every visit, birthday special treatment, and early access to new services.',
+        perks:['12% off','Free hair wash','Birthday gift','Early access'], members:4 },
+      { id:3, tier:'plat',   heading:'Platinum Elite',  points:1000, pct:90, discount:'20% off all services',
+        desc:'Premium 20% discount on all services, free monthly facial, personal stylist assignment, VIP lounge access, and complimentary product hamper quarterly.',
+        perks:['20% off','Free facial','VIP lounge','Personal stylist','Product hamper'], members:2 },
+      { id:4, tier:'rose',   heading:'Rose Member',     points:750,  pct:78, discount:'15% off + bridal perks',
+        desc:'Specially crafted for bridal clients. Enjoy 15% off bridal packages, complimentary trial session, dedicated bridal coordinator, and premium flower draping.',
+        perks:['15% off','Bridal trial','Coordinator','Flower draping'], members:1 }
     ];
 
-    function renderCards(data){
-      var g=document.getElementById('lcGrid');
-      document.getElementById('lcInfo').innerHTML='<b>'+data.length+'</b> loyalty card'+(data.length!==1?'s':'')+' configured';
-      if(!data.length){g.innerHTML='<div class="kc-empty" style="grid-column:1/-1"><i class="fa-solid fa-id-card" style="font-size:32px;color:var(--border);display:block;margin-bottom:10px"></i><div style="font-size:14px;color:var(--ink-3)">No loyalty cards yet. Create one above.</div></div>';return;}
-      g.innerHTML=data.map(function(c){
-        return '<div class="kc-lc">'
-          +'<div class="kc-lc-bg">'
-            +'<div class="kc-lc-brand">KCOZM — The Luxury Salon</div>'
-            +'<div class="kc-lc-heading">'+c.heading+'</div>'
-            +'<div class="kc-lc-points">'+c.points+' pts required</div>'
-            +'<div class="kc-lc-bar-wrap"><div class="kc-lc-bar" style="width:'+c.pct+'%"></div></div>'
+    /* ══════════════════════════════════════
+       MEMBER DATA
+    ══════════════════════════════════════ */
+    var MEMBERS = [
+      { id:1,  name:'Priya Sharma',   email:'priya.s@gmail.com',    tier:'plat',   earned:1240, redeemed:380, balance:860, lastRedeem:'₹380 off facial pkg',   lastRedeemDate:'2 days ago',  joined:'Jan 2024', status:'redeemed' },
+      { id:2,  name:'Ananya Singh',   email:'ananya.s@gmail.com',   tier:'gold',   earned:620,  redeemed:120, balance:500, lastRedeem:'₹120 off colour',        lastRedeemDate:'1 week ago',  joined:'Mar 2024', status:'redeemed' },
+      { id:3,  name:'Meera Kapoor',   email:'meera.k@gmail.com',    tier:'plat',   earned:1580, redeemed:580, balance:1000,lastRedeem:'₹580 off bridal pkg',    lastRedeemDate:'5 days ago',  joined:'Nov 2023', status:'redeemed' },
+      { id:4,  name:'Ritika Joshi',   email:'ritika.j@yahoo.com',   tier:'silver', earned:210,  redeemed:0,   balance:210, lastRedeem:'—',                      lastRedeemDate:'Never',       joined:'Feb 2025', status:'none' },
+      { id:5,  name:'Kavya Nair',     email:'kavya.n@gmail.com',    tier:'gold',   earned:490,  redeemed:80,  balance:410, lastRedeem:'₹80 off nail art',       lastRedeemDate:'2 weeks ago', joined:'Aug 2024', status:'redeemed' },
+      { id:6,  name:'Deepa Menon',    email:'deepa.m@gmail.com',    tier:'silver', earned:180,  redeemed:0,   balance:180, lastRedeem:'—',                      lastRedeemDate:'Never',       joined:'Jun 2025', status:'none' },
+      { id:7,  name:'Sunita Verma',   email:'sunita.v@gmail.com',   tier:'rose',   earned:820,  redeemed:220, balance:600, lastRedeem:'₹220 off bridal trial',  lastRedeemDate:'3 days ago',  joined:'Dec 2023', status:'redeemed' },
+      { id:8,  name:'Pallavi Desai',  email:'pallavi.d@gmail.com',  tier:'gold',   earned:560,  redeemed:160, balance:400, lastRedeem:'₹160 off keratin',       lastRedeemDate:'1 month ago', joined:'Apr 2024', status:'redeemed' },
+      { id:9,  name:'Nandita Rao',    email:'nandita.r@gmail.com',  tier:'silver', earned:220,  redeemed:50,  balance:170, lastRedeem:'₹50 off waxing',         lastRedeemDate:'3 weeks ago', joined:'Sep 2024', status:'redeemed' },
+      { id:10, name:'Shalini Iyer',   email:'shalini.i@gmail.com',  tier:'gold',   earned:430,  redeemed:0,   balance:430, lastRedeem:'—',                      lastRedeemDate:'Never',       joined:'Jul 2024', status:'pending' },
+      { id:11, name:'Divya Sharma',   email:'divya.sh@gmail.com',   tier:'silver', earned:195,  redeemed:0,   balance:195, lastRedeem:'—',                      lastRedeemDate:'Never',       joined:'Oct 2024', status:'none' },
+      { id:12, name:'Kavita Pillai',  email:'kavita.p@gmail.com',   tier:'gold',   earned:510,  redeemed:100, balance:410, lastRedeem:'₹100 off spa pkg',       lastRedeemDate:'2 weeks ago', joined:'Feb 2024', status:'redeemed' },
+    ];
+
+    var AVCOLORS = ['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5','#795548','#607d8b','#e65100','#1565c0'];
+    var pendingDelId = null, pendingRedeemId = null, activeTier = 'silver';
+    var memberFilter = 'all', memberSearch = '';
+
+    function initials(n){ return n.split(' ').map(function(w){return w[0]}).join('').substring(0,2).toUpperCase(); }
+
+    /* ══════════════════════════════════════
+       RENDER TIERS
+    ══════════════════════════════════════ */
+    function tierLabel(t){ return {silver:'Silver',gold:'Gold',plat:'Platinum',rose:'Rose'}[t]||t; }
+    function cardNum(id){ return 'KCZM ' + String(id).padStart(4,'0') + ' •••• 8842'; }
+
+    function renderTiers(data) {
+      var grid  = document.getElementById('lcGrid');
+      var empty = document.getElementById('lcEmpty');
+      document.getElementById('lcCount').textContent  = data.length;
+      document.getElementById('lcPlural').textContent = data.length !== 1 ? 's' : '';
+      document.getElementById('statTiers').textContent = data.length;
+
+      if (!data.length) {
+        grid.innerHTML = ''; empty.style.display = 'block'; grid.style.display = 'none'; return;
+      }
+      empty.style.display = 'none'; grid.style.display = 'grid';
+
+      grid.innerHTML = data.map(function(c, i) {
+        var perksHtml = (c.perks||[]).map(function(p){ return '<span class="lc-perk">'+p+'</span>'; }).join('');
+        return '<div class="lc-wrap" style="animation-delay:'+(i*.07)+'s">'
+
+          +'<div class="lc-face '+c.tier+'">'
+            +'<div class="lc-orb1"></div><div class="lc-orb2"></div>'
+
+            +'<div class="lc-top-row">'
+              +'<div class="lc-brand-col">'
+                +'<div class="lc-brand-name">KCOZM</div>'
+                +'<div class="lc-brand-tagline">The Luxury Salon</div>'
+              +'</div>'
+              +'<div class="lc-chip-col">'
+                +'<div class="lc-chip"></div>'
+                +'<div class="lc-tier-badge">'+tierLabel(c.tier)+'</div>'
+              +'</div>'
+            +'</div>'
+
+            +'<div class="lc-mid">'
+              +'<div class="lc-tier-name">'+c.heading+'</div>'
+              +'<div class="lc-pts-row">'
+                +'<span class="lc-pts-val">'+c.points.toLocaleString()+' pts required</span>'
+                +'<div class="lc-pts-divider"></div>'
+                +'<span class="lc-discount">'+c.discount+'</span>'
+              +'</div>'
+            +'</div>'
+
+            +'<div class="lc-bottom">'
+              +'<div class="lc-bar-header">'
+                +'<span class="lc-bar-lbl">Tier Fill Rate</span>'
+                +'<span class="lc-bar-pct">'+c.pct+'%</span>'
+              +'</div>'
+              +'<div class="lc-track"><div class="lc-fill" style="width:'+c.pct+'%"></div></div>'
+              +'<div class="lc-members-row">'
+                +'<span class="lc-members"><i class="fa-solid fa-users"></i> '+c.members+' member'+(c.members!==1?'s':'')+'</span>'
+                +'<span class="lc-card-no">'+cardNum(c.id)+'</span>'
+              +'</div>'
+            +'</div>'
           +'</div>'
-          +'<div class="kc-lc-body">'
-            +'<div class="kc-lc-desc">'+c.desc+'</div>'
-            +'<div class="kc-lc-footer">'
-              +'<span class="kc-lc-badge"><i class="fa-solid fa-star" style="margin-right:4px"></i>'+c.points+' pts</span>'
-              +'<div class="kc-lc-actions">'
-                +'<button class="kc-act-btn edit" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>'
-                +'<button class="kc-act-btn delete" title="Delete" onclick="delCard('+c.id+')"><i class="fa-solid fa-trash"></i></button>'
+
+          +'<div class="lc-body">'
+            +'<div class="lc-desc">'+c.desc+'</div>'
+            +'<div class="lc-perks-row">'+perksHtml+'</div>'
+            +'<div class="lc-footer">'
+              +'<div class="lc-footer-stat"><div class="lc-footer-val">'+c.points.toLocaleString()+'</div><div class="lc-footer-lbl">pts threshold</div></div>'
+              +'<div class="lc-footer-divider"></div>'
+              +'<div class="lc-footer-stat"><div class="lc-footer-val">'+c.members+'</div><div class="lc-footer-lbl">members</div></div>'
+              +'<div class="lc-footer-divider"></div>'
+              +'<div class="lc-footer-stat"><div class="lc-footer-val">'+c.perks.length+'</div><div class="lc-footer-lbl">perks</div></div>'
+              +'<div class="lc-acts">'
+                +'<button class="lc-act-btn edit" title="Edit"   onclick="editTier('+c.id+')"><i class="fa-solid fa-pen"></i></button>'
+                +'<button class="lc-act-btn del"  title="Delete" onclick="openDelModal('+c.id+')"><i class="fa-solid fa-trash"></i></button>'
               +'</div>'
             +'</div>'
           +'</div>'
         +'</div>';
       }).join('');
     }
-    renderCards(cards);
 
-    function delCard(id){ if(!confirm('Delete this loyalty card?')) return; cards=cards.filter(function(c){return c.id!==id;}); localStorage.setItem('kc_loyalty',JSON.stringify(cards)); renderCards(cards); }
+    renderTiers(TIERS);
 
-    document.getElementById('toggleLC').addEventListener('click',function(){ document.getElementById('lcForm').classList.toggle('open'); });
-    document.getElementById('cancelLC').addEventListener('click',function(){ document.getElementById('lcForm').classList.remove('open'); });
+    /* ══════════════════════════════════════
+       RENDER MEMBERS
+    ══════════════════════════════════════ */
+    function getFilteredMembers() {
+      var data = MEMBERS;
+      if (memberFilter !== 'all') data = data.filter(function(m){ return m.tier === memberFilter; });
+      if (memberSearch) data = data.filter(function(m){ return m.name.toLowerCase().includes(memberSearch) || m.email.toLowerCase().includes(memberSearch); });
+      return data;
+    }
 
-    document.getElementById('saveLC').addEventListener('click',function(){
-      var h=document.getElementById('lcHeading').value.trim();
-      var d=document.getElementById('lcDesc').value.trim();
-      var p=parseInt(document.getElementById('lcPoints').value)||0;
-      if(!h||!d){KcozmAdmin.showToast('Please fill all fields','error');return;}
-      var maxPts=1200; var pct=Math.min(100,Math.round(p/maxPts*100));
-      cards.push({id:Date.now(),heading:h,points:p,desc:d,pct:pct});
-      localStorage.setItem('kc_loyalty',JSON.stringify(cards)); renderCards(cards);
+    function renderMembers(data) {
+      var tbody = document.getElementById('memberTbody');
+      document.getElementById('memberCount').textContent = data.length;
+      document.getElementById('memberPagInfo').textContent = 'Showing 1–'+data.length+' of '+data.length;
+      document.getElementById('statMembers').textContent = MEMBERS.length;
+
+      // recalc totals
+      var totalIssued   = MEMBERS.reduce(function(s,m){return s+m.earned},0);
+      var totalRedeemed = MEMBERS.reduce(function(s,m){return s+m.redeemed},0);
+      document.getElementById('statIssued').textContent   = (totalIssued/1000).toFixed(1)+'K';
+      document.getElementById('statRedeemed').textContent = (totalRedeemed/1000).toFixed(1)+'K';
+
+      if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--ink-3)"><i class="fa-solid fa-users-slash" style="font-size:2rem;opacity:.3;display:block;margin-bottom:10px"></i>No members found</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.map(function(m, i) {
+        var av = AVCOLORS[m.id % AVCOLORS.length];
+        var tierMap = {silver:'Silver',gold:'Gold',plat:'Platinum',rose:'Rose'};
+        var tierIconMap = {silver:'fa-medal',gold:'fa-trophy',plat:'fa-crown',rose:'fa-heart'};
+        var maxPts = {silver:200,gold:500,plat:1000,rose:750};
+        var max = maxPts[m.tier] || 1000;
+        var fillPct = Math.min(100, Math.round(m.balance / max * 100));
+        var fillClass = m.tier === 'silver' ? 'silver-fill' : m.tier === 'plat' ? 'plat-fill' : m.tier === 'rose' ? 'rose-fill' : '';
+
+        var redeemBadgeClass = m.status === 'redeemed' ? 'redeemed' : m.status === 'pending' ? 'pending' : 'none';
+        var redeemBadgeLabel = m.status === 'redeemed' ? '<i class="fa-solid fa-circle-check" style="font-size:9px"></i> Redeemed' : m.status === 'pending' ? '<i class="fa-solid fa-clock" style="font-size:9px"></i> Pending' : 'No history';
+
+        return '<tr style="animation:fadeUp .3s '+(i*.04)+'s ease both">'
+          +'<td><span style="font-size:12px;color:var(--ink-3);font-weight:700">'+String(i+1).padStart(2,'0')+'</span></td>'
+
+          +'<td><div class="kc-cust">'
+            +'<div class="kc-av" style="background:'+av+'">'+initials(m.name)+'</div>'
+            +'<div><div class="kc-cname">'+m.name+'</div><div class="kc-cemail">'+m.email+'</div></div>'
+          +'</div></td>'
+
+          +'<td><span class="kc-tier-badge-tbl '+m.tier+'">'
+            +'<i class="fa-solid '+tierIconMap[m.tier]+'" style="font-size:9px"></i> '+tierMap[m.tier]
+          +'</span></td>'
+
+          +'<td><div class="kc-pts-wrap">'
+            +'<div class="kc-pts-top"><span class="kc-pts-num">'+m.balance.toLocaleString()+'</span><span class="kc-pts-max">/ '+max.toLocaleString()+'</span></div>'
+            +'<div class="kc-pts-track"><div class="kc-pts-fill '+fillClass+'" style="width:'+fillPct+'%"></div></div>'
+          +'</div></td>'
+
+          +'<td style="font-weight:600;color:var(--ink)">'+m.earned.toLocaleString()+' <span style="font-size:11px;color:var(--ink-3);font-weight:400">pts</span></td>'
+
+          +'<td><span class="kc-total-red">'+m.redeemed.toLocaleString()+' <span style="font-size:11px;color:var(--ink-3);font-weight:400">pts</span></span></td>'
+
+          +'<td><div class="kc-redeem">'
+            +'<span class="kc-redeem-last">'+m.lastRedeem+'</span>'
+            +'<span class="kc-redeem-date">'+m.lastRedeemDate+'</span>'
+            +'<span class="kc-redeem-badge '+redeemBadgeClass+'">'+redeemBadgeLabel+'</span>'
+          +'</div></td>'
+
+          +'<td style="font-size:12.5px;color:var(--ink-3)">'+m.joined+'</td>'
+
+          +'<td><div class="kc-row-acts">'
+            +'<button class="kc-row-btn" title="Redeem points" onclick="openRedeemModal('+m.id+')"><i class="fa-solid fa-gift"></i></button>'
+            +'<button class="kc-row-btn" title="Add points"    onclick="addPoints('+m.id+')">    <i class="fa-solid fa-plus"></i></button>'
+            +'<button class="kc-row-btn danger" title="Remove member" onclick="event.stopPropagation();KcozmAdmin.showToast(\'Member removed\',\'success\')"><i class="fa-solid fa-trash"></i></button>'
+          +'</div></td>'
+        +'</tr>';
+      }).join('');
+    }
+
+    renderMembers(getFilteredMembers());
+
+    /* ══ Search / Filter / Sort ══ */
+    function filterMembers(q){ memberSearch = q.toLowerCase(); renderMembers(getFilteredMembers()); }
+    function setMemberFilter(el, f) {
+      document.querySelectorAll('.kc-ftab').forEach(function(b){ b.classList.remove('active'); });
+      el.classList.add('active'); memberFilter = f; renderMembers(getFilteredMembers());
+    }
+    function sortMembers(v) {
+      var d = getFilteredMembers().slice();
+      if (v==='name')          d.sort(function(a,b){return a.name.localeCompare(b.name)});
+      if (v==='points_desc')   d.sort(function(a,b){return b.balance-a.balance});
+      if (v==='points_asc')    d.sort(function(a,b){return a.balance-b.balance});
+      if (v==='redeemed_desc') d.sort(function(a,b){return b.redeemed-a.redeemed});
+      renderMembers(d);
+    }
+
+    /* ══════════════════════════════════════
+       TIER FORM LOGIC
+    ══════════════════════════════════════ */
+    document.getElementById('lcSearch').addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      renderTiers(q ? TIERS.filter(function(c){ return c.heading.toLowerCase().includes(q)||c.desc.toLowerCase().includes(q); }) : TIERS);
+    });
+
+    document.getElementById('toggleLC').addEventListener('click', function() {
+      var form = document.getElementById('lcForm'), isOpen = form.classList.contains('open');
+      form.classList.toggle('open');
+      this.innerHTML = isOpen ? '<i class="fa-solid fa-plus"></i> New Tier' : '<i class="fa-solid fa-xmark"></i> Close';
+    });
+
+    document.getElementById('cancelLC').addEventListener('click', function() {
       document.getElementById('lcForm').classList.remove('open');
-      document.getElementById('lcHeading').value=''; document.getElementById('lcDesc').value=''; document.getElementById('lcPoints').value='';
-      KcozmAdmin.showToast('Loyalty card created','success');
+      document.getElementById('toggleLC').innerHTML = '<i class="fa-solid fa-plus"></i> New Tier';
+      resetForm();
     });
 
-    document.getElementById('lcSearch').addEventListener('input',function(){
-      var q=this.value.toLowerCase();
-      renderCards(cards.filter(function(c){return c.heading.toLowerCase().includes(q)||c.desc.toLowerCase().includes(q);}));
+    document.querySelectorAll('.kc-tier-chip').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.kc-tier-chip').forEach(function(b){ b.classList.remove('sel'); });
+        this.classList.add('sel'); activeTier = this.getAttribute('data-t');
+      });
     });
+
+    document.getElementById('saveLC').addEventListener('click', function() {
+      var heading  = document.getElementById('lcHeading').value.trim();
+      var pts      = parseInt(document.getElementById('lcPoints').value) || 0;
+      var desc     = document.getElementById('lcDesc').value.trim();
+      var discount = document.getElementById('lcDiscount').value.trim() || 'Member benefits';
+      var perksRaw = document.getElementById('lcPerks').value.trim();
+      if (!heading) { KcozmAdmin.showToast('Please enter a card heading', 'error'); return; }
+      if (!desc)    { KcozmAdmin.showToast('Please add a description', 'error');   return; }
+      var perks = perksRaw ? perksRaw.split(',').map(function(p){ return p.trim(); }).filter(Boolean) : [];
+      var pct = Math.min(100, Math.round(pts / 12));
+      TIERS.push({ id:Date.now(), tier:activeTier, heading:heading, points:pts, pct:pct, discount:discount, desc:desc, perks:perks, members:0 });
+      renderTiers(TIERS);
+      document.getElementById('lcForm').classList.remove('open');
+      document.getElementById('toggleLC').innerHTML = '<i class="fa-solid fa-plus"></i> New Tier';
+      resetForm();
+      KcozmAdmin.showToast('Loyalty tier created!', 'success');
+    });
+
+    function resetForm() {
+      ['lcHeading','lcPoints','lcDesc','lcPerks','lcDiscount'].forEach(function(id){ document.getElementById(id).value=''; });
+      document.querySelectorAll('.kc-tier-chip').forEach(function(b){ b.classList.remove('sel'); });
+      document.querySelector('[data-t="silver"]').classList.add('sel'); activeTier='silver';
+    }
+
+    function editTier(id) {
+      var t = TIERS.find(function(c){ return c.id===id; }); if(!t) return;
+      document.getElementById('lcHeading').value  = t.heading;
+      document.getElementById('lcPoints').value   = t.points;
+      document.getElementById('lcDesc').value     = t.desc;
+      document.getElementById('lcPerks').value    = (t.perks||[]).join(', ');
+      document.getElementById('lcDiscount').value = t.discount||'';
+      document.querySelectorAll('.kc-tier-chip').forEach(function(b){ b.classList.remove('sel'); });
+      var chip = document.querySelector('[data-t="'+t.tier+'"]');
+      if (chip) chip.classList.add('sel'); activeTier = t.tier;
+      TIERS = TIERS.filter(function(c){ return c.id!==id; });
+      document.getElementById('lcForm').classList.add('open');
+      document.getElementById('toggleLC').innerHTML='<i class="fa-solid fa-xmark"></i> Close';
+      document.getElementById('lcForm').scrollIntoView({behavior:'smooth',block:'nearest'});
+      KcozmAdmin.showToast('Editing "'+t.heading+'" — save to update','info');
+    }
+
+    /* ══ Delete ══ */
+    function openDelModal(id){ pendingDelId=id; document.getElementById('delOverlay').classList.add('show'); }
+    function closeDelModal(){ document.getElementById('delOverlay').classList.remove('show'); pendingDelId=null; }
+    function confirmDelete(){
+      if(pendingDelId===null) return;
+      TIERS=TIERS.filter(function(c){return c.id!==pendingDelId;});
+      closeDelModal(); renderTiers(TIERS);
+      KcozmAdmin.showToast('Loyalty tier deleted.','success');
+    }
+    document.getElementById('delOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
+
+    /* ══ Redeem ══ */
+    function openRedeemModal(id) {
+      var m = MEMBERS.find(function(x){ return x.id===id; }); if(!m) return;
+      pendingRedeemId = id;
+      document.getElementById('redeemName').textContent = m.name;
+      document.getElementById('redeemSubtitle').innerHTML = 'Balance: <strong style="color:var(--gold-dk)">'+m.balance.toLocaleString()+' pts</strong> — '+m.name;
+      document.getElementById('redeemAmt').value='';
+      document.getElementById('redeemOverlay').classList.add('show');
+    }
+    function closeRedeemModal(){ document.getElementById('redeemOverlay').classList.remove('show'); pendingRedeemId=null; }
+    function confirmRedeem() {
+      var amt = parseInt(document.getElementById('redeemAmt').value)||0;
+      var m = MEMBERS.find(function(x){return x.id===pendingRedeemId;});
+      if(!m||amt<=0){ KcozmAdmin.showToast('Enter a valid points amount','error'); return; }
+      if(amt>m.balance){ KcozmAdmin.showToast('Insufficient points balance','error'); return; }
+      m.balance  -= amt; m.redeemed += amt;
+      m.lastRedeem = '₹'+amt+' redeemed'; m.lastRedeemDate = 'Just now'; m.status = 'redeemed';
+      closeRedeemModal(); renderMembers(getFilteredMembers());
+      KcozmAdmin.showToast(amt+' points redeemed for '+m.name+'!','success');
+    }
+    document.getElementById('redeemOverlay').addEventListener('click',function(e){if(e.target===this)closeRedeemModal();});
+
+    function addPoints(id) {
+      var m = MEMBERS.find(function(x){return x.id===id;});
+      if(!m) return;
+      var pts = parseInt(prompt('Add points for '+m.name+' (current: '+m.balance+'):'))||0;
+      if(pts<=0) return;
+      m.balance+=pts; m.earned+=pts;
+      renderMembers(getFilteredMembers());
+      KcozmAdmin.showToast(pts+' points added to '+m.name+'!','success');
+    }
   </script>
 </body>
 </html>
