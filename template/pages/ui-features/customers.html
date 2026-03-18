@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>KCOZM Admin – Customers</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../../images/favicon.png"/>
   <style>
     :root {
@@ -43,7 +43,7 @@
     .kc-stat:nth-child(3)::before{background:linear-gradient(90deg,var(--pk),var(--pk-dk))}
     .kc-stat:nth-child(4)::before{background:linear-gradient(90deg,#2196f3,#1565c0)}
     .kc-stat-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:10px}
-    .kc-stat-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--ink);line-height:1}
+    .kc-stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:800;color:var(--ink);line-height:1}
     .kc-stat-sub{display:flex;align-items:center;gap:5px;margin-top:8px;font-size:12px}
     .kc-stat-up{color:#2e7d32;font-weight:600}
     .kc-stat-dn{color:var(--pk-dk);font-weight:600}
@@ -59,7 +59,7 @@
     .kc-head-left{display:flex;align-items:center;gap:14px}
     .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center}
     .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
-    .kc-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
     .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
     .kc-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
@@ -95,7 +95,7 @@
 
     /* Customer cell */
     .kc-cust{display:flex;align-items:center;gap:12px}
-    .kc-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:#fff}
+    .kc-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:#fff}
     .kc-cust-name{font-weight:600;color:var(--ink);font-size:14px}
     .kc-cust-email{font-size:12px;color:var(--ink-3);margin-top:2px}
 
@@ -131,16 +131,16 @@
     .kc-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,95vw);background:var(--surface);box-shadow:-8px 0 50px rgba(26,18,8,.18);z-index:2001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
     .kc-drawer.show{transform:translateX(0)}
     .kc-drawer-head{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-    .kc-drawer-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--ink)}
+    .kc-drawer-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--ink)}
     .kc-drawer-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
     .kc-drawer-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
     .kc-drawer-body{flex:1;overflow-y:auto;padding:22px}
-    .kc-drawer-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#fff}
-    .kc-drawer-name{text-align:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-drawer-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:800;color:#fff}
+    .kc-drawer-name{text-align:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
     .kc-drawer-sub{text-align:center;font-size:13px;color:var(--ink-3);margin-top:4px}
     .kc-drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
     .kc-ds{background:var(--surface-2);border-radius:var(--r-md);padding:14px;text-align:center;border:1px solid var(--border)}
-    .kc-ds-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-ds-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
     .kc-ds-lbl{font-size:11px;color:var(--ink-3);margin-top:4px}
     .kc-drawer-sec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin:18px 0 10px}
     .kc-drawer-info-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}

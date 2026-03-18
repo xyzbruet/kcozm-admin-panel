@@ -621,8 +621,8 @@
     ]},
     { sec:'BUSINESS', items:[
       { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/franchise_new_tabel.html', badge:null },
-      { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'#', badge:null },
-      { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'#', badge:null },
+      { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'javascript:void KcozmAdmin.showToast(\'Payments module coming soon\',\'info\')', badge:null },
+      { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'javascript:void KcozmAdmin.showToast(\'Reports module coming soon\',\'info\')', badge:null },
       { slug:'more-pages', label:'More Pages', icon:'fa-layer-group', badge:null, children:[
         { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/bridal_tabel.html'  },
         { slug:'offers',  label:'Offers',   icon:'fa-tag',          href:'pages/ui-features/Offers_new.html'    },
@@ -637,7 +637,7 @@
     ]}
   ];
 
-  function mkUrl(r,h){ return (!h||h==='#')?(h||'#'):r+h; }
+  function mkUrl(r,h){ return (!h||h==='#'||h.startsWith('javascript:'))?(h||'#'):r+h; }
   function childActive(it,slug){ return it.children&&it.children.some(function(c){return c.slug===slug;}); }
 
   /* ═══════════════════ BUILD DESKTOP SIDEBAR ═══════════════════ */

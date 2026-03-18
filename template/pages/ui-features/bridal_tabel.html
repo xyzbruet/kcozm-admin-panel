@@ -43,7 +43,7 @@
       margin-bottom: 22px; animation: fadeDown 0.4s ease both;
     }
     .kc-breadcrumb a {
-      color: var(--pink); text-decoration: none;
+      color: var(--gold); text-decoration: none;
       display: inline-flex; align-items: center; gap: 5px;
       transition: opacity var(--t);
     }
@@ -69,16 +69,16 @@
     .kc-title-block { display: flex; align-items: center; gap: 14px; }
     .kc-icon-wrap {
       width: 46px; height: 46px; border-radius: var(--radius-sm);
-      background: var(--pink-soft);
+      background: var(--gold-lt);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .kc-icon-wrap i { color: var(--pink); font-size: 19px; }
+    .kc-icon-wrap i { color: var(--gold); font-size: 19px; }
     .kc-title { font-size: 21px; font-weight: 700; color: var(--ink); margin: 0; line-height: 1.2; }
     .kc-title span { display: block; font-size: 12px; font-weight: 400; color: var(--ink-light); margin-top: 3px; }
 
     /* ── Add button ── */
     .kc-btn-add {
-      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       color: #fff; border: none; padding: 10px 22px; border-radius: var(--radius-sm);
       font-size: 13.5px; font-weight: 600; cursor: pointer;
       display: inline-flex; align-items: center; gap: 7px;
@@ -102,7 +102,7 @@
       font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--ink);
       outline: none; transition: border-color var(--t), box-shadow var(--t), background var(--t);
     }
-    .kc-search:focus { border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-glow); background: #fff; }
+    .kc-search:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); background: #fff; }
     .kc-search::placeholder { color: var(--ink-light); }
     .kc-stat-pill {
       display: inline-flex; align-items: center; gap: 6px;
@@ -110,7 +110,7 @@
       background: var(--surface-2); border: 1px solid var(--border);
       padding: 6px 16px; border-radius: 50px; margin-left: auto; white-space: nowrap;
     }
-    .kc-stat-pill strong { color: var(--pink); font-size: 14px; }
+    .kc-stat-pill strong { color: var(--gold); font-size: 14px; }
 
     /* ── Table ── */
     .kc-table-wrap { overflow-x: auto; }
@@ -173,10 +173,10 @@
     /* ── Empty state ── */
     .kc-empty { text-align: center; padding: 64px 20px; display: none; }
     .kc-empty-ring {
-      width: 76px; height: 76px; border-radius: 50%; background: var(--pink-soft);
+      width: 76px; height: 76px; border-radius: 50%; background: var(--gold-lt);
       display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
     }
-    .kc-empty-ring i { color: var(--pink); font-size: 30px; opacity: 0.55; }
+    .kc-empty-ring i { color: var(--gold); font-size: 30px; opacity: 0.55; }
     .kc-empty h6 { font-size: 17px; color: var(--ink); margin: 0 0 8px; }
     .kc-empty p  { font-size: 13px; color: var(--ink-light); margin: 0; }
 
@@ -191,9 +191,9 @@
       background: var(--surface); font-family: 'DM Sans', sans-serif;
       font-size: 13px; font-weight: 600; color: var(--ink-mid); cursor: pointer; transition: all var(--t);
     }
-    .kc-pg:hover:not([disabled]) { border-color:var(--pink); color:var(--pink); background:var(--pink-soft); }
+    .kc-pg:hover:not([disabled]) { border-color:var(--gold); color:var(--gold); background:var(--gold-lt); }
     .kc-pg[disabled] { opacity:.38; cursor:not-allowed; }
-    .kc-pg.active { background:var(--pink); border-color:var(--pink); color:#fff; box-shadow:var(--shadow-btn); }
+    .kc-pg.active { background:var(--gold); border-color:var(--gold); color:#fff; box-shadow:var(--shadow-btn); }
     .kc-pg-info { margin-left:auto; font-size:12.5px; color:var(--ink-light); }
 
     /* ── Delete modal ── */
@@ -210,10 +210,10 @@
       animation: fadeUp 0.25s ease both;
     }
     .kc-modal-ring {
-      width: 64px; height: 64px; border-radius: 50%; background: var(--pink-soft);
+      width: 64px; height: 64px; border-radius: 50%; background: var(--gold-lt);
       display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
     }
-    .kc-modal-ring i { color:var(--pink); font-size:26px; }
+    .kc-modal-ring i { color:var(--gold); font-size:26px; }
     .kc-modal h5 { font-size:19px; color:var(--ink); margin:0 0 10px; }
     .kc-modal p  { font-size:13.5px; color:var(--ink-light); margin:0 0 26px; line-height:1.6; }
     .kc-modal-row { display:flex; gap:10px; }
@@ -225,7 +225,7 @@
     .kc-btn-cancel:hover { background:var(--surface-2); }
     .kc-btn-confirm {
       flex:1; padding:11px; border:none; border-radius:var(--radius-sm);
-      background:linear-gradient(135deg,var(--pink),var(--pink-dark));
+      background:linear-gradient(135deg,var(--gold),var(--gold-dk));
       font-size:13.5px; font-weight:600; color:#fff; cursor:pointer;
       box-shadow:var(--shadow-btn); transition:opacity var(--t),transform var(--t);
     }
@@ -257,7 +257,7 @@
               <span>Manage bridal packages &amp; images</span>
             </h4>
           </div>
-          <button class="kc-btn-add" onclick="window.location.href='bridal_from.html'">
+          <button class="kc-btn-add" onclick="openAddModal()">
             <i class="fa-solid fa-plus"></i> Add Bridal
           </button>
         </div>
@@ -322,6 +322,34 @@
   </div>
 
   <!-- Shared Components ONLY — no vendor CSS conflicts -->
+  
+  <!-- Add Modal -->
+  <div class="kc-modal-overlay" id="addModalOverlay" style="align-items:center;">
+    <div class="kc-modal" style="width:min(520px,95vw); max-height:90vh; overflow-y:auto;">
+      <div style="padding-bottom:18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;">
+        <h5 style="margin:0; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--ink)">Add New Bridal</h5>
+        <button onclick="closeAddModal()" style="width:34px; height:34px; border-radius:8px; border:1.5px solid var(--border); background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-light); transition:all 0.18s"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div>
+        
+      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
+        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Image URL</label>
+        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter image url...">
+      </div>
+  
+      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
+        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Description</label>
+        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter description...">
+      </div>
+  
+      </div>
+      <div style="padding-top:16px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end">
+        <button class="kc-btn-cancel" onclick="closeAddModal()">Cancel</button>
+        <button class="kc-btn-confirm" onclick="submitAddModal()"><i class="fa-solid fa-plus"></i> Add Bridal</button>
+      </div>
+    </div>
+  </div>
+  
   <script src="../../js/shared-components.js"></script>
   <script>
     KcozmAdmin.init({
@@ -404,7 +432,7 @@
     function goPage(p) { page = p; render(); }
 
     function viewRow(id) { KcozmAdmin.showToast('Opening entry #' + id + '…', 'info'); }
-    function editRow(id) { window.location.href = 'bridal_from.html?id=' + id; }
+    function editRow(id) { KcozmAdmin.showToast('Editing Bridal #' + id, 'info'); openAddModal(); }
 
     function openModal(id) { delId = id; document.getElementById('deleteOverlay').classList.add('show'); }
     function closeModal()  { document.getElementById('deleteOverlay').classList.remove('show'); delId = null; }
@@ -420,5 +448,14 @@
     render();
   </script>
 
+<script>
+    function openAddModal() { document.getElementById('addModalOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
+    function closeAddModal()  { document.getElementById('addModalOverlay').classList.remove('show'); document.body.style.overflow=''; }
+    function submitAddModal() {
+      closeAddModal();
+      if(window.KcozmAdmin && KcozmAdmin.showToast) KcozmAdmin.showToast('Bridal added successfully!', 'success');
+      if(typeof render === 'function') render();
+    }
+  </script>
 </body>
 </html>

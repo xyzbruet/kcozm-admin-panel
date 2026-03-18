@@ -49,7 +49,7 @@
       margin-bottom: 22px; animation: fadeDown 0.4s ease both;
     }
     .kc-breadcrumb a {
-      color: var(--pink); text-decoration: none;
+      color: var(--gold); text-decoration: none;
       display: inline-flex; align-items: center; gap: 5px;
       transition: opacity var(--t);
     }
@@ -72,10 +72,10 @@
     .kc-title-block { display: flex; align-items: center; gap: 14px; }
     .kc-icon-wrap {
       width: 46px; height: 46px; border-radius: var(--radius-sm);
-      background: var(--pink-soft);
+      background: var(--gold-lt);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .kc-icon-wrap i { color: var(--pink); font-size: 19px; }
+    .kc-icon-wrap i { color: var(--gold); font-size: 19px; }
     .kc-title {
       font-size: 21px; font-weight: 700;
       color: var(--ink); margin: 0; line-height: 1.2;
@@ -87,14 +87,14 @@
 
     /* ── Buttons ── */
     .kc-btn-add {
-      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       color: #fff; border: none; padding: 10px 22px; border-radius: var(--radius-sm);
       font-size: 13.5px; font-weight: 600;
       cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
       box-shadow: var(--shadow-btn); transition: transform var(--t), box-shadow var(--t);
       white-space: nowrap;
     }
-    .kc-btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(233,30,99,.40); }
+    .kc-btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(200,160,64,.40); }
     .kc-btn-outline {
       padding: 10px 20px; border-radius: var(--radius-sm);
       border: 1.5px solid var(--border); background: var(--surface);
@@ -102,7 +102,7 @@
       color: var(--ink-mid); cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
       transition: all var(--t);
     }
-    .kc-btn-outline:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-soft); }
+    .kc-btn-outline:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-lt); }
 
     /* ══ TWO-COLUMN LAYOUT ══ */
     .kc-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; min-width: 0; }
@@ -138,7 +138,7 @@
     .kc-sec-drag { color: var(--ink-light); font-size: 13px; cursor: grab; }
     .kc-sec-num {
       width: 24px; height: 24px; border-radius: 6px;
-      background: var(--pink-soft); color: var(--pink);
+      background: var(--gold-lt); color: var(--gold);
       font-size: 11px; font-weight: 700;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
@@ -166,7 +166,7 @@
       transition: border-color var(--t), box-shadow var(--t), background var(--t);
     }
     .kc-input:focus, .kc-textarea:focus {
-      border-color: var(--pink); box-shadow: 0 0 0 3px var(--pink-glow); background: #fff;
+      border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); background: #fff;
     }
     .kc-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
 
@@ -177,7 +177,7 @@
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       cursor: pointer; transition: all var(--t); position: relative; overflow: hidden; text-align: center;
     }
-    .kc-img-dropzone:hover { border-color: var(--pink); background: var(--pink-soft); }
+    .kc-img-dropzone:hover { border-color: var(--gold); background: var(--gold-lt); }
     .kc-img-dropzone.has-img { padding: 0; border-style: solid; border-color: var(--border); }
     .kc-img-dropzone input[type=file] {
       position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; z-index: 2;
@@ -222,7 +222,7 @@
       font-size: 12px; font-weight: 600; color: var(--ink-light);
       cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all var(--t);
     }
-    .kc-tmpl:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-soft); border-style: solid; }
+    .kc-tmpl:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-lt); border-style: solid; }
     .kc-tmpl i { font-size: 11px; }
 
     /* ── Right: preview ── */
@@ -244,7 +244,7 @@
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; font-size: 13px; color: var(--ink-light); transition: all var(--t);
     }
-    .kc-dev-btn.active, .kc-dev-btn:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-soft); }
+    .kc-dev-btn.active, .kc-dev-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-lt); }
     .kc-preview-frame-wrap {
       flex: 1; padding: 20px; overflow-y: auto;
       display: flex; justify-content: center; background: #f0eff8;
@@ -261,16 +261,16 @@
     #livePreview { font-family: 'DM Sans', sans-serif; color: #1a1a2e; }
     .pv-hero {
       padding: 60px 40px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 60%, #c2185b 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 60%, #a07828 100%);
       color: #fff; text-align: center; position: relative; overflow: hidden;
     }
     .pv-hero::before {
       content:''; position:absolute; inset:0;
-      background: radial-gradient(circle at 70% 30%, rgba(233,30,99,.25) 0%, transparent 60%);
+      background: radial-gradient(circle at 70% 30%, rgba(200,160,64,.25) 0%, transparent 60%);
     }
     .pv-hero-tag {
       display: inline-block; padding: 5px 16px; border-radius: 50px;
-      background: rgba(233,30,99,.18); border: 1px solid rgba(233,30,99,.35);
+      background: rgba(200,160,64,.18); border: 1px solid rgba(200,160,64,.35);
       font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
       text-transform: uppercase; color: #f48fb1; margin-bottom: 16px;
     }
@@ -283,7 +283,7 @@
     .pv-text { padding: 44px 40px; }
     .pv-text .sec-eyebrow {
       font-size: 10.5px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1.2px; color: var(--pink); margin-bottom: 10px;
+      letter-spacing: 1.2px; color: var(--gold); margin-bottom: 10px;
     }
     .pv-text h2 { font-size: clamp(20px,3vw,28px); font-weight: 700; color: #1a1a2e; margin: 0 0 14px; line-height: 1.3; }
     .pv-text p { font-size: 14.5px; color: #4a4a6a; line-height: 1.75; margin: 0; }
@@ -297,7 +297,7 @@
     .pv-img-sec .pv-text-side { flex: 1; }
     .pv-img-sec .pv-text-side .sec-eyebrow {
       font-size: 10.5px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1.2px; color: var(--pink); margin-bottom: 10px;
+      letter-spacing: 1.2px; color: var(--gold); margin-bottom: 10px;
     }
     .pv-img-sec .pv-text-side h2 { font-size: clamp(18px,2.5vw,24px); font-weight: 700; color: #1a1a2e; margin: 0 0 12px; line-height: 1.3; }
     .pv-img-sec .pv-text-side p { font-size: 14px; color: #4a4a6a; line-height: 1.75; margin: 0; }
@@ -316,11 +316,11 @@
     .pv-stat + .pv-stat::before {
       content:''; position:absolute; left:0; top:10%; bottom:10%; width:1px; background: var(--border);
     }
-    .pv-stat .num { font-size: 28px; font-weight: 800; color: var(--pink); }
+    .pv-stat .num { font-size: 28px; font-weight: 800; color: var(--gold); }
     .pv-stat .lbl { font-size: 12px; color: #8888aa; font-weight: 500; margin-top: 4px; }
-    .pv-quote { padding: 44px 40px; background: var(--pink-soft); border-top: 3px solid var(--pink); text-align: center; }
+    .pv-quote { padding: 44px 40px; background: var(--gold-lt); border-top: 3px solid var(--gold); text-align: center; }
     .pv-quote blockquote { font-size: clamp(18px,2.5vw,24px); font-weight: 700; color: var(--ink); line-height: 1.45; margin: 0 0 14px; }
-    .pv-quote cite { font-size: 13px; color: var(--pink); font-style: normal; font-weight: 600; }
+    .pv-quote cite { font-size: 13px; color: var(--gold); font-style: normal; font-weight: 600; }
     .pv-empty { padding: 80px 24px; text-align: center; color: #8888aa; }
     .pv-empty i { font-size: 36px; opacity:.3; margin-bottom: 14px; display:block; }
     .pv-empty p { font-size: 13px; }
@@ -339,10 +339,10 @@
       animation: fadeUp 0.25s ease both;
     }
     .kc-modal-ring {
-      width: 64px; height: 64px; border-radius: 50%; background: var(--pink-soft);
+      width: 64px; height: 64px; border-radius: 50%; background: var(--gold-lt);
       display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
     }
-    .kc-modal-ring i { color:var(--pink); font-size:26px; }
+    .kc-modal-ring i { color:var(--gold); font-size:26px; }
     .kc-modal h5 { font-size:19px; color:var(--ink); margin:0 0 10px; }
     .kc-modal p  { font-size:13.5px; color:var(--ink-light); margin:0 0 26px; line-height:1.6; }
     .kc-modal-row { display:flex; gap:10px; }
@@ -354,7 +354,7 @@
     .kc-btn-cancel:hover { background:var(--surface-2); }
     .kc-btn-confirm {
       flex:1; padding:11px; border: none; border-radius: var(--radius-sm);
-      background: linear-gradient(135deg,var(--pink),var(--pink-dark));
+      background: linear-gradient(135deg,var(--gold),var(--gold-dk));
       font-size:13.5px; font-weight:600; color:#fff; cursor:pointer;
       box-shadow: var(--shadow-btn); transition: opacity var(--t), transform var(--t);
     }
@@ -403,7 +403,7 @@
           <div class="kc-editor">
             <div class="kc-editor-header">
               <span class="kc-editor-title">
-                <i class="fa-solid fa-sliders" style="margin-right:6px;color:var(--pink)"></i>Section Builder
+                <i class="fa-solid fa-sliders" style="margin-right:6px;color:var(--gold)"></i>Section Builder
               </span>
               <span style="font-size:12px;color:var(--ink-light);" id="sectionCount">0 sections</span>
             </div>
