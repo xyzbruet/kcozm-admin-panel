@@ -378,7 +378,7 @@
   </script>
 
   <script>
-    var DATA = [
+    var DATA = JSON.parse(localStorage.getItem('products')) || [
       { id:1, img:'https://www.lakmesalon.in/cdn/shop/products/1000x1000_BeautyGarageFrizzDismissOil100ml._2.jpg?v=1679569147', name:'De Fabulous Reviver Hair Repair Shampoo 250ml', price:1190, qty:'250ml' },
       { id:2, img:'https://www.lakmesalon.in/cdn/shop/products/H-Stress-Positive-Eye-Lift-25ml-5000X500-PX.jpg?v=1623325880&width=713', name:'Dermalogica Stress Positive Eye Lift Masque 25ml', price:5100, qty:'25ml' },
       { id:3, img:'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=200&q=80', name:'Lakme 9to5 Primer + Matte Lipstick — Nude Uncut', price:650, qty:'3.6g' },
@@ -454,6 +454,7 @@
       if(delId===null) return;
       DATA=DATA.filter(function(r){return r.id!==delId;});
       list=list.filter(function(r){return r.id!==delId;});
+      localStorage.setItem('products', JSON.stringify(DATA));
       closeModal(); render();
       if(window.KcozmAdmin&&KcozmAdmin.showToast) KcozmAdmin.showToast('Product deleted.','success');
     }

@@ -230,7 +230,7 @@
   </script>
 
   <script>
-    var DATA = [
+    var DATA = JSON.parse(localStorage.getItem('franchises')) || [
       { id:1, img:'https://images.unsplash.com/photo-1560066984-138daaa0b1b8?w=200&q=80',   name:'Kcozm Nagpur Central',       location:'Central Avenue, Nagpur',            status:'active'   },
       { id:2, img:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', name:'Kcozm Pune West',            location:'Baner Road, Pune',                  status:'active'   },
       { id:3, img:'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=200&q=80', name:'Kcozm Mumbai Andheri',       location:'Link Road, Andheri West, Mumbai',   status:'active'   },
@@ -297,6 +297,7 @@
       if(delId===null)return;
       DATA=DATA.filter(function(r){return r.id!==delId;});
       list=list.filter(function(r){return r.id!==delId;});
+      localStorage.setItem('franchises', JSON.stringify(DATA));
       closeModal();render();
       if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Franchise entry deleted.','success');
     }

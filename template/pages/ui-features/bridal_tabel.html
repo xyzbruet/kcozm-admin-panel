@@ -360,7 +360,7 @@
   </script>
 
   <script>
-    var DATA = [
+    var DATA = JSON.parse(localStorage.getItem('bridalPackages')) || [
       { id:1, img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=200&q=80',
         desc:'Premium bridal package including full hair styling, airbrush makeup, saree draping, and pre-bridal skin care session for glowing day-of skin.' },
       { id:2, img:'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=200&q=80',
@@ -440,6 +440,7 @@
       if (delId === null) return;
       DATA = DATA.filter(function(r){ return r.id !== delId; });
       list = list.filter(function(r){ return r.id !== delId; });
+      localStorage.setItem('bridalPackages', JSON.stringify(DATA));
       closeModal(); render();
       KcozmAdmin.showToast('Bridal entry deleted.', 'success');
     }

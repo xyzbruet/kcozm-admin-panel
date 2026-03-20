@@ -245,7 +245,7 @@
   </script>
 
   <script>
-    var DATA = [
+    var DATA = JSON.parse(localStorage.getItem('offers')) || [
       { id:1, banner:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', name:'Summer Hair Care Deal',   discount:'20%', validUntil:'31 Mar 2026', status:'active'  },
       { id:2, banner:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80', name:'Eye Lift Special Offer',  discount:'15%', validUntil:'15 Apr 2026', status:'active'  },
       { id:3, banner:'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&q=80', name:'Monsoon Skincare Bundle', discount:'30%', validUntil:'28 Feb 2026', status:'expired' },
@@ -319,6 +319,7 @@
     function confirmDelete(){
       if(delId===null)return;
       DATA=DATA.filter(function(r){return r.id!==delId;});
+      localStorage.setItem('offers', JSON.stringify(DATA));
       closeModal(); applyFilters();
       if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Offer deleted successfully.','success');
     }

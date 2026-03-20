@@ -495,7 +495,7 @@
   <script>
     KcozmAdmin.init({ activePage:'services', pageTitle:'Services', depth:'../../' });
 
-    var SERVICES = [
+    var SERVICES = JSON.parse(localStorage.getItem('services')) || [
       {id:1,  name:'Bridal Full Makeup',      cat:'bridal',sub:'Full Bridal',  price:8500,duration:'180 min',status:true, img:null},
       {id:2,  name:'Gold Facial',             cat:'ladies',sub:'Facials',      price:1800,duration:'60 min', status:true, img:null},
       {id:3,  name:'Hair Colour + Highlights',cat:'ladies',sub:'Hair Styling', price:3500,duration:'90 min', status:true, img:null},
@@ -663,6 +663,7 @@
     function confirmDelete(){
       if(pendingDelId===null)return;
       SERVICES=SERVICES.filter(function(s){return s.id!==pendingDelId;});
+      localStorage.setItem('services', JSON.stringify(SERVICES));
       closeDelModal();refreshAll();KcozmAdmin.showToast('Service deleted.','success');
     }
     document.getElementById('delOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});

@@ -1,0 +1,538 @@
+/**
+ * KCOZM Shared Form & Table Styles v1.0
+ * ═══════════════════════════════════════════════════════════════
+ * Consolidated CSS for form and table components
+ * Eliminates duplication across all pages
+ * Include this in <head> of all pages: <link rel="stylesheet" href="../../css/form-table-shared.css">
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+/* ═══ FORM CONTAINER ═══ */
+.kc-form-wrapper {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--white, #ffffff);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.08));
+  animation: slideUp 0.3s ease;
+}
+
+.kc-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.kc-form-grid.two-col {
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* ═══ FORM FIELDS ═══ */
+.kc-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kc-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Form Labels */
+.kc-form-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink, #1a1a1a);
+  letter-spacing: 0.3px;
+}
+
+.kc-form-label.required::after {
+  content: ' *';
+  color: #c62828;
+  font-weight: 600;
+}
+
+/* Form Inputs, TextAreas, Selects */
+.kc-form-input,
+.kc-form-textarea,
+.kc-form-select {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-light, #e0e0e0);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink, #1a1a1a);
+  background: var(--white, #ffffff);
+  transition: all 0.2s ease;
+}
+
+.kc-form-input:focus,
+.kc-form-textarea:focus,
+.kc-form-select:focus {
+  outline: none;
+  border-color: var(--gold, #d4a574);
+  background: var(--white, #ffffff);
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+}
+
+.kc-form-input::placeholder {
+  color: var(--placeholder, #999);
+}
+
+/* TextArea specific */
+.kc-form-textarea {
+  resize: vertical;
+  min-height: 120px;
+  max-height: 400px;
+}
+
+/* ═══ FORM INPUT STATES ═══ */
+.kc-form-input-error {
+  border-color: #c62828 !important;
+  background-color: rgba(198, 40, 40, 0.04);
+}
+
+.kc-form-input-error:focus {
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.1);
+}
+
+.kc-form-input:disabled,
+.kc-form-select:disabled {
+  background: var(--bg-light, #f5f5f5);
+  color: var(--text-disabled, #999);
+  cursor: not-allowed;
+}
+
+/* ═══ FORM HELP TEXT ═══ */
+.kc-form-help {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #666);
+  margin-top: 0.25rem;
+}
+
+.kc-form-error {
+  font-size: 0.85rem;
+  color: #c62828;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* ═══ FORM BUTTONS ═══ */
+.kc-form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+  grid-column: 1 / -1;
+}
+
+.kc-form-actions.single-btn {
+  grid-template-columns: 1fr;
+}
+
+.kc-btn-submit,
+.kc-btn-reset,
+.kc-btn-cancel {
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kc-btn-submit {
+  background: linear-gradient(135deg, var(--gold, #d4a574), var(--gold-dark, #b8860b));
+  color: var(--white, #ffffff);
+}
+
+.kc-btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+}
+
+.kc-btn-submit:active {
+  transform: translateY(0);
+}
+
+.kc-btn-cancel {
+  background: var(--bg-light, #f5f5f5);
+  color: var(--ink, #1a1a1a);
+  border: 2px solid var(--border-light, #e0e0e0);
+}
+
+.kc-btn-cancel:hover {
+  background: var(--border-light, #e0e0e0);
+}
+
+.kc-btn-reset {
+  background: transparent;
+  color: var(--text-secondary, #666);
+  border: 2px solid var(--border-light, #e0e0e0);
+}
+
+.kc-btn-reset:hover {
+  border-color: var(--gold, #d4a574);
+  color: var(--gold, #d4a574);
+}
+
+/* ═══ TABLE WRAPPER ═══ */
+.kc-table-wrapper {
+  background: var(--white, #ffffff);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.08));
+}
+
+.kc-table-header {
+  padding: 1.5rem;
+  border-bottom: 2px solid var(--border-light, #e0e0e0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kc-table-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink, #1a1a1a);
+}
+
+.kc-table-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* ═══ TABLE SEARCH ═══ */
+.kc-search-input {
+  padding: 0.65rem 1rem;
+  border: 2px solid var(--border-light, #e0e0e0);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  min-width: 250px;
+}
+
+.kc-search-input:focus {
+  outline: none;
+  border-color: var(--gold, #d4a574);
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+}
+
+/* ═══ TABLE CONTENT ═══ */
+.kc-table-content {
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.kc-table-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.kc-table-content::-webkit-scrollbar-track {
+  background: var(--bg-light, #f5f5f5);
+}
+
+.kc-table-content::-webkit-scrollbar-thumb {
+  background: var(--border-light, #e0e0e0);
+  border-radius: 4px;
+}
+
+.kc-table-content::-webkit-scrollbar-thumb:hover {
+  background: var(--gold, #d4a574);
+}
+
+/* Standard HTML Table */
+.kc-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.kc-table thead {
+  background: var(--bg-light, #f5f5f5);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.kc-table thead th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink, #1a1a1a);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-light, #e0e0e0);
+}
+
+.kc-table tbody tr {
+  border-bottom: 1px solid var(--border-light, #e0e0e0);
+  transition: background 0.2s ease;
+}
+
+.kc-table tbody tr:hover {
+  background: var(--bg-light, #f5f5f5);
+}
+
+.kc-table tbody td {
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary, #666);
+}
+
+/* Cell Styling */
+.kc-table-cell-title {
+  font-weight: 600;
+  color: var(--ink, #1a1a1a);
+}
+
+.kc-table-cell-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+/* ═══ TABLE ACTIONS ═══ */
+.kc-btn-table {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.kc-btn-edit {
+  background: rgba(212, 165, 116, 0.15);
+  color: var(--gold, #d4a574);
+}
+
+.kc-btn-edit:hover {
+  background: rgba(212, 165, 116, 0.25);
+}
+
+.kc-btn-delete {
+  background: rgba(198, 40, 40, 0.15);
+  color: #c62828;
+}
+
+.kc-btn-delete:hover {
+  background: rgba(198, 40, 40, 0.25);
+}
+
+.kc-btn-view {
+  background: rgba(76, 175, 80, 0.15);
+  color: #2e7d32;
+}
+
+.kc-btn-view:hover {
+  background: rgba(76, 175, 80, 0.25);
+}
+
+/* ═══ EMPTY STATE ═══ */
+.kc-empty-message {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-secondary, #666);
+  font-size: 1.05rem;
+}
+
+.kc-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* ═══ LOADING STATE ═══ */
+.kc-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  color: var(--text-secondary, #666);
+}
+
+.kc-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(212, 165, 116, 0.3);
+  border-top-color: var(--gold, #d4a574);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 0.8rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ═══ PAGINATION ═══ */
+.kc-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-light, #e0e0e0);
+}
+
+.kc-pagination-btn {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-light, #e0e0e0);
+  background: var(--white, #ffffff);
+  color: var(--ink, #1a1a1a);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kc-pagination-btn:hover {
+  background: var(--bg-light, #f5f5f5);
+  border-color: var(--gold, #d4a574);
+}
+
+.kc-pagination-btn.active {
+  background: var(--gold, #d4a574);
+  color: var(--white, #ffffff);
+  border-color: var(--gold, #d4a574);
+}
+
+.kc-pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═══ RESPONSIVE DESIGN ═══ */
+@media (max-width: 768px) {
+  .kc-form-wrapper {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .kc-form-grid.two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .kc-form-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .kc-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .kc-table-controls {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .kc-search-input {
+    min-width: 100%;
+  }
+
+  .kc-table-content {
+    max-height: 400px;
+  }
+
+  .kc-table {
+    font-size: 0.9rem;
+  }
+
+  .kc-table thead th,
+  .kc-table tbody td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .kc-btn-table {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .kc-pagination {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .kc-form-wrapper {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0;
+  }
+
+  .kc-form-grid {
+    gap: 1rem;
+  }
+
+  .kc-form-input,
+  .kc-form-textarea,
+  .kc-form-select {
+    padding: 0.65rem 0.75rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .kc-btn-submit,
+  .kc-btn-cancel {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .kc-table-cell-actions {
+    flex-direction: column;
+  }
+
+  .kc-btn-table {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.kc-fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+/* ═══ MODAL FORM INTEGRATION ═══ */
+.kc-modal-form {
+  max-width: 500px !important;
+  margin: 0 !important;
+  padding: 1.5rem !important;
+}
+
+.kc-modal-form .kc-form-grid {
+  gap: 1.2rem;
+}
+
+.kc-modal-form .kc-form-actions {
+  margin-top: 1.5rem;
+}

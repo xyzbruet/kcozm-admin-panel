@@ -392,7 +392,7 @@
       purple:{ bg:'linear-gradient(135deg,#9c27b0,#6a1b9a)' },
     };
 
-    var CATS = [
+    var CATS = JSON.parse(localStorage.getItem('categories')) || [
       { id:1, name:'Ladies',  icon:'fa-venus',  color:'rose',  status:'active',  desc:'Hair, skin, nail, styling and mehendi services exclusively for women.', subCats:6, services:12, bookings:89 },
       { id:2, name:'Gents',   icon:'fa-mars',   color:'blue',  status:'active',  desc:'Haircut, beard grooming, shaving and head massage services for men.',    subCats:4, services:4,  bookings:31 },
       { id:3, name:'Bridal',  icon:'fa-heart',  color:'gold',  status:'active',  desc:'Full bridal, pre-bridal, reception and engagement packages.',            subCats:4, services:4,  bookings:18 },
@@ -466,6 +466,7 @@
       if(!name){KcozmAdmin.showToast('Please enter a category name','error');return;}
       CATS.push({id:Date.now(),name:name,icon:icon,color:color,status:status,desc:desc,subCats:0,services:0,bookings:0});
       render();
+      localStorage.setItem('categories', JSON.stringify(CATS));
       document.getElementById('addForm').classList.remove('open');
       document.getElementById('toggleAdd').innerHTML='<i class="fa-solid fa-plus"></i> Add Category';
       resetForm(); KcozmAdmin.showToast('"'+name+'" category created!','success');
@@ -491,6 +492,7 @@
       if(pendingDelId===null)return;
       var c=CATS.find(function(x){return x.id===pendingDelId;});
       CATS=CATS.filter(function(x){return x.id!==pendingDelId;});
+      localStorage.setItem('categories', JSON.stringify(CATS));
       closeDelModal();render(); KcozmAdmin.showToast((c?c.name:'Category')+' deleted.','success');
     }
     document.getElementById('delOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});

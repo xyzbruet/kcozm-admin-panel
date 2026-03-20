@@ -505,12 +505,12 @@
 
   <script src="../../js/shared-components.js"></script>
   <script>
-    KcozmAdmin.init({ activePage:'more-pages', pageTitle:'Loyalty Cards', depth:'../../' });
+    KcozmAdmin.init({ activePage:'more-pages', pageTitle:'Loyalty Cards', depth:'../../', addButton:'Add Loyalty Card', addButtonHref:'loyaltyform.html' });
 
     /* ══════════════════════════════════════
        TIER DATA
     ══════════════════════════════════════ */
-    var TIERS = [
+    var TIERS = JSON.parse(localStorage.getItem('tiers')) || [
       { id:1, tier:'silver', heading:'Silver Member',   points:200,  pct:33, discount:'5% off all services',
         desc:'Enjoy 5% off on all services. Free consultations and priority booking for our valued Silver members. Earn 1 point for every ₹100 spent.',
         perks:['5% off','Free consult','Priority booking'], members:5 },
@@ -761,6 +761,7 @@
       var pct = Math.min(100, Math.round(pts / 12));
       TIERS.push({ id:Date.now(), tier:activeTier, heading:heading, points:pts, pct:pct, discount:discount, desc:desc, perks:perks, members:0 });
       renderTiers(TIERS);
+      localStorage.setItem('tiers', JSON.stringify(TIERS));
       document.getElementById('lcForm').classList.remove('open');
       document.getElementById('toggleLC').innerHTML = '<i class="fa-solid fa-plus"></i> New Tier';
       resetForm();
@@ -796,6 +797,7 @@
     function confirmDelete(){
       if(pendingDelId===null) return;
       TIERS=TIERS.filter(function(c){return c.id!==pendingDelId;});
+      localStorage.setItem('tiers', JSON.stringify(TIERS));
       closeDelModal(); renderTiers(TIERS);
       KcozmAdmin.showToast('Loyalty tier deleted.','success');
     }
