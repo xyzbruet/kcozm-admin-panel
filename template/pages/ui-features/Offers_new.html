@@ -7,31 +7,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../../images/favicon.png" />
-
   <style>
     :root {
-      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --pink-glow:rgba(233,30,99,0.13);
-      --ink:#1a1a2e; --ink-mid:#4a4a6a; --ink-light:#8888aa;
-      --surface:#ffffff; --surface-2:#f8f7fc; --border:#ededf5;
-      --radius-sm:8px; --radius-md:14px; --radius-lg:20px;
-      --shadow-card:0 2px 24px rgba(26,26,46,0.08); --shadow-btn:0 4px 16px rgba(233,30,99,0.32); --t:0.18s ease;
+      --gold:#c8a040;--gold-dk:#a07828;--gold-lt:#fdf6e4;--gold-glow:rgba(200,160,64,.15);
+      --ink:#1a1a2e;--ink-mid:#4a4a6a;--ink-light:#8888aa;
+      --surface:#fff;--surface-2:#f8f7fc;--border:#ededf5;
+      --radius-sm:8px;--radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,.08);--shadow-btn:0 4px 16px rgba(200,160,64,.32);--t:.18s ease;
     }
     *,*::before,*::after{box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
-
     .main-panel{min-width:0;overflow-x:hidden}
-
     @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
-    @keyframes fadeUp  {from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
     @keyframes rowSlide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
-
     .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
-
-    .kc-breadcrumb{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both}
-    .kc-breadcrumb a{color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
-    .kc-breadcrumb a:hover{opacity:.72}
-    .kc-breadcrumb .sep{font-size:10px}
-
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.72}
+    .kc-bc .sep{font-size:10px}
     .kc-card{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--border);overflow:hidden;animation:fadeUp .45s ease both;width:100%;margin-bottom:28px;min-width:0}
     .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
     .kc-title-block{display:flex;align-items:center;gap:14px}
@@ -39,112 +33,127 @@
     .kc-icon-wrap i{color:var(--gold);font-size:19px}
     .kc-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2}
     .kc-title span{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px}
-
     .kc-btn-add{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
-    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(233,30,99,0.40)}
-
+    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
     .kc-toolbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
     .kc-search-wrap{position:relative;flex:1;min-width:220px;max-width:400px}
     .kc-search-wrap .kc-si{position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
     .kc-search{width:100%;padding:9.5px 14px 9.5px 40px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color var(--t),box-shadow var(--t),background var(--t)}
     .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
     .kc-search::placeholder{color:var(--ink-light)}
-
     .kc-filter-chips{display:flex;gap:6px;flex-wrap:wrap}
     .kc-chip{padding:5px 14px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--ink-light);cursor:pointer;transition:all var(--t)}
     .kc-chip:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-lt)}
     .kc-chip.active{background:var(--gold);border-color:var(--gold);color:#fff}
-
     .kc-stat-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-light);background:var(--surface-2);border:1px solid var(--border);padding:6px 16px;border-radius:50px;margin-left:auto;white-space:nowrap}
     .kc-stat-pill strong{color:var(--gold);font-size:14px}
-
     .kc-table-wrap{overflow-x:auto}
     .kc-table{width:100%;border-collapse:collapse}
-    .kc-table thead th{padding:13px 18px;font-family:'Cormorant Garamond',serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink-light);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
+    .kc-table thead th{padding:13px 18px;font-family:'Cormorant Garamond',serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-light);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
     .kc-table thead th:first-child{padding-left:28px}
     .kc-table thead th:last-child{padding-right:28px}
-    .kc-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t);animation:rowSlide 0.3s ease both}
-    .kc-table tbody tr:nth-child(1){animation-delay:.04s}
-    .kc-table tbody tr:nth-child(2){animation-delay:.08s}
-    .kc-table tbody tr:nth-child(3){animation-delay:.12s}
-    .kc-table tbody tr:nth-child(4){animation-delay:.16s}
-    .kc-table tbody tr:nth-child(5){animation-delay:.20s}
+    .kc-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t);animation:rowSlide .3s ease both}
+    .kc-table tbody tr:nth-child(1){animation-delay:.04s}.kc-table tbody tr:nth-child(2){animation-delay:.08s}.kc-table tbody tr:nth-child(3){animation-delay:.12s}.kc-table tbody tr:nth-child(4){animation-delay:.16s}.kc-table tbody tr:nth-child(5){animation-delay:.20s}
     .kc-table tbody tr:hover{background:#fdf6f9}
     .kc-table tbody tr:last-child{border-bottom:none}
     .kc-table tbody td{padding:13px 18px;vertical-align:middle;font-size:13.5px;color:var(--ink-mid)}
     .kc-table tbody td:first-child{padding-left:28px}
     .kc-table tbody td:last-child{padding-right:28px}
-
     .kc-serial{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--ink-light)}
     .kc-img{width:50px;height:50px;border-radius:var(--radius-sm);object-fit:cover;border:2px solid var(--border);transition:transform var(--t),box-shadow var(--t);display:block;cursor:zoom-in}
-    .kc-img:hover{transform:scale(1.1);box-shadow:0 6px 18px rgba(0,0,0,0.14)}
+    .kc-img:hover{transform:scale(1.1);box-shadow:0 6px 18px rgba(0,0,0,.14)}
+    .kc-img-ph{width:50px;height:50px;border-radius:var(--radius-sm);background:var(--gold-lt);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px}
     .kc-name{font-weight:600;color:var(--ink);font-size:13.5px}
     .kc-discount{display:inline-flex;align-items:center;gap:4px;background:var(--gold-lt);color:var(--gold);padding:4px 11px;border-radius:50px;font-size:12px;font-weight:700}
     .kc-date{font-size:13px;color:var(--ink-mid);white-space:nowrap}
     .kc-date.expired{color:var(--ink-light);text-decoration:line-through}
-
     .kc-status{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;font-size:11.5px;font-weight:600}
     .kc-status .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-    .kc-status.active {background:#e8f5e9;color:#2e7d32}
+    .kc-status.active{background:#e8f5e9;color:#2e7d32}
     .kc-status.expired{background:#fff3e0;color:#e65100}
-
     .kc-actions{display:flex;align-items:center;gap:8px}
     .kc-act{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink-light);transition:background var(--t),border-color var(--t),transform var(--t),color var(--t)}
     .kc-act:hover{transform:translateY(-2px)}
-    .kc-act.view:hover  {background:#e3f2fd;border-color:#90caf9;color:#1565c0}
-    .kc-act.edit:hover  {background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+    .kc-act.view:hover{background:#e3f2fd;border-color:#90caf9;color:#1565c0}
+    .kc-act.edit:hover{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
     .kc-act.delete:hover{background:#fce4ec;border-color:#f48fb1;color:#c62828}
-
     .kc-empty{text-align:center;padding:64px 20px;display:none}
     .kc-empty-ring{width:76px;height:76px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-    .kc-empty-ring i{color:var(--gold);font-size:30px;opacity:0.55}
+    .kc-empty-ring i{color:var(--gold);font-size:30px;opacity:.55}
     .kc-empty h6{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin:0 0 8px}
     .kc-empty p{font-size:13px;color:var(--ink-light);margin:0}
-
     .kc-pagination{padding:16px 28px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
     .kc-pg{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:all var(--t)}
     .kc-pg:hover:not([disabled]){border-color:var(--gold);color:var(--gold);background:var(--gold-lt)}
     .kc-pg[disabled]{opacity:.38;cursor:not-allowed}
     .kc-pg.active{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:var(--shadow-btn)}
     .kc-pg-info{margin-left:auto;font-size:12.5px;color:var(--ink-light)}
-
-    .kc-modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,0.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center}
-    .kc-modal-overlay.show{display:flex}
-    .kc-modal{background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,0.24);animation:fadeUp 0.25s ease both}
-    .kc-modal-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-    .kc-modal-ring i{color:var(--gold);font-size:26px}
-    .kc-modal h5{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);margin:0 0 10px}
-    .kc-modal p{font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6}
-    .kc-modal-row{display:flex;gap:10px}
+    /* DELETE MODAL */
+    .kc-overlay{position:fixed;inset:0;background:rgba(26,26,46,.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center}
+    .kc-overlay.show{display:flex}
+    .kc-del-modal{background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,.24);animation:fadeUp .25s ease both}
+    .kc-del-ring{width:64px;height:64px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .kc-del-ring i{color:#c62828;font-size:26px}
+    .kc-del-modal h5{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);margin:0 0 10px}
+    .kc-del-modal p{font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6}
+    .kc-del-row{display:flex;gap:10px}
     .kc-btn-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:background var(--t)}
     .kc-btn-cancel:hover{background:var(--surface-2)}
-    .kc-btn-confirm{flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;box-shadow:var(--shadow-btn);transition:opacity var(--t),transform var(--t)}
-    .kc-btn-confirm:hover{opacity:.88;transform:translateY(-1px)}
+    .kc-btn-del{flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#e53935,#b71c1c);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;transition:opacity var(--t),transform var(--t)}
+    .kc-btn-del:hover{opacity:.88;transform:translateY(-1px)}
+    /* FORM MODAL */
+    .kc-form-overlay{position:fixed;inset:0;background:rgba(26,26,46,.55);backdrop-filter:blur(6px);z-index:9100;display:none;align-items:center;justify-content:center;padding:16px}
+    .kc-form-overlay.show{display:flex}
+    .kc-form-modal{background:var(--surface);border-radius:var(--radius-lg);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;box-shadow:0 28px 70px rgba(26,26,46,.24);animation:fadeUp .25s ease both;display:flex;flex-direction:column}
+    .kc-fm-head{padding:20px 26px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;background:var(--surface);z-index:1}
+    .kc-fm-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink)}
+    .kc-fm-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-light);font-size:14px;transition:all var(--t)}
+    .kc-fm-close:hover{background:var(--surface-2);border-color:var(--ink-light)}
+    .kc-fm-body{padding:22px 26px;display:flex;flex-direction:column;gap:18px}
+    .kc-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-light);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+    .kc-sec-lbl i{color:var(--gold)}
+    .kc-ff-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .kc-ff{display:flex;flex-direction:column;gap:6px}
+    .kc-flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-light)}
+    .kc-req{color:#c97b84;margin-left:2px}
+    .kc-finp,.kc-fsel{padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;transition:all var(--t);width:100%}
+    .kc-finp:focus,.kc-fsel:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp::placeholder{color:var(--ink-light)}
+    .kc-fsel{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238888aa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;background-color:var(--surface-2)}
+    .kc-img-zone{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center;cursor:pointer;transition:all var(--t);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:82px}
+    .kc-img-zone:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .kc-img-zone input{display:none}
+    .kc-img-zone .zi{font-size:20px;color:var(--gold);margin-bottom:4px}
+    .kc-img-zone .zt{font-size:11.5px;color:var(--ink-light)}
+    .kc-img-zone img.zprev{width:60px;height:60px;object-fit:cover;border-radius:6px;border:1.5px solid var(--border)}
+    .kc-img-zone .zch{font-size:10.5px;color:var(--ink-light);margin-top:4px}
+    .kc-url-lnk{font-size:11px;color:var(--gold);cursor:pointer;text-decoration:underline;margin-top:4px;display:inline-block}
+    .kc-url-lnk:hover{opacity:.75}
+    .kc-url-wrap{display:none;margin-top:6px}
+    .kc-div{height:1px;background:var(--border)}
+    .kc-fm-foot{padding:16px 26px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;flex-shrink:0;position:sticky;bottom:0;background:var(--surface)}
+    .kc-btn-sec{padding:10px 20px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:background var(--t)}
+    .kc-btn-sec:hover{background:var(--surface-2)}
+    .kc-btn-pri{padding:10px 22px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-pri:hover{opacity:.88;transform:translateY(-1px)}
   </style>
 </head>
 <body>
-
-  <!-- ✅ Bridal structure: main-panel > kc-page-content -->
   <div class="main-panel">
     <div class="kc-page-content">
-
-      <nav class="kc-breadcrumb">
+      <nav class="kc-bc">
         <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
         <i class="fa-solid fa-chevron-right sep"></i>
         <span>Offers</span>
       </nav>
-
       <div class="kc-card">
         <div class="kc-card-header">
           <div class="kc-title-block">
             <div class="kc-icon-wrap"><i class="fa-solid fa-tag"></i></div>
             <h4 class="kc-title">Offers<span>Manage discount offers &amp; promotions</span></h4>
           </div>
-          <button class="kc-btn-add" onclick="openAddModal()">
-            <i class="fa-solid fa-plus"></i> Add Offer
-          </button>
+          <button class="kc-btn-add" onclick="openFormModal(null)"><i class="fa-solid fa-plus"></i> Add Offer</button>
         </div>
-
         <div class="kc-toolbar">
           <div class="kc-search-wrap">
             <i class="fa-solid fa-magnifying-glass kc-si"></i>
@@ -152,188 +161,290 @@
           </div>
           <div class="kc-filter-chips">
             <button class="kc-chip active" onclick="setFilter('all',this)">All</button>
-            <button class="kc-chip"        onclick="setFilter('active',this)">Active</button>
-            <button class="kc-chip"        onclick="setFilter('expired',this)">Expired</button>
+            <button class="kc-chip" onclick="setFilter('active',this)">Active</button>
+            <button class="kc-chip" onclick="setFilter('expired',this)">Expired</button>
           </div>
           <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">0</strong></div>
         </div>
-
         <div class="kc-table-wrap">
           <table class="kc-table">
-            <thead>
-              <tr>
-                <th style="width:60px;">#</th>
-                <th style="width:80px;">Banner</th>
-                <th style="width:80px;">Offer Img</th>
-                <th>Offer Name</th>
-                <th style="width:100px;">Discount</th>
-                <th style="width:130px;">Valid Until</th>
-                <th style="width:110px;">Status</th>
-                <th style="width:120px;">Actions</th>
-              </tr>
-            </thead>
+            <thead><tr>
+              <th style="width:60px">#</th>
+              <th style="width:80px">Banner</th>
+              <th style="width:80px">Offer Img</th>
+              <th>Offer Name</th>
+              <th style="width:110px">Discount</th>
+              <th style="width:140px">Valid Until</th>
+              <th style="width:110px">Status</th>
+              <th style="width:130px">Actions</th>
+            </tr></thead>
             <tbody id="tableBody"></tbody>
           </table>
           <div class="kc-empty" id="emptyState">
             <div class="kc-empty-ring"><i class="fa-solid fa-tag"></i></div>
             <h6>No offers found</h6>
-            <p>Try a different search or filter, or click <strong>Add Offer</strong>.</p>
+            <p>Try a different filter, or click <strong>Add Offer</strong>.</p>
           </div>
         </div>
-
         <div class="kc-pagination" id="paginationWrap">
           <button class="kc-pg" id="prevBtn" onclick="changePage(-1)"><i class="fa-solid fa-angle-left"></i> Previous</button>
-          <div id="pageNumbers" style="display:flex;gap:6px;"></div>
+          <div id="pageNumbers" style="display:flex;gap:6px"></div>
           <button class="kc-pg" id="nextBtn" onclick="changePage(1)">Next <i class="fa-solid fa-angle-right"></i></button>
           <span class="kc-pg-info" id="pageInfo"></span>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- Delete Modal -->
-  <div class="kc-modal-overlay" id="deleteOverlay">
-    <div class="kc-modal">
-      <div class="kc-modal-ring"><i class="fa-solid fa-trash-can"></i></div>
+  <!-- Delete confirm -->
+  <div class="kc-overlay" id="deleteOverlay">
+    <div class="kc-del-modal">
+      <div class="kc-del-ring"><i class="fa-solid fa-trash-can"></i></div>
       <h5>Delete Offer?</h5>
       <p>This offer will be permanently removed.<br>This action cannot be undone.</p>
-      <div class="kc-modal-row">
-        <button class="kc-btn-cancel"  onclick="closeModal()">Cancel</button>
-        <button class="kc-btn-confirm" onclick="confirmDelete()">Yes, Delete</button>
+      <div class="kc-del-row">
+        <button class="kc-btn-cancel" onclick="closeDelModal()">Cancel</button>
+        <button class="kc-btn-del" onclick="confirmDelete()">Yes, Delete</button>
       </div>
     </div>
   </div>
 
-  <!-- Shared Components only -->
-  
-  <!-- Add Modal -->
-  <div class="kc-modal-overlay" id="addModalOverlay" style="align-items:center;">
-    <div class="kc-modal" style="width:min(520px,95vw); max-height:90vh; overflow-y:auto;">
-      <div style="padding-bottom:18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;">
-        <h5 style="margin:0; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--ink)">Add New Offer</h5>
-        <button onclick="closeAddModal()" style="width:34px; height:34px; border-radius:8px; border:1.5px solid var(--border); background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-light); transition:all 0.18s"><i class="fa-solid fa-xmark"></i></button>
+  <!--
+    ADD / EDIT FORM MODAL
+    Every field maps 1-to-1 to a table column:
+    Table:  #  | Banner | Offer Img | Offer Name | Discount | Valid Until | Status | Actions
+    Form:      | Banner | Offer Img | Offer Name | Discount | Valid Until | Status |
+  -->
+  <div class="kc-form-overlay" id="formOverlay">
+    <div class="kc-form-modal">
+      <div class="kc-fm-head">
+        <div class="kc-fm-title" id="fmTitle">Add New Offer</div>
+        <button class="kc-fm-close" onclick="closeFormModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div>
-        
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Offer Code</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter offer code...">
+      <div class="kc-fm-body">
+
+        <!-- IMAGES section -->
+        <div>
+          <div class="kc-sec-lbl"><i class="fa-solid fa-images"></i> Images</div>
+          <div class="kc-ff-row">
+            <!-- Banner Image -->
+            <div class="kc-ff">
+              <label class="kc-flbl">Banner Image <span class="kc-req">*</span></label>
+              <div class="kc-img-zone" id="bannerZone" onclick="document.getElementById('bannerFile').click()">
+                <input type="file" id="bannerFile" accept="image/*" onchange="onFilePick(this,'bannerZone','bannerUrl')">
+                <i class="fa-solid fa-image zi" id="bzIcon"></i>
+                <div class="zt" id="bzText">Click to upload</div>
+              </div>
+              <span class="kc-url-lnk" onclick="toggleUrlBox('bannerUrlBox')">↳ Or paste URL</span>
+              <div class="kc-url-wrap" id="bannerUrlBox">
+                <input type="text" class="kc-finp" id="bannerUrl" placeholder="https://…/banner.jpg" oninput="onUrlPick(this.value,'bannerZone')">
+              </div>
+            </div>
+            <!-- Offer Image -->
+            <div class="kc-ff">
+              <label class="kc-flbl">Offer Image <span class="kc-req">*</span></label>
+              <div class="kc-img-zone" id="offerImgZone" onclick="document.getElementById('offerFile').click()">
+                <input type="file" id="offerFile" accept="image/*" onchange="onFilePick(this,'offerImgZone','offerImgUrl')">
+                <i class="fa-solid fa-tag zi" id="ozIcon"></i>
+                <div class="zt" id="ozText">Click to upload</div>
+              </div>
+              <span class="kc-url-lnk" onclick="toggleUrlBox('offerImgUrlBox')">↳ Or paste URL</span>
+              <div class="kc-url-wrap" id="offerImgUrlBox">
+                <input type="text" class="kc-finp" id="offerImgUrl" placeholder="https://…/offer.jpg" oninput="onUrlPick(this.value,'offerImgZone')">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="kc-div"></div>
+
+        <!-- OFFER DETAILS section -->
+        <div>
+          <div class="kc-sec-lbl"><i class="fa-solid fa-file-lines"></i> Offer Details</div>
+
+          <!-- Offer Name — full width -->
+          <div class="kc-ff" style="margin-bottom:14px">
+            <label class="kc-flbl">Offer Name <span class="kc-req">*</span></label>
+            <input type="text" class="kc-finp" id="offerName" placeholder="e.g. Summer Hair Care Deal…">
+          </div>
+
+          <!-- Discount % + Valid Until — side by side -->
+          <div class="kc-ff-row" style="margin-bottom:14px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Discount % <span class="kc-req">*</span></label>
+              <input type="number" class="kc-finp" id="offerDiscount" placeholder="e.g. 20" min="1" max="100">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Valid Until <span class="kc-req">*</span></label>
+              <input type="date" class="kc-finp" id="offerValidUntil">
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="kc-ff">
+            <label class="kc-flbl">Status</label>
+            <select class="kc-fsel" id="offerStatus">
+              <option value="active">Active</option>
+              <option value="expired">Expired</option>
+            </select>
+          </div>
+        </div>
+
       </div>
-  
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Discount %</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter discount %...">
-      </div>
-  
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Expiry Date</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter expiry date...">
-      </div>
-  
-      </div>
-      <div style="padding-top:16px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end">
-        <button class="kc-btn-cancel" onclick="closeAddModal()">Cancel</button>
-        <button class="kc-btn-confirm" onclick="submitAddModal()"><i class="fa-solid fa-plus"></i> Add Offer</button>
+      <div class="kc-fm-foot">
+        <button class="kc-btn-sec" onclick="closeFormModal()">Cancel</button>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-check" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Add Offer</span>
+        </button>
       </div>
     </div>
   </div>
-  
+
   <script src="../../js/shared-components.js"></script>
+  <script>KcozmAdmin.init({activePage:'offers',pageTitle:'Offers',depth:'../../'});</script>
   <script>
-    KcozmAdmin.init({ activePage:'offers', pageTitle:'Offers', depth:'../../' });
-  </script>
-
-  <script>
-    var DATA = JSON.parse(localStorage.getItem('offers')) || [
-      { id:1, banner:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', name:'Summer Hair Care Deal',   discount:'20%', validUntil:'31 Mar 2026', status:'active'  },
-      { id:2, banner:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80', name:'Eye Lift Special Offer',  discount:'15%', validUntil:'15 Apr 2026', status:'active'  },
-      { id:3, banner:'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&q=80', name:'Monsoon Skincare Bundle', discount:'30%', validUntil:'28 Feb 2026', status:'expired' },
-      { id:4, banner:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80', name:'Bridal Glow Package',     discount:'25%', validUntil:'30 Apr 2026', status:'active'  },
-      { id:5, banner:'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=200&q=80', name:'Festival Colour Treat',   discount:'10%', validUntil:'20 Mar 2026', status:'active'  },
-      { id:6, banner:'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&q=80', offerImg:'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&q=80', name:'Winter Spa Special',      discount:'18%', validUntil:'10 Jan 2026', status:'expired' },
+    var DATA=[
+      {id:1,banner:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80',offerImg:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80',name:'Summer Hair Care Deal',  discount:'20%',validUntil:'31 Mar 2026',status:'active'},
+      {id:2,banner:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80',offerImg:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&q=80',name:'Eye Lift Special Offer', discount:'15%',validUntil:'15 Apr 2026',status:'active'},
+      {id:3,banner:'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&q=80',offerImg:'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=200&q=80',name:'Monsoon Skincare Bundle',discount:'30%',validUntil:'28 Feb 2026',status:'expired'},
+      {id:4,banner:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80',offerImg:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80',name:'Bridal Glow Package',    discount:'25%',validUntil:'30 Apr 2026',status:'active'},
+      {id:5,banner:'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=200&q=80',   offerImg:'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=200&q=80',   name:'Festival Colour Treat',  discount:'10%',validUntil:'20 Mar 2026',status:'active'},
+      {id:6,banner:'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&q=80',offerImg:'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=200&q=80',name:'Winter Spa Special',      discount:'18%',validUntil:'10 Jan 2026',status:'expired'},
     ];
+    var ROWS=5,page=1,filter='all',query='',list=[],delId=null,editId=null;
 
-    var ROWS=5, page=1, filter='all', query='', list=[], delId=null;
-
-    function applyFilters(){
-      list=DATA.filter(function(r){
-        return(filter==='all'||r.status===filter)&&(!query||r.name.toLowerCase().includes(query));
-      });
-      page=1; render();
-    }
+    function applyFilters(){list=DATA.filter(function(r){return(filter==='all'||r.status===filter)&&(!query||r.name.toLowerCase().indexOf(query)>=0);});page=1;render();}
     function handleSearch(){query=document.getElementById('searchInput').value.toLowerCase().trim();applyFilters();}
-    function setFilter(f,el){
-      filter=f;
-      document.querySelectorAll('.kc-chip').forEach(function(c){c.classList.remove('active');});
-      el.classList.add('active'); applyFilters();
-    }
+    function setFilter(f,el){filter=f;document.querySelectorAll('.kc-chip').forEach(function(c){c.classList.remove('active');});el.classList.add('active');applyFilters();}
 
     function render(){
-      var tbody=document.getElementById('tableBody'), empty=document.getElementById('emptyState'), pgWrap=document.getElementById('paginationWrap');
+      var tbody=document.getElementById('tableBody'),empty=document.getElementById('emptyState'),pgWrap=document.getElementById('paginationWrap');
       document.getElementById('totalCount').textContent=list.length;
       if(!list.length){tbody.innerHTML='';empty.style.display='block';pgWrap.style.display='none';return;}
-      empty.style.display='none'; pgWrap.style.display='flex';
-      var pages=Math.ceil(list.length/ROWS); page=Math.min(page,pages);
-      var s=(page-1)*ROWS;
+      empty.style.display='none';pgWrap.style.display='flex';
+      var pages=Math.ceil(list.length/ROWS);page=Math.min(page,pages);var s=(page-1)*ROWS;
       tbody.innerHTML=list.slice(s,s+ROWS).map(function(r,i){
-        var sc=r.status==='active'?'active':'expired', sl=r.status==='active'?'Active':'Expired';
+        var sc=r.status==='active'?'active':'expired',sl=r.status==='active'?'Active':'Expired';
+        var bImg=r.banner?'<img class="kc-img" src="'+r.banner+'" alt="Banner">'  :'<div class="kc-img-ph"><i class="fa-solid fa-image"></i></div>';
+        var oImg=r.offerImg?'<img class="kc-img" src="'+r.offerImg+'" alt="Offer">'  :'<div class="kc-img-ph"><i class="fa-solid fa-tag"></i></div>';
         return '<tr>'
           +'<td><span class="kc-serial">'+(s+i+1)+'</span></td>'
-          +'<td><img class="kc-img" src="'+r.banner+'" alt="Banner"></td>'
-          +'<td><img class="kc-img" src="'+r.offerImg+'" alt="Offer"></td>'
+          +'<td>'+bImg+'</td>'+'<td>'+oImg+'</td>'
           +'<td><span class="kc-name">'+r.name+'</span></td>'
           +'<td><span class="kc-discount"><i class="fa-solid fa-percent" style="font-size:10px"></i>'+r.discount+'</span></td>'
           +'<td><span class="kc-date'+(r.status==='expired'?' expired':'')+'">'+r.validUntil+'</span></td>'
           +'<td><span class="kc-status '+sc+'"><span class="dot"></span>'+sl+'</span></td>'
           +'<td><div class="kc-actions">'
-          +'<button class="kc-act view"   onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
-          +'<button class="kc-act edit"   onclick="editRow('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
-          +'<button class="kc-act delete" onclick="openModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
+          +'<button class="kc-act view" onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
+          +'<button class="kc-act edit" onclick="openFormModal('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
+          +'<button class="kc-act delete" onclick="openDelModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
           +'</div></td></tr>';
       }).join('');
       renderPg(pages);
     }
-
     function renderPg(pages){
       var nums=document.getElementById('pageNumbers');
-      document.getElementById('prevBtn').disabled=page===1;
-      document.getElementById('nextBtn').disabled=page===pages;
+      document.getElementById('prevBtn').disabled=page===1;document.getElementById('nextBtn').disabled=page===pages;
       nums.innerHTML='';
-      for(var p=1;p<=pages;p++){
-        var b=document.createElement('button');
-        b.className='kc-pg'+(p===page?' active':''); b.textContent=p;
-        b.onclick=(function(pp){return function(){goPage(pp);};})(p);
-        nums.appendChild(b);
-      }
-      var s=(page-1)*ROWS+1, e=Math.min(page*ROWS,list.length);
+      for(var p=1;p<=pages;p++){var b=document.createElement('button');b.className='kc-pg'+(p===page?' active':'');b.textContent=p;b.onclick=(function(pp){return function(){goPage(pp);};})(p);nums.appendChild(b);}
+      var s=(page-1)*ROWS+1,e=Math.min(page*ROWS,list.length);
       document.getElementById('pageInfo').textContent='Showing '+s+'–'+e+' of '+list.length;
     }
-
     function changePage(d){page=Math.max(1,Math.min(page+d,Math.ceil(list.length/ROWS)));render();}
     function goPage(p){page=p;render();}
-    function viewRow(id){if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Opening offer #'+id+'…','info');}
-    function editRow(id) { KcozmAdmin.showToast('Editing Offer #' + id, 'info'); openAddModal(); }
-    function openModal(id){delId=id;document.getElementById('deleteOverlay').classList.add('show');}
-    function closeModal(){document.getElementById('deleteOverlay').classList.remove('show');delId=null;}
+    function viewRow(id){var r=DATA.find(function(x){return x.id===id;});if(r)KcozmAdmin.showToast(r.name+' · '+r.discount+' off · '+r.validUntil,'info');}
+
+    /* DELETE */
+    function openDelModal(id){delId=id;document.getElementById('deleteOverlay').classList.add('show');}
+    function closeDelModal(){document.getElementById('deleteOverlay').classList.remove('show');delId=null;}
     function confirmDelete(){
       if(delId===null)return;
-      DATA=DATA.filter(function(r){return r.id!==delId;});
-      localStorage.setItem('offers', JSON.stringify(DATA));
-      closeModal(); applyFilters();
-      if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Offer deleted successfully.','success');
+      var r=DATA.find(function(x){return x.id===delId;});
+      DATA=DATA.filter(function(x){return x.id!==delId;});
+      closeDelModal();applyFilters();
+      KcozmAdmin.showToast((r?'"'+r.name+'"':'Offer')+' deleted.','success');
     }
-    document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+    document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
+
+    /* FORM */
+    function openFormModal(id){
+      editId=id||null;resetForm();
+      var isEdit=!!editId;
+      document.getElementById('fmTitle').textContent  =isEdit?'Edit Offer':'Add New Offer';
+      document.getElementById('fmBtnIcon').className  ='fa-solid '+(isEdit?'fa-check':'fa-plus');
+      document.getElementById('fmBtnLabel').textContent=isEdit?'Save Changes':'Add Offer';
+      if(isEdit){
+        var r=DATA.find(function(x){return x.id===editId;});
+        if(r){
+          document.getElementById('offerName').value     =r.name;
+          document.getElementById('offerDiscount').value =r.discount.replace('%','');
+          document.getElementById('offerValidUntil').value=toIso(r.validUntil);
+          document.getElementById('offerStatus').value   =r.status;
+          if(r.banner){setZoneImg('bannerZone',r.banner);document.getElementById('bannerUrl').value=r.banner;document.getElementById('bannerUrlBox').style.display='block';}
+          if(r.offerImg){setZoneImg('offerImgZone',r.offerImg);document.getElementById('offerImgUrl').value=r.offerImg;document.getElementById('offerImgUrlBox').style.display='block';}
+        }
+      }
+      document.getElementById('formOverlay').classList.add('show');document.body.style.overflow='hidden';
+    }
+    function closeFormModal(){document.getElementById('formOverlay').classList.remove('show');document.body.style.overflow='';editId=null;}
+    function resetForm(){
+      ['offerName','offerDiscount','offerValidUntil','bannerUrl','offerImgUrl'].forEach(function(id){document.getElementById(id).value='';});
+      document.getElementById('offerStatus').value='active';
+      resetZone('bannerZone');resetZone('offerImgZone');
+      document.getElementById('bannerUrlBox').style.display='none';
+      document.getElementById('offerImgUrlBox').style.display='none';
+      document.getElementById('bannerFile').value='';
+      document.getElementById('offerFile').value='';
+    }
+    function submitForm(){
+      var name    =document.getElementById('offerName').value.trim();
+      var disc    =document.getElementById('offerDiscount').value.trim();
+      var validRaw=document.getElementById('offerValidUntil').value;
+      var status  =document.getElementById('offerStatus').value;
+      var bUrl    =document.getElementById('bannerUrl').value.trim();
+      var oUrl    =document.getElementById('offerImgUrl').value.trim();
+      if(!name)    {KcozmAdmin.showToast('Please enter an offer name','error');return;}
+      if(!disc)    {KcozmAdmin.showToast('Please enter a discount value','error');return;}
+      if(!validRaw){KcozmAdmin.showToast('Please select a valid-until date','error');return;}
+      var discStr =disc.replace('%','')+'%';
+      var valDisp =fromIso(validRaw);
+      if(editId){
+        var r=DATA.find(function(x){return x.id===editId;});
+        if(r){r.name=name;r.discount=discStr;r.validUntil=valDisp;r.status=status;if(bUrl)r.banner=bUrl;if(oUrl)r.offerImg=oUrl;}
+        KcozmAdmin.showToast('"'+name+'" updated!','success');
+      } else {
+        var newId=DATA.length?Math.max.apply(null,DATA.map(function(x){return x.id;}))+1:1;
+        DATA.push({id:newId,banner:bUrl||'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80',offerImg:oUrl||'https://images.unsplash.com/photo-1560869713-7d0a29430803?w=200&q=80',name:name,discount:discStr,validUntil:valDisp,status:status});
+        KcozmAdmin.showToast('"'+name+'" added!','success');
+      }
+      closeFormModal();applyFilters();
+    }
+    document.getElementById('formOverlay').addEventListener('click',function(e){if(e.target===this)closeFormModal();});
+
+    /* IMAGE HELPERS */
+    function onFilePick(input,zoneId,urlFieldId){var f=input.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){setZoneImg(zoneId,e.target.result);document.getElementById(urlFieldId).value='';};r.readAsDataURL(f);}
+    function onUrlPick(url,zoneId){if(url.trim())setZoneImg(zoneId,url.trim());else resetZone(zoneId);}
+    function toggleUrlBox(id){var b=document.getElementById(id);b.style.display=b.style.display==='none'?'block':'none';}
+    function setZoneImg(zoneId,src){
+      var z=document.getElementById(zoneId);
+      var ex=z.querySelector('img.zprev');if(ex)ex.remove();
+      var ic=z.querySelector('.zi'),tx=z.querySelector('.zt');if(ic)ic.style.display='none';if(tx)tx.style.display='none';
+      var img=document.createElement('img');img.className='zprev';img.src=src;z.insertBefore(img,z.firstChild);
+      var lbl=z.querySelector('.zch');if(!lbl){lbl=document.createElement('div');lbl.className='zch';lbl.textContent='Click to change';z.appendChild(lbl);}
+    }
+    function resetZone(zoneId){
+      var z=document.getElementById(zoneId);
+      var p=z.querySelector('img.zprev');if(p)p.remove();var l=z.querySelector('.zch');if(l)l.remove();
+      var ic=z.querySelector('.zi'),tx=z.querySelector('.zt');if(ic)ic.style.display='';if(tx)tx.style.display='';
+    }
+
+    /* DATE HELPERS */
+    var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function fromIso(iso){if(!iso)return'';var p=iso.split('-');return parseInt(p[2])+' '+MON[parseInt(p[1])-1]+' '+p[0];}
+    function toIso(d){if(!d)return'';var p=d.split(' ');if(p.length<3)return'';return p[2]+'-'+String(MON.indexOf(p[1])+1).padStart(2,'0')+'-'+p[0].padStart(2,'0');}
+
     applyFilters();
-  </script>
-<script>
-    function openAddModal() { document.getElementById('addModalOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
-    function closeAddModal()  { document.getElementById('addModalOverlay').classList.remove('show'); document.body.style.overflow=''; }
-    function submitAddModal() {
-      closeAddModal();
-      if(window.KcozmAdmin && KcozmAdmin.showToast) KcozmAdmin.showToast('Offer added successfully!', 'success');
-      if(typeof render === 'function') render();
-    }
   </script>
 </body>
 </html>

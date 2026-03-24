@@ -607,8 +607,8 @@
     { sec:'SALON', items:[
       { slug:'services', label:'Services', icon:'fa-scissors', badge:null, children:[
         { slug:'services',            label:'All Services',       icon:'fa-list',               href:'pages/ui-features/service.html'            },
-        { slug:'categorylist',        label:'Categories',         icon:'fa-folder',             href:'pages/ui-features/categorylist.html'        },
-        { slug:'service_categories',  label:'Sub-Categories',     icon:'fa-folder-open',        href:'pages/ui-features/service_categories.html'  },
+        { slug:'categorylist',        label:'Categories',         icon:'fa-folder',             href:'pages/ui-features/tables/categorylist.html'        },
+        { slug:'service_categories',  label:'Sub-Categories',     icon:'fa-folder-open',        href:'pages/ui-features/tables/service_categories.html'  },
         { slug:'styling',             label:'Styling',            icon:'fa-wand-magic-sparkles', href:'pages/ui-features/styling.html'            },
         { slug:'loyalty',             label:'Loyalty Cards',      icon:'fa-id-card',            href:'pages/ui-features/loyalty.html'             }
       ]},
@@ -620,11 +620,11 @@
       ]}
     ]},
     { sec:'BUSINESS', items:[
-      { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/franchise_new_tabel.html', badge:null },
+      { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/tables/franchise_new_tabel.html', badge:null },
       { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'javascript:void KcozmAdmin.showToast(\'Payments module coming soon\',\'info\')', badge:null },
       { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'javascript:void KcozmAdmin.showToast(\'Reports module coming soon\',\'info\')', badge:null },
       { slug:'more-pages', label:'More Pages', icon:'fa-layer-group', badge:null, children:[
-        { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/bridal_tabel.html'  },
+        { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/tables/bridal_tabel.html'  },
         { slug:'offers',  label:'Offers',   icon:'fa-tag',          href:'pages/ui-features/Offers_new.html'    },
         { slug:'contact', label:'Contact',  icon:'fa-envelope',     href:'pages/ui-features/contact_admin.html' },
         { slug:'about',   label:'About Us', icon:'fa-circle-info',  href:'pages/ui-features/about.html'         },
