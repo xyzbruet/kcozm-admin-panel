@@ -122,13 +122,19 @@
     .tab-pane{display:none}
     .tab-pane.active{display:block}
 
-    /* ── Inline Form ── */
-    .inline-form{padding:28px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--gold-lt),rgba(200,160,64,.04));display:none}
-    .inline-form.open{display:block;animation:fadeUp .25s ease both}
-    .form-header{display:flex;align-items:center;gap:12px;margin-bottom:22px}
-    .form-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff}
-    .form-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)}
-    .form-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
+    /* ── Service Modal ── */
+    .svc-modal-ov{display:none;position:fixed;inset:0;background:rgba(24,18,12,.55);z-index:2000;backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}
+    .svc-modal-ov.show{display:flex}
+    .svc-modal{background:var(--surface);border-radius:20px;width:min(580px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 28px 70px rgba(24,18,12,.22);animation:popIn .22s ease both}
+    .svc-modal-head{padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .svc-modal-head-left{display:flex;align-items:center;gap:12px}
+    .svc-modal-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+    .svc-modal-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)}
+    .svc-modal-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
+    .svc-modal-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
+    .svc-modal-close:hover{border-color:var(--rose);color:var(--rose-dk);background:var(--rose-lt)}
+    .svc-modal-body{padding:24px 26px;display:flex;flex-direction:column;gap:16px}
+    .svc-modal-foot{padding:16px 26px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
     .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px}
     @media(max-width:720px){.form-grid{grid-template-columns:1fr}}
     .fg{display:flex;flex-direction:column;gap:6px}
@@ -342,7 +348,7 @@
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" class="search-input" id="svcSearch" placeholder="Search services…" oninput="handleSearch(this.value)">
             </div>
-            <button class="btn btn-gold" id="addToggle">
+            <button class="btn btn-gold" id="addToggle" onclick="openSvcModal()">
               <i class="fa-solid fa-plus"></i> Add Service
             </button>
           </div>
@@ -355,68 +361,6 @@
           <button class="tab-link" data-tab="gents"><i class="fa-solid fa-mars" style="font-size:11px"></i> Gents <span class="tc" id="cnt-gents">0</span></button>
           <button class="tab-link" data-tab="bridal"><i class="fa-solid fa-heart" style="font-size:11px"></i> Bridal <span class="tc" id="cnt-bridal">0</span></button>
           <button class="tab-link" data-tab="kids"><i class="fa-solid fa-child" style="font-size:11px"></i> Kids <span class="tc" id="cnt-kids">0</span></button>
-        </div>
-
-        <!-- Add Form -->
-        <div class="inline-form" id="addForm">
-          <div class="form-header">
-            <div class="form-icon"><i class="fa-solid fa-scissors"></i></div>
-            <div>
-              <div class="form-title">Add New Service
-                <small>Fill in the details below to create a service</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-grid">
-            <div class="fg">
-              <label class="flbl">Banner Image</label>
-              <div class="file-zone" id="fileZone" onclick="document.getElementById('bannerFile').click()">
-                <input type="file" id="bannerFile" accept="image/*">
-                <div class="fz-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-                <p>Click to upload — PNG, JPG up to 5MB</p>
-              </div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:14px">
-              <div class="fg">
-                <label class="flbl">Category <span style="color:var(--rose-dk)">*</span></label>
-                <select class="fsel" id="svcCat">
-                  <option value="">Select Category</option>
-                  <option value="ladies">Ladies</option>
-                  <option value="gents">Gents</option>
-                  <option value="bridal">Bridal</option>
-                  <option value="kids">Kids</option>
-                </select>
-              </div>
-              <div class="fg">
-                <label class="flbl">Sub-Category <span style="color:var(--rose-dk)">*</span></label>
-                <select class="fsel" id="svcSub"><option value="">Select Sub-Category</option></select>
-              </div>
-            </div>
-            <div class="fg">
-              <label class="flbl">Price (₹) <span style="color:var(--rose-dk)">*</span></label>
-              <div class="price-wrap"><span class="px">₹</span><input type="number" class="finp" id="svcPrice" placeholder="0" min="0"></div>
-            </div>
-            <div class="fg">
-              <label class="flbl">Duration</label>
-              <select class="fsel" id="svcDuration">
-                <option value="">Select Duration</option>
-                <option>15 min</option><option>30 min</option><option>45 min</option>
-                <option>60 min</option><option>90 min</option><option>120 min</option><option>180 min</option>
-              </select>
-            </div>
-            <div class="fg full">
-              <label class="flbl">Service Names <span style="color:var(--rose-dk)">*</span> <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink-3)">(add one or more)</span></label>
-              <div class="svc-add-row">
-                <input type="text" class="finp" id="svcNameInp" placeholder="e.g. Bridal Makeup, Gold Facial…">
-                <button class="btn btn-gold" id="addChipBtn" type="button"><i class="fa-solid fa-plus"></i> Add</button>
-              </div>
-              <div class="chips-box" id="chipsBox"><span class="chip-ph">Services will appear here…</span></div>
-            </div>
-          </div>
-          <div class="form-foot">
-            <button class="btn btn-out" id="cancelAdd">Cancel</button>
-            <button class="btn btn-rose" id="saveAdd"><i class="fa-solid fa-check"></i> Save Service</button>
-          </div>
         </div>
 
         <!-- Tab Panes -->
@@ -454,6 +398,75 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Add Service Modal -->
+  <div class="svc-modal-ov" id="svcModalOv" onclick="if(event.target===this)closeSvcModal()">
+    <div class="svc-modal">
+      <div class="svc-modal-head">
+        <div class="svc-modal-head-left">
+          <div class="svc-modal-icon"><i class="fa-solid fa-scissors"></i></div>
+          <div>
+            <div class="svc-modal-title">Add New Service
+              <small>Fill in the details to create a service</small>
+            </div>
+          </div>
+        </div>
+        <button class="svc-modal-close" onclick="closeSvcModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="svc-modal-body">
+        <div class="form-grid">
+          <div class="fg">
+            <label class="flbl">Banner Image</label>
+            <div class="file-zone" id="fileZone" onclick="document.getElementById('bannerFile').click()">
+              <input type="file" id="bannerFile" accept="image/*">
+              <div class="fz-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+              <p>Click to upload — PNG, JPG up to 5MB</p>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="fg">
+              <label class="flbl">Category <span style="color:var(--rose-dk)">*</span></label>
+              <select class="fsel" id="svcCat">
+                <option value="">Select Category</option>
+                <option value="ladies">Ladies</option>
+                <option value="gents">Gents</option>
+                <option value="bridal">Bridal</option>
+                <option value="kids">Kids</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label class="flbl">Sub-Category <span style="color:var(--rose-dk)">*</span></label>
+              <select class="fsel" id="svcSub"><option value="">Select Sub-Category</option></select>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flbl">Price (₹) <span style="color:var(--rose-dk)">*</span></label>
+            <div class="price-wrap"><span class="px">₹</span><input type="number" class="finp" id="svcPrice" placeholder="0" min="0"></div>
+          </div>
+          <div class="fg">
+            <label class="flbl">Duration</label>
+            <select class="fsel" id="svcDuration">
+              <option value="">Select Duration</option>
+              <option>15 min</option><option>30 min</option><option>45 min</option>
+              <option>60 min</option><option>90 min</option><option>120 min</option><option>180 min</option>
+            </select>
+          </div>
+          <div class="fg full">
+            <label class="flbl">Service Names <span style="color:var(--rose-dk)">*</span> <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink-3)">(add one or more)</span></label>
+            <div class="svc-add-row">
+              <input type="text" class="finp" id="svcNameInp" placeholder="e.g. Bridal Makeup, Gold Facial…">
+              <button class="btn btn-gold" id="addChipBtn" type="button"><i class="fa-solid fa-plus"></i> Add</button>
+            </div>
+            <div class="chips-box" id="chipsBox"><span class="chip-ph">Services will appear here…</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="svc-modal-foot">
+        <button class="btn btn-out" id="cancelAdd" onclick="closeSvcModal()">Cancel</button>
+        <button class="btn btn-rose" id="saveAdd"><i class="fa-solid fa-check"></i> Save Service</button>
+      </div>
     </div>
   </div>
 
@@ -581,17 +594,10 @@
       document.querySelectorAll('#tbody-all tr').forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>=0?'':'none';});
     }
 
-    /* Form */
-    document.getElementById('addToggle').addEventListener('click',function(){
-      var form=document.getElementById('addForm'),open=form.classList.contains('open');
-      form.classList.toggle('open');
-      this.innerHTML=open?'<i class="fa-solid fa-plus"></i> Add Service':'<i class="fa-solid fa-xmark"></i> Close';
-    });
-    document.getElementById('cancelAdd').addEventListener('click',function(){
-      document.getElementById('addForm').classList.remove('open');
-      document.getElementById('addToggle').innerHTML='<i class="fa-solid fa-plus"></i> Add Service';
-      resetForm();
-    });
+    /* Service Modal */
+    function openSvcModal(){document.getElementById('svcModalOv').classList.add('show');document.body.style.overflow='hidden';}
+    function closeSvcModal(){document.getElementById('svcModalOv').classList.remove('show');document.body.style.overflow='';resetForm();}
+
     document.getElementById('svcCat').addEventListener('change',function(){
       var sub=document.getElementById('svcSub');
       sub.innerHTML='<option value="">Select Sub-Category</option>';
@@ -625,8 +631,7 @@
       if(!price){KcozmAdmin.showToast('Please enter a price','error');return;}
       chips.forEach(function(name){SERVICES.push({id:Date.now()+Math.random(),name:name,cat:cat,sub:sub,price:price,duration:dur||'—',status:true,img:null});});
       chips=[];renderChips();resetForm();refreshAll();
-      document.getElementById('addForm').classList.remove('open');
-      document.getElementById('addToggle').innerHTML='<i class="fa-solid fa-plus"></i> Add Service';
+      closeSvcModal();
       KcozmAdmin.showToast('Service(s) added successfully!','success');
     });
     function resetForm(){
@@ -667,7 +672,7 @@
       closeDelModal();refreshAll();KcozmAdmin.showToast('Service deleted.','success');
     }
     document.getElementById('delOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeView();closeDelModal();}});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeView();closeDelModal();closeSvcModal();}});
   </script>
 </body>
 </html>

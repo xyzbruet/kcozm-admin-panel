@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Franchise Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../../images/favicon.png" />
+  <style>
+    :root {
+      --gold:#c8a040;--gold-dk:#a07828;--gold-lt:#fdf6e4;--gold-glow:rgba(200,160,64,.15);
+      --ink:#1a1a2e;--ink-mid:#4a4a6a;--ink-light:#8888aa;
+      --surface:#fff;--surface-2:#f8f7fc;--border:#ededf5;
+      --radius-sm:8px;--radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,.08);
+      --shadow-btn:0 4px 16px rgba(200,160,64,.32);
+      --t:.18s ease;
+    }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'DM Sans',sans-serif; background:var(--surface-2); }
+    .main-panel { min-width:0; overflow-x:hidden; }
+
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:none} }
+
+    /* PAGE WRAPPER */
+    .kc-page-content {
+      padding:28px 28px 40px;
+      width:100%;
+      min-width:0;
+    }
+
+    /* BREADCRUMB */
+    .kc-bc {
+      display:flex;align-items:center;gap:8px;
+      font-size:12.5px;font-weight:500;color:var(--ink-light);
+      margin-bottom:22px;animation:fadeDown .4s ease both;
+    }
+    .kc-bc a {
+      color:var(--gold);text-decoration:none;
+      display:inline-flex;align-items:center;gap:5px;
+      transition:opacity var(--t);
+    }
+    .kc-bc a:hover { opacity:.72; }
+    .kc-bc .sep { font-size:10px; }
+
+    /* CARD */
+    .kc-card {
+      background:var(--surface);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-card);
+      border:1px solid var(--border);
+      overflow:hidden;
+      animation:fadeUp .45s ease both;
+      width:100%;
+      margin-bottom:28px;
+    }
+
+    /* CARD HEADER */
+    .kc-card-header {
+      padding:22px 28px 18px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:14px;
+      border-bottom:1px solid var(--border);
+    }
+    .kc-title-block { display:flex;align-items:center;gap:14px; }
+    .kc-icon-wrap {
+      width:46px;height:46px;border-radius:var(--radius-sm);
+      background:var(--gold-lt);display:flex;align-items:center;
+      justify-content:center;flex-shrink:0;
+    }
+    .kc-icon-wrap i { color:var(--gold);font-size:19px; }
+    .kc-title {
+      font-family:'Cormorant Garamond',serif;font-size:21px;
+      font-weight:700;color:var(--ink);line-height:1.2;
+    }
+    .kc-title-sub {
+      display:block;font-family:'DM Sans',sans-serif;
+      font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px;
+    }
+
+    /* EDIT BANNER */
+    .kc-edit-banner {
+      display:none;
+      background:var(--gold-lt);
+      border:1px solid rgba(200,160,64,.3);
+      border-radius:10px;
+      padding:10px 16px;
+      margin:16px 28px 0;
+      font-size:13px;color:var(--gold-dk);
+      align-items:center;gap:8px;
+    }
+    .kc-edit-banner.show { display:flex; }
+
+    /* FORM BODY */
+    .kc-form-body {
+      padding:28px;
+      display:flex;flex-direction:column;gap:20px;
+    }
+
+    /* INNER SECTION */
+    .kc-section {
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:22px 24px;
+    }
+
+    /* SECTION LABEL */
+    .kc-sec-lbl {
+      font-size:10px;font-weight:700;text-transform:uppercase;
+      letter-spacing:1.2px;color:var(--ink-light);
+      margin-bottom:16px;
+      display:flex;align-items:center;gap:6px;
+    }
+    .kc-sec-lbl i { color:var(--gold); }
+
+    /* TWO-COLUMN GRID */
+    .kc-ff-row { display:grid;grid-template-columns:1fr 1fr;gap:20px; }
+    @media(max-width:600px) { .kc-ff-row { grid-template-columns:1fr; } }
+
+    /* THREE-COLUMN GRID */
+    .kc-ff-row-3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px; }
+    @media(max-width:700px) { .kc-ff-row-3 { grid-template-columns:1fr 1fr; } }
+    @media(max-width:480px) { .kc-ff-row-3 { grid-template-columns:1fr; } }
+
+    .kc-ff { display:flex;flex-direction:column;gap:6px; }
+    .kc-flbl {
+      font-size:10.5px;font-weight:700;text-transform:uppercase;
+      letter-spacing:.6px;color:var(--ink-light);
+    }
+    .kc-req { color:#c97b84;margin-left:2px; }
+
+    /* INPUTS */
+    .kc-finp, .kc-fsel, .kc-ftxt {
+      padding:10px 13px;
+      border:1.5px solid var(--border);
+      border-radius:var(--radius-sm);
+      font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);
+      background:var(--surface-2);
+      outline:none;width:100%;
+      transition:border-color var(--t),box-shadow var(--t),background var(--t);
+    }
+    .kc-finp:focus, .kc-fsel:focus, .kc-ftxt:focus {
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px var(--gold-glow);
+      background:#fff;
+    }
+    .kc-finp::placeholder,
+    .kc-ftxt::placeholder { color:var(--ink-light); }
+    .kc-ftxt { resize:vertical;min-height:90px;line-height:1.55; }
+
+    /* PREFIX INPUT */
+    .kc-input-prefix-wrap {
+      position:relative;display:flex;align-items:center;
+    }
+    .kc-input-prefix-wrap .kc-prefix {
+      position:absolute;left:13px;
+      font-size:13.5px;color:var(--ink-light);pointer-events:none;
+      font-weight:600;
+    }
+    .kc-input-prefix-wrap .kc-finp {
+      padding-left:26px;
+    }
+
+    /* SUFFIX INPUT (sqft) */
+    .kc-input-suffix-wrap {
+      position:relative;display:flex;align-items:center;
+    }
+    .kc-input-suffix-wrap .kc-suffix {
+      position:absolute;right:13px;
+      font-size:12px;color:var(--ink-light);pointer-events:none;
+    }
+    .kc-input-suffix-wrap .kc-finp {
+      padding-right:48px;
+    }
+
+    .kc-fsel {
+      cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238888aa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 13px center;
+      padding-right:34px;background-color:var(--surface-2);
+    }
+
+    /* IMAGE UPLOAD ZONE */
+    .kc-img-zone {
+      border:2px dashed var(--border);
+      border-radius:var(--radius-sm);
+      padding:28px 16px;
+      text-align:center;cursor:pointer;
+      transition:all var(--t);
+      background:var(--surface-2);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:120px;
+    }
+    .kc-img-zone:hover { border-color:var(--gold);background:var(--gold-lt); }
+    .kc-img-zone input { display:none; }
+    .kc-img-zone .zi { font-size:24px;color:var(--gold);margin-bottom:7px; }
+    .kc-img-zone .zt { font-size:12px;color:var(--ink-light); }
+    .kc-img-zone img.zprev {
+      width:80px;height:80px;object-fit:cover;
+      border-radius:8px;border:1.5px solid var(--border);
+    }
+    .kc-img-zone .zch { font-size:10.5px;color:var(--ink-light);margin-top:6px; }
+    .kc-url-lnk {
+      font-size:11px;color:var(--gold);cursor:pointer;
+      text-decoration:underline;margin-top:6px;display:inline-block;
+    }
+    .kc-url-lnk:hover { opacity:.75; }
+    .kc-url-wrap { display:none;margin-top:8px; }
+
+    /* FOOTER */
+    .kc-form-footer {
+      padding:18px 28px;
+      border-top:1px solid var(--border);
+      display:flex;gap:10px;justify-content:flex-end;align-items:center;
+    }
+    .kc-btn-sec {
+      padding:10px 22px;
+      border:1.5px solid var(--border);border-radius:var(--radius-sm);
+      background:var(--surface);
+      font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;
+      color:var(--ink-mid);cursor:pointer;
+      text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+      transition:background var(--t);
+    }
+    .kc-btn-sec:hover { background:var(--surface-2); }
+    .kc-btn-pri {
+      padding:10px 26px;border:none;border-radius:var(--radius-sm);
+      background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+      font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;
+      cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+      box-shadow:var(--shadow-btn);
+      transition:opacity var(--t),transform var(--t);
+    }
+    .kc-btn-pri:hover { opacity:.88;transform:translateY(-1px); }
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../franchise.html"><i class="fa-solid fa-store"></i> Franchise</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span id="bcLabel">Add Franchise</span>
+    </nav>
+
+    <!-- Full-width card -->
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-store"></i></div>
+          <h4 class="kc-title">
+            <span id="pageHeading">Add New Franchise</span>
+            <span class="kc-title-sub" id="pageSubtitle">Fill in the details to add a new franchise location</span>
+          </h4>
+        </div>
+      </div>
+
+      <!-- Edit notice -->
+      <div class="kc-edit-banner" id="editBanner">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>You are editing an existing franchise. Changes will be saved back to the Franchise list.</span>
+      </div>
+
+      <!-- Form body -->
+      <div class="kc-form-body">
+
+        <!-- ── FRANCHISE IMAGE ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-image"></i> Franchise Image</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Franchise Image <span class="kc-req">*</span></label>
+            <div class="kc-img-zone" id="franchiseImgZone" onclick="document.getElementById('franchiseFile').click()">
+              <input type="file" id="franchiseFile" accept="image/*" onchange="onFilePick(this,'franchiseImgZone','franchiseImgUrl')">
+              <i class="fa-solid fa-store zi"></i>
+              <div class="zt">Click to upload franchise image</div>
+            </div>
+            <span class="kc-url-lnk" onclick="toggleUrlBox('franchiseImgUrlBox')">↳ Or paste URL</span>
+            <div class="kc-url-wrap" id="franchiseImgUrlBox">
+              <input type="text" class="kc-finp" id="franchiseImgUrl" placeholder="https://…/store.jpg" oninput="onUrlPick(this.value,'franchiseImgZone')">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── FRANCHISE DETAILS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-file-lines"></i> Franchise Details</div>
+
+          <!-- Franchise Name — full width -->
+          <div class="kc-ff" style="margin-bottom:16px">
+            <label class="kc-flbl">Franchise Name <span class="kc-req">*</span></label>
+            <input type="text" class="kc-finp" id="franchiseName" placeholder="e.g. Kcozm Nagpur Central…">
+          </div>
+
+          <!-- Location — full width -->
+          <div class="kc-ff" style="margin-bottom:16px">
+            <label class="kc-flbl">Location / Address <span class="kc-req">*</span></label>
+            <input type="text" class="kc-finp" id="franchiseLocation" placeholder="e.g. Central Avenue, Nagpur…">
+          </div>
+
+          <!-- City + State — two columns -->
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">City <span class="kc-req">*</span></label>
+              <input type="text" class="kc-finp" id="franchiseCity" placeholder="e.g. Nagpur">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">State</label>
+              <input type="text" class="kc-finp" id="franchiseState" placeholder="e.g. Maharashtra">
+            </div>
+          </div>
+
+          <!-- Area sqft + Status — two columns -->
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Area (sq. ft.)</label>
+              <div class="kc-input-suffix-wrap">
+                <input type="number" class="kc-finp" id="franchiseArea" placeholder="e.g. 1200" min="0">
+                <span class="kc-suffix">sq.ft.</span>
+              </div>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Status</label>
+              <select class="kc-fsel" id="franchiseStatus">
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Agreement Date — full width -->
+          <div class="kc-ff" style="margin-bottom:0">
+            <label class="kc-flbl">Agreement Date</label>
+            <input type="date" class="kc-finp" id="franchiseAgreement">
+          </div>
+        </div>
+
+        <!-- ── OWNER / PARTNER INFO ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-user-tie"></i> Owner / Partner Information</div>
+
+          <!-- Owner Name + Contact — two columns -->
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Owner Name <span class="kc-req">*</span></label>
+              <input type="text" class="kc-finp" id="franchiseOwner" placeholder="e.g. Priya Sharma">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Contact Number <span class="kc-req">*</span></label>
+              <input type="tel" class="kc-finp" id="franchiseContact" placeholder="e.g. 9876543210">
+            </div>
+          </div>
+
+          <!-- Email + Investment — two columns -->
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Email Address</label>
+              <input type="email" class="kc-finp" id="franchiseEmail" placeholder="e.g. owner@example.com">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Investment Amount (₹) <span class="kc-req">*</span></label>
+              <div class="kc-input-prefix-wrap">
+                <span class="kc-prefix">₹</span>
+                <input type="text" class="kc-finp" id="franchiseInvestment" placeholder="e.g. 25,00,000">
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes — full width -->
+          <div class="kc-ff">
+            <label class="kc-flbl">Notes / Remarks</label>
+            <textarea class="kc-ftxt" id="franchiseNotes" placeholder="Any additional notes about this franchise location…"></textarea>
+          </div>
+        </div>
+
+      </div><!-- /kc-form-body -->
+
+      <!-- Footer -->
+      <div class="kc-form-footer">
+        <a href="../franchise.html" class="kc-btn-sec">
+          <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-check" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Add Franchise</span>
+        </button>
+      </div>
+
+    </div><!-- /kc-card -->
+  </div>
+</div>
+
+<script src="../../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({activePage:'franchise',pageTitle:'Franchise Form',depth:'../../../'});</script>
+<script>
+  /* ── URL param ── */
+  var params = new URLSearchParams(window.location.search);
+  var editId  = params.get('id') ? parseInt(params.get('id')) : null;
+  var isEdit  = !!editId;
+
+  /* ── Load shared data ── */
+  var DATA = [];
+  try { DATA = JSON.parse(sessionStorage.getItem('kc_franchise_data') || '[]'); } catch(e){}
+
+  /* ── Configure for Add vs Edit ── */
+  if (isEdit) {
+    document.getElementById('bcLabel').textContent      = 'Edit Franchise';
+    document.getElementById('pageHeading').textContent  = 'Edit Franchise';
+    document.getElementById('pageSubtitle').textContent = 'Update the details for this franchise location';
+    document.getElementById('fmBtnIcon').className      = 'fa-solid fa-check';
+    document.getElementById('fmBtnLabel').textContent   = 'Save Changes';
+    document.getElementById('editBanner').classList.add('show');
+
+    var r = DATA.find(function(x){ return x.id === editId; });
+    if (r) {
+      document.getElementById('franchiseName').value       = r.name        || '';
+      document.getElementById('franchiseLocation').value   = r.location    || '';
+      document.getElementById('franchiseCity').value       = r.city        || '';
+      document.getElementById('franchiseState').value      = r.state       || '';
+      document.getElementById('franchiseArea').value       = r.area        || '';
+      document.getElementById('franchiseStatus').value     = r.status      || 'active';
+      document.getElementById('franchiseAgreement').value  = r.agreement   || '';
+      document.getElementById('franchiseOwner').value      = r.owner       || '';
+      document.getElementById('franchiseContact').value    = r.contact     || '';
+      document.getElementById('franchiseEmail').value      = r.email       || '';
+      document.getElementById('franchiseInvestment').value = r.investment  || '';
+      document.getElementById('franchiseNotes').value      = r.notes       || '';
+      if (r.img) {
+        setZoneImg('franchiseImgZone', r.img);
+        document.getElementById('franchiseImgUrl').value = r.img;
+        document.getElementById('franchiseImgUrlBox').style.display = 'block';
+      }
+    }
+  }
+
+  /* ── Submit ── */
+  function submitForm() {
+    var name       = document.getElementById('franchiseName').value.trim();
+    var location   = document.getElementById('franchiseLocation').value.trim();
+    var city       = document.getElementById('franchiseCity').value.trim();
+    var state      = document.getElementById('franchiseState').value.trim();
+    var area       = document.getElementById('franchiseArea').value.trim();
+    var status     = document.getElementById('franchiseStatus').value;
+    var agreement  = document.getElementById('franchiseAgreement').value;
+    var owner      = document.getElementById('franchiseOwner').value.trim();
+    var contact    = document.getElementById('franchiseContact').value.trim();
+    var email      = document.getElementById('franchiseEmail').value.trim();
+    var investment = document.getElementById('franchiseInvestment').value.trim();
+    var notes      = document.getElementById('franchiseNotes').value.trim();
+    var imgUrl     = document.getElementById('franchiseImgUrl').value.trim();
+
+    if (!name)       { showErr('Please enter a franchise name');    return; }
+    if (!location)   { showErr('Please enter a location/address'); return; }
+    if (!city)       { showErr('Please enter the city');            return; }
+    if (!owner)      { showErr('Please enter the owner name');      return; }
+    if (!contact)    { showErr('Please enter a contact number');    return; }
+    if (!investment) { showErr('Please enter the investment amount'); return; }
+
+    if (isEdit) {
+      var rec = DATA.find(function(x){ return x.id === editId; });
+      if (rec) {
+        rec.name=name; rec.location=location; rec.city=city; rec.state=state;
+        rec.area=area; rec.status=status; rec.agreement=agreement;
+        rec.owner=owner; rec.contact=contact; rec.email=email;
+        rec.investment=investment; rec.notes=notes;
+        if (imgUrl) rec.img = imgUrl;
+      }
+    } else {
+      var nid = DATA.length
+        ? Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1 : 1;
+      DATA.push({
+        id:nid, img:imgUrl||'', name:name, location:location, city:city,
+        state:state, area:area, status:status, agreement:agreement,
+        owner:owner, contact:contact, email:email,
+        investment:investment, notes:notes
+      });
+    }
+
+    sessionStorage.setItem('kc_franchise_data', JSON.stringify(DATA));
+    sessionStorage.setItem('kc_franchise_toast', JSON.stringify({
+      msg: '"' + name + '" ' + (isEdit ? 'updated!' : 'added!'),
+      type: 'success'
+    }));
+    window.location.href = '../franchise.html';
+  }
+
+  function showErr(msg) {
+    try { KcozmAdmin.showToast(msg, 'error'); } catch(e) { alert(msg); }
+  }
+
+  /* ── Image helpers ── */
+  function onFilePick(input, zoneId, urlFieldId) {
+    var f = input.files[0]; if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      setZoneImg(zoneId, e.target.result);
+      document.getElementById(urlFieldId).value = '';
+    };
+    reader.readAsDataURL(f);
+  }
+  function onUrlPick(url, zoneId) {
+    if (url.trim()) setZoneImg(zoneId, url.trim()); else resetZone(zoneId);
+  }
+  function toggleUrlBox(id) {
+    var b = document.getElementById(id);
+    b.style.display = b.style.display === 'none' ? 'block' : 'none';
+  }
+  function setZoneImg(zoneId, src) {
+    var z  = document.getElementById(zoneId);
+    var ex = z.querySelector('img.zprev'); if (ex) ex.remove();
+    var ic = z.querySelector('.zi'), tx = z.querySelector('.zt');
+    if (ic) ic.style.display = 'none';
+    if (tx) tx.style.display = 'none';
+    var img = document.createElement('img');
+    img.className = 'zprev'; img.src = src;
+    z.insertBefore(img, z.firstChild);
+    var lbl = z.querySelector('.zch');
+    if (!lbl) {
+      lbl = document.createElement('div');
+      lbl.className = 'zch'; lbl.textContent = 'Click to change';
+      z.appendChild(lbl);
+    }
+  }
+  function resetZone(zoneId) {
+    var z  = document.getElementById(zoneId);
+    var p  = z.querySelector('img.zprev'); if (p) p.remove();
+    var l  = z.querySelector('.zch');     if (l) l.remove();
+    var ic = z.querySelector('.zi'), tx = z.querySelector('.zt');
+    if (ic) ic.style.display = '';
+    if (tx) tx.style.display = '';
+  }
+</script>
+</body>
+</html>

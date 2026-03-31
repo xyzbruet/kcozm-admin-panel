@@ -10,15 +10,14 @@
 
   <style>
     :root {
-      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --pink-glow:rgba(233,30,99,0.13);
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
       --ink:#1a1a2e; --ink-mid:#4a4a6a; --ink-light:#8888aa;
       --surface:#ffffff; --surface-2:#f8f7fc; --border:#ededf5;
       --radius-sm:8px; --radius-md:14px; --radius-lg:20px;
-      --shadow-card:0 2px 24px rgba(26,26,46,0.08); --shadow-btn:0 4px 16px rgba(233,30,99,0.32); --t:0.18s ease;
+      --shadow-card:0 2px 24px rgba(26,26,46,0.08); --shadow-btn:0 4px 16px rgba(200,160,64,0.32); --t:0.18s ease;
     }
     *,*::before,*::after{box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
-
     .main-panel{min-width:0;overflow-x:hidden}
 
     @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
@@ -40,8 +39,8 @@
     .kc-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2}
     .kc-title span{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px}
 
-    .kc-btn-add{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
-    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(233,30,99,0.40)}
+    .kc-btn-add{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap;text-decoration:none}
+    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
 
     .kc-toolbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
     .kc-search-wrap{position:relative;flex:1;min-width:220px;max-width:400px}
@@ -100,23 +99,23 @@
     .kc-pg.active{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:var(--shadow-btn)}
     .kc-pg-info{margin-left:auto;font-size:12.5px;color:var(--ink-light)}
 
-    .kc-modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,0.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center}
-    .kc-modal-overlay.show{display:flex}
-    .kc-modal{background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,0.24);animation:fadeUp 0.25s ease both}
-    .kc-modal-ring{width:64px;height:64px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-    .kc-modal-ring i{color:var(--gold);font-size:26px}
-    .kc-modal h5{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);margin:0 0 10px}
-    .kc-modal p{font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6}
-    .kc-modal-row{display:flex;gap:10px}
+    /* Delete Modal */
+    .kc-overlay{position:fixed;inset:0;background:rgba(26,26,46,.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center}
+    .kc-overlay.show{display:flex}
+    .kc-del-modal{background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,.24);animation:fadeUp .25s ease both}
+    .kc-del-ring{width:64px;height:64px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .kc-del-ring i{color:#c62828;font-size:26px}
+    .kc-del-modal h5{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);margin:0 0 10px}
+    .kc-del-modal p{font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6}
+    .kc-del-row{display:flex;gap:10px}
     .kc-btn-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:background var(--t)}
     .kc-btn-cancel:hover{background:var(--surface-2)}
-    .kc-btn-confirm{flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;box-shadow:var(--shadow-btn);transition:opacity var(--t),transform var(--t)}
-    .kc-btn-confirm:hover{opacity:.88;transform:translateY(-1px)}
+    .kc-btn-del{flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#e53935,#b71c1c);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;transition:opacity var(--t),transform var(--t)}
+    .kc-btn-del:hover{opacity:.88;transform:translateY(-1px)}
   </style>
 </head>
 <body>
 
-  <!-- ✅ Bridal structure: main-panel > kc-page-content -->
   <div class="main-panel">
     <div class="kc-page-content">
 
@@ -132,9 +131,10 @@
             <div class="kc-icon-wrap"><i class="fa-solid fa-store"></i></div>
             <h4 class="kc-title">Franchise<span>Manage franchise locations &amp; partners</span></h4>
           </div>
-          <button class="kc-btn-add" onclick="openAddModal()">
+          <!-- Navigate to form page — same pattern as e_shop -->
+          <a href="forms/franchise_form.html" class="kc-btn-add">
             <i class="fa-solid fa-plus"></i> Add Franchise
-          </button>
+          </a>
         </div>
 
         <div class="kc-toolbar">
@@ -149,12 +149,15 @@
           <table class="kc-table">
             <thead>
               <tr>
-                <th style="width:64px;">#</th>
-                <th style="width:100px;">Image</th>
+                <th style="width:54px">#</th>
+                <th style="width:80px">Image</th>
                 <th>Franchise Name</th>
                 <th>Location</th>
-                <th style="width:120px;">Status</th>
-                <th style="width:120px;">Actions</th>
+                <th>Owner</th>
+                <th>Contact</th>
+                <th>Investment</th>
+                <th style="width:120px">Status</th>
+                <th style="width:120px">Actions</th>
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
@@ -178,72 +181,54 @@
   </div>
 
   <!-- Delete Modal -->
-  <div class="kc-modal-overlay" id="deleteOverlay">
-    <div class="kc-modal">
-      <div class="kc-modal-ring"><i class="fa-solid fa-trash-can"></i></div>
+  <div class="kc-overlay" id="deleteOverlay">
+    <div class="kc-del-modal">
+      <div class="kc-del-ring"><i class="fa-solid fa-trash-can"></i></div>
       <h5>Delete Franchise?</h5>
       <p>This franchise entry will be permanently removed.<br>This action cannot be undone.</p>
-      <div class="kc-modal-row">
-        <button class="kc-btn-cancel"  onclick="closeModal()">Cancel</button>
-        <button class="kc-btn-confirm" onclick="confirmDelete()">Yes, Delete</button>
+      <div class="kc-del-row">
+        <button class="kc-btn-cancel" onclick="closeDelModal()">Cancel</button>
+        <button class="kc-btn-del"    onclick="confirmDelete()">Yes, Delete</button>
       </div>
     </div>
   </div>
 
-  <!-- Shared Components only -->
-  
-  <!-- Add Modal -->
-  <div class="kc-modal-overlay" id="addModalOverlay" style="align-items:center;">
-    <div class="kc-modal" style="width:min(520px,95vw); max-height:90vh; overflow-y:auto;">
-      <div style="padding-bottom:18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;">
-        <h5 style="margin:0; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--ink)">Add New Franchise</h5>
-        <button onclick="closeAddModal()" style="width:34px; height:34px; border-radius:8px; border:1.5px solid var(--border); background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-light); transition:all 0.18s"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div>
-        
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Franchise Name</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter franchise name...">
-      </div>
-  
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Location</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter location...">
-      </div>
-  
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Investment</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter investment...">
-      </div>
-  
-      </div>
-      <div style="padding-top:16px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end">
-        <button class="kc-btn-cancel" onclick="closeAddModal()">Cancel</button>
-        <button class="kc-btn-confirm" onclick="submitAddModal()"><i class="fa-solid fa-plus"></i> Add Franchise</button>
-      </div>
-    </div>
-  </div>
-  
   <script src="../../js/shared-components.js"></script>
   <script>
     KcozmAdmin.init({ activePage:'franchise', pageTitle:'Franchise', depth:'../../' });
   </script>
 
   <script>
-    var DATA = JSON.parse(localStorage.getItem('franchises')) || [
-      { id:1, img:'https://images.unsplash.com/photo-1560066984-138daaa0b1b8?w=200&q=80',   name:'Kcozm Nagpur Central',       location:'Central Avenue, Nagpur',            status:'active'   },
-      { id:2, img:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', name:'Kcozm Pune West',            location:'Baner Road, Pune',                  status:'active'   },
-      { id:3, img:'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=200&q=80', name:'Kcozm Mumbai Andheri',       location:'Link Road, Andheri West, Mumbai',   status:'active'   },
-      { id:4, img:'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=200&q=80',    name:'Kcozm Hyderabad HITEC',      location:'HITEC City, Hyderabad',             status:'pending'  },
-      { id:5, img:'https://images.unsplash.com/photo-1470259078422-826894b933aa?w=200&q=80', name:'Kcozm Bangalore Koramangala',location:'5th Block, Koramangala, Bangalore', status:'inactive' },
-      { id:6, img:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80', name:'Kcozm Delhi Saket',          location:'Select CityWalk, Saket, Delhi',     status:'active'   },
+    /* ── Seed data ── */
+    var SEED = [
+      { id:1, img:'https://images.unsplash.com/photo-1560066984-138daaa0b1b8?w=200&q=80',   name:'Kcozm Nagpur Central',        location:'Central Avenue, Nagpur',            owner:'Priya Sharma',   contact:'9876543210', investment:'25,00,000', agreement:'2024-01-15', area:'1200', status:'active'   },
+      { id:2, img:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&q=80', name:'Kcozm Pune West',             location:'Baner Road, Pune',                  owner:'Rahul Mehta',    contact:'9823456789', investment:'30,00,000', agreement:'2024-03-01', area:'1400', status:'active'   },
+      { id:3, img:'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=200&q=80', name:'Kcozm Mumbai Andheri',        location:'Link Road, Andheri West, Mumbai',   owner:'Sneha Joshi',    contact:'9811234567', investment:'45,00,000', agreement:'2023-11-20', area:'1800', status:'active'   },
+      { id:4, img:'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=200&q=80',    name:'Kcozm Hyderabad HITEC',       location:'HITEC City, Hyderabad',             owner:'Arun Reddy',     contact:'9700987654', investment:'35,00,000', agreement:'2024-06-10', area:'1500', status:'pending'  },
+      { id:5, img:'https://images.unsplash.com/photo-1470259078422-826894b933aa?w=200&q=80', name:'Kcozm Bangalore Koramangala', location:'5th Block, Koramangala, Bangalore', owner:'Deepa Nair',     contact:'9845001122', investment:'40,00,000', agreement:'2023-08-05', area:'1600', status:'inactive' },
+      { id:6, img:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=200&q=80', name:'Kcozm Delhi Saket',           location:'Select CityWalk, Saket, Delhi',     owner:'Vikram Singh',   contact:'9910223344', investment:'50,00,000', agreement:'2024-02-28', area:'2000', status:'active'   },
     ];
+
+    /* ── Load from sessionStorage ── */
+    var stored = sessionStorage.getItem('kc_franchise_data');
+    var DATA   = stored ? JSON.parse(stored) : SEED;
+    sessionStorage.setItem('kc_franchise_data', JSON.stringify(DATA));
+
+    /* ── Toast on return from form ── */
+    var toastRaw = sessionStorage.getItem('kc_franchise_toast');
+    if (toastRaw) {
+      try {
+        var t = JSON.parse(toastRaw);
+        sessionStorage.removeItem('kc_franchise_toast');
+        setTimeout(function(){ KcozmAdmin.showToast(t.msg, t.type); }, 300);
+      } catch(e){}
+    }
 
     var ROWS=5, page=1, list=DATA.slice(), delId=null;
 
     function handleSearch(){
       var q=document.getElementById('searchInput').value.toLowerCase().trim();
-      list=q?DATA.filter(function(r){return(r.name+r.location).toLowerCase().includes(q);}):DATA.slice();
+      list=q?DATA.filter(function(r){return(r.name+r.location+r.owner).toLowerCase().includes(q);}):DATA.slice();
       page=1; render();
     }
 
@@ -262,11 +247,14 @@
           +'<td><img class="kc-img" src="'+r.img+'" alt="'+r.name+'"></td>'
           +'<td><p class="kc-name">'+r.name+'</p></td>'
           +'<td><span style="font-size:13px;color:var(--ink-mid)"><i class="fa-solid fa-location-dot" style="color:var(--gold);margin-right:5px;font-size:12px"></i>'+r.location+'</span></td>'
+          +'<td><span style="font-size:13px;color:var(--ink-mid)"><i class="fa-solid fa-user" style="color:var(--ink-light);margin-right:5px;font-size:11px"></i>'+r.owner+'</span></td>'
+          +'<td><span style="font-size:13px;color:var(--ink-mid)">'+r.contact+'</span></td>'
+          +'<td><span style="font-size:13px;font-weight:600;color:var(--ink)">&#8377; '+r.investment+'</span></td>'
           +'<td><span class="kc-status '+st.cls+'"><span class="dot"></span>'+st.label+'</span></td>'
           +'<td><div class="kc-actions">'
           +'<button class="kc-act view"   onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
           +'<button class="kc-act edit"   onclick="editRow('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
-          +'<button class="kc-act delete" onclick="openModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
+          +'<button class="kc-act delete" onclick="openDelModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
           +'</div></td></tr>';
       }).join('');
       renderPg(pages);
@@ -289,29 +277,30 @@
 
     function changePage(d){page=Math.max(1,Math.min(page+d,Math.ceil(list.length/ROWS)));render();}
     function goPage(p){page=p;render();}
-    function viewRow(id){if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Opening franchise #'+id+'…','info');}
-    function editRow(id) { KcozmAdmin.showToast('Editing Franchise #' + id, 'info'); openAddModal(); }
-    function openModal(id){delId=id;document.getElementById('deleteOverlay').classList.add('show');}
-    function closeModal(){document.getElementById('deleteOverlay').classList.remove('show');delId=null;}
+
+    function viewRow(id){
+      var r=DATA.find(function(x){return x.id===id;});
+      if(r) KcozmAdmin.showToast(r.name+' · '+r.location+' · ₹'+r.investment,'info');
+    }
+
+    /* Edit → navigate to form with ?id= */
+    function editRow(id){
+      window.location.href='forms/franchise_form.html?id='+id;
+    }
+
+    function openDelModal(id){delId=id;document.getElementById('deleteOverlay').classList.add('show');}
+    function closeDelModal(){document.getElementById('deleteOverlay').classList.remove('show');delId=null;}
     function confirmDelete(){
       if(delId===null)return;
-      DATA=DATA.filter(function(r){return r.id!==delId;});
-      list=list.filter(function(r){return r.id!==delId;});
-      localStorage.setItem('franchises', JSON.stringify(DATA));
-      closeModal();render();
-      if(window.KcozmAdmin&&KcozmAdmin.showToast)KcozmAdmin.showToast('Franchise entry deleted.','success');
+      var r=DATA.find(function(x){return x.id===delId;});
+      DATA=DATA.filter(function(x){return x.id!==delId;});
+      list=list.filter(function(x){return x.id!==delId;});
+      sessionStorage.setItem('kc_franchise_data',JSON.stringify(DATA));
+      closeDelModal(); render();
+      KcozmAdmin.showToast((r?'"'+r.name+'"':'Franchise')+' deleted.','success');
     }
-    document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+    document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
     render();
-  </script>
-<script>
-    function openAddModal() { document.getElementById('addModalOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
-    function closeAddModal()  { document.getElementById('addModalOverlay').classList.remove('show'); document.body.style.overflow=''; }
-    function submitAddModal() {
-      closeAddModal();
-      if(window.KcozmAdmin && KcozmAdmin.showToast) KcozmAdmin.showToast('Franchise added successfully!', 'success');
-      if(typeof render === 'function') render();
-    }
   </script>
 </body>
 </html>

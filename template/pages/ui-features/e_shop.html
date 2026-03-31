@@ -7,468 +7,365 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../../images/favicon.png" />
-
   <style>
     :root {
-      --pink:        #e91e63;
-      --pink-dark:   #c2185b;
-      --pink-soft:   #fce4ec;
-      --pink-glow:   rgba(233,30,99,0.13);
-      --ink:         #1a1a2e;
-      --ink-mid:     #4a4a6a;
-      --ink-light:   #8888aa;
-      --surface:     #ffffff;
-      --surface-2:   #f8f7fc;
-      --border:      #ededf5;
-      --radius-sm:   8px;
-      --radius-md:   14px;
-      --radius-lg:   20px;
-      --shadow-card: 0 2px 24px rgba(26,26,46,0.08);
-      --shadow-btn:  0 4px 16px rgba(233,30,99,0.32);
-      --t:           0.18s ease;
+      --gold:#c8a040;--gold-dk:#a07828;--gold-lt:#fdf6e4;--gold-glow:rgba(200,160,64,.15);
+      --ink:#1a1a2e;--ink-mid:#4a4a6a;--ink-light:#8888aa;
+      --surface:#fff;--surface-2:#f8f7fc;--border:#ededf5;
+      --radius-sm:8px;--radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,.08);
+      --shadow-btn:0 4px 16px rgba(200,160,64,.32);
+      --t:.18s ease;
     }
-    *, *::before, *::after { box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--surface-2); }
-
-    /* ── Ensure main-panel fills remaining space correctly ── */
-    .main-panel { min-width: 0; overflow-x: hidden; }
+    *,*::before,*::after { box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--surface-2); }
+    .main-panel { min-width:0; overflow-x:hidden; }
 
     @keyframes fadeDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
     @keyframes fadeUp   { from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:none} }
     @keyframes rowSlide { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:none} }
 
-    /* ── Page wrapper (matches Bridal structure) ── */
-    .kc-page-content { padding: 28px 28px 0; flex: 1; width: 100%; min-width: 0; }
+    /* PAGE */
+    .kc-page-content { padding:28px 28px 0;flex:1;width:100%;min-width:0; }
 
-    /* Breadcrumb */
-    .kc-breadcrumb {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12.5px; font-weight: 500; color: var(--ink-light);
-      margin-bottom: 22px; animation: fadeDown 0.4s ease both;
-    }
-    .kc-breadcrumb a {
-      color: var(--gold); text-decoration: none;
-      display: inline-flex; align-items: center; gap: 5px;
-      transition: opacity var(--t);
-    }
-    .kc-breadcrumb a:hover { opacity: 0.72; }
-    .kc-breadcrumb .sep { font-size: 10px; }
+    /* BREADCRUMB */
+    .kc-bc { display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both; }
+    .kc-bc a { color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t); }
+    .kc-bc a:hover { opacity:.72; }
+    .kc-bc .sep { font-size:10px; }
 
-    /* Card */
-    .kc-card {
-      background: var(--surface); border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card); border: 1px solid var(--border);
-      overflow: hidden; animation: fadeUp 0.45s ease both;
-      width: 100%; margin-bottom: 28px; min-width: 0;
-    }
-    .kc-card-header {
-      padding: 22px 28px 18px; display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .kc-title-block { display: flex; align-items: center; gap: 14px; }
-    .kc-icon-wrap {
-      width: 46px; height: 46px; border-radius: var(--radius-sm);
-      background: var(--gold-lt);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .kc-icon-wrap i { color: var(--gold); font-size: 19px; }
-    .kc-title { font-family:'Cormorant Garamond',serif; font-size: 21px; font-weight: 700; color: var(--ink); margin: 0; line-height: 1.2; }
-    .kc-title span { display: block; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400; color: var(--ink-light); margin-top: 3px; }
+    /* CARD */
+    .kc-card { background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--border);overflow:hidden;animation:fadeUp .45s ease both;width:100%;margin-bottom:28px;min-width:0; }
 
-    .kc-btn-add {
-      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
-      color: #fff; border: none; padding: 10px 22px; border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
-      box-shadow: var(--shadow-btn); transition: transform var(--t), box-shadow var(--t); white-space: nowrap;
-    }
-    .kc-btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(233,30,99,0.40); }
+    /* CARD HEADER */
+    .kc-card-header { padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border); }
+    .kc-title-block { display:flex;align-items:center;gap:14px; }
+    .kc-icon-wrap { width:46px;height:46px;border-radius:var(--radius-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .kc-icon-wrap i { color:var(--gold);font-size:19px; }
+    .kc-title { font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2; }
+    .kc-title span { display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px; }
 
-    /* Toolbar */
-    .kc-toolbar {
-      padding: 16px 28px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    }
-    .kc-search-wrap { position: relative; flex: 1; min-width: 220px; max-width: 380px; }
-    .kc-search-wrap .kc-si {
-      position: absolute; top: 50%; left: 14px; transform: translateY(-50%);
-      color: var(--ink-light); font-size: 13px; pointer-events: none;
-    }
-    .kc-search {
-      width: 100%; padding: 9.5px 14px 9.5px 40px; border-radius: 50px;
-      border: 1.5px solid var(--border); background: var(--surface-2);
-      font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--ink);
-      outline: none; transition: border-color var(--t), box-shadow var(--t), background var(--t);
-    }
-    .kc-search:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); background: #fff; }
-    .kc-search::placeholder { color: var(--ink-light); }
+    /* ADD BUTTON */
+    .kc-btn-add { background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap;text-decoration:none; }
+    .kc-btn-add:hover { transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40); }
 
-    .kc-tool-btn {
-      display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;
-      border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface);
-      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-      color: var(--ink-mid); cursor: pointer; transition: all var(--t);
-    }
-    .kc-tool-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-lt); }
-    .kc-tool-btn i { font-size: 12px; }
+    /* TOOLBAR */
+    .kc-toolbar { padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+    .kc-search-wrap { position:relative;flex:1;min-width:220px;max-width:440px; }
+    .kc-search-wrap .kc-si { position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none; }
+    .kc-search { width:100%;padding:9.5px 14px 9.5px 40px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color var(--t),box-shadow var(--t),background var(--t); }
+    .kc-search:focus { border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff; }
+    .kc-search::placeholder { color:var(--ink-light); }
 
-    .kc-stat-pill {
-      display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;
-      color: var(--ink-light); background: var(--surface-2); border: 1px solid var(--border);
-      padding: 6px 16px; border-radius: 50px; margin-left: auto; white-space: nowrap;
-    }
-    .kc-stat-pill strong { color: var(--gold); font-size: 14px; }
+    /* SORT BUTTON */
+    .kc-btn-sort { padding:9px 18px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-mid);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all var(--t); }
+    .kc-btn-sort:hover { border-color:var(--gold);color:var(--gold);background:var(--gold-lt); }
+    .kc-btn-sort.asc  i:last-child { transform:rotate(180deg); }
 
-    /* Table */
-    .kc-table-wrap { overflow-x: auto; }
-    .kc-table { width: 100%; border-collapse: collapse; }
-    .kc-table thead th {
-      padding: 13px 20px; font-family:'Cormorant Garamond',serif; font-size: 10.5px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.8px; color: var(--ink-light);
-      background: var(--surface-2); border-bottom: 1px solid var(--border); white-space: nowrap;
-    }
-    .kc-table thead th:first-child { padding-left: 28px; }
-    .kc-table thead th:last-child  { padding-right: 28px; }
-    .kc-table tbody tr { border-bottom: 1px solid var(--border); transition: background var(--t); animation: rowSlide 0.3s ease both; }
+    /* STAT PILL */
+    .kc-stat-pill { display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-light);background:var(--surface-2);border:1px solid var(--border);padding:6px 16px;border-radius:50px;margin-left:auto;white-space:nowrap; }
+    .kc-stat-pill strong { color:var(--gold);font-size:14px; }
+
+    /* TABLE */
+    .kc-table-wrap { overflow-x:auto; }
+    .kc-table { width:100%;border-collapse:collapse; }
+    .kc-table thead th { padding:13px 18px;font-family:'Cormorant Garamond',serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-light);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap; }
+    .kc-table thead th:first-child { padding-left:28px; }
+    .kc-table thead th:last-child  { padding-right:28px; }
+    .kc-table tbody tr { border-bottom:1px solid var(--border);transition:background var(--t);animation:rowSlide .3s ease both; }
     .kc-table tbody tr:nth-child(1){animation-delay:.04s}
     .kc-table tbody tr:nth-child(2){animation-delay:.08s}
     .kc-table tbody tr:nth-child(3){animation-delay:.12s}
     .kc-table tbody tr:nth-child(4){animation-delay:.16s}
     .kc-table tbody tr:nth-child(5){animation-delay:.20s}
-    .kc-table tbody tr:hover  { background: #fdf6f9; }
-    .kc-table tbody tr:last-child { border-bottom: none; }
-    .kc-table tbody td { padding: 14px 20px; vertical-align: middle; font-size: 13.5px; color: var(--ink-mid); }
-    .kc-table tbody td:first-child { padding-left: 28px; }
-    .kc-table tbody td:last-child  { padding-right: 28px; }
+    .kc-table tbody tr:hover { background:#fdf6f9; }
+    .kc-table tbody tr:last-child { border-bottom:none; }
+    .kc-table tbody td { padding:13px 18px;vertical-align:middle;font-size:13.5px;color:var(--ink-mid); }
+    .kc-table tbody td:first-child { padding-left:28px; }
+    .kc-table tbody td:last-child  { padding-right:28px; }
 
-    .kc-serial {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px; border-radius: 7px;
-      background: var(--surface-2); border: 1px solid var(--border);
-      font-size: 11px; font-weight: 700; color: var(--ink-light);
-    }
-    .kc-img {
-      width: 54px; height: 54px; border-radius: var(--radius-sm);
-      object-fit: cover; border: 2px solid var(--border);
-      transition: transform var(--t), box-shadow var(--t); display: block; cursor: zoom-in;
-    }
-    .kc-img:hover { transform: scale(1.1); box-shadow: 0 6px 18px rgba(0,0,0,0.14); }
-    .kc-prod-name { font-weight: 600; color: var(--ink); font-size: 13.5px; max-width: 260px; line-height: 1.4; }
-    .kc-price { display: inline-flex; align-items: center; gap: 3px; font-weight: 700; color: var(--ink); font-size: 14px; }
-    .kc-price .sym { font-size: 11px; color: var(--ink-light); margin-top: 1px; }
-    .kc-qty {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--surface-2); border: 1px solid var(--border);
-      padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; color: var(--ink-mid);
-    }
-    .kc-qty i { font-size: 10px; color: var(--ink-light); }
+    /* SERIAL */
+    .kc-serial { display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--ink-light); }
 
-    /* Actions */
-    .kc-actions { display: flex; align-items: center; gap: 8px; }
-    .kc-act {
-      width: 34px; height: 34px; border-radius: 9px;
-      border: 1.5px solid var(--border); background: var(--surface);
-      display: inline-flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 13px; color: var(--ink-light);
-      transition: background var(--t), border-color var(--t), transform var(--t), color var(--t);
-    }
-    .kc-act:hover { transform: translateY(-2px); }
-    .kc-act.view:hover   { background:#e3f2fd; border-color:#90caf9; color:#1565c0; }
-    .kc-act.edit:hover   { background:#e8f5e9; border-color:#a5d6a7; color:#2e7d32; }
-    .kc-act.delete:hover { background:#fce4ec; border-color:#f48fb1; color:#c62828; }
+    /* PRODUCT IMAGE */
+    .kc-img { width:50px;height:50px;border-radius:var(--radius-sm);object-fit:cover;border:2px solid var(--border);transition:transform var(--t),box-shadow var(--t);display:block;cursor:zoom-in; }
+    .kc-img:hover { transform:scale(1.1);box-shadow:0 6px 18px rgba(0,0,0,.14); }
+    .kc-img-ph { width:50px;height:50px;border-radius:var(--radius-sm);background:var(--gold-lt);border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px; }
 
-    /* Empty state */
-    .kc-empty { text-align: center; padding: 64px 20px; display: none; }
-    .kc-empty-ring {
-      width: 76px; height: 76px; border-radius: 50%; background: var(--gold-lt);
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-    }
-    .kc-empty-ring i { color: var(--gold); font-size: 30px; opacity: 0.55; }
-    .kc-empty h6 { font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--ink); margin:0 0 8px; }
-    .kc-empty p  { font-size:13px; color:var(--ink-light); margin:0; }
+    /* NAME */
+    .kc-name { font-weight:600;color:var(--ink);font-size:13.5px; }
 
-    /* Pagination */
-    .kc-pagination {
-      padding: 16px 28px; border-top: 1px solid var(--border);
-      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
-    }
-    .kc-pg {
-      display: inline-flex; align-items: center; gap: 5px; padding: 7px 16px;
-      border-radius: var(--radius-sm); border: 1.5px solid var(--border); background: var(--surface);
-      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-      color: var(--ink-mid); cursor: pointer; transition: all var(--t);
-    }
-    .kc-pg:hover:not([disabled]) { border-color:var(--gold); color:var(--gold); background:var(--gold-lt); }
-    .kc-pg[disabled] { opacity:.38; cursor:not-allowed; }
-    .kc-pg.active    { background:var(--gold); border-color:var(--gold); color:#fff; box-shadow:var(--shadow-btn); }
-    .kc-pg-info { margin-left:auto; font-size:12.5px; color:var(--ink-light); }
+    /* PRICE */
+    .kc-price { font-weight:700;color:var(--ink);font-size:13.5px; }
 
-    /* Delete Modal */
-    .kc-modal-overlay {
-      position: fixed; inset: 0; background: rgba(26,26,46,0.50);
-      backdrop-filter: blur(5px); z-index: 9000;
-      display: none; align-items: center; justify-content: center;
-    }
-    .kc-modal-overlay.show { display: flex; }
-    .kc-modal {
-      background: var(--surface); border-radius: var(--radius-lg);
-      padding: 38px 34px 30px; width: 100%; max-width: 390px;
-      text-align: center; box-shadow: 0 28px 70px rgba(26,26,46,0.24);
-      animation: fadeUp 0.25s ease both;
-    }
-    .kc-modal-ring {
-      width: 64px; height: 64px; border-radius: 50%; background: var(--gold-lt);
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
-    }
-    .kc-modal-ring i { color:var(--gold); font-size:26px; }
-    .kc-modal h5 { font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--ink); margin:0 0 10px; }
-    .kc-modal p  { font-size:13.5px; color:var(--ink-light); margin:0 0 26px; line-height:1.6; }
-    .kc-modal-row { display:flex; gap:10px; }
-    .kc-btn-cancel {
-      flex:1; padding:11px; border:1.5px solid var(--border); border-radius:var(--radius-sm);
-      background:var(--surface); font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:600;
-      color:var(--ink-mid); cursor:pointer; transition:background var(--t);
-    }
+    /* QUANTITY BADGE */
+    .kc-qty { display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--ink-mid);font-weight:500; }
+    .kc-qty i { color:var(--ink-light);font-size:11px; }
+
+    /* STATUS */
+    .kc-status { display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;font-size:11.5px;font-weight:600; }
+    .kc-status .dot { width:6px;height:6px;border-radius:50%;background:currentColor; }
+    .kc-status.active       { background:#e8f5e9;color:#2e7d32; }
+    .kc-status.inactive     { background:#f3e5f5;color:#7b1fa2; }
+    .kc-status.out_of_stock { background:#fff3e0;color:#e65100; }
+
+    /* ACTIONS */
+    .kc-actions { display:flex;align-items:center;gap:8px; }
+    .kc-act { width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink-light);transition:background var(--t),border-color var(--t),transform var(--t),color var(--t); }
+    .kc-act:hover { transform:translateY(-2px); }
+    .kc-act.view:hover   { background:#e3f2fd;border-color:#90caf9;color:#1565c0; }
+    .kc-act.edit:hover   { background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32; }
+    .kc-act.delete:hover { background:#fce4ec;border-color:#f48fb1;color:#c62828; }
+
+    /* EMPTY STATE */
+    .kc-empty { text-align:center;padding:64px 20px;display:none; }
+    .kc-empty-ring { width:76px;height:76px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 20px; }
+    .kc-empty-ring i { color:var(--gold);font-size:30px;opacity:.55; }
+    .kc-empty h6 { font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin:0 0 8px; }
+    .kc-empty p  { font-size:13px;color:var(--ink-light);margin:0; }
+
+    /* PAGINATION */
+    .kc-pagination { padding:16px 28px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-wrap:wrap; }
+    .kc-pg { display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:all var(--t); }
+    .kc-pg:hover:not([disabled]) { border-color:var(--gold);color:var(--gold);background:var(--gold-lt); }
+    .kc-pg[disabled] { opacity:.38;cursor:not-allowed; }
+    .kc-pg.active { background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:var(--shadow-btn); }
+    .kc-pg-info { margin-left:auto;font-size:12.5px;color:var(--ink-light); }
+
+    /* DELETE MODAL */
+    .kc-overlay { position:fixed;inset:0;background:rgba(26,26,46,.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center; }
+    .kc-overlay.show { display:flex; }
+    .kc-del-modal { background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,.24);animation:fadeUp .25s ease both; }
+    .kc-del-ring { width:64px;height:64px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;margin:0 auto 20px; }
+    .kc-del-ring i { color:#c62828;font-size:26px; }
+    .kc-del-modal h5 { font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);margin:0 0 10px; }
+    .kc-del-modal p  { font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6; }
+    .kc-del-row { display:flex;gap:10px; }
+    .kc-btn-cancel { flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:background var(--t); }
     .kc-btn-cancel:hover { background:var(--surface-2); }
-    .kc-btn-confirm {
-      flex:1; padding:11px; border:none; border-radius:var(--radius-sm);
-      background:linear-gradient(135deg,var(--gold),var(--gold-dk));
-      font-family:'DM Sans',sans-serif; font-size:13.5px; font-weight:600; color:#fff;
-      cursor:pointer; box-shadow:var(--shadow-btn); transition:opacity var(--t),transform var(--t);
-    }
-    .kc-btn-confirm:hover { opacity:.88; transform:translateY(-1px); }
+    .kc-btn-del { flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#e53935,#b71c1c);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;transition:opacity var(--t),transform var(--t); }
+    .kc-btn-del:hover { opacity:.88;transform:translateY(-1px); }
   </style>
 </head>
-
 <body>
+<div class="main-panel">
+  <div class="kc-page-content">
 
-  <!-- ✅ Same structure as Bridal: main-panel > kc-page-content -->
-  <div class="main-panel">
-    <div class="kc-page-content">
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span>E-Shop</span>
+    </nav>
 
-      <!-- Breadcrumb -->
-      <nav class="kc-breadcrumb">
-        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-        <i class="fa-solid fa-chevron-right sep"></i>
-        <span>E-Shop</span>
-      </nav>
+    <div class="kc-card">
 
-      <div class="kc-card">
-
-        <!-- Header -->
-        <div class="kc-card-header">
-          <div class="kc-title-block">
-            <div class="kc-icon-wrap"><i class="fa-solid fa-bag-shopping"></i></div>
-            <h4 class="kc-title">
-              E-Shop
-              <span>Manage products, prices &amp; inventory</span>
-            </h4>
-          </div>
-          <button class="kc-btn-add" onclick="openAddModal()">
-            <i class="fa-solid fa-plus"></i> Add Product
-          </button>
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-bag-shopping"></i></div>
+          <h4 class="kc-title">E-Shop<span>Manage products, prices &amp; inventory</span></h4>
         </div>
-
-        <!-- Toolbar -->
-        <div class="kc-toolbar">
-          <div class="kc-search-wrap">
-            <i class="fa-solid fa-magnifying-glass kc-si"></i>
-            <input type="text" class="kc-search" id="searchInput"
-              placeholder="Search by product name or price…" oninput="handleSearch()">
-          </div>
-          <button class="kc-tool-btn" onclick="toggleSort()">
-            <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
-          </button>
-          <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">0</strong></div>
-        </div>
-
-        <!-- Table -->
-        <div class="kc-table-wrap">
-          <table class="kc-table">
-            <thead>
-              <tr>
-                <th style="width:64px;">#</th>
-                <th style="width:90px;">Image</th>
-                <th>Product Name</th>
-                <th style="width:130px;">Price</th>
-                <th style="width:110px;">Quantity</th>
-                <th style="width:120px;">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-          </table>
-          <div class="kc-empty" id="emptyState">
-            <div class="kc-empty-ring"><i class="fa-solid fa-bag-shopping"></i></div>
-            <h6>No products found</h6>
-            <p>Try a different search, or click <strong>Add Product</strong> to create one.</p>
-          </div>
-        </div>
-
-        <!-- Pagination -->
-        <div class="kc-pagination" id="paginationWrap">
-          <button class="kc-pg" id="prevBtn" onclick="changePage(-1)">
-            <i class="fa-solid fa-angle-left"></i> Previous
-          </button>
-          <div id="pageNumbers" style="display:flex;gap:6px;"></div>
-          <button class="kc-pg" id="nextBtn" onclick="changePage(1)">
-            Next <i class="fa-solid fa-angle-right"></i>
-          </button>
-          <span class="kc-pg-info" id="pageInfo"></span>
-        </div>
-
-      </div><!-- /kc-card -->
-    </div><!-- /kc-page-content -->
-  </div><!-- /main-panel -->
-
-  <!-- Delete Modal -->
-  <div class="kc-modal-overlay" id="deleteOverlay">
-    <div class="kc-modal">
-      <div class="kc-modal-ring"><i class="fa-solid fa-trash-can"></i></div>
-      <h5>Delete Product?</h5>
-      <p>This product will be permanently removed from your shop.<br>This action cannot be undone.</p>
-      <div class="kc-modal-row">
-        <button class="kc-btn-cancel"  onclick="closeModal()">Cancel</button>
-        <button class="kc-btn-confirm" onclick="confirmDelete()">Yes, Delete</button>
+        <!-- Add Product → navigate to form page -->
+        <a href="forms/product_form.html" class="kc-btn-add">
+          <i class="fa-solid fa-plus"></i> Add Product
+        </a>
       </div>
+
+      <!-- Toolbar -->
+      <div class="kc-toolbar">
+        <div class="kc-search-wrap">
+          <i class="fa-solid fa-magnifying-glass kc-si"></i>
+          <input type="text" class="kc-search" id="searchInput" placeholder="Search by product name or price…" oninput="handleSearch()">
+        </div>
+        <button class="kc-btn-sort" id="sortBtn" onclick="toggleSort()">
+          <i class="fa-solid fa-arrow-up-wide-short"></i> Sort
+          <i class="fa-solid fa-chevron-down" style="font-size:10px"></i>
+        </button>
+        <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">0</strong></div>
+      </div>
+
+      <!-- Table -->
+      <div class="kc-table-wrap">
+        <table class="kc-table">
+          <thead><tr>
+            <th style="width:54px">#</th>
+            <th style="width:76px">Image</th>
+            <th>Product Name</th>
+            <th style="width:120px">Price</th>
+            <th style="width:120px">Quantity</th>
+            <th style="width:120px">Status</th>
+            <th style="width:120px">Actions</th>
+          </tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="kc-empty" id="emptyState">
+          <div class="kc-empty-ring"><i class="fa-solid fa-bag-shopping"></i></div>
+          <h6>No products found</h6>
+          <p>Try a different search, or click <strong>Add Product</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="kc-pagination" id="paginationWrap">
+        <button class="kc-pg" id="prevBtn" onclick="changePage(-1)"><i class="fa-solid fa-angle-left"></i> Previous</button>
+        <div id="pageNumbers" style="display:flex;gap:6px"></div>
+        <button class="kc-pg" id="nextBtn" onclick="changePage(1)">Next <i class="fa-solid fa-angle-right"></i></button>
+        <span class="kc-pg-info" id="pageInfo"></span>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <!-- Shared Components -->
-  
-  <!-- Add Modal -->
-  <div class="kc-modal-overlay" id="addModalOverlay" style="align-items:center;">
-    <div class="kc-modal" style="width:min(520px,95vw); max-height:90vh; overflow-y:auto;">
-      <div style="padding-bottom:18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;">
-        <h5 style="margin:0; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--ink)">Add New Product</h5>
-        <button onclick="closeAddModal()" style="width:34px; height:34px; border-radius:8px; border:1.5px solid var(--border); background:transparent; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-light); transition:all 0.18s"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div>
-        
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Product Name</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter product name...">
-      </div>
-  
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Price</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter price...">
-      </div>
-  
-      <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px; text-align:left">
-        <label style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-light)">Stock</label>
-        <input style="padding:10px 13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--ink); background:var(--surface-2); outline:none; transition:all 0.18s" type="text" placeholder="Enter stock...">
-      </div>
-  
-      </div>
-      <div style="padding-top:16px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end">
-        <button class="kc-btn-cancel" onclick="closeAddModal()">Cancel</button>
-        <button class="kc-btn-confirm" onclick="submitAddModal()"><i class="fa-solid fa-plus"></i> Add Product</button>
-      </div>
+<!-- Delete confirm modal -->
+<div class="kc-overlay" id="deleteOverlay">
+  <div class="kc-del-modal">
+    <div class="kc-del-ring"><i class="fa-solid fa-trash-can"></i></div>
+    <h5>Delete Product?</h5>
+    <p>This product will be permanently removed.<br>This action cannot be undone.</p>
+    <div class="kc-del-row">
+      <button class="kc-btn-cancel" onclick="closeDelModal()">Cancel</button>
+      <button class="kc-btn-del"    onclick="confirmDelete()">Yes, Delete</button>
     </div>
   </div>
-  
-  <script src="../../js/shared-components.js"></script>
-  <script>
-    KcozmAdmin.init({
-      activePage : 'products',
-      pageTitle  : 'E-Shop',
-      depth      : '../../'
-    });
-  </script>
+</div>
 
-  <script>
-    var DATA = [
-      { id:1, img:'https://www.lakmesalon.in/cdn/shop/products/1000x1000_BeautyGarageFrizzDismissOil100ml._2.jpg?v=1679569147', name:'De Fabulous Reviver Hair Repair Shampoo 250ml', price:1190, qty:'250ml' },
-      { id:2, img:'https://www.lakmesalon.in/cdn/shop/products/H-Stress-Positive-Eye-Lift-25ml-5000X500-PX.jpg?v=1623325880&width=713', name:'Dermalogica Stress Positive Eye Lift Masque 25ml', price:5100, qty:'25ml' },
-      { id:3, img:'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=200&q=80', name:'Lakme 9to5 Primer + Matte Lipstick — Nude Uncut', price:650, qty:'3.6g' },
-      { id:4, img:'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=200&q=80', name:'Kérastase Nutritive Masquintense Hair Mask 200ml', price:3400, qty:'200ml' },
-      { id:5, img:'https://images.unsplash.com/photo-1556228852-6d35a585d566?w=200&q=80', name:'Forest Essentials Facial Elixir Kumkumadi 30ml', price:2800, qty:'30ml' },
-      { id:6, img:'https://images.unsplash.com/photo-1631390989416-40ad4e82c2a3?w=200&q=80', name:"L'Oréal Professionnel Serie Expert Scalp Serum 90ml", price:1850, qty:'90ml' },
-    ];
-
-    var ROWS = 5, page = 1, list = DATA.slice(), delId = null, sortAsc = true;
-
-    function handleSearch() {
-      var q = document.getElementById('searchInput').value.toLowerCase().trim();
-      list = q ? DATA.filter(function(r){ return r.name.toLowerCase().includes(q) || String(r.price).includes(q); }) : DATA.slice();
-      page = 1; render();
-    }
-
-    function toggleSort() {
-      sortAsc = !sortAsc;
-      list.sort(function(a,b){ return sortAsc ? a.price - b.price : b.price - a.price; });
-      page = 1; render();
-      if (window.KcozmAdmin && KcozmAdmin.showToast) KcozmAdmin.showToast('Sorted by price: ' + (sortAsc ? 'low → high' : 'high → low'), 'info');
-    }
-
-    function render() {
-      var tbody = document.getElementById('tableBody');
-      var empty = document.getElementById('emptyState');
-      var pgWrap = document.getElementById('paginationWrap');
-      document.getElementById('totalCount').textContent = list.length;
-      if (!list.length) { tbody.innerHTML=''; empty.style.display='block'; pgWrap.style.display='none'; return; }
-      empty.style.display='none'; pgWrap.style.display='flex';
-      var pages = Math.ceil(list.length / ROWS);
-      page = Math.min(page, pages);
-      var s = (page-1)*ROWS;
-      tbody.innerHTML = list.slice(s, s+ROWS).map(function(r,i){
-        return '<tr>'
-          +'<td><span class="kc-serial">'+(s+i+1)+'</span></td>'
-          +'<td><img class="kc-img" src="'+r.img+'" alt="'+r.name+'"></td>'
-          +'<td><p class="kc-prod-name">'+r.name+'</p></td>'
-          +'<td><span class="kc-price">₹ '+r.price.toLocaleString('en-IN')+'</span></td>'
-          +'<td><span class="kc-qty"><i class="fa-solid fa-box"></i>'+r.qty+'</span></td>'
-          +'<td><div class="kc-actions">'
-          +'<button class="kc-act view"   onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
-          +'<button class="kc-act edit"   onclick="editRow('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
-          +'<button class="kc-act delete" onclick="openModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
-          +'</div></td></tr>';
-      }).join('');
-      renderPg(pages);
-    }
-
-    function renderPg(pages) {
-      var nums = document.getElementById('pageNumbers');
-      document.getElementById('prevBtn').disabled = page === 1;
-      document.getElementById('nextBtn').disabled = page === pages;
-      nums.innerHTML = '';
-      for (var p=1; p<=pages; p++) {
-        var b = document.createElement('button');
-        b.className = 'kc-pg'+(p===page?' active':'');
-        b.textContent = p;
-        b.onclick = (function(pp){ return function(){ goPage(pp); }; })(p);
-        nums.appendChild(b);
-      }
-      var s=(page-1)*ROWS+1, e=Math.min(page*ROWS,list.length);
-      document.getElementById('pageInfo').textContent = 'Showing '+s+'–'+e+' of '+list.length;
-    }
-
-    function changePage(d) { page=Math.max(1,Math.min(page+d,Math.ceil(list.length/ROWS))); render(); }
-    function goPage(p) { page=p; render(); }
-    function viewRow(id) { if(window.KcozmAdmin&&KcozmAdmin.showToast) KcozmAdmin.showToast('Opening product #'+id+'…','info'); }
-    function editRow(id) { KcozmAdmin.showToast('Editing Product #' + id, 'info'); openAddModal(); }
-    function openModal(id) { delId=id; document.getElementById('deleteOverlay').classList.add('show'); }
-    function closeModal() { document.getElementById('deleteOverlay').classList.remove('show'); delId=null; }
-    function confirmDelete() {
-      if(delId===null) return;
-      DATA=DATA.filter(function(r){return r.id!==delId;});
-      list=list.filter(function(r){return r.id!==delId;});
-      closeModal(); render();
-      if(window.KcozmAdmin&&KcozmAdmin.showToast) KcozmAdmin.showToast('Product deleted.','success');
-    }
-    document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
-    render();
-  </script>
+<script src="../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({activePage:'eshop',pageTitle:'E-Shop',depth:'../../'});</script>
 <script>
-    function openAddModal() { document.getElementById('addModalOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
-    function closeAddModal()  { document.getElementById('addModalOverlay').classList.remove('show'); document.body.style.overflow=''; }
-    function submitAddModal() {
-      closeAddModal();
-      if(window.KcozmAdmin && KcozmAdmin.showToast) KcozmAdmin.showToast('Product added successfully!', 'success');
-      if(typeof render === 'function') render();
+  /* ── Seed data ── */
+  var SEED = [
+    {id:1,name:'De Fabulous Reviver Hair Repair Shampoo 250ml',price:'1190',quantity:'250ml',stock:'30',desc:'',category:'hair',   status:'active',  image:'https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=200&q=80'},
+    {id:2,name:'Dermalogica Stress Positive Eye Lift Masque 25ml', price:'5100',quantity:'25ml', stock:'12',desc:'',category:'skin',   status:'active',  image:'https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=200&q=80'},
+    {id:3,name:'Lakme 9to5 Primer + Matte Lipstick — Nude Uncut',  price:'650', quantity:'3.6g', stock:'45',desc:'',category:'makeup', status:'active',  image:'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=200&q=80'},
+    {id:4,name:'Matrix Biolage Scalp Sync Anti-Dandruff Shampoo',  price:'880', quantity:'400ml',stock:'8', desc:'',category:'hair',   status:'active',  image:'https://images.unsplash.com/photo-1585751119414-ef2636f8aede?w=200&q=80'},
+    {id:5,name:'Biotique Bio Papaya Revitalizing Tan Removal Scrub',price:'199', quantity:'75g',  stock:'0', desc:'',category:'skin',   status:'out_of_stock',image:'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=200&q=80'},
+    {id:6,name:'OPI Nail Lacquer — Big Apple Red',                  price:'1100',quantity:'15ml', stock:'20',desc:'',category:'nail',   status:'active',  image:'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=200&q=80'},
+  ];
+
+  /* ── Load from sessionStorage (returns from form) ── */
+  var stored = sessionStorage.getItem('kc_eshop_data');
+  var DATA   = stored ? JSON.parse(stored) : SEED;
+  sessionStorage.setItem('kc_eshop_data', JSON.stringify(DATA));
+
+  /* ── Toast on return from form ── */
+  var toastRaw = sessionStorage.getItem('kc_eshop_toast');
+  if (toastRaw) {
+    try {
+      var t = JSON.parse(toastRaw);
+      sessionStorage.removeItem('kc_eshop_toast');
+      setTimeout(function(){ KcozmAdmin.showToast(t.msg, t.type); }, 300);
+    } catch(e){}
+  }
+
+  var ROWS=5, page=1, query='', sortAsc=false, list=[], delId=null;
+
+  /* ── Filter + sort ── */
+  function applyFilters() {
+    list = DATA.filter(function(r){
+      return !query
+        || r.name.toLowerCase().indexOf(query) >= 0
+        || String(r.price).indexOf(query) >= 0;
+    });
+    if (sortAsc) {
+      list.sort(function(a,b){ return parseFloat(a.price)-parseFloat(b.price); });
     }
-  </script>
+    page = 1; render();
+  }
+  function handleSearch() {
+    query = document.getElementById('searchInput').value.toLowerCase().trim();
+    applyFilters();
+  }
+  function toggleSort() {
+    sortAsc = !sortAsc;
+    document.getElementById('sortBtn').classList.toggle('asc', sortAsc);
+    applyFilters();
+  }
+
+  /* ── Render table ── */
+  function render() {
+    var tbody   = document.getElementById('tableBody');
+    var empty   = document.getElementById('emptyState');
+    var pgWrap  = document.getElementById('paginationWrap');
+    document.getElementById('totalCount').textContent = list.length;
+
+    if (!list.length) {
+      tbody.innerHTML = ''; empty.style.display='block'; pgWrap.style.display='none'; return;
+    }
+    empty.style.display='none'; pgWrap.style.display='flex';
+    var pages = Math.ceil(list.length/ROWS);
+    page = Math.min(page, pages);
+    var s = (page-1)*ROWS;
+
+    tbody.innerHTML = list.slice(s, s+ROWS).map(function(r, i) {
+      var img = r.image
+        ? '<img class="kc-img" src="'+r.image+'" alt="'+r.name+'">'
+        : '<div class="kc-img-ph"><i class="fa-solid fa-bag-shopping"></i></div>';
+
+      var statusLabel = {active:'Active',inactive:'Inactive',out_of_stock:'Out of Stock'}[r.status] || r.status;
+      var statusCls   = r.status || 'active';
+
+      return '<tr>'
+        +'<td><span class="kc-serial">'+(s+i+1)+'</span></td>'
+        +'<td>'+img+'</td>'
+        +'<td><span class="kc-name">'+r.name+'</span></td>'
+        +'<td><span class="kc-price">&#8377; '+Number(r.price).toLocaleString('en-IN')+'</span></td>'
+        +'<td><span class="kc-qty"><i class="fa-solid fa-box"></i>'+r.quantity+'</span></td>'
+        +'<td><span class="kc-status '+statusCls+'"><span class="dot"></span>'+statusLabel+'</span></td>'
+        +'<td><div class="kc-actions">'
+        +'<button class="kc-act view"   onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
+        +'<button class="kc-act edit"   onclick="editRow('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
+        +'<button class="kc-act delete" onclick="openDelModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
+        +'</div></td></tr>';
+    }).join('');
+
+    renderPg(pages);
+  }
+
+  function renderPg(pages) {
+    var nums = document.getElementById('pageNumbers');
+    document.getElementById('prevBtn').disabled = page===1;
+    document.getElementById('nextBtn').disabled = page===pages;
+    nums.innerHTML = '';
+    for (var p=1; p<=pages; p++) {
+      var b = document.createElement('button');
+      b.className = 'kc-pg'+(p===page?' active':'');
+      b.textContent = p;
+      b.onclick = (function(pp){ return function(){ goPage(pp); }; })(p);
+      nums.appendChild(b);
+    }
+    var s=(page-1)*ROWS+1, e=Math.min(page*ROWS,list.length);
+    document.getElementById('pageInfo').textContent = 'Showing '+s+'–'+e+' of '+list.length;
+  }
+
+  function changePage(d) { page=Math.max(1,Math.min(page+d,Math.ceil(list.length/ROWS))); render(); }
+  function goPage(p)     { page=p; render(); }
+
+  function viewRow(id) {
+    var r = DATA.find(function(x){ return x.id===id; });
+    if (r) KcozmAdmin.showToast(r.name+' · ₹'+Number(r.price).toLocaleString('en-IN')+' · '+r.quantity, 'info');
+  }
+
+  /* Edit → navigate to form with ?id= */
+  function editRow(id) {
+    window.location.href = 'forms/product_form.html?id='+id;
+  }
+
+  /* Delete */
+  function openDelModal(id)  { delId=id; document.getElementById('deleteOverlay').classList.add('show'); }
+  function closeDelModal()   { document.getElementById('deleteOverlay').classList.remove('show'); delId=null; }
+  function confirmDelete() {
+    if (delId===null) return;
+    var r = DATA.find(function(x){ return x.id===delId; });
+    DATA  = DATA.filter(function(x){ return x.id!==delId; });
+    sessionStorage.setItem('kc_eshop_data', JSON.stringify(DATA));
+    closeDelModal(); applyFilters();
+    KcozmAdmin.showToast((r?'"'+r.name+'"':'Product')+' deleted.','success');
+  }
+  document.getElementById('deleteOverlay').addEventListener('click',function(e){ if(e.target===this) closeDelModal(); });
+
+  applyFilters();
+</script>
 </body>
 </html>

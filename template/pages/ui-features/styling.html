@@ -3,178 +3,297 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>KCOZM — Styling</title>
+  <title>KCOZM Admin – Styling</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../../images/favicon.png" />
   <style>
-    .kc-page{padding:24px 28px 32px}
-    .kc-anim{opacity:0;transform:translateY(14px);animation:kcRise .4s ease forwards}
-    @keyframes kcRise{to{opacity:1;transform:none}}
-    .kc-pg-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow-page);overflow:hidden}
-    .kc-pg-head{padding:20px 24px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
-    .kc-pg-title-wrap{display:flex;align-items:center;gap:12px}
-    .kc-pg-icon{width:40px;height:40px;border-radius:11px;background:var(--rose-lt);color:var(--rose-dk);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-    .kc-pg-title{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--ink)}
-    .kc-pg-sub{font-size:12px;color:var(--ink-3);margin-top:1px}
-    .kc-pg-actions{display:flex;align-items:center;gap:10px}
-    .kc-search-wrap{position:relative}
-    .kc-search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
-    .kc-search{padding:9px 16px 9px 36px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface-2);font-family:"DM Sans",sans-serif;font-size:13px;color:var(--ink);width:220px;outline:none}
-    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
-    .kc-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;border:none;text-decoration:none}
-    .kc-btn-gold{background:linear-gradient(135deg,#c8a040,#9a7020);color:#fff;box-shadow:0 3px 12px rgba(200,160,64,.28)}
-    .kc-btn-gold:hover{box-shadow:0 5px 18px rgba(200,160,64,.40);transform:translateY(-1px);color:#fff}
-    .kc-btn-rose{background:linear-gradient(135deg,#c97b84,#a85560);color:#fff;box-shadow:0 3px 12px rgba(201,123,132,.25)}
-    .kc-btn-rose:hover{box-shadow:0 5px 18px rgba(201,123,132,.38);transform:translateY(-1px);color:#fff}
-    .kc-btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
-    .kc-btn-outline:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    :root {
+      --gold:#c8a040;--gold-dk:#a07828;--gold-lt:#fdf6e4;--gold-glow:rgba(200,160,64,.15);
+      --ink:#1a1a2e;--ink-mid:#4a4a6a;--ink-light:#8888aa;
+      --surface:#fff;--surface-2:#f8f7fc;--border:#ededf5;
+      --radius-sm:8px;--radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,.08);
+      --shadow-btn:0 4px 16px rgba(200,160,64,.32);
+      --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
+    .main-panel{min-width:0;overflow-x:hidden}
 
-    /* Style cards grid */
-    .kc-st-grid{padding:22px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
+    @keyframes rowSlide{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
 
-    .kc-st-card{border:1.5px solid var(--border);border-radius:14px;overflow:hidden;transition:all .2s;cursor:pointer}
-    .kc-st-card:hover{border-color:var(--gold);box-shadow:0 6px 22px rgba(200,160,64,.14);transform:translateY(-2px)}
-    .kc-st-img{height:130px;background:linear-gradient(135deg,var(--gold-lt) 0%,rgba(201,123,132,.12) 100%);display:flex;align-items:center;justify-content:center;font-size:38px;color:var(--gold-dk);position:relative}
-    .kc-st-overlay{position:absolute;top:8px;right:8px;display:flex;gap:5px;opacity:0;transition:opacity .2s}
-    .kc-st-card:hover .kc-st-overlay{opacity:1}
-    .kc-st-act{width:28px;height:28px;border-radius:7px;border:none;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer}
-    .kc-st-act.edit{background:#e8f5e9;color:#2e7d32}
-    .kc-st-act.delete{background:#fce4ec;color:#c62828}
-    .kc-st-body{padding:12px 14px}
-    .kc-st-name{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:4px}
-    .kc-st-meta{font-size:11.5px;color:var(--ink-3)}
-    .kc-st-badge{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:14px;margin-top:8px;background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
 
-    /* Inline form */
-    .kc-inline{padding:22px 24px;border-bottom:1px solid var(--border);background:var(--surface-2);display:none}
-    .kc-inline.open{display:block}
-    .kc-if-title{font-family:"Cormorant Garamond",serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:16px}
-    .kc-form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px 22px}
-    @media(max-width:720px){.kc-form-row{grid-template-columns:1fr}}
-    .kc-fg{display:flex;flex-direction:column;gap:7px}
-    .kc-fg.full{grid-column:1/-1}
-    .kc-label{font-size:12.5px;font-weight:600;color:var(--ink-2)}
-    .kc-input,.kc-select{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:"DM Sans",sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color .18s;width:100%}
-    .kc-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(200,160,64,.12)}
-    .kc-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;background-color:var(--surface)}
-    .kc-form-footer{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding-top:18px;border-top:1px solid var(--border);margin-top:18px}
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.72}
+    .kc-bc .sep{font-size:10px}
 
-    .kc-pg-info{font-size:12.5px;color:var(--ink-3);padding:14px 24px;border-top:1px solid var(--border)}
-    .kc-icons{font-size:36px;display:flex;gap:12px;flex-wrap:wrap;margin:10px 0 4px}
+    .kc-card{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--border);overflow:hidden;animation:fadeUp .45s ease both;width:100%;margin-bottom:28px;min-width:0}
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--radius-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold);font-size:19px}
+    .kc-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2}
+    .kc-title span{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px}
+
+    .kc-btn-add{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 22px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:var(--shadow-btn);transition:transform var(--t),box-shadow var(--t);white-space:nowrap;text-decoration:none}
+    .kc-btn-add:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
+
+    .kc-toolbar{padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .kc-search-wrap{position:relative;flex:1;min-width:220px;max-width:400px}
+    .kc-search-wrap .kc-si{position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none}
+    .kc-search{width:100%;padding:9.5px 14px 9.5px 40px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color var(--t),box-shadow var(--t),background var(--t)}
+    .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-search::placeholder{color:var(--ink-light)}
+    .kc-stat-pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-light);background:var(--surface-2);border:1px solid var(--border);padding:6px 16px;border-radius:50px;margin-left:auto;white-space:nowrap}
+    .kc-stat-pill strong{color:var(--gold);font-size:14px}
+
+    .kc-table-wrap{overflow-x:auto}
+    .kc-table{width:100%;border-collapse:collapse}
+    .kc-table thead th{padding:13px 20px;font-family:'Cormorant Garamond',serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-light);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
+    .kc-table thead th:first-child{padding-left:28px}
+    .kc-table thead th:last-child{padding-right:28px}
+    .kc-table tbody tr{border-bottom:1px solid var(--border);transition:background var(--t);animation:rowSlide .3s ease both}
+    .kc-table tbody tr:nth-child(1){animation-delay:.04s}
+    .kc-table tbody tr:nth-child(2){animation-delay:.08s}
+    .kc-table tbody tr:nth-child(3){animation-delay:.12s}
+    .kc-table tbody tr:nth-child(4){animation-delay:.16s}
+    .kc-table tbody tr:nth-child(5){animation-delay:.20s}
+    .kc-table tbody tr:hover{background:#fdf6f9}
+    .kc-table tbody tr:last-child{border-bottom:none}
+    .kc-table tbody td{padding:14px 20px;vertical-align:middle;font-size:13.5px;color:var(--ink-mid)}
+    .kc-table tbody td:first-child{padding-left:28px}
+    .kc-table tbody td:last-child{padding-right:28px}
+
+    .kc-serial{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);font-size:11px;font-weight:700;color:var(--ink-light)}
+    .kc-name{font-weight:600;color:var(--ink);font-size:14px;margin:0 0 2px}
+    .kc-sub{font-size:12px;color:var(--ink-light);margin:0}
+    .kc-price{font-weight:700;color:var(--ink);font-size:13.5px}
+
+    .kc-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;font-size:11.5px;font-weight:600}
+    .kc-badge.bridal  {background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-badge.party   {background:#fce4ec;color:#c2185b}
+    .kc-badge.casual  {background:#e3f2fd;color:#1565c0}
+    .kc-badge.trial   {background:#e8f5e9;color:#2e7d32}
+    .kc-badge.creative{background:#f3e5f5;color:#7b1fa2}
+
+    .kc-status{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:50px;font-size:11.5px;font-weight:600}
+    .kc-status .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+    .kc-status.active  {background:#e8f5e9;color:#2e7d32}
+    .kc-status.inactive{background:#fff3e0;color:#e65100}
+    .kc-status.seasonal{background:#e3f2fd;color:#1565c0}
+
+    .kc-actions{display:flex;align-items:center;gap:8px}
+    .kc-act{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink-light);transition:background var(--t),border-color var(--t),transform var(--t),color var(--t)}
+    .kc-act:hover{transform:translateY(-2px)}
+    .kc-act.view:hover  {background:#e3f2fd;border-color:#90caf9;color:#1565c0}
+    .kc-act.edit:hover  {background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+    .kc-act.delete:hover{background:#fce4ec;border-color:#f48fb1;color:#c62828}
+
+    .kc-empty{text-align:center;padding:64px 20px;display:none}
+    .kc-empty-ring{width:76px;height:76px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .kc-empty-ring i{color:var(--gold);font-size:30px;opacity:.55}
+    .kc-empty h6{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin:0 0 8px}
+    .kc-empty p{font-size:13px;color:var(--ink-light);margin:0}
+
+    .kc-pagination{padding:16px 28px;border-top:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .kc-pg{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:all var(--t)}
+    .kc-pg:hover:not([disabled]){border-color:var(--gold);color:var(--gold);background:var(--gold-lt)}
+    .kc-pg[disabled]{opacity:.38;cursor:not-allowed}
+    .kc-pg.active{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:var(--shadow-btn)}
+    .kc-pg-info{margin-left:auto;font-size:12.5px;color:var(--ink-light)}
+
+    .kc-overlay{position:fixed;inset:0;background:rgba(26,26,46,.50);backdrop-filter:blur(5px);z-index:9000;display:none;align-items:center;justify-content:center}
+    .kc-overlay.show{display:flex}
+    .kc-del-modal{background:var(--surface);border-radius:var(--radius-lg);padding:38px 34px 30px;width:100%;max-width:390px;text-align:center;box-shadow:0 28px 70px rgba(26,26,46,.24);animation:fadeUp .25s ease both}
+    .kc-del-ring{width:64px;height:64px;border-radius:50%;background:#fce4ec;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .kc-del-ring i{color:#c62828;font-size:26px}
+    .kc-del-modal h5{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--ink);margin:0 0 10px}
+    .kc-del-modal p{font-size:13.5px;color:var(--ink-light);margin:0 0 26px;line-height:1.6}
+    .kc-del-row{display:flex;gap:10px}
+    .kc-btn-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:background var(--t)}
+    .kc-btn-cancel:hover{background:var(--surface-2)}
+    .kc-btn-del{flex:1;padding:11px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#e53935,#b71c1c);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;transition:opacity var(--t),transform var(--t)}
+    .kc-btn-del:hover{opacity:.88;transform:translateY(-1px)}
   </style>
 </head>
 <body>
-  <div class="main-panel">
-    <div class="kc-page">
-      <div class="kc-pg-card kc-anim" style="animation-delay:.05s">
+<div class="main-panel">
+  <div class="kc-page-content">
 
-        <div class="kc-pg-head">
-          <div class="kc-pg-title-wrap">
-            <div class="kc-pg-icon"><i class="fa-solid fa-wand-sparkles"></i></div>
-            <div>
-              <div class="kc-pg-title">Styling Catalogue</div>
-              <div class="kc-pg-sub">Manage styling categories and inspiration looks</div>
-            </div>
-          </div>
-          <div class="kc-pg-actions">
-            <div class="kc-search-wrap">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" class="kc-search" placeholder="Search styles…" id="stSearch">
-            </div>
-            <button class="kc-btn kc-btn-gold" id="toggleSt"><i class="fa-solid fa-plus"></i> Add Style</button>
-          </div>
+    <nav class="kc-bc">
+      <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span>Styling</span>
+    </nav>
+
+    <div class="kc-card">
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-wand-sparkles"></i></div>
+          <h4 class="kc-title">Styling Catalogue<span>Manage styling packages &amp; inspiration looks</span></h4>
         </div>
+        <a href="forms/styling_form.html" class="kc-btn-add">
+          <i class="fa-solid fa-plus"></i> Add Style
+        </a>
+      </div>
 
-        <!-- Form -->
-        <div class="kc-inline" id="stForm">
-          <div class="kc-if-title"><i class="fa-solid fa-wand-sparkles" style="color:var(--gold-dk)"></i> Add New Style</div>
-          <div class="kc-form-row">
-            <div class="kc-fg">
-              <label class="kc-label">Style Name</label>
-              <input type="text" class="kc-input" id="stName" placeholder="e.g. Bridal Updo, Smokey Eye…">
-            </div>
-            <div class="kc-fg">
-              <label class="kc-label">Category</label>
-              <select class="kc-select" id="stCat">
-                <option value="">Select Category</option>
-                <option>Hair</option>
-                <option>Makeup</option>
-                <option>Nail Art</option>
-                <option>Bridal</option>
-                <option>Mehendi</option>
-              </select>
-            </div>
-          </div>
-          <div class="kc-form-footer">
-            <button class="kc-btn kc-btn-outline" id="cancelSt">Cancel</button>
-            <button class="kc-btn kc-btn-rose" id="saveSt"><i class="fa-solid fa-check"></i> Save Style</button>
-          </div>
+      <div class="kc-toolbar">
+        <div class="kc-search-wrap">
+          <i class="fa-solid fa-magnifying-glass kc-si"></i>
+          <input type="text" class="kc-search" id="searchInput" placeholder="Search styles…" oninput="handleSearch()">
         </div>
+        <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">0</strong></div>
+      </div>
 
-        <!-- Grid -->
-        <div class="kc-st-grid" id="stGrid"></div>
-        <div class="kc-pg-info" id="stInfo"></div>
+      <div class="kc-table-wrap">
+        <table class="kc-table">
+          <thead>
+            <tr>
+              <th style="width:54px">#</th>
+              <th>Package Name</th>
+              <th>Code</th>
+              <th>Type</th>
+              <th style="width:110px">Price</th>
+              <th style="width:100px">Duration</th>
+              <th style="width:110px">Status</th>
+              <th style="width:120px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="kc-empty" id="emptyState">
+          <div class="kc-empty-ring"><i class="fa-solid fa-wand-sparkles"></i></div>
+          <h6>No styling entries found</h6>
+          <p>Try a different search, or click <strong>Add Style</strong> to create one.</p>
+        </div>
+      </div>
 
+      <div class="kc-pagination" id="paginationWrap">
+        <button class="kc-pg" id="prevBtn" onclick="changePage(-1)"><i class="fa-solid fa-angle-left"></i> Previous</button>
+        <div id="pageNumbers" style="display:flex;gap:6px"></div>
+        <button class="kc-pg" id="nextBtn" onclick="changePage(1)">Next <i class="fa-solid fa-angle-right"></i></button>
+        <span class="kc-pg-info" id="pageInfo"></span>
       </div>
     </div>
+
   </div>
+</div>
 
-  <script src="../../js/shared-components.js"></script>
-  <script>
-    KcozmAdmin.init({ activePage:'services', depth:'../../', addButton:'Add Styling Package', addButtonHref:'forms/stylingform.html' });
+<!-- Delete Modal -->
+<div class="kc-overlay" id="deleteOverlay">
+  <div class="kc-del-modal">
+    <div class="kc-del-ring"><i class="fa-solid fa-trash-can"></i></div>
+    <h5>Delete Styling Package?</h5>
+    <p>This styling entry will be permanently removed.<br>This action cannot be undone.</p>
+    <div class="kc-del-row">
+      <button class="kc-btn-cancel" onclick="closeDelModal()">Cancel</button>
+      <button class="kc-btn-del"    onclick="confirmDelete()">Yes, Delete</button>
+    </div>
+  </div>
+</div>
 
-    var iconMap={Hair:'fa-scissors',Makeup:'fa-wand-magic-sparkles',Bridal:'fa-heart',Mehendi:'fa-paint-brush','Nail Art':'fa-paintbrush'};
-    var styles = JSON.parse(localStorage.getItem('kc_styles')) || [
-      {id:1,name:'Bridal Updo',cat:'Hair',active:true},
-      {id:2,name:'Smokey Eye Glam',cat:'Makeup',active:true},
-      {id:3,name:'Classic French Tips',cat:'Nail Art',active:true},
-      {id:4,name:'Floral Mehendi',cat:'Mehendi',active:true},
-      {id:5,name:'Soft Waves',cat:'Hair',active:true},
-      {id:6,name:'Gold Shimmer Look',cat:'Bridal',active:true}
-    ];
+<script src="../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({activePage:'services',pageTitle:'Styling',depth:'../../'});</script>
+<script>
+  var SEED = [
+    {id:1,name:'Bridal Hair + Makeup',  code:'SHP001',basePrice:8500, duration:4,   type:'bridal',  status:'active',  includesMakeup:true,  advance:2000, desc:'Complete bridal styling with airbrush makeup and updo.'},
+    {id:2,name:'Party Makeover',        code:'PMO001',basePrice:3500, duration:2,   type:'party',   status:'active',  includesMakeup:true,  advance:500,  desc:'Glam party look with full face makeup and blowdry.'},
+    {id:3,name:'Casual Day Look',       code:'CDL001',basePrice:1200, duration:1,   type:'casual',  status:'active',  includesMakeup:false, advance:0,    desc:'Natural everyday look — minimal makeup and styled hair.'},
+    {id:4,name:'Bridal Trial Session',  code:'BTS001',basePrice:4000, duration:2.5, type:'trial',   status:'active',  includesMakeup:true,  advance:1000, desc:'Full trial run for the bridal look before the wedding day.'},
+    {id:5,name:'Photoshoot Package',    code:'PSH001',basePrice:6500, duration:3,   type:'creative',status:'seasonal',includesMakeup:true,  advance:1500, desc:'High-definition creative makeup for portfolio/photoshoots.'},
+    {id:6,name:'Soft Waves Blowdry',    code:'SWB001',basePrice:900,  duration:1,   type:'casual',  status:'active',  includesMakeup:false, advance:0,    desc:'Effortless soft wave blowdry styling for any occasion.'},
+  ];
 
-    function renderStyles(data){
-      var g=document.getElementById('stGrid');
-      document.getElementById('stInfo').innerHTML='<b>'+data.length+'</b> style'+(data.length!==1?'s':'')+' in catalogue';
-      if(!data.length){g.innerHTML='<div style="grid-column:1/-1;padding:40px;text-align:center;font-size:14px;color:var(--ink-3)">No styles found</div>';return;}
-      g.innerHTML=data.map(function(s){
-        var ic=iconMap[s.cat]||'fa-star';
-        return '<div class="kc-st-card">'
-          +'<div class="kc-st-img"><i class="fa-solid '+ic+'"></i>'
-            +'<div class="kc-st-overlay">'
-              +'<button class="kc-st-act edit"><i class="fa-solid fa-pen-to-square"></i></button>'
-              +'<button class="kc-st-act delete" onclick="event.stopPropagation();delStyle('+s.id+')"><i class="fa-solid fa-trash"></i></button>'
-            +'</div>'
-          +'</div>'
-          +'<div class="kc-st-body">'
-            +'<div class="kc-st-name">'+s.name+'</div>'
-            +'<div class="kc-st-meta">'+s.cat+'</div>'
-            +'<div class="kc-st-badge"><i class="fa-solid fa-circle-check" style="font-size:8px;margin-right:3px"></i>Active</div>'
-          +'</div>'
-        +'</div>';
-      }).join('');
+  var stored = sessionStorage.getItem('kc_styling_data');
+  var DATA   = stored ? JSON.parse(stored) : SEED;
+  sessionStorage.setItem('kc_styling_data', JSON.stringify(DATA));
+
+  var toastRaw = sessionStorage.getItem('kc_styling_toast');
+  if (toastRaw) {
+    try { var t=JSON.parse(toastRaw); sessionStorage.removeItem('kc_styling_toast'); setTimeout(function(){ KcozmAdmin.showToast(t.msg,t.type); },300); } catch(e){}
+  }
+
+  var ROWS=5, page=1, list=DATA.slice(), delId=null;
+
+  var TYPE_BADGE = {
+    bridal:'bridal',party:'party',casual:'casual',trial:'trial',creative:'creative'
+  };
+  var TYPE_LABEL = {
+    bridal:'Bridal',party:'Party',casual:'Casual',trial:'Trial',creative:'Creative'
+  };
+
+  function handleSearch(){
+    var q=document.getElementById('searchInput').value.toLowerCase().trim();
+    list=q?DATA.filter(function(r){return(r.name+r.code+r.type).toLowerCase().includes(q);}):DATA.slice();
+    page=1; render();
+  }
+
+  function render(){
+    var tbody=document.getElementById('tableBody'),empty=document.getElementById('emptyState'),pgWrap=document.getElementById('paginationWrap');
+    document.getElementById('totalCount').textContent=list.length;
+    if(!list.length){tbody.innerHTML='';empty.style.display='block';pgWrap.style.display='none';return;}
+    empty.style.display='none'; pgWrap.style.display='flex';
+    var pages=Math.ceil(list.length/ROWS); page=Math.min(page,pages);
+    var s=(page-1)*ROWS;
+    var sm={active:{cls:'active',label:'Active'},inactive:{cls:'inactive',label:'Inactive'},seasonal:{cls:'seasonal',label:'Seasonal'}};
+    tbody.innerHTML=list.slice(s,s+ROWS).map(function(r,i){
+      var st=sm[r.status]||sm.active;
+      var tc=TYPE_BADGE[r.type]||'casual';
+      var tl=TYPE_LABEL[r.type]||r.type;
+      return '<tr>'
+        +'<td><span class="kc-serial">'+(s+i+1)+'</span></td>'
+        +'<td><p class="kc-name">'+r.name+'</p><p class="kc-sub">'+(r.includesMakeup?'<i class="fa-solid fa-check" style="color:var(--gold);margin-right:4px;font-size:10px"></i>Includes makeup':'Hair only')+'</p></td>'
+        +'<td><code style="font-size:12px;background:var(--surface-2);padding:3px 8px;border-radius:6px;border:1px solid var(--border);color:var(--ink-mid)">'+r.code+'</code></td>'
+        +'<td><span class="kc-badge '+tc+'">'+tl+'</span></td>'
+        +'<td><span class="kc-price">&#8377; '+Number(r.basePrice).toLocaleString('en-IN')+'</span></td>'
+        +'<td><span style="font-size:13px;color:var(--ink-mid)"><i class="fa-regular fa-clock" style="color:var(--gold);margin-right:4px;font-size:11px"></i>'+r.duration+' hr'+(r.duration===1?'':'s')+'</span></td>'
+        +'<td><span class="kc-status '+st.cls+'"><span class="dot"></span>'+st.label+'</span></td>'
+        +'<td><div class="kc-actions">'
+        +'<button class="kc-act view"   onclick="viewRow('+r.id+')"><i class="fa-solid fa-eye"></i></button>'
+        +'<button class="kc-act edit"   onclick="editRow('+r.id+')"><i class="fa-solid fa-pen-to-square"></i></button>'
+        +'<button class="kc-act delete" onclick="openDelModal('+r.id+')"><i class="fa-solid fa-trash"></i></button>'
+        +'</div></td></tr>';
+    }).join('');
+    renderPg(pages);
+  }
+
+  function renderPg(pages){
+    var nums=document.getElementById('pageNumbers');
+    document.getElementById('prevBtn').disabled=page===1;
+    document.getElementById('nextBtn').disabled=page===pages;
+    nums.innerHTML='';
+    for(var p=1;p<=pages;p++){
+      var b=document.createElement('button');
+      b.className='kc-pg'+(p===page?' active':''); b.textContent=p;
+      b.onclick=(function(pp){return function(){goPage(pp);};})(p);
+      nums.appendChild(b);
     }
-    renderStyles(styles);
+    var s=(page-1)*ROWS+1,e=Math.min(page*ROWS,list.length);
+    document.getElementById('pageInfo').textContent='Showing '+s+'–'+e+' of '+list.length;
+  }
 
-    function delStyle(id){ if(!confirm('Delete this style?')) return; styles=styles.filter(function(s){return s.id!==id;}); localStorage.setItem('kc_styles',JSON.stringify(styles)); renderStyles(styles); }
-
-    document.getElementById('toggleSt').addEventListener('click',function(){ document.getElementById('stForm').classList.toggle('open'); });
-    document.getElementById('cancelSt').addEventListener('click',function(){ document.getElementById('stForm').classList.remove('open'); });
-
-    document.getElementById('saveSt').addEventListener('click',function(){
-      var n=document.getElementById('stName').value.trim();
-      var c=document.getElementById('stCat').value;
-      if(!n||!c){KcozmAdmin.showToast('Please fill all fields','error');return;}
-      styles.push({id:Date.now(),name:n,cat:c,active:true});
-      localStorage.setItem('kc_styles',JSON.stringify(styles)); renderStyles(styles);
-      document.getElementById('stForm').classList.remove('open');
-      document.getElementById('stName').value='';
-      KcozmAdmin.showToast('Style added successfully','success');
-    });
-
-    document.getElementById('stSearch').addEventListener('input',function(){
-      var q=this.value.toLowerCase();
-      renderStyles(styles.filter(function(s){return s.name.toLowerCase().includes(q)||s.cat.toLowerCase().includes(q);}));
-    });
-  </script>
+  function changePage(d){page=Math.max(1,Math.min(page+d,Math.ceil(list.length/ROWS)));render();}
+  function goPage(p){page=p;render();}
+  function viewRow(id){var r=DATA.find(function(x){return x.id===id;});if(r)KcozmAdmin.showToast(r.name+' · ₹'+Number(r.basePrice).toLocaleString('en-IN')+' · '+r.duration+'hr','info');}
+  function editRow(id){window.location.href='forms/styling_form.html?id='+id;}
+  function openDelModal(id){delId=id;document.getElementById('deleteOverlay').classList.add('show');}
+  function closeDelModal(){document.getElementById('deleteOverlay').classList.remove('show');delId=null;}
+  function confirmDelete(){
+    if(delId===null)return;
+    var r=DATA.find(function(x){return x.id===delId;});
+    DATA=DATA.filter(function(x){return x.id!==delId;});
+    list=list.filter(function(x){return x.id!==delId;});
+    sessionStorage.setItem('kc_styling_data',JSON.stringify(DATA));
+    closeDelModal(); render();
+    KcozmAdmin.showToast((r?'"'+r.name+'"':'Package')+' deleted.','success');
+  }
+  document.getElementById('deleteOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
+  render();
+</script>
 </body>
 </html>
