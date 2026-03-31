@@ -641,8 +641,8 @@
     ]},
     { sec:'BUSINESS', items:[
       { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/franchise.html', badge:null },
-      { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'javascript:void KcozmAdmin.showToast(\'Payments module coming soon\',\'info\')', badge:null },
-      { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'javascript:void KcozmAdmin.showToast(\'Reports module coming soon\',\'info\')', badge:null },
+      { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'#',     badge:null, onClick:'_comingSoon("Payments")' },
+      { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'#',     badge:null, onClick:'_comingSoon("Reports")' },
       { slug:'more-pages', label:'More Pages', icon:'fa-layer-group', badge:null, children:[
         { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/bridal.html'  },
         { slug:'offers',  label:'Offers',   icon:'fa-tag',          href:'pages/ui-features/Offers_new.html'    },
@@ -695,8 +695,12 @@
           h+='</div>';
         } else {
           var fly='<div class="kc-sb-fly"><div class="kc-sb-fly-label">'+item.label+'</div></div>';
+          var onClickAttr='';
+          if(item.onClick){
+            onClickAttr=' onclick="event.preventDefault();event.stopPropagation();KcozmAdmin.'+item.onClick+'();return false;"';
+          }
           h+='<a class="kc-sb-item'+(isAct?' active':'')+'" href="'+mkUrl(root,item.href)+'"'
-           + (item.danger?' style="color:rgba(200,50,70,0.80)"':'')+' >'
+           + (item.danger?' style="color:rgba(200,50,70,0.80)"':'')+onClickAttr+' >'
            + '<span class="kc-sb-icon"><i class="fa-solid '+item.icon+'"></i></span>'
            + fly
            + '<span class="kc-sb-label">'+item.label+'</span>'
@@ -742,8 +746,14 @@
           });
           h+='</div>';
         } else {
+          var onClickAttr='';
+          if(item.onClick){
+            onClickAttr=' onclick="event.preventDefault();event.stopPropagation();KcozmAdmin.'+item.onClick+'();KcozmAdmin._closeMob();return false;"';
+          } else {
+            onClickAttr=' onclick="KcozmAdmin._closeMob()"';
+          }
           h+='<a class="kc-mob-sb-item'+(isAct?' active':'')+'" href="'+mkUrl(root,item.href)+'"'
-           + (item.danger?' style="color:rgba(200,50,70,0.80)"':'')+' onclick="KcozmAdmin._closeMob()">'
+           + (item.danger?' style="color:rgba(200,50,70,0.80)"':'')+onClickAttr+'>'
            + '<span class="kc-mob-sb-icon"><i class="fa-solid '+item.icon+'"></i></span>'
            + '<span class="kc-mob-sb-label">'+item.label+'</span>'
            + (item.badge?'<span class="kc-mob-sb-badge">'+item.badge+'</span>':'')
@@ -979,6 +989,9 @@
     },
     _sbSearch:function(q){ filterItems(q,'kcSbNav','.kc-sb-item','.kc-sb-sub-item'); },
     _mobSearch:function(q){ filterItems(q,'kcMobNav','.kc-mob-sb-item','.kc-mob-sb-sub-item'); },
+    _comingSoon:function(moduleName){
+      this.showToast(moduleName+' module coming soon','info');
+    },
     showToast:function(msg,type){
       var icons={success:'fa-circle-check',error:'fa-circle-xmark',info:'fa-circle-info'};
       var bg={success:'#1b5e20',error:'#b71c1c',info:'#18120f'};
