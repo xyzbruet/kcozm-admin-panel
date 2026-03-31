@@ -622,11 +622,11 @@
       ]}
     ]},
     { sec:'BUSINESS', items:[
-      { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/tables/franchise_new_tabel.html', badge:null },
+      { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/franchise.html', badge:null },
       { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'javascript:void KcozmAdmin.showToast(\'Payments module coming soon\',\'info\')', badge:null },
       { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'javascript:void KcozmAdmin.showToast(\'Reports module coming soon\',\'info\')', badge:null },
       { slug:'more-pages', label:'More Pages', icon:'fa-layer-group', badge:null, children:[
-        { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/tables/bridal_tabel.html'  },
+        { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/bridal.html'  },
         { slug:'offers',  label:'Offers',   icon:'fa-tag',          href:'pages/ui-features/Offers_new.html'    },
         { slug:'contact', label:'Contact',  icon:'fa-envelope',     href:'pages/ui-features/contact_admin.html' },
         { slug:'about',   label:'About Us', icon:'fa-circle-info',  href:'pages/ui-features/about.html'         },

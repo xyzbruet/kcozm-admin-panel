@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Appointment Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
+      --pk:#e91e63; --pk-dk:#c2185b; --pk-lt:#fce4ec;
+      --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060; --ink-4:#c4a898;
+      --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
+      --r-sm:8px; --r-md:14px; --r-lg:20px;
+      --shadow:0 2px 24px rgba(26,18,8,.08); --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink)}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none}}
+
+    /* ── Page ── */
+    .kc-page-content{padding:28px 28px 48px;width:100%;min-width:0}
+    @media(max-width:640px){.kc-page-content{padding:18px 16px 40px}}
+
+    /* ── Breadcrumb ── */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:9px;color:var(--ink-4)}
+
+    /* ── Card ── */
+    .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .45s ease both;margin-bottom:28px;width:100%}
+
+    /* ── Card Header ── */
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:800;color:var(--ink);line-height:1.2}
+    .kc-title-sub{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:3px}
+
+    /* ── Edit Banner ── */
+    .kc-edit-banner{
+      display:none;background:var(--gold-lt);
+      border:1px solid rgba(200,160,64,.3);border-radius:var(--r-sm);
+      padding:10px 16px;margin:16px 28px 0;
+      font-size:13px;color:var(--gold-dk);
+      align-items:center;gap:8px;
+    }
+    .kc-edit-banner.show{display:flex}
+
+    /* ── Form Body ── */
+    .kc-form-body{padding:28px;display:flex;flex-direction:column;gap:20px}
+
+    /* ── Section ── */
+    .kc-section{border:1px solid var(--border);border-radius:var(--r-md);padding:22px 24px}
+
+    /* ── Section Label ── */
+    .kc-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+    .kc-sec-lbl i{color:var(--gold-dk)}
+
+    /* ── Grids ── */
+    .kc-ff-row  {display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .kc-ff-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+    @media(max-width:700px){.kc-ff-row-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.kc-ff-row,.kc-ff-row-3{grid-template-columns:1fr}}
+
+    /* ── Field ── */
+    .kc-ff{display:flex;flex-direction:column;gap:6px}
+    .kc-flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-req{color:var(--pk-dk);margin-left:2px}
+
+    /* ── Inputs ── */
+    .kc-finp,.kc-fsel,.kc-ftxt{
+      padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+      font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);
+      background:var(--surface-2);outline:none;width:100%;
+      transition:border-color var(--t),box-shadow var(--t),background var(--t);
+    }
+    .kc-finp:focus,.kc-fsel:focus,.kc-ftxt:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp::placeholder,.kc-ftxt::placeholder{color:var(--ink-4)}
+    .kc-ftxt{resize:vertical;min-height:90px;line-height:1.55}
+
+    /* ── Select ── */
+    .kc-fsel{
+      cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 13px center;
+      padding-right:34px;background-color:var(--surface-2);
+    }
+    .kc-fsel:focus{background-color:#fff}
+
+    /* ── Amount prefix ── */
+    .kc-prefix-wrap{position:relative;display:flex;align-items:center}
+    .kc-prefix-wrap .kc-pfx{position:absolute;left:13px;font-size:14px;font-weight:600;color:var(--ink-3);pointer-events:none}
+    .kc-prefix-wrap .kc-finp{padding-left:26px}
+
+    /* ── Status badge preview ── */
+    .kc-status-preview{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600;margin-top:4px;transition:all var(--t)}
+    .kc-status-preview.confirmed{background:#e8f5e9;color:#2e7d32}
+    .kc-status-preview.pending  {background:#fff3e0;color:#e65100}
+    .kc-status-preview.completed{background:var(--gold-lt);color:var(--gold-dk)}
+    .kc-status-preview.cancelled{background:var(--pk-lt);color:var(--pk-dk)}
+
+    /* ── Footer ── */
+    .kc-form-footer{
+      padding:18px 28px;border-top:1px solid var(--border);
+      display:flex;gap:10px;justify-content:flex-end;align-items:center;
+      background:var(--surface-2);
+    }
+    .kc-btn-sec{
+      padding:10px 22px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+      background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;
+      font-weight:600;color:var(--ink-2);cursor:pointer;
+      text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+      transition:background var(--t);
+    }
+    .kc-btn-sec:hover{background:var(--surface-2)}
+    .kc-btn-pri{
+      padding:10px 28px;border:none;border-radius:var(--r-sm);
+      background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+      font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;
+      cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+      box-shadow:0 4px 16px var(--gold-glow);
+      transition:opacity var(--t),transform var(--t);
+    }
+    .kc-btn-pri:hover{opacity:.88;transform:translateY(-1px)}
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../appointments.html"><i class="fa-solid fa-calendar-days"></i> Appointments</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span id="bcLabel">New Booking</span>
+    </nav>
+
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-calendar-plus"></i></div>
+          <h4 class="kc-title">
+            <span id="pageHeading">New Appointment</span>
+            <span class="kc-title-sub" id="pageSubtitle">Fill in the details to schedule a new appointment</span>
+          </h4>
+        </div>
+      </div>
+
+      <!-- Edit banner -->
+      <div class="kc-edit-banner" id="editBanner">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>You are editing an existing appointment. Changes will be saved back to the Appointments list.</span>
+      </div>
+
+      <!-- Form Body -->
+      <div class="kc-form-body">
+
+        <!-- ── CUSTOMER INFO ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-user"></i> Customer Information</div>
+
+          <!-- Name + Phone — two columns -->
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Customer Name <span class="kc-req">*</span></label>
+              <input type="text" class="kc-finp" id="custName" placeholder="e.g. Priya Sharma…">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Phone Number <span class="kc-req">*</span></label>
+              <input type="tel" class="kc-finp" id="custPhone" placeholder="e.g. 9876543210">
+            </div>
+          </div>
+
+          <!-- Email — full width -->
+          <div class="kc-ff">
+            <label class="kc-flbl">Email Address</label>
+            <input type="email" class="kc-finp" id="custEmail" placeholder="e.g. priya@gmail.com">
+          </div>
+        </div>
+
+        <!-- ── APPOINTMENT DETAILS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-scissors"></i> Appointment Details</div>
+
+          <!-- Service — full width -->
+          <div class="kc-ff" style="margin-bottom:16px">
+            <label class="kc-flbl">Service <span class="kc-req">*</span></label>
+            <select class="kc-fsel" id="apptService">
+              <option value="">— Select Service —</option>
+              <optgroup label="Ladies">
+                <option value="Gold Facial">Gold Facial</option>
+                <option value="Diamond Facial">Diamond Facial</option>
+                <option value="Hair Colour + Highlights">Hair Colour + Highlights</option>
+                <option value="Keratin Treatment">Keratin Treatment</option>
+                <option value="Manicure & Pedicure">Manicure &amp; Pedicure</option>
+                <option value="Nail Art">Nail Art</option>
+                <option value="Mehndi Application">Mehndi Application</option>
+                <option value="Waxing (Full Body)">Waxing (Full Body)</option>
+                <option value="Saree Draping">Saree Draping</option>
+              </optgroup>
+              <optgroup label="Bridal">
+                <option value="Bridal Full Makeup">Bridal Full Makeup</option>
+                <option value="Bridal Trial Makeup">Bridal Trial Makeup</option>
+                <option value="Reception Makeup">Reception Makeup</option>
+                <option value="Engagement Makeup">Engagement Makeup</option>
+                <option value="Bridal Package">Bridal Package</option>
+                <option value="Bridal Hair & Makeup">Bridal Hair &amp; Makeup</option>
+              </optgroup>
+              <optgroup label="Gents">
+                <option value="Haircut">Haircut</option>
+                <option value="Beard Grooming">Beard Grooming</option>
+                <option value="Head Massage">Head Massage</option>
+                <option value="Clean Shave">Clean Shave</option>
+              </optgroup>
+              <optgroup label="Kids">
+                <option value="Kids Haircut">Kids Haircut</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="Facial & Cleanup">Facial &amp; Cleanup</option>
+                <option value="Threading">Threading</option>
+                <option value="Hair Spa">Hair Spa</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Date + Time — two columns -->
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Date <span class="kc-req">*</span></label>
+              <input type="date" class="kc-finp" id="apptDate" value="2026-03-14">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Time <span class="kc-req">*</span></label>
+              <input type="time" class="kc-finp" id="apptTime" value="10:00">
+            </div>
+          </div>
+
+          <!-- Duration + Branch — two columns -->
+          <div class="kc-ff-row">
+            <div class="kc-ff">
+              <label class="kc-flbl">Duration</label>
+              <select class="kc-fsel" id="apptDuration">
+                <option value="">— Select Duration —</option>
+                <option value="15 min">15 min</option>
+                <option value="20 min">20 min</option>
+                <option value="30 min">30 min</option>
+                <option value="45 min">45 min</option>
+                <option value="60 min" selected>60 min</option>
+                <option value="75 min">75 min</option>
+                <option value="90 min">90 min</option>
+                <option value="120 min">120 min</option>
+                <option value="150 min">150 min</option>
+                <option value="180 min">180 min</option>
+              </select>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Branch</label>
+              <select class="kc-fsel" id="apptBranch">
+                <option value="">— Select Branch —</option>
+                <option value="Pune West">Pune West</option>
+                <option value="Mumbai Andheri">Mumbai Andheri</option>
+                <option value="Nagpur Central">Nagpur Central</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── STAFF & BILLING ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-id-badge"></i> Staff &amp; Billing</div>
+
+          <!-- Staff + Amount + Status — three columns -->
+          <div class="kc-ff-row-3">
+            <div class="kc-ff">
+              <label class="kc-flbl">Assigned Staff <span class="kc-req">*</span></label>
+              <select class="kc-fsel" id="apptStaff">
+                <option value="">— Select Staff —</option>
+                <option value="Aisha Khan">Aisha Khan</option>
+                <option value="Preethi Nair">Preethi Nair</option>
+                <option value="Roshni Gupta">Roshni Gupta</option>
+                <option value="Sonal Mehta">Sonal Mehta</option>
+              </select>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Amount (&#8377;) <span class="kc-req">*</span></label>
+              <div class="kc-prefix-wrap">
+                <span class="kc-pfx">&#8377;</span>
+                <input type="number" class="kc-finp" id="apptAmt" placeholder="0" min="0" step="1">
+              </div>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Status</label>
+              <select class="kc-fsel" id="apptStatus" onchange="updateStatusPreview()">
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <span class="kc-status-preview pending" id="statusPreview">
+                <i class="fa-solid fa-circle" style="font-size:7px"></i> Pending
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── NOTES ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-note-sticky"></i> Additional Notes</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Notes / Special Requests</label>
+            <textarea class="kc-ftxt" id="apptNotes" placeholder="Any special requests, allergies, preferences or important instructions…"></textarea>
+          </div>
+        </div>
+
+      </div><!-- /kc-form-body -->
+
+      <!-- Footer -->
+      <div class="kc-form-footer">
+        <a href="../appointments.html" class="kc-btn-sec">
+          <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-calendar-plus" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Book Appointment</span>
+        </button>
+      </div>
+
+    </div><!-- /kc-card -->
+  </div>
+</div>
+
+<script src="../../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({activePage:'appointments', pageTitle:'Appointment Form', depth:'../../../'});</script>
+<script>
+  /* ── URL param ── */
+  var params = new URLSearchParams(window.location.search);
+  var editId  = params.get('id') ? parseInt(params.get('id')) : null;
+  var isEdit  = !!editId;
+
+  /* ── Load shared data ── */
+  var DATA = [];
+  try { DATA = JSON.parse(sessionStorage.getItem('kc_appts_data') || '[]'); } catch(e){}
+
+  /* ── Status preview ── */
+  var STATUS_LABELS = {
+    pending:   'Pending',
+    confirmed: 'Confirmed',
+    completed: 'Completed',
+    cancelled: 'Cancelled'
+  };
+  function updateStatusPreview() {
+    var val  = document.getElementById('apptStatus').value;
+    var prev = document.getElementById('statusPreview');
+    prev.className = 'kc-status-preview ' + val;
+    prev.innerHTML = '<i class="fa-solid fa-circle" style="font-size:7px"></i> ' + (STATUS_LABELS[val] || val);
+  }
+
+  /* ── Configure Add vs Edit ── */
+  if (isEdit) {
+    document.getElementById('bcLabel').textContent      = 'Edit Appointment';
+    document.getElementById('pageHeading').textContent  = 'Edit Appointment';
+    document.getElementById('pageSubtitle').textContent = 'Update the details for this appointment';
+    document.getElementById('fmBtnIcon').className      = 'fa-solid fa-check';
+    document.getElementById('fmBtnLabel').textContent   = 'Save Changes';
+    document.getElementById('editBanner').classList.add('show');
+
+    var r = DATA.find(function(x){ return x.id === editId; });
+    if (r) {
+      document.getElementById('custName').value    = r.name     || '';
+      document.getElementById('custPhone').value   = r.phone    || '';
+      document.getElementById('custEmail').value   = r.email    || '';
+      document.getElementById('apptDate').value    = r.date     || '';
+      document.getElementById('apptTime').value    = r.time     || '';
+      document.getElementById('apptNotes').value   = r.notes    || '';
+      document.getElementById('apptAmt').value     = r.amt      || '';
+
+      /* Select fields */
+      var fields = ['apptService','apptDuration','apptBranch','apptStaff','apptStatus'];
+      var vals   = [r.service, r.dur, r.branch, r.staff, r.status];
+      fields.forEach(function(id, i) {
+        var el = document.getElementById(id);
+        if (vals[i]) el.value = vals[i];
+      });
+      updateStatusPreview();
+    }
+  }
+
+  /* ── Submit ── */
+  function submitForm() {
+    var name     = document.getElementById('custName').value.trim();
+    var phone    = document.getElementById('custPhone').value.trim();
+    var email    = document.getElementById('custEmail').value.trim();
+    var service  = document.getElementById('apptService').value;
+    var date     = document.getElementById('apptDate').value;
+    var time     = document.getElementById('apptTime').value;
+    var dur      = document.getElementById('apptDuration').value;
+    var branch   = document.getElementById('apptBranch').value;
+    var staff    = document.getElementById('apptStaff').value;
+    var amt      = document.getElementById('apptAmt').value.trim();
+    var status   = document.getElementById('apptStatus').value;
+    var notes    = document.getElementById('apptNotes').value.trim();
+
+    if (!name)    { showErr('Please enter customer name');   return; }
+    if (!phone)   { showErr('Please enter phone number');    return; }
+    if (!service) { showErr('Please select a service');      return; }
+    if (!date)    { showErr('Please select a date');         return; }
+    if (!time)    { showErr('Please select a time');         return; }
+    if (!staff)   { showErr('Please assign a staff member'); return; }
+    if (!amt)     { showErr('Please enter the amount');      return; }
+
+    if (isEdit) {
+      var rec = DATA.find(function(x){ return x.id === editId; });
+      if (rec) {
+        rec.name    = name;
+        rec.phone   = phone;
+        rec.email   = email;
+        rec.service = service;
+        rec.date    = date;
+        rec.time    = time;
+        rec.dur     = dur || '60 min';
+        rec.branch  = branch;
+        rec.staff   = staff;
+        rec.amt     = parseInt(amt) || 0;
+        rec.status  = status;
+        rec.notes   = notes;
+      }
+    } else {
+      var nid = DATA.length
+        ? Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1 : 1;
+      DATA.push({
+        id:      nid,
+        name:    name,
+        phone:   phone,
+        email:   email,
+        service: service,
+        date:    date,
+        time:    time,
+        dur:     dur || '60 min',
+        branch:  branch,
+        staff:   staff,
+        amt:     parseInt(amt) || 0,
+        status:  status,
+        notes:   notes
+      });
+    }
+
+    sessionStorage.setItem('kc_appts_data', JSON.stringify(DATA));
+    sessionStorage.setItem('kc_appts_toast', JSON.stringify({
+      msg:  '"' + name + '" appointment ' + (isEdit ? 'updated successfully!' : 'booked successfully!'),
+      type: 'success'
+    }));
+    window.location.href = '../appointments.html';
+  }
+
+  function showErr(msg) {
+    try { KcozmAdmin.showToast(msg, 'error'); } catch(e) { alert(msg); }
+  }
+</script>
+</body>
+</html>

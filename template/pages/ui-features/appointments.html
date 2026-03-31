@@ -67,8 +67,8 @@
     .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
     .kc-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
-    .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--gold-glow);transition:transform var(--t),box-shadow var(--t);white-space:nowrap}
-    .kc-btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
+    .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--gold-glow);transition:transform var(--t),box-shadow var(--t);white-space:nowrap;text-decoration:none}
+    .kc-btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40);color:#fff}
     .kc-btn-out{padding:9px 18px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--t);white-space:nowrap}
     .kc-btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
 
@@ -79,7 +79,7 @@
     .kc-search{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;transition:all var(--t)}
     .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
     .kc-search::placeholder{color:var(--ink-3)}
-    .kc-filter-tabs{display:flex;gap:4px}
+    .kc-filter-tabs{display:flex;gap:4px;flex-wrap:wrap}
     .kc-ftab{padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);font-size:12.5px;font-weight:600;color:var(--ink-3);cursor:pointer;background:var(--surface);transition:all var(--t);white-space:nowrap}
     .kc-ftab.active,.kc-ftab:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
     .kc-date-input{padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-2);background:var(--surface);outline:none;cursor:pointer;transition:border-color var(--t)}
@@ -150,6 +150,25 @@
     .kc-cal-appt.confirmed{background:#e8f5e9;border-left-color:#4caf50;color:#2e7d32}
     .kc-cal-more{font-size:10px;color:var(--ink-3);margin-top:2px}
 
+    /* Confirm modal */
+    .kc-confirm-ov{display:none;position:fixed;inset:0;background:rgba(26,18,8,.50);z-index:2000;backdrop-filter:blur(4px);align-items:center;justify-content:center}
+    .kc-confirm-ov.show{display:flex}
+    .kc-confirm-modal{background:var(--surface);border-radius:var(--r-lg);width:min(380px,95vw);padding:38px 34px 28px;text-align:center;box-shadow:0 28px 70px rgba(26,18,8,.24);animation:popIn .22s ease both}
+    .kc-conf-ring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+    .kc-conf-ring.green{background:#e8f5e9}
+    .kc-conf-ring.green i{color:#2e7d32;font-size:26px}
+    .kc-conf-ring.red{background:var(--pk-lt)}
+    .kc-conf-ring.red i{color:var(--pk-dk);font-size:26px}
+    .kc-confirm-modal h5{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:8px}
+    .kc-confirm-modal p{font-size:13.5px;color:var(--ink-3);margin-bottom:24px;line-height:1.6}
+    .kc-conf-row{display:flex;gap:10px}
+    .kc-conf-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:background var(--t)}
+    .kc-conf-cancel:hover{background:var(--surface-2)}
+    .kc-conf-ok{flex:1;padding:11px;border:none;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;transition:opacity var(--t),transform var(--t)}
+    .kc-conf-ok:hover{opacity:.88;transform:translateY(-1px)}
+    .kc-conf-ok.green{background:linear-gradient(135deg,#4caf50,#2e7d32)}
+    .kc-conf-ok.red  {background:linear-gradient(135deg,var(--pk),var(--pk-dk))}
+
     /* Pagination */
     .kc-pag{padding:16px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .kc-pag-info{font-size:13px;color:var(--ink-3)}
@@ -157,27 +176,9 @@
     .kc-pag-btn{min-width:34px;height:34px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all var(--t)}
     .kc-pag-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
     .kc-pag-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border-color:transparent}
-
-    /* Booking modal */
-    .kc-modal-ov{display:none;position:fixed;inset:0;background:rgba(26,18,8,.55);z-index:2000;backdrop-filter:blur(3px);align-items:center;justify-content:center}
-    .kc-modal-ov.show{display:flex}
-    .kc-modal{background:var(--surface);border-radius:var(--r-lg);width:min(520px,95vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(26,18,8,.22);animation:popIn .22s ease both}
-    .kc-modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-    .kc-modal-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:800;color:var(--ink)}
-    .kc-modal-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
-    .kc-modal-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
-    .kc-modal-body{padding:22px 24px;display:flex;flex-direction:column;gap:16px}
-    .kc-field{display:flex;flex-direction:column;gap:5px}
-    .kc-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
-    .kc-inp{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;transition:all var(--t)}
-    .kc-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
-    .kc-inp::placeholder{color:var(--ink-3)}
-    .kc-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .kc-modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
   </style>
 </head>
 <body>
-
   <div class="main-panel">
     <div class="kc-page-content">
 
@@ -192,25 +193,25 @@
         <div class="kc-stat" style="animation-delay:.0s">
           <div class="kc-stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
           <div class="kc-stat-label">Today's Appointments</div>
-          <div class="kc-stat-val">12</div>
+          <div class="kc-stat-val" id="statToday">0</div>
           <div class="kc-stat-sub"><span class="up"><i class="fa-solid fa-arrow-up"></i> 3</span>&nbsp;vs yesterday</div>
         </div>
         <div class="kc-stat" style="animation-delay:.07s">
           <div class="kc-stat-icon"><i class="fa-solid fa-circle-check"></i></div>
           <div class="kc-stat-label">Completed This Week</div>
-          <div class="kc-stat-val">47</div>
+          <div class="kc-stat-val" id="statCompleted">0</div>
           <div class="kc-stat-sub"><span class="up"><i class="fa-solid fa-arrow-up"></i> 8%</span>&nbsp;completion rate</div>
         </div>
         <div class="kc-stat" style="animation-delay:.14s">
           <div class="kc-stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
           <div class="kc-stat-label">Pending Confirmation</div>
-          <div class="kc-stat-val">5</div>
+          <div class="kc-stat-val" id="statPending">0</div>
           <div class="kc-stat-sub" style="color:var(--pk-dk)"><i class="fa-solid fa-circle-exclamation"></i>&nbsp;Needs action</div>
         </div>
         <div class="kc-stat" style="animation-delay:.21s">
           <div class="kc-stat-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
           <div class="kc-stat-label">Revenue This Week</div>
-          <div class="kc-stat-val">₹84K</div>
+          <div class="kc-stat-val">&#8377;84K</div>
           <div class="kc-stat-sub"><span class="up"><i class="fa-solid fa-arrow-up"></i> 8.4%</span>&nbsp;vs last week</div>
         </div>
       </div>
@@ -225,26 +226,29 @@
           <div class="kc-head-right">
             <div class="kc-view-toggle">
               <button class="kc-view-btn active" id="listBtn" onclick="setView('list')"><i class="fa-solid fa-list"></i> List</button>
-              <button class="kc-view-btn" id="calBtn"  onclick="setView('cal')"><i class="fa-solid fa-calendar"></i> Calendar</button>
+              <button class="kc-view-btn"         id="calBtn"  onclick="setView('cal')"><i class="fa-solid fa-calendar"></i> Calendar</button>
             </div>
             <button class="kc-btn-out"><i class="fa-solid fa-file-export"></i> Export</button>
-            <button class="kc-btn-gold" onclick="openModal()"><i class="fa-solid fa-plus"></i> New Booking</button>
+            <!-- Navigate to form — same pattern as e_shop -->
+            <a href="forms/appointment_form.html" class="kc-btn-gold">
+              <i class="fa-solid fa-plus"></i> New Booking
+            </a>
           </div>
         </div>
 
         <div class="kc-toolbar">
           <div class="kc-search-wrap">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" class="kc-search" placeholder="Search appointments…">
+            <input type="text" class="kc-search" id="searchInput" placeholder="Search appointments…" oninput="handleSearch(this.value)">
           </div>
-          <div class="kc-filter-tabs">
-            <button class="kc-ftab active">All</button>
-            <button class="kc-ftab">Confirmed</button>
-            <button class="kc-ftab">Pending</button>
-            <button class="kc-ftab">Completed</button>
-            <button class="kc-ftab">Cancelled</button>
+          <div class="kc-filter-tabs" id="filterTabs">
+            <button class="kc-ftab active" data-filter="all">All</button>
+            <button class="kc-ftab" data-filter="confirmed">Confirmed</button>
+            <button class="kc-ftab" data-filter="pending">Pending</button>
+            <button class="kc-ftab" data-filter="completed">Completed</button>
+            <button class="kc-ftab" data-filter="cancelled">Cancelled</button>
           </div>
-          <input type="date" class="kc-date-input" value="2026-03-14">
+          <input type="date" class="kc-date-input" id="dateFilter" value="2026-03-14" onchange="render()">
         </div>
 
         <!-- List View -->
@@ -267,15 +271,8 @@
             </table>
           </div>
           <div class="kc-pag">
-            <div class="kc-pag-info">Showing 1–10 of 47</div>
-            <div class="kc-pag-btns">
-              <button class="kc-pag-btn">‹</button>
-              <button class="kc-pag-btn active">1</button>
-              <button class="kc-pag-btn">2</button>
-              <button class="kc-pag-btn">3</button>
-              <button class="kc-pag-btn">4</button>
-              <button class="kc-pag-btn">›</button>
-            </div>
+            <div class="kc-pag-info" id="pagInfo">Showing 0 appointments</div>
+            <div class="kc-pag-btns" id="pagBtns"></div>
           </div>
         </div>
 
@@ -292,81 +289,18 @@
         </div>
 
       </div><!-- /kc-card -->
-    </div><!-- /kc-page-content -->
-  </div><!-- /main-panel -->
+    </div>
+  </div>
 
-  <!-- New Booking Modal -->
-  <div class="kc-modal-ov" id="modalOv" onclick="if(event.target===this)closeModal()">
-    <div class="kc-modal">
-      <div class="kc-modal-head">
-        <div class="kc-modal-title">New Appointment</div>
-        <button class="kc-modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="kc-modal-body">
-        <div class="kc-field">
-          <label class="kc-lbl">Customer Name</label>
-          <input class="kc-inp" type="text" placeholder="Search or enter customer name…">
-        </div>
-        <div class="kc-field">
-          <label class="kc-lbl">Service</label>
-          <select class="kc-inp">
-            <option value="">Select service…</option>
-            <option>Bridal Hair &amp; Makeup</option>
-            <option>Hair Colour + Highlights</option>
-            <option>Facial &amp; Cleanup</option>
-            <option>Keratin Treatment</option>
-            <option>Nail Art</option>
-            <option>Waxing</option>
-            <option>Threading</option>
-          </select>
-        </div>
-        <div class="kc-row2">
-          <div class="kc-field">
-            <label class="kc-lbl">Date</label>
-            <input class="kc-inp" type="date" value="2026-03-14">
-          </div>
-          <div class="kc-field">
-            <label class="kc-lbl">Time</label>
-            <input class="kc-inp" type="time" value="10:00">
-          </div>
-        </div>
-        <div class="kc-field">
-          <label class="kc-lbl">Assigned Staff</label>
-          <select class="kc-inp">
-            <option value="">Select staff member…</option>
-            <option>Aisha Khan</option>
-            <option>Preethi Nair</option>
-            <option>Roshni Gupta</option>
-            <option>Sonal Mehta</option>
-          </select>
-        </div>
-        <div class="kc-row2">
-          <div class="kc-field">
-            <label class="kc-lbl">Duration</label>
-            <select class="kc-inp">
-              <option>30 min</option><option>45 min</option>
-              <option selected>60 min</option><option>90 min</option><option>120 min</option>
-            </select>
-          </div>
-          <div class="kc-field">
-            <label class="kc-lbl">Branch</label>
-            <select class="kc-inp">
-              <option>Pune West</option>
-              <option>Mumbai Andheri</option>
-              <option>Nagpur Central</option>
-            </select>
-          </div>
-        </div>
-        <div class="kc-field">
-          <label class="kc-lbl">Notes (optional)</label>
-          <textarea class="kc-inp" rows="2" placeholder="Special requests or notes…" style="resize:vertical"></textarea>
-        </div>
-      </div>
-      <div class="kc-modal-foot">
-        <button class="kc-btn-out" onclick="closeModal()">Cancel</button>
-        <button class="kc-btn-gold" onclick="closeModal();KcozmAdmin.showToast('Appointment booked successfully!','success')">
-          <i class="fa-solid fa-calendar-plus"></i> Book Appointment
-        </button>
+  <!-- Confirm / Cancel Confirmation Modal -->
+  <div class="kc-confirm-ov" id="confirmOv" onclick="if(event.target===this)closeConfirm()">
+    <div class="kc-confirm-modal">
+      <div class="kc-conf-ring" id="confRing"><i id="confIcon"></i></div>
+      <h5 id="confTitle">Confirm Action?</h5>
+      <p id="confMsg">Are you sure?</p>
+      <div class="kc-conf-row">
+        <button class="kc-conf-cancel" onclick="closeConfirm()">Cancel</button>
+        <button class="kc-conf-ok" id="confOkBtn" onclick="execConfirm()">Confirm</button>
       </div>
     </div>
   </div>
@@ -375,70 +309,214 @@
   <script>
     KcozmAdmin.init({ activePage:'appointments', pageTitle:'Appointments', depth:'../../' });
 
-    const AVS=['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5','#795548'];
-    const APPTS=[
-      {id:1, name:'Priya Sharma',  email:'priya.s@gmail.com',  service:'Bridal Hair & Makeup',    date:'Sat, 14 Mar',time:'10:00 AM',dur:'120 min',staff:'Aisha Khan',   status:'confirmed',amt:'₹8,500'},
-      {id:2, name:'Ananya Singh',  email:'ananya.s@gmail.com', service:'Hair Colour + Highlights', date:'Sat, 14 Mar',time:'11:30 AM',dur:'90 min', staff:'Roshni Gupta', status:'confirmed',amt:'₹4,200'},
-      {id:3, name:'Meera Kapoor',  email:'meera.k@gmail.com',  service:'Keratin Treatment',        date:'Sat, 14 Mar',time:'01:00 PM',dur:'90 min', staff:'Preethi Nair', status:'pending',  amt:'₹6,500'},
-      {id:4, name:'Ritika Joshi',  email:'ritika.j@yahoo.com', service:'Facial & Cleanup',         date:'Sat, 14 Mar',time:'02:30 PM',dur:'60 min', staff:'Sonal Mehta',  status:'confirmed',amt:'₹2,100'},
-      {id:5, name:'Kavya Nair',    email:'kavya.n@gmail.com',  service:'Nail Art',                 date:'Sat, 14 Mar',time:'03:00 PM',dur:'45 min', staff:'Aisha Khan',   status:'pending',  amt:'₹1,800'},
-      {id:6, name:'Deepa Menon',   email:'deepa.m@gmail.com',  service:'Waxing',                   date:'Sun, 15 Mar',time:'10:00 AM',dur:'45 min', staff:'Sonal Mehta',  status:'confirmed',amt:'₹900'},
-      {id:7, name:'Sunita Verma',  email:'sunita.v@gmail.com', service:'Bridal Package',           date:'Sun, 15 Mar',time:'11:00 AM',dur:'180 min',staff:'Preethi Nair', status:'confirmed',amt:'₹18,000'},
-      {id:8, name:'Pallavi Desai', email:'pallavi.d@gmail.com',service:'Threading',                date:'Sun, 15 Mar',time:'02:00 PM',dur:'30 min', staff:'Roshni Gupta', status:'completed',amt:'₹350'},
-      {id:9, name:'Nandita Rao',   email:'nandita.r@gmail.com',service:'Facial & Cleanup',         date:'Mon, 16 Mar',time:'10:30 AM',dur:'60 min', staff:'Sonal Mehta',  status:'confirmed',amt:'₹2,100'},
-      {id:10,name:'Shalini Iyer',  email:'shalini.i@gmail.com',service:'Hair Spa',                 date:'Mon, 16 Mar',time:'12:00 PM',dur:'60 min', staff:'Aisha Khan',   status:'cancelled',amt:'₹2,800'},
+    /* ── Seed data ── */
+    var SEED = [
+      {id:1,  name:'Priya Sharma',   phone:'9876543210', email:'priya.s@gmail.com',   service:'Bridal Hair & Makeup',    date:'2026-03-14', time:'10:00', dur:'120 min', staff:'Aisha Khan',   branch:'Pune West',      status:'confirmed', amt:8500,  notes:''},
+      {id:2,  name:'Ananya Singh',   phone:'9812345678', email:'ananya.s@gmail.com',  service:'Hair Colour + Highlights', date:'2026-03-14', time:'11:30', dur:'90 min',  staff:'Roshni Gupta', branch:'Pune West',      status:'confirmed', amt:4200,  notes:''},
+      {id:3,  name:'Meera Kapoor',   phone:'9823456789', email:'meera.k@gmail.com',   service:'Keratin Treatment',        date:'2026-03-14', time:'13:00', dur:'90 min',  staff:'Preethi Nair', branch:'Mumbai Andheri', status:'pending',   amt:6500,  notes:'Sensitive scalp'},
+      {id:4,  name:'Ritika Joshi',   phone:'9834567890', email:'ritika.j@yahoo.com',  service:'Facial & Cleanup',         date:'2026-03-14', time:'14:30', dur:'60 min',  staff:'Sonal Mehta',  branch:'Pune West',      status:'confirmed', amt:2100,  notes:''},
+      {id:5,  name:'Kavya Nair',     phone:'9845678901', email:'kavya.n@gmail.com',   service:'Nail Art',                 date:'2026-03-14', time:'15:00', dur:'45 min',  staff:'Aisha Khan',   branch:'Nagpur Central', status:'pending',   amt:1800,  notes:'French tip'},
+      {id:6,  name:'Deepa Menon',    phone:'9856789012', email:'deepa.m@gmail.com',   service:'Waxing',                   date:'2026-03-15', time:'10:00', dur:'45 min',  staff:'Sonal Mehta',  branch:'Pune West',      status:'confirmed', amt:900,   notes:''},
+      {id:7,  name:'Sunita Verma',   phone:'9867890123', email:'sunita.v@gmail.com',  service:'Bridal Package',           date:'2026-03-15', time:'11:00', dur:'180 min', staff:'Preethi Nair', branch:'Mumbai Andheri', status:'confirmed', amt:18000, notes:'Trial run first'},
+      {id:8,  name:'Pallavi Desai',  phone:'9878901234', email:'pallavi.d@gmail.com', service:'Threading',                date:'2026-03-15', time:'14:00', dur:'30 min',  staff:'Roshni Gupta', branch:'Pune West',      status:'completed', amt:350,   notes:''},
+      {id:9,  name:'Nandita Rao',    phone:'9889012345', email:'nandita.r@gmail.com', service:'Facial & Cleanup',         date:'2026-03-16', time:'10:30', dur:'60 min',  staff:'Sonal Mehta',  branch:'Nagpur Central', status:'confirmed', amt:2100,  notes:''},
+      {id:10, name:'Shalini Iyer',   phone:'9890123456', email:'shalini.i@gmail.com', service:'Hair Spa',                 date:'2026-03-16', time:'12:00', dur:'60 min',  staff:'Aisha Khan',   branch:'Pune West',      status:'cancelled', amt:2800,  notes:''},
     ];
 
-    function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
-    function statusHtml(s){
-      const m={confirmed:'<span class="kc-status confirmed"><span class="kc-status-dot"></span>Confirmed</span>',pending:'<span class="kc-status pending"><span class="kc-status-dot"></span>Pending</span>',completed:'<span class="kc-status completed"><span class="kc-status-dot"></span>Completed</span>',cancelled:'<span class="kc-status cancelled"><span class="kc-status-dot"></span>Cancelled</span>'};
-      return m[s]||'';
+    var stored = sessionStorage.getItem('kc_appts_data');
+    var DATA   = stored ? JSON.parse(stored) : SEED;
+    sessionStorage.setItem('kc_appts_data', JSON.stringify(DATA));
+
+    /* ── Toast on return from form ── */
+    var toastRaw = sessionStorage.getItem('kc_appts_toast');
+    if (toastRaw) {
+      try {
+        var t = JSON.parse(toastRaw);
+        sessionStorage.removeItem('kc_appts_toast');
+        setTimeout(function(){ KcozmAdmin.showToast(t.msg, t.type); }, 300);
+      } catch(e){}
     }
 
-    const tb=document.getElementById('apptTbody');
-    APPTS.forEach((a,i)=>{
-      const av=AVS[i%AVS.length];
-      tb.innerHTML+=`<tr style="animation:fadeUp .3s ${i*.04}s ease both">
-        <td><span style="font-size:12px;color:var(--ink-3);font-weight:700">${String(a.id).padStart(2,'0')}</span></td>
-        <td><div class="kc-cust"><div class="kc-av" style="background:${av}">${initials(a.name)}</div><div><div class="kc-cn">${a.name}</div><div class="kc-ce">${a.email}</div></div></div></td>
-        <td><span class="kc-svc-pill"><i class="fa-solid fa-scissors" style="font-size:10px;color:var(--gold)"></i>${a.service}</span></td>
-        <td><div class="kc-time-cell"><div class="kc-time-main">${a.time}</div><div class="kc-time-sub">${a.date} · ${a.dur}</div></div></td>
-        <td style="font-size:13px;color:var(--ink-2)">${a.staff}</td>
-        <td>${statusHtml(a.status)}</td>
-        <td><span class="kc-amt">${a.amt}</span></td>
-        <td><div class="kc-row-acts">
-          <button class="kc-row-btn ok" title="Confirm"><i class="fa-solid fa-check"></i></button>
-          <button class="kc-row-btn" title="Edit"><i class="fa-solid fa-pen"></i></button>
-          <button class="kc-row-btn danger" title="Cancel"><i class="fa-solid fa-xmark"></i></button>
-        </div></td>
-      </tr>`;
+    var AVS = ['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5','#795548'];
+    var activeFilter = 'all';
+    var searchQ = '';
+
+    /* ── Confirm/Cancel modal state ── */
+    var pendingAction = null, pendingId = null;
+
+    function initials(n) { return n.split(' ').map(function(w){ return w[0]; }).join('').substring(0,2).toUpperCase(); }
+
+    function fmtDate(iso) {
+      if (!iso) return '—';
+      var d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-IN', {weekday:'short', day:'numeric', month:'short'});
+    }
+    function fmtTime(t) {
+      if (!t) return '—';
+      var parts = t.split(':');
+      var h = parseInt(parts[0]), m = parts[1];
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      return h + ':' + m + ' ' + ampm;
+    }
+
+    function statusHtml(s) {
+      var map = {
+        confirmed: '<span class="kc-status confirmed"><span class="kc-status-dot"></span>Confirmed</span>',
+        pending:   '<span class="kc-status pending"><span class="kc-status-dot"></span>Pending</span>',
+        completed: '<span class="kc-status completed"><span class="kc-status-dot"></span>Completed</span>',
+        cancelled: '<span class="kc-status cancelled"><span class="kc-status-dot"></span>Cancelled</span>'
+      };
+      return map[s] || '';
+    }
+
+    /* ── Update stats ── */
+    function updateStats() {
+      var today = DATA.filter(function(a){ return a.date === '2026-03-14'; }).length;
+      var pend  = DATA.filter(function(a){ return a.status === 'pending'; }).length;
+      var comp  = DATA.filter(function(a){ return a.status === 'completed'; }).length;
+      document.getElementById('statToday').textContent     = today;
+      document.getElementById('statPending').textContent   = pend;
+      document.getElementById('statCompleted').textContent = comp;
+    }
+
+    /* ── Render table ── */
+    function render() {
+      var filtered = DATA.filter(function(a) {
+        var matchFilter = activeFilter === 'all' || a.status === activeFilter;
+        var matchSearch = !searchQ
+          || a.name.toLowerCase().indexOf(searchQ) >= 0
+          || a.service.toLowerCase().indexOf(searchQ) >= 0
+          || a.staff.toLowerCase().indexOf(searchQ) >= 0;
+        return matchFilter && matchSearch;
+      });
+
+      var tb = document.getElementById('apptTbody');
+      tb.innerHTML = filtered.map(function(a, i) {
+        var av = AVS[i % AVS.length];
+        return '<tr style="animation:fadeUp .3s '+(i*.04)+'s ease both">'
+          +'<td><span style="font-size:12px;color:var(--ink-3);font-weight:700">'+String(a.id).padStart(2,'0')+'</span></td>'
+          +'<td><div class="kc-cust"><div class="kc-av" style="background:'+av+'">'+initials(a.name)+'</div>'
+            +'<div><div class="kc-cn">'+a.name+'</div><div class="kc-ce">'+a.email+'</div></div></div></td>'
+          +'<td><span class="kc-svc-pill"><i class="fa-solid fa-scissors" style="font-size:10px;color:var(--gold)"></i>'+a.service+'</span></td>'
+          +'<td><div class="kc-time-cell"><div class="kc-time-main">'+fmtTime(a.time)+'</div><div class="kc-time-sub">'+fmtDate(a.date)+' &middot; '+a.dur+'</div></div></td>'
+          +'<td style="font-size:13px;color:var(--ink-2)">'+a.staff+'</td>'
+          +'<td>'+statusHtml(a.status)+'</td>'
+          +'<td><span class="kc-amt">&#8377;'+Number(a.amt).toLocaleString('en-IN')+'</span></td>'
+          +'<td><div class="kc-row-acts">'
+            +'<button class="kc-row-btn ok"     title="Confirm" onclick="openConfirm('+a.id+',\'confirm\')"><i class="fa-solid fa-check"></i></button>'
+            +'<button class="kc-row-btn"         title="Edit"    onclick="editRow('+a.id+')"><i class="fa-solid fa-pen"></i></button>'
+            +'<button class="kc-row-btn danger"  title="Cancel"  onclick="openConfirm('+a.id+',\'cancel\')"><i class="fa-solid fa-xmark"></i></button>'
+          +'</div></td>'
+        +'</tr>';
+      }).join('');
+
+      document.getElementById('pagInfo').textContent = 'Showing '+filtered.length+' appointment'+(filtered.length!==1?'s':'');
+      updateStats();
+    }
+
+    /* ── Edit → navigate to form ── */
+    function editRow(id) {
+      window.location.href = 'forms/appointment_form.html?id=' + id;
+    }
+
+    /* ── Confirm / Cancel action modal ── */
+    function openConfirm(id, action) {
+      pendingId     = id;
+      pendingAction = action;
+      var a = DATA.find(function(x){ return x.id===id; });
+      var ring   = document.getElementById('confRing');
+      var icon   = document.getElementById('confIcon');
+      var okBtn  = document.getElementById('confOkBtn');
+      var title  = document.getElementById('confTitle');
+      var msg    = document.getElementById('confMsg');
+
+      if (action === 'confirm') {
+        ring.className  = 'kc-conf-ring green';
+        icon.className  = 'fa-solid fa-circle-check';
+        title.textContent = 'Confirm Appointment?';
+        msg.textContent = (a ? '"'+a.name+'" — '+a.service : 'This appointment')+' will be marked as Confirmed.';
+        okBtn.className = 'kc-conf-ok green';
+        okBtn.textContent = 'Yes, Confirm';
+      } else {
+        ring.className  = 'kc-conf-ring red';
+        icon.className  = 'fa-solid fa-xmark-circle';
+        title.textContent = 'Cancel Appointment?';
+        msg.textContent = (a ? '"'+a.name+'" — '+a.service : 'This appointment')+' will be marked as Cancelled.';
+        okBtn.className = 'kc-conf-ok red';
+        okBtn.textContent = 'Yes, Cancel';
+      }
+      document.getElementById('confirmOv').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeConfirm() {
+      document.getElementById('confirmOv').classList.remove('show');
+      document.body.style.overflow = '';
+      pendingId = null; pendingAction = null;
+    }
+    function execConfirm() {
+      if (pendingId === null) return;
+      var a = DATA.find(function(x){ return x.id===pendingId; });
+      if (a) {
+        a.status = (pendingAction === 'confirm') ? 'confirmed' : 'cancelled';
+        sessionStorage.setItem('kc_appts_data', JSON.stringify(DATA));
+        KcozmAdmin.showToast(
+          '"'+a.name+'" appointment '+a.status+'.',
+          pendingAction === 'confirm' ? 'success' : 'info'
+        );
+      }
+      closeConfirm(); render();
+    }
+
+    /* ── Search ── */
+    function handleSearch(q) { searchQ = q.toLowerCase().trim(); render(); }
+
+    /* ── Filter tabs ── */
+    document.getElementById('filterTabs').addEventListener('click', function(e) {
+      var btn = e.target.closest('.kc-ftab');
+      if (!btn) return;
+      document.querySelectorAll('.kc-ftab').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      render();
     });
 
-    function buildCal(){
-      const g=document.getElementById('calGrid'); g.innerHTML='';
-      ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d=>{g.innerHTML+=`<div class="kc-cal-day-hdr">${d}</div>`;});
-      const aByDay={14:[{t:'10:00 Priya',cls:'confirmed'},{t:'11:30 Ananya',cls:'confirmed'},{t:'01:00 Meera',cls:'pending'}],15:[{t:'10:00 Deepa',cls:'confirmed'},{t:'11:00 Sunita',cls:'confirmed'}],16:[{t:'10:30 Nandita',cls:'confirmed'},{t:'12:00 Shalini',cls:''}],18:[{t:'02:00 Kavya',cls:'pending'}],20:[{t:'09:00 Priya',cls:'confirmed'},{t:'11:00 Ritika',cls:'confirmed'},{t:'03:00 Meera',cls:'pending'}]};
-      for(let d=1;d<=31;d++){
-        const isToday=d===14, apts=aByDay[d]||[];
-        let h=`<div class="kc-cal-cell${isToday?' today':''}" onclick="setView('list')"><div class="kc-cal-num">${d}</div>`;
-        apts.slice(0,2).forEach(a=>{h+=`<div class="kc-cal-appt ${a.cls}">${a.t}</div>`;});
-        if(apts.length>2) h+=`<div class="kc-cal-more">+${apts.length-2} more</div>`;
-        g.innerHTML+=h+'</div>';
+    /* ── Calendar ── */
+    function buildCal() {
+      var g = document.getElementById('calGrid');
+      g.innerHTML = '';
+      ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(function(d) {
+        g.innerHTML += '<div class="kc-cal-day-hdr">'+d+'</div>';
+      });
+      var aByDay = {
+        14:[{t:'10:00 Priya',cls:'confirmed'},{t:'11:30 Ananya',cls:'confirmed'},{t:'13:00 Meera',cls:'pending'}],
+        15:[{t:'10:00 Deepa',cls:'confirmed'},{t:'11:00 Sunita',cls:'confirmed'}],
+        16:[{t:'10:30 Nandita',cls:'confirmed'},{t:'12:00 Shalini',cls:''}],
+        18:[{t:'14:00 Kavya',cls:'pending'}],
+        20:[{t:'09:00 Priya',cls:'confirmed'},{t:'11:00 Ritika',cls:'confirmed'},{t:'15:00 Meera',cls:'pending'}]
+      };
+      for (var d = 1; d <= 31; d++) {
+        var isToday = (d === 14), apts = aByDay[d] || [];
+        var h = '<div class="kc-cal-cell'+(isToday?' today':'')+'" onclick="setView(\'list\')">'
+              +'<div class="kc-cal-num">'+d+'</div>';
+        apts.slice(0,2).forEach(function(a){ h += '<div class="kc-cal-appt '+a.cls+'">'+a.t+'</div>'; });
+        if (apts.length > 2) h += '<div class="kc-cal-more">+' + (apts.length-2) + ' more</div>';
+        g.innerHTML += h + '</div>';
       }
     }
     buildCal();
 
-    function setView(v){
-      document.getElementById('listView').style.display=v==='list'?'block':'none';
-      document.getElementById('calView').style.display=v==='cal'?'block':'none';
-      document.getElementById('listBtn').classList.toggle('active',v==='list');
-      document.getElementById('calBtn').classList.toggle('active',v==='cal');
+    /* ── View toggle ── */
+    function setView(v) {
+      document.getElementById('listView').style.display = v==='list' ? 'block' : 'none';
+      document.getElementById('calView').style.display  = v==='cal'  ? 'block' : 'none';
+      document.getElementById('listBtn').classList.toggle('active', v==='list');
+      document.getElementById('calBtn').classList.toggle('active',  v==='cal');
     }
-    function openModal(){document.getElementById('modalOv').classList.add('show');document.body.style.overflow='hidden';}
-    function closeModal(){document.getElementById('modalOv').classList.remove('show');document.body.style.overflow='';}
-    document.querySelectorAll('.kc-ftab').forEach(btn=>{
-      btn.addEventListener('click',()=>{document.querySelectorAll('.kc-ftab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');});
-    });
+
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeConfirm(); });
+
+    render();
   </script>
 </body>
 </html>

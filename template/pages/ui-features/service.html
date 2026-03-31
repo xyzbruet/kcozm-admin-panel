@@ -32,6 +32,7 @@
     @keyframes slideIn {from{transform:translateX(100%);opacity:0}  to{transform:translateX(0);opacity:1}}
     @keyframes rowIn   {from{opacity:0;transform:translateX(-8px)}  to{opacity:1;transform:none}}
 
+    /* ── Breadcrumb ── */
     .kc-bc{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);margin-bottom:20px;animation:fadeDown .35s ease both}
     .kc-bc a{color:var(--gold-dk);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:opacity var(--t)}
     .kc-bc a:hover{opacity:.7}
@@ -99,8 +100,6 @@
     .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;white-space:nowrap;text-decoration:none}
     .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;box-shadow:0 3px 12px var(--gold-glow)}
     .btn-gold:hover{box-shadow:0 6px 20px rgba(200,160,64,.42);transform:translateY(-1px);color:#fff}
-    .btn-rose{background:linear-gradient(135deg,var(--rose),var(--rose-dk));color:#fff;box-shadow:0 3px 12px rgba(201,123,132,.25)}
-    .btn-rose:hover{box-shadow:0 6px 20px rgba(201,123,132,.38);transform:translateY(-1px);color:#fff}
     .btn-out{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
     .btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
 
@@ -122,45 +121,6 @@
     .tab-pane{display:none}
     .tab-pane.active{display:block}
 
-    /* ── Service Modal ── */
-    .svc-modal-ov{display:none;position:fixed;inset:0;background:rgba(24,18,12,.55);z-index:2000;backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}
-    .svc-modal-ov.show{display:flex}
-    .svc-modal{background:var(--surface);border-radius:20px;width:min(580px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 28px 70px rgba(24,18,12,.22);animation:popIn .22s ease both}
-    .svc-modal-head{padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-    .svc-modal-head-left{display:flex;align-items:center;gap:12px}
-    .svc-modal-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
-    .svc-modal-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)}
-    .svc-modal-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
-    .svc-modal-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
-    .svc-modal-close:hover{border-color:var(--rose);color:var(--rose-dk);background:var(--rose-lt)}
-    .svc-modal-body{padding:24px 26px;display:flex;flex-direction:column;gap:16px}
-    .svc-modal-foot{padding:16px 26px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px}
-    @media(max-width:720px){.form-grid{grid-template-columns:1fr}}
-    .fg{display:flex;flex-direction:column;gap:6px}
-    .fg.full{grid-column:1/-1}
-    .flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-3)}
-    .finp,.fsel{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:all var(--t);width:100%}
-    .finp:focus,.fsel:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
-    .finp::placeholder{color:var(--ink-4)}
-    .fsel{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-    .price-wrap{position:relative}
-    .price-wrap .px{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;color:var(--ink-3);pointer-events:none}
-    .price-wrap .finp{padding-left:26px}
-    .file-zone{border:2px dashed var(--border);border-radius:10px;padding:22px;text-align:center;cursor:pointer;transition:all var(--t);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100px;position:relative}
-    .file-zone:hover{border-color:var(--gold);background:var(--gold-lt)}
-    .file-zone input{display:none}
-    .file-zone .fz-icon{font-size:24px;color:var(--gold);margin-bottom:8px}
-    .file-zone p{font-size:12px;color:var(--ink-3)}
-    .chips-box{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;padding:10px 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);align-items:center;cursor:text}
-    .chip-tag{display:inline-flex;align-items:center;gap:6px;background:var(--gold-lt);color:var(--gold-dk);border:1px solid rgba(200,160,64,.35);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;animation:popIn .15s ease}
-    .chip-x{width:14px;height:14px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:8px;cursor:pointer;border:none;flex-shrink:0;transition:background var(--t)}
-    .chip-x:hover{background:var(--rose-dk)}
-    .chip-ph{font-size:12px;color:var(--ink-3)}
-    .svc-add-row{display:flex;gap:8px;margin-bottom:8px}
-    .svc-add-row .finp{flex:1}
-    .form-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
-
     /* ── Table ── */
     .tbl-wrap{overflow-x:auto}
     table.tbl{width:100%;border-collapse:collapse}
@@ -172,7 +132,7 @@
     .tbl td:last-child{padding-right:28px;text-align:right}
     .tbl tr:last-child td{border-bottom:none}
     .tbl tbody tr{animation:rowIn .3s ease both}
-    .tbl tbody tr:hover td{background:#fdf8f0;cursor:pointer}
+    .tbl tbody tr:hover td{background:#fdf8f0}
     .serial{width:32px;height:32px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink-3)}
     .thumb{width:56px;height:46px;border-radius:10px;object-fit:cover;border:1px solid var(--border);display:block}
     .thumb-ph{width:56px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--gold-lt),rgba(201,123,132,.12));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold-dk);font-size:16px}
@@ -185,15 +145,18 @@
     .badge.green {background:#e8f5e9;color:#2e7d32}
     .price-val{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--gold-dk)}
     .duration{font-size:12px;color:var(--ink-3);margin-top:2px;display:flex;align-items:center;gap:4px}
+
     /* Toggle switch */
-    .sw{position:relative;width:38px;height:22px}
+    .sw{position:relative;width:38px;height:22px;display:inline-block}
     .sw input{opacity:0;width:0;height:0;position:absolute}
-    .sw-track{display:block;width:38px;height:22px;border-radius:22px;background:var(--border);cursor:pointer;transition:background var(--t)}
+    .sw-track{display:block;width:38px;height:22px;border-radius:22px;background:var(--border);cursor:pointer;transition:background var(--t);position:relative}
     .sw input:checked+.sw-track{background:var(--gold)}
     .sw-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform var(--t);box-shadow:0 1px 4px rgba(0,0,0,.2)}
     .sw input:checked+.sw-track::after{transform:translateX(16px)}
+
+    /* Row actions */
     .row-acts{display:flex;align-items:center;gap:6px;justify-content:flex-end}
-    .act{width:33px;height:33px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12.5px;color:var(--ink-3);transition:all var(--t)}
+    .act{width:33px;height:33px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12.5px;color:var(--ink-3);transition:all var(--t);text-decoration:none}
     .act:hover{transform:scale(1.08)}
     .act.view:hover{background:#e3f2fd;border-color:#90caf9;color:#1565c0}
     .act.edit:hover{background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
@@ -226,6 +189,7 @@
     .drawer-close:hover{border-color:var(--rose);color:var(--rose-dk);background:var(--rose-lt)}
     .drawer-body{flex:1;overflow-y:auto;padding:24px}
     .dw-banner{width:100%;height:150px;border-radius:14px;background:linear-gradient(135deg,var(--gold-lt),rgba(201,123,132,.15));display:flex;align-items:center;justify-content:center;font-size:56px;color:var(--gold-dk);margin-bottom:22px;border:1px solid var(--border);overflow:hidden}
+    .dw-banner img{width:100%;height:100%;object-fit:cover}
     .dw-row{display:flex;gap:0;padding:14px 0;border-bottom:1px solid var(--border)}
     .dw-row:last-child{border-bottom:none}
     .dw-lbl{width:130px;flex-shrink:0;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-3);padding-top:3px;display:flex;align-items:flex-start;gap:6px}
@@ -273,7 +237,7 @@
               <span class="dot"></span>
               <span>Level 3 of 3</span>
               <span class="dot"></span>
-              <span id="heroCount">18 services</span>
+              <span id="heroCount">0 services</span>
             </div>
           </div>
         </div>
@@ -298,7 +262,7 @@
           <div class="ln-desc">Facials, Hair Styling, Beard…</div>
         </a>
         <a class="ln-item active" href="service.html">
-          <span class="ln-count">18</span>
+          <span class="ln-count" id="lnCount">0</span>
           <div class="ln-step"><i class="fa-solid fa-scissors"></i> Level 3 — You are here</div>
           <div class="ln-name">Services</div>
           <div class="ln-desc">Gold Facial, Keratin, Bridal Makeup…</div>
@@ -348,9 +312,10 @@
               <i class="fa-solid fa-magnifying-glass"></i>
               <input type="text" class="search-input" id="svcSearch" placeholder="Search services…" oninput="handleSearch(this.value)">
             </div>
-            <button class="btn btn-gold" id="addToggle" onclick="openSvcModal()">
+            <!-- Navigate to form page — same pattern as e_shop -->
+            <a href="forms/service_form.html" class="btn btn-gold">
               <i class="fa-solid fa-plus"></i> Add Service
-            </button>
+            </a>
           </div>
         </div>
 
@@ -368,105 +333,49 @@
           <div class="tbl-wrap">
             <table class="tbl">
               <thead><tr>
-                <th style="width:52px">#</th><th style="width:72px">Banner</th>
-                <th>Service Name</th><th>Category</th><th>Sub-Category</th>
-                <th>Price</th><th>Duration</th><th>Status</th><th>Actions</th>
+                <th style="width:52px">#</th>
+                <th style="width:72px">Banner</th>
+                <th>Service Name</th>
+                <th>Category</th>
+                <th>Sub-Category</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr></thead>
               <tbody id="tbody-all"></tbody>
             </table>
           </div>
           <div class="empty-state" id="empty-all">
             <div class="empty-ring"><i class="fa-solid fa-scissors"></i></div>
-            <h6>No services yet</h6><p>Click <strong>Add Service</strong> to create your first.</p>
+            <h6>No services yet</h6>
+            <p>Click <strong>Add Service</strong> to create your first.</p>
           </div>
         </div>
 
-        <div class="tab-pane" id="pane-ladies"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-ladies"></tbody></table></div><div class="empty-state" id="empty-ladies"><div class="empty-ring"><i class="fa-solid fa-venus"></i></div><h6>No Ladies services</h6><p>Add ladies services to see them here.</p></div></div>
-        <div class="tab-pane" id="pane-gents"> <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-gents"></tbody> </table></div><div class="empty-state" id="empty-gents"> <div class="empty-ring"><i class="fa-solid fa-mars"></i></div><h6>No Gents services</h6><p>Add gents services to see them here.</p></div></div>
-        <div class="tab-pane" id="pane-bridal"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-bridal"></tbody></table></div><div class="empty-state" id="empty-bridal"><div class="empty-ring"><i class="fa-solid fa-heart"></i></div><h6>No Bridal services</h6><p>Add bridal services to see them here.</p></div></div>
-        <div class="tab-pane" id="pane-kids">  <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-kids"></tbody>  </table></div><div class="empty-state" id="empty-kids">  <div class="empty-ring"><i class="fa-solid fa-child"></i></div><h6>No Kids services</h6><p>Add kids services to see them here.</p></div></div>
+        <div class="tab-pane" id="pane-ladies">
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-ladies"></tbody></table></div>
+          <div class="empty-state" id="empty-ladies"><div class="empty-ring"><i class="fa-solid fa-venus"></i></div><h6>No Ladies services</h6><p>Add ladies services to see them here.</p></div>
+        </div>
+        <div class="tab-pane" id="pane-gents">
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-gents"></tbody></table></div>
+          <div class="empty-state" id="empty-gents"><div class="empty-ring"><i class="fa-solid fa-mars"></i></div><h6>No Gents services</h6><p>Add gents services to see them here.</p></div>
+        </div>
+        <div class="tab-pane" id="pane-bridal">
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-bridal"></tbody></table></div>
+          <div class="empty-state" id="empty-bridal"><div class="empty-ring"><i class="fa-solid fa-heart"></i></div><h6>No Bridal services</h6><p>Add bridal services to see them here.</p></div>
+        </div>
+        <div class="tab-pane" id="pane-kids">
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Banner</th><th>Service Name</th><th>Sub-Category</th><th>Price</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-kids"></tbody></table></div>
+          <div class="empty-state" id="empty-kids"><div class="empty-ring"><i class="fa-solid fa-child"></i></div><h6>No Kids services</h6><p>Add kids services to see them here.</p></div>
+        </div>
 
         <div class="pag">
           <div class="pag-info" id="pagInfo">Showing all services</div>
-          <div class="pag-btns">
-            <button class="pag-btn">‹</button>
-            <button class="pag-btn active">1</button>
-            <button class="pag-btn">2</button>
-            <button class="pag-btn">3</button>
-            <button class="pag-btn">›</button>
-          </div>
+          <div class="pag-btns" id="pagBtns"></div>
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <!-- Add Service Modal -->
-  <div class="svc-modal-ov" id="svcModalOv" onclick="if(event.target===this)closeSvcModal()">
-    <div class="svc-modal">
-      <div class="svc-modal-head">
-        <div class="svc-modal-head-left">
-          <div class="svc-modal-icon"><i class="fa-solid fa-scissors"></i></div>
-          <div>
-            <div class="svc-modal-title">Add New Service
-              <small>Fill in the details to create a service</small>
-            </div>
-          </div>
-        </div>
-        <button class="svc-modal-close" onclick="closeSvcModal()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="svc-modal-body">
-        <div class="form-grid">
-          <div class="fg">
-            <label class="flbl">Banner Image</label>
-            <div class="file-zone" id="fileZone" onclick="document.getElementById('bannerFile').click()">
-              <input type="file" id="bannerFile" accept="image/*">
-              <div class="fz-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-              <p>Click to upload — PNG, JPG up to 5MB</p>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:14px">
-            <div class="fg">
-              <label class="flbl">Category <span style="color:var(--rose-dk)">*</span></label>
-              <select class="fsel" id="svcCat">
-                <option value="">Select Category</option>
-                <option value="ladies">Ladies</option>
-                <option value="gents">Gents</option>
-                <option value="bridal">Bridal</option>
-                <option value="kids">Kids</option>
-              </select>
-            </div>
-            <div class="fg">
-              <label class="flbl">Sub-Category <span style="color:var(--rose-dk)">*</span></label>
-              <select class="fsel" id="svcSub"><option value="">Select Sub-Category</option></select>
-            </div>
-          </div>
-          <div class="fg">
-            <label class="flbl">Price (₹) <span style="color:var(--rose-dk)">*</span></label>
-            <div class="price-wrap"><span class="px">₹</span><input type="number" class="finp" id="svcPrice" placeholder="0" min="0"></div>
-          </div>
-          <div class="fg">
-            <label class="flbl">Duration</label>
-            <select class="fsel" id="svcDuration">
-              <option value="">Select Duration</option>
-              <option>15 min</option><option>30 min</option><option>45 min</option>
-              <option>60 min</option><option>90 min</option><option>120 min</option><option>180 min</option>
-            </select>
-          </div>
-          <div class="fg full">
-            <label class="flbl">Service Names <span style="color:var(--rose-dk)">*</span> <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:400;color:var(--ink-3)">(add one or more)</span></label>
-            <div class="svc-add-row">
-              <input type="text" class="finp" id="svcNameInp" placeholder="e.g. Bridal Makeup, Gold Facial…">
-              <button class="btn btn-gold" id="addChipBtn" type="button"><i class="fa-solid fa-plus"></i> Add</button>
-            </div>
-            <div class="chips-box" id="chipsBox"><span class="chip-ph">Services will appear here…</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="svc-modal-foot">
-        <button class="btn btn-out" id="cancelAdd" onclick="closeSvcModal()">Cancel</button>
-        <button class="btn btn-rose" id="saveAdd"><i class="fa-solid fa-check"></i> Save Service</button>
-      </div>
     </div>
   </div>
 
@@ -486,7 +395,7 @@
       <div class="drawer-body" id="drawerBody"></div>
       <div class="drawer-foot">
         <button class="btn btn-out" style="flex:1" onclick="closeView()">Close</button>
-        <button class="btn btn-gold" style="flex:1"><i class="fa-solid fa-pen-to-square"></i> Edit Service</button>
+        <button class="btn btn-gold" style="flex:1" id="drawerEditBtn"><i class="fa-solid fa-pen-to-square"></i> Edit Service</button>
       </div>
     </div>
   </div>
@@ -508,171 +417,206 @@
   <script>
     KcozmAdmin.init({ activePage:'services', pageTitle:'Services', depth:'../../' });
 
-    var SERVICES = JSON.parse(localStorage.getItem('services')) || [
-      {id:1,  name:'Bridal Full Makeup',      cat:'bridal',sub:'Full Bridal',  price:8500,duration:'180 min',status:true, img:null},
-      {id:2,  name:'Gold Facial',             cat:'ladies',sub:'Facials',      price:1800,duration:'60 min', status:true, img:null},
-      {id:3,  name:'Hair Colour + Highlights',cat:'ladies',sub:'Hair Styling', price:3500,duration:'90 min', status:true, img:null},
-      {id:4,  name:'Manicure & Pedicure',     cat:'ladies',sub:'Nail Care',    price:950, duration:'60 min', status:true, img:null},
-      {id:5,  name:'Saree Draping',           cat:'ladies',sub:'Styling',      price:600, duration:'30 min', status:true, img:null},
-      {id:6,  name:'Keratin Treatment',       cat:'ladies',sub:'Hair Styling', price:4500,duration:'120 min',status:true, img:null},
-      {id:7,  name:'Bridal Trial Makeup',     cat:'bridal',sub:'Pre-Bridal',   price:4000,duration:'120 min',status:false,img:null},
-      {id:8,  name:'Haircut',                 cat:'gents', sub:'Hair',         price:300, duration:'30 min', status:true, img:null},
-      {id:9,  name:'Beard Grooming',          cat:'gents', sub:'Beard',        price:250, duration:'20 min', status:true, img:null},
-      {id:10, name:'Head Massage',            cat:'gents', sub:'Head Massage', price:500, duration:'45 min', status:true, img:null},
-      {id:11, name:'Clean Shave',             cat:'gents', sub:'Shaving',      price:150, duration:'15 min', status:true, img:null},
-      {id:12, name:'Diamond Facial',          cat:'ladies',sub:'Facials',      price:2500,duration:'75 min', status:true, img:null},
-      {id:13, name:'Mehndi Application',      cat:'ladies',sub:'Mehendi',      price:800, duration:'60 min', status:true, img:null},
-      {id:14, name:'Reception Makeup',        cat:'bridal',sub:'Reception',    price:6000,duration:'150 min',status:true, img:null},
-      {id:15, name:'Engagement Makeup',       cat:'bridal',sub:'Engagement',   price:4500,duration:'120 min',status:true, img:null},
-      {id:16, name:'Kids Haircut',            cat:'kids',  sub:'Haircut',      price:200, duration:'20 min', status:true, img:null},
-      {id:17, name:'Nail Art',                cat:'ladies',sub:'Nail Care',    price:600, duration:'45 min', status:true, img:null},
-      {id:18, name:'Waxing (Full Body)',      cat:'ladies',sub:'Waxing',       price:1200,duration:'60 min', status:true, img:null},
+    /* ── Seed data ── */
+    var SEED = [
+      {id:1,  name:'Bridal Full Makeup',       cat:'bridal', sub:'Full Bridal',  price:8500, duration:'180 min', status:true,  image:''},
+      {id:2,  name:'Gold Facial',              cat:'ladies', sub:'Facials',      price:1800, duration:'60 min',  status:true,  image:''},
+      {id:3,  name:'Hair Colour + Highlights', cat:'ladies', sub:'Hair Styling', price:3500, duration:'90 min',  status:true,  image:''},
+      {id:4,  name:'Manicure & Pedicure',      cat:'ladies', sub:'Nail Care',    price:950,  duration:'60 min',  status:true,  image:''},
+      {id:5,  name:'Saree Draping',            cat:'ladies', sub:'Styling',      price:600,  duration:'30 min',  status:true,  image:''},
+      {id:6,  name:'Keratin Treatment',        cat:'ladies', sub:'Hair Styling', price:4500, duration:'120 min', status:true,  image:''},
+      {id:7,  name:'Bridal Trial Makeup',      cat:'bridal', sub:'Pre-Bridal',   price:4000, duration:'120 min', status:false, image:''},
+      {id:8,  name:'Haircut',                  cat:'gents',  sub:'Hair',         price:300,  duration:'30 min',  status:true,  image:''},
+      {id:9,  name:'Beard Grooming',           cat:'gents',  sub:'Beard',        price:250,  duration:'20 min',  status:true,  image:''},
+      {id:10, name:'Head Massage',             cat:'gents',  sub:'Head Massage', price:500,  duration:'45 min',  status:true,  image:''},
+      {id:11, name:'Clean Shave',              cat:'gents',  sub:'Shaving',      price:150,  duration:'15 min',  status:true,  image:''},
+      {id:12, name:'Diamond Facial',           cat:'ladies', sub:'Facials',      price:2500, duration:'75 min',  status:true,  image:''},
+      {id:13, name:'Mehndi Application',       cat:'ladies', sub:'Mehendi',      price:800,  duration:'60 min',  status:true,  image:''},
+      {id:14, name:'Reception Makeup',         cat:'bridal', sub:'Reception',    price:6000, duration:'150 min', status:true,  image:''},
+      {id:15, name:'Engagement Makeup',        cat:'bridal', sub:'Engagement',   price:4500, duration:'120 min', status:true,  image:''},
+      {id:16, name:'Kids Haircut',             cat:'kids',   sub:'Haircut',      price:200,  duration:'20 min',  status:true,  image:''},
+      {id:17, name:'Nail Art',                 cat:'ladies', sub:'Nail Care',    price:600,  duration:'45 min',  status:true,  image:''},
+      {id:18, name:'Waxing (Full Body)',       cat:'ladies', sub:'Waxing',       price:1200, duration:'60 min',  status:true,  image:''},
     ];
 
-    var SUB_MAP={ladies:['Facials','Hair Styling','Nail Care','Styling','Mehendi','Massage','Waxing'],gents:['Hair','Beard','Shaving','Head Massage'],bridal:['Full Bridal','Pre-Bridal','Reception','Engagement'],kids:['Haircut','Nail Art']};
-    var CAT_META={ladies:{label:'Ladies',badgeCls:'rose',icon:'fa-venus'},gents:{label:'Gents',badgeCls:'blue',icon:'fa-mars'},bridal:{label:'Bridal',badgeCls:'gold',icon:'fa-heart'},kids:{label:'Kids',badgeCls:'green',icon:'fa-child'}};
-    var pendingDelId=null, chips=[];
+    /* ── Load from sessionStorage (returns from form) ── */
+    var stored = sessionStorage.getItem('kc_services_data');
+    var DATA   = stored ? JSON.parse(stored) : SEED;
+    sessionStorage.setItem('kc_services_data', JSON.stringify(DATA));
 
-    function catBadge(c){var m=CAT_META[c]||CAT_META.ladies;return '<span class="badge '+m.badgeCls+'"><i class="fa-solid '+m.icon+'" style="font-size:9px"></i> '+m.label+'</span>';}
-    function swToggle(id,chk){return '<label class="sw"><input type="checkbox" '+(chk?'checked':'')+" onchange=\"toggleStatus("+id+",this.checked)\"><span class=\"sw-track\"></span></label>";}
-    function toggleStatus(id,val){var s=SERVICES.find(function(x){return x.id===id;});if(s)s.status=val;KcozmAdmin.showToast(val?'Service activated':'Service deactivated',val?'success':'info');}
+    /* ── Toast on return from form ── */
+    var toastRaw = sessionStorage.getItem('kc_services_toast');
+    if (toastRaw) {
+      try {
+        var t = JSON.parse(toastRaw);
+        sessionStorage.removeItem('kc_services_toast');
+        setTimeout(function(){ KcozmAdmin.showToast(t.msg, t.type); }, 300);
+      } catch(e){}
+    }
 
-    function renderTab(cat){
-      var data=cat==='all'?SERVICES:SERVICES.filter(function(s){return s.cat===cat;});
-      var tbody=document.getElementById('tbody-'+cat);
-      var empty=document.getElementById('empty-'+cat);
-      var showCat=cat==='all';
-      if(!data.length){tbody.innerHTML='';empty.style.display='block';return;}
-      empty.style.display='none';
-      tbody.innerHTML=data.map(function(s,i){
-        var thumb=s.img?'<img class="thumb" src="'+s.img+'">':'<div class="thumb-ph"><i class="fa-solid '+(CAT_META[s.cat]?CAT_META[s.cat].icon:'fa-scissors')+'"></i></div>';
+    var CAT_META = {
+      ladies: {label:'Ladies', badgeCls:'rose', icon:'fa-venus'},
+      gents:  {label:'Gents',  badgeCls:'blue', icon:'fa-mars'},
+      bridal: {label:'Bridal', badgeCls:'gold', icon:'fa-heart'},
+      kids:   {label:'Kids',   badgeCls:'green',icon:'fa-child'}
+    };
+
+    var pendingDelId = null;
+
+    function catBadge(c) {
+      var m = CAT_META[c] || CAT_META.ladies;
+      return '<span class="badge '+m.badgeCls+'"><i class="fa-solid '+m.icon+'" style="font-size:9px"></i> '+m.label+'</span>';
+    }
+
+    function swToggle(id, chk) {
+      return '<label class="sw"><input type="checkbox"'+(chk?' checked':'')+' onchange="toggleStatus('+id+',this.checked)"><span class="sw-track"></span></label>';
+    }
+
+    function toggleStatus(id, val) {
+      var s = DATA.find(function(x){ return x.id===id; });
+      if (s) { s.status = val; sessionStorage.setItem('kc_services_data', JSON.stringify(DATA)); }
+      KcozmAdmin.showToast(val ? 'Service activated' : 'Service deactivated', val ? 'success' : 'info');
+    }
+
+    /* ── Edit row → navigate to form ── */
+    function editRow(id) {
+      window.location.href = 'forms/service_form.html?id=' + id;
+    }
+
+    /* ── Render a tab ── */
+    function renderTab(cat) {
+      var data = cat === 'all' ? DATA : DATA.filter(function(s){ return s.cat === cat; });
+      var tbody = document.getElementById('tbody-'+cat);
+      var empty = document.getElementById('empty-'+cat);
+      var showCat = (cat === 'all');
+
+      if (!data.length) {
+        tbody.innerHTML = ''; empty.style.display = 'block'; return;
+      }
+      empty.style.display = 'none';
+
+      tbody.innerHTML = data.map(function(s, i) {
+        var thumb = s.image
+          ? '<img class="thumb" src="'+s.image+'" alt="'+s.name+'">'
+          : '<div class="thumb-ph"><i class="fa-solid '+(CAT_META[s.cat]||CAT_META.ladies).icon+'"></i></div>';
+
         return '<tr style="animation-delay:'+(i*.04)+'s">'
           +'<td><span class="serial">'+String(i+1).padStart(2,'0')+'</span></td>'
           +'<td>'+thumb+'</td>'
           +'<td><div class="svc-name">'+s.name+'</div><div class="svc-sub">'+s.sub+'</div></td>'
-          +(showCat?'<td>'+catBadge(s.cat)+'</td>':'')
+          +(showCat ? '<td>'+catBadge(s.cat)+'</td>' : '')
           +'<td><span style="font-size:13px;color:var(--ink-3)">'+s.sub+'</span></td>'
-          +'<td><div class="price-val">₹'+s.price.toLocaleString()+'</div></td>'
+          +'<td><div class="price-val">&#8377;'+Number(s.price).toLocaleString('en-IN')+'</div></td>'
           +'<td><div class="duration"><i class="fa-regular fa-clock"></i>'+s.duration+'</div></td>'
-          +'<td>'+swToggle(s.id,s.status)+'</td>'
+          +'<td>'+swToggle(s.id, s.status)+'</td>'
           +'<td><div class="row-acts">'
-            +'<button class="act view" title="View" onclick="openView('+s.id+')"><i class="fa-solid fa-eye"></i></button>'
-            +'<button class="act edit" title="Edit" onclick="KcozmAdmin.showToast(\'Edit coming soon\',\'info\')"><i class="fa-solid fa-pen"></i></button>'
+            +'<button class="act view" title="View"   onclick="openView('+s.id+')"><i class="fa-solid fa-eye"></i></button>'
+            +'<button class="act edit" title="Edit"   onclick="editRow('+s.id+')"><i class="fa-solid fa-pen"></i></button>'
             +'<button class="act del"  title="Delete" onclick="openDelModal('+s.id+')"><i class="fa-solid fa-trash"></i></button>'
           +'</div></td>'
         +'</tr>';
       }).join('');
     }
 
-    function refreshAll(){
+    /* ── Refresh all counters + tabs ── */
+    function refreshAll() {
       ['all','ladies','gents','bridal','kids'].forEach(renderTab);
-      document.getElementById('cnt-all').textContent=SERVICES.length;
-      document.getElementById('cnt-ladies').textContent=SERVICES.filter(function(s){return s.cat==='ladies';}).length;
-      document.getElementById('cnt-gents').textContent=SERVICES.filter(function(s){return s.cat==='gents';}).length;
-      document.getElementById('cnt-bridal').textContent=SERVICES.filter(function(s){return s.cat==='bridal';}).length;
-      document.getElementById('cnt-kids').textContent=SERVICES.filter(function(s){return s.cat==='kids';}).length;
-      document.getElementById('statTotal').textContent=SERVICES.length;
-      document.getElementById('statLadies').textContent=SERVICES.filter(function(s){return s.cat==='ladies';}).length;
-      document.getElementById('statGents').textContent=SERVICES.filter(function(s){return s.cat==='gents';}).length;
-      document.getElementById('pagInfo').textContent='Showing '+SERVICES.length+' services';
-      document.getElementById('heroCount').textContent=SERVICES.length+' service'+(SERVICES.length!==1?'s':'');
+
+      var tot    = DATA.length;
+      var ladies = DATA.filter(function(s){ return s.cat==='ladies'; }).length;
+      var gents  = DATA.filter(function(s){ return s.cat==='gents'; }).length;
+      var bridal = DATA.filter(function(s){ return s.cat==='bridal'; }).length;
+      var kids   = DATA.filter(function(s){ return s.cat==='kids'; }).length;
+
+      document.getElementById('cnt-all').textContent    = tot;
+      document.getElementById('cnt-ladies').textContent = ladies;
+      document.getElementById('cnt-gents').textContent  = gents;
+      document.getElementById('cnt-bridal').textContent = bridal;
+      document.getElementById('cnt-kids').textContent   = kids;
+      document.getElementById('statTotal').textContent  = tot;
+      document.getElementById('statLadies').textContent = ladies;
+      document.getElementById('statGents').textContent  = gents;
+      document.getElementById('pagInfo').textContent    = 'Showing '+tot+' service'+(tot!==1?'s':'');
+      document.getElementById('heroCount').textContent  = tot+' service'+(tot!==1?'s':'');
+      document.getElementById('lnCount').textContent    = tot;
+
+      /* Simple pagination buttons (static demo — extend as needed) */
+      var pages = Math.max(1, Math.ceil(tot / 10));
+      var btns  = '';
+      btns += '<button class="pag-btn">&#8249;</button>';
+      for (var p = 1; p <= Math.min(pages, 5); p++) {
+        btns += '<button class="pag-btn'+(p===1?' active':'')+'">'+p+'</button>';
+      }
+      btns += '<button class="pag-btn">&#8250;</button>';
+      document.getElementById('pagBtns').innerHTML = btns;
     }
     refreshAll();
 
-    /* Tabs */
-    document.querySelectorAll('.tab-link').forEach(function(t){
-      t.addEventListener('click',function(){
-        document.querySelectorAll('.tab-link').forEach(function(x){x.classList.remove('active');});
-        document.querySelectorAll('.tab-pane').forEach(function(x){x.classList.remove('active');});
+    /* ── Tab switching ── */
+    document.querySelectorAll('.tab-link').forEach(function(t) {
+      t.addEventListener('click', function() {
+        document.querySelectorAll('.tab-link').forEach(function(x){ x.classList.remove('active'); });
+        document.querySelectorAll('.tab-pane').forEach(function(x){ x.classList.remove('active'); });
         t.classList.add('active');
         document.getElementById('pane-'+t.dataset.tab).classList.add('active');
       });
     });
 
-    function handleSearch(q){
-      q=q.toLowerCase();
-      document.querySelectorAll('#tbody-all tr').forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>=0?'':'none';});
+    /* ── Search (filters "all" tab rows) ── */
+    function handleSearch(q) {
+      q = q.toLowerCase();
+      document.querySelectorAll('#tbody-all tr').forEach(function(r) {
+        r.style.display = r.textContent.toLowerCase().indexOf(q) >= 0 ? '' : 'none';
+      });
     }
 
-    /* Service Modal */
-    function openSvcModal(){document.getElementById('svcModalOv').classList.add('show');document.body.style.overflow='hidden';}
-    function closeSvcModal(){document.getElementById('svcModalOv').classList.remove('show');document.body.style.overflow='';resetForm();}
+    /* ── View Drawer ── */
+    function openView(id) {
+      var s = DATA.find(function(x){ return x.id===id; }); if (!s) return;
+      var m = CAT_META[s.cat] || CAT_META.ladies;
 
-    document.getElementById('svcCat').addEventListener('change',function(){
-      var sub=document.getElementById('svcSub');
-      sub.innerHTML='<option value="">Select Sub-Category</option>';
-      (SUB_MAP[this.value]||[]).forEach(function(s){sub.innerHTML+='<option>'+s+'</option>';});
-    });
+      document.getElementById('drawerTitle').textContent = s.name;
+      document.getElementById('drawerSub').textContent   = m.label+' — '+s.sub;
+      document.getElementById('drawerEditBtn').onclick   = function(){ editRow(s.id); };
 
-    /* Chips */
-    function renderChips(){
-      var box=document.getElementById('chipsBox');
-      if(!chips.length){box.innerHTML='<span class="chip-ph">Services will appear here…</span>';return;}
-      box.innerHTML=chips.map(function(ch,i){return '<span class="chip-tag">'+ch+'<button class="chip-x" onclick="removeChip('+i+')"><i class="fa-solid fa-xmark" style="font-size:7px"></i></button></span>';}).join('');
-    }
-    function removeChip(i){chips.splice(i,1);renderChips();}
-    document.getElementById('addChipBtn').addEventListener('click',addChip);
-    document.getElementById('svcNameInp').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addChip();}});
-    function addChip(){
-      var v=document.getElementById('svcNameInp').value.trim();
-      if(!v)return;
-      if(chips.indexOf(v)>=0){KcozmAdmin.showToast('Already added','info');return;}
-      chips.push(v);renderChips();document.getElementById('svcNameInp').value='';
-    }
+      var bannerHtml = s.image
+        ? '<img src="'+s.image+'" style="width:100%;height:100%;object-fit:cover">'
+        : '<i class="fa-solid '+m.icon+'"></i>';
 
-    document.getElementById('saveAdd').addEventListener('click',function(){
-      var cat=document.getElementById('svcCat').value;
-      var sub=document.getElementById('svcSub').value;
-      var price=parseInt(document.getElementById('svcPrice').value)||0;
-      var dur=document.getElementById('svcDuration').value;
-      if(!cat){KcozmAdmin.showToast('Please select a category','error');return;}
-      if(!sub){KcozmAdmin.showToast('Please select a sub-category','error');return;}
-      if(!chips.length){KcozmAdmin.showToast('Please add at least one service','error');return;}
-      if(!price){KcozmAdmin.showToast('Please enter a price','error');return;}
-      chips.forEach(function(name){SERVICES.push({id:Date.now()+Math.random(),name:name,cat:cat,sub:sub,price:price,duration:dur||'—',status:true,img:null});});
-      chips=[];renderChips();resetForm();refreshAll();
-      closeSvcModal();
-      KcozmAdmin.showToast('Service(s) added successfully!','success');
-    });
-    function resetForm(){
-      ['svcCat','svcSub','svcDuration'].forEach(function(id){document.getElementById(id).value='';});
-      document.getElementById('svcPrice').value='';
-      document.getElementById('svcNameInp').value='';
-      chips=[];renderChips();
-    }
-
-    /* View Drawer */
-    function openView(id){
-      var s=SERVICES.find(function(x){return x.id===id;}); if(!s)return;
-      var m=CAT_META[s.cat]||CAT_META.ladies;
-      document.getElementById('drawerTitle').textContent=s.name;
-      document.getElementById('drawerSub').textContent=m.label+' — '+s.sub;
-      document.getElementById('drawerBody').innerHTML=
-        '<div class="dw-banner"><i class="fa-solid '+m.icon+'"></i></div>'
+      document.getElementById('drawerBody').innerHTML =
+        '<div class="dw-banner">'+bannerHtml+'</div>'
         +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-scissors"></i> Service</div><div class="dw-val" style="font-weight:700;font-size:16px">'+s.name+'</div></div>'
         +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-layer-group"></i> Category</div><div class="dw-val">'+catBadge(s.cat)+'</div></div>'
         +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-tags"></i> Sub-Category</div><div class="dw-val">'+s.sub+'</div></div>'
-        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-indian-rupee-sign"></i> Price</div><div class="dw-val"><span style="font-family:Playfair Display,serif;font-size:22px;font-weight:700;color:var(--gold-dk)">₹'+s.price.toLocaleString()+'</span></div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-indian-rupee-sign"></i> Price</div><div class="dw-val"><span style="font-family:Playfair Display,serif;font-size:22px;font-weight:700;color:var(--gold-dk)">&#8377;'+Number(s.price).toLocaleString('en-IN')+'</span></div></div>'
         +'<div class="dw-row"><div class="dw-lbl"><i class="fa-regular fa-clock"></i> Duration</div><div class="dw-val">'+s.duration+'</div></div>'
         +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-circle-dot"></i> Status</div><div class="dw-val">'
-          +(s.status?'<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2e7d32;background:#e8f5e9;padding:4px 12px;border-radius:20px"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>':'<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#c62828;background:#fce4ec;padding:4px 12px;border-radius:20px"><i class="fa-solid fa-circle" style="font-size:7px"></i> Inactive</span>')
+          +(s.status
+            ? '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2e7d32;background:#e8f5e9;padding:4px 12px;border-radius:20px"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>'
+            : '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#c62828;background:#fce4ec;padding:4px 12px;border-radius:20px"><i class="fa-solid fa-circle" style="font-size:7px"></i> Inactive</span>')
         +'</div></div>';
-      document.getElementById('viewOverlay').classList.add('show');
-      document.body.style.overflow='hidden';
-    }
-    function closeView(){document.getElementById('viewOverlay').classList.remove('show');document.body.style.overflow='';}
 
-    /* Delete */
-    function openDelModal(id){pendingDelId=id;document.getElementById('delOverlay').classList.add('show');}
-    function closeDelModal(){document.getElementById('delOverlay').classList.remove('show');pendingDelId=null;}
-    function confirmDelete(){
-      if(pendingDelId===null)return;
-      SERVICES=SERVICES.filter(function(s){return s.id!==pendingDelId;});
-      localStorage.setItem('services', JSON.stringify(SERVICES));
-      closeDelModal();refreshAll();KcozmAdmin.showToast('Service deleted.','success');
+      document.getElementById('viewOverlay').classList.add('show');
+      document.body.style.overflow = 'hidden';
     }
-    document.getElementById('delOverlay').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeView();closeDelModal();closeSvcModal();}});
+    function closeView() {
+      document.getElementById('viewOverlay').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    /* ── Delete Modal ── */
+    function openDelModal(id) { pendingDelId = id; document.getElementById('delOverlay').classList.add('show'); }
+    function closeDelModal()   { document.getElementById('delOverlay').classList.remove('show'); pendingDelId = null; }
+    function confirmDelete() {
+      if (pendingDelId === null) return;
+      var r = DATA.find(function(x){ return x.id===pendingDelId; });
+      DATA  = DATA.filter(function(x){ return x.id!==pendingDelId; });
+      sessionStorage.setItem('kc_services_data', JSON.stringify(DATA));
+      closeDelModal(); refreshAll();
+      KcozmAdmin.showToast((r ? '"'+r.name+'"' : 'Service')+' deleted.', 'success');
+    }
+    document.getElementById('delOverlay').addEventListener('click', function(e){ if(e.target===this) closeDelModal(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeView(); closeDelModal(); } });
   </script>
 </body>
 </html>
