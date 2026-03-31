@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM — Service Categories</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#9a7020; --gold-ddk:#7a5010;
+      --gold-lt:#fdf6e8; --gold-mid:#fdf0d0; --gold-glow:rgba(200,160,64,.18);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#18120f; --ink-2:#3d3028; --ink-3:#907860; --ink-4:#c4b098;
+      --surface:#fff; --surface-2:#faf8f6; --surface-3:#f4f0eb;
+      --border:#ebe5de; --border-lt:#f2ede6;
+      --shadow-sm:0 1px 6px rgba(24,18,12,.06); --shadow:0 2px 24px rgba(24,18,12,.08);
+      --shadow-md:0 6px 32px rgba(24,18,12,.11); --shadow-lg:0 12px 48px rgba(24,18,12,.14);
+      --r:14px; --r-sm:9px; --t:.2s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink);line-height:1.5}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+    .kc-page-content{padding:32px 32px 48px;flex:1;width:100%;min-width:0}
+    @media(max-width:640px){.kc-page-content{padding:18px 16px 40px}}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none}}
+    @keyframes popIn   {from{opacity:0;transform:scale(.94)}        to{opacity:1;transform:scale(1)}}
+    @keyframes rowIn   {from{opacity:0;transform:translateX(-8px)}  to{opacity:1;transform:none}}
+    @keyframes slideIn {from{transform:translateX(100%);opacity:0}  to{transform:translateX(0);opacity:1}}
+
+    /* ── Breadcrumb ── */
+    .kc-bc{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);margin-bottom:20px;animation:fadeDown .35s ease both}
+    .kc-bc a{color:var(--gold-dk);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.7}
+    .kc-bc .sep{font-size:9px;color:var(--ink-4)}
+
+    /* ── Page Hero ── */
+    .page-hero{background:linear-gradient(135deg,var(--gold-lt) 0%,rgba(200,160,64,.07) 100%);border:1px solid rgba(200,160,64,.22);border-radius:18px;padding:28px 32px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;animation:fadeDown .4s ease both;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(200,160,64,.10) 0%,transparent 70%);pointer-events:none}
+    .page-hero-left{display:flex;align-items:center;gap:18px}
+    .page-hero-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;flex-shrink:0;box-shadow:0 4px 16px var(--gold-glow)}
+    .page-hero-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:4px}
+    .page-hero-sub{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .page-hero-sub .dot{width:4px;height:4px;border-radius:50%;background:var(--ink-4)}
+    .page-hero-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+    /* ── Level Nav ── */
+    .level-nav{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:28px;box-shadow:var(--shadow-sm);animation:fadeDown .4s .05s ease both}
+    @media(max-width:600px){.level-nav{grid-template-columns:1fr}}
+    .ln-item{display:flex;flex-direction:column;padding:18px 20px;background:var(--surface);border-right:1px solid var(--border);text-decoration:none;transition:background var(--t);position:relative;overflow:hidden}
+    .ln-item:last-child{border-right:none}
+    .ln-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:transparent;transition:background var(--t)}
+    .ln-item.active{background:linear-gradient(135deg,rgba(200,160,64,.09),rgba(200,160,64,.04))}
+    .ln-item.active::after{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
+    .ln-item:hover:not(.active){background:var(--gold-lt)}
+    .ln-step{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:5px;margin-bottom:6px}
+    .ln-item.active .ln-step{color:var(--gold-dk)}
+    .ln-count{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--border);line-height:1;position:absolute;right:16px;top:14px}
+    .ln-item.active .ln-count{color:rgba(200,160,64,.22)}
+    .ln-name{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:3px}
+    .ln-item.active .ln-name{color:var(--gold-dk)}
+    .ln-desc{font-size:11.5px;color:var(--ink-3)}
+
+    /* ── Stats ── */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    @media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.stats-row{grid-template-columns:1fr}}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm);animation:fadeUp .45s ease both;transition:box-shadow var(--t),transform var(--t)}
+    .stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+    .stat-card:nth-child(1)::before{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
+    .stat-card:nth-child(2)::before{background:linear-gradient(90deg,var(--rose),var(--rose-dk))}
+    .stat-card:nth-child(3)::before{background:linear-gradient(90deg,#2196f3,#1565c0)}
+    .stat-card:nth-child(4)::before{background:linear-gradient(90deg,#4caf50,#2e7d32)}
+    .stat-icon{position:absolute;right:18px;top:18px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px}
+    .stat-card:nth-child(1) .stat-icon{background:var(--gold-lt);color:var(--gold-dk)}
+    .stat-card:nth-child(2) .stat-icon{background:var(--rose-lt);color:var(--rose-dk)}
+    .stat-card:nth-child(3) .stat-icon{background:#e3f2fd;color:#1565c0}
+    .stat-card:nth-child(4) .stat-icon{background:#e8f5e9;color:#2e7d32}
+    .stat-label{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);margin-bottom:8px}
+    .stat-value{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--ink);line-height:1}
+    .stat-sub{font-size:11.5px;color:var(--ink-3);margin-top:6px}
+
+    /* ── Main Card ── */
+    .kc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:28px;animation:fadeUp .5s .05s ease both}
+    .card-head{padding:22px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+    .head-left{display:flex;align-items:center;gap:14px}
+    .head-icon{width:48px;height:48px;border-radius:12px;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .head-icon i{color:var(--gold-dk)}
+    .head-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink)}
+    .head-sub{font-size:12px;color:var(--ink-3);margin-top:3px}
+    .head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+    /* ── Buttons ── */
+    .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;white-space:nowrap;text-decoration:none}
+    .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;box-shadow:0 3px 12px var(--gold-glow)}
+    .btn-gold:hover{box-shadow:0 6px 20px rgba(200,160,64,.42);transform:translateY(-1px);color:#fff}
+    .btn-out{background:transparent;border:1.5px solid var(--border);color:var(--ink-2)}
+    .btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+
+    /* ── Search ── */
+    .search-wrap{position:relative}
+    .search-wrap i{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:12px;pointer-events:none}
+    .search-input{padding:9px 16px 9px 36px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);width:220px;outline:none;transition:all var(--t)}
+    .search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff;width:260px}
+    .search-input::placeholder{color:var(--ink-3)}
+
+    /* ── Tabs ── */
+    .tab-nav{display:flex;padding:0 28px;border-bottom:1px solid var(--border);background:var(--surface-2);overflow-x:auto}
+    .tab-link{padding:13px 18px;font-size:13px;font-weight:600;color:var(--ink-3);border:none;background:transparent;cursor:pointer;position:relative;transition:color var(--t);white-space:nowrap;display:flex;align-items:center;gap:7px}
+    .tab-link .tc{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:20px;background:var(--border);color:var(--ink-3);transition:all var(--t)}
+    .tab-link::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2.5px;background:var(--gold);border-radius:2px 2px 0 0;transform:scaleX(0);transition:transform .2s}
+    .tab-link.active{color:var(--gold-dk)}
+    .tab-link.active::after{transform:scaleX(1)}
+    .tab-link.active .tc{background:var(--gold-lt);color:var(--gold-dk)}
+    .tab-pane{display:none}
+    .tab-pane.active{display:block}
+
+    /* ── Table ── */
+    .tbl-wrap{overflow-x:auto}
+    table.tbl{width:100%;border-collapse:collapse}
+    .tbl th{padding:12px 20px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
+    .tbl th:first-child{padding-left:28px}
+    .tbl th:last-child{padding-right:28px;text-align:right}
+    .tbl td{padding:15px 20px;border-bottom:1px solid var(--border-lt);font-size:13.5px;color:var(--ink-2);vertical-align:middle;transition:background var(--t)}
+    .tbl td:first-child{padding-left:28px}
+    .tbl td:last-child{padding-right:28px;text-align:right}
+    .tbl tr:last-child td{border-bottom:none}
+    .tbl tbody tr{animation:rowIn .3s ease both}
+    .tbl tbody tr:hover td{background:#fdf8f0}
+    .serial{width:32px;height:32px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink-3)}
+    .thumb-ph{width:56px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid rgba(255,255,255,.2);flex-shrink:0}
+    .cell-name{font-weight:700;color:var(--ink);font-size:14px}
+    .cell-desc{font-size:12px;color:var(--ink-3);margin-top:3px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .color-badge{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:20px}
+    .color-badge.rose  {background:var(--rose-lt);color:var(--rose-dk)}
+    .color-badge.blue  {background:#e3f2fd;color:#1565c0}
+    .color-badge.gold  {background:var(--gold-lt);color:var(--gold-dk)}
+    .color-badge.green {background:#e8f5e9;color:#2e7d32}
+    .color-badge.purple{background:#f3e5f5;color:#6a1b9a}
+    .num-val{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink);line-height:1}
+    .num-lbl{font-size:10px;color:var(--ink-3);margin-top:2px}
+
+    /* Toggle */
+    .sw{position:relative;width:38px;height:22px;display:inline-block}
+    .sw input{opacity:0;width:0;height:0;position:absolute}
+    .sw-track{display:block;width:38px;height:22px;border-radius:22px;background:var(--border);cursor:pointer;transition:background var(--t);position:relative}
+    .sw input:checked+.sw-track{background:var(--gold)}
+    .sw-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform var(--t);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+    .sw input:checked+.sw-track::after{transform:translateX(16px)}
+
+    /* Row actions */
+    .row-acts{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+    .act{width:33px;height:33px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12.5px;color:var(--ink-3);transition:all var(--t);text-decoration:none}
+    .act:hover{transform:scale(1.08)}
+    .act.view:hover {background:#e3f2fd;border-color:#90caf9;color:#1565c0}
+    .act.sub:hover  {background:var(--gold-lt);border-color:var(--gold);color:var(--gold-dk)}
+    .act.edit:hover {background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32}
+    .act.del:hover  {background:#fce4ec;border-color:#f48fb1;color:#c62828}
+
+    /* ── Empty ── */
+    .empty-state{padding:64px 20px;text-align:center;display:none}
+    .empty-ring{width:80px;height:80px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+    .empty-ring i{color:var(--gold-dk);font-size:30px;opacity:.5}
+    .empty-state h6{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:8px}
+    .empty-state p{font-size:13px;color:var(--ink-3)}
+
+    /* ── Pagination ── */
+    .pag{padding:16px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    .pag-info{font-size:13px;color:var(--ink-3)}
+    .pag-btns{display:flex;gap:4px}
+    .pag-btn{min-width:34px;height:34px;padding:0 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all var(--t)}
+    .pag-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .pag-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border-color:transparent}
+
+    /* ── View Drawer ── */
+    .overlay{position:fixed;inset:0;background:rgba(24,18,12,.52);backdrop-filter:blur(6px);z-index:9000;display:none;justify-content:flex-end}
+    .overlay.show{display:flex}
+    .drawer{width:440px;max-width:95vw;height:100vh;background:var(--surface);box-shadow:-10px 0 48px rgba(24,18,12,.18);display:flex;flex-direction:column;animation:slideIn .3s cubic-bezier(.22,.68,0,1.05)}
+    .drawer-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--gold-lt)}
+    .drawer-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;flex-shrink:0}
+    .drawer-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink)}
+    .drawer-sub-lbl{font-size:12px;color:var(--ink-3);margin-top:2px}
+    .drawer-close{width:36px;height:36px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);color:var(--ink-3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all var(--t);flex-shrink:0}
+    .drawer-close:hover{border-color:var(--rose);color:var(--rose-dk);background:var(--rose-lt)}
+    .drawer-body{flex:1;overflow-y:auto;padding:24px}
+    .dw-banner{width:100%;height:150px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:56px;margin-bottom:22px;overflow:hidden}
+    .dw-row{display:flex;gap:0;padding:14px 0;border-bottom:1px solid var(--border)}
+    .dw-row:last-child{border-bottom:none}
+    .dw-lbl{width:130px;flex-shrink:0;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-3);padding-top:3px;display:flex;align-items:flex-start;gap:6px}
+    .dw-lbl i{margin-top:2px;color:var(--gold)}
+    .dw-val{flex:1;font-size:14px;color:var(--ink);font-weight:500;line-height:1.5}
+    .drawer-foot{padding:18px 24px;border-top:1px solid var(--border);display:flex;gap:10px;background:var(--surface-2)}
+
+    /* ── Delete Modal ── */
+    .del-overlay{position:fixed;inset:0;background:rgba(24,18,12,.55);backdrop-filter:blur(6px);z-index:9100;display:none;align-items:center;justify-content:center}
+    .del-overlay.show{display:flex}
+    .modal{background:var(--surface);border-radius:20px;padding:40px 36px 30px;width:100%;max-width:380px;text-align:center;box-shadow:0 32px 80px rgba(24,18,12,.26);animation:popIn .22s ease both}
+    .modal-ring{width:68px;height:68px;border-radius:50%;background:var(--rose-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+    .modal-ring i{color:var(--rose-dk);font-size:28px}
+    .modal h5{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:22px;color:var(--ink);margin-bottom:10px}
+    .modal p{font-size:13.5px;color:var(--ink-3);margin-bottom:26px;line-height:1.6}
+    .modal-row{display:flex;gap:10px}
+    .m-cancel{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:background var(--t)}
+    .m-cancel:hover{background:var(--surface-2)}
+    .m-confirm{flex:1;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--rose),var(--rose-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(201,123,132,.30);transition:opacity var(--t),transform var(--t)}
+    .m-confirm:hover{opacity:.88;transform:translateY(-1px)}
+  </style>
+</head>
+<body>
+  <div class="main-panel">
+    <div class="kc-page-content">
+
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right sep"></i>
+        <span>Service Categories</span>
+      </nav>
+
+      <!-- Page Hero -->
+      <div class="page-hero">
+        <div class="page-hero-left">
+          <div class="page-hero-icon"><i class="fa-solid fa-folder"></i></div>
+          <div>
+            <div class="page-hero-title">Service Categories</div>
+            <div class="page-hero-sub">
+              <span>Top-level groupings for all services</span>
+              <span class="dot"></span>
+              <span>Level 1 of 3</span>
+              <span class="dot"></span>
+              <span id="heroCount">4 categories</span>
+            </div>
+          </div>
+        </div>
+        <div class="page-hero-right">
+          <a href="service_subcategory.html" class="btn btn-out"><i class="fa-solid fa-folder-open"></i> Sub-Categories</a>
+          <a href="service.html" class="btn btn-out"><i class="fa-solid fa-scissors"></i> View Services</a>
+        </div>
+      </div>
+
+      <!-- 3-Level Nav -->
+      <div class="level-nav">
+        <a class="ln-item active" href="service_category.html">
+          <span class="ln-count" id="lnCount">4</span>
+          <div class="ln-step"><i class="fa-solid fa-folder"></i> Level 1 — You are here</div>
+          <div class="ln-name">Categories</div>
+          <div class="ln-desc">Ladies, Gents, Bridal, Kids</div>
+        </a>
+        <a class="ln-item" href="service_subcategory.html">
+          <span class="ln-count">16</span>
+          <div class="ln-step"><i class="fa-solid fa-folder-open"></i> Level 2</div>
+          <div class="ln-name">Sub-Categories</div>
+          <div class="ln-desc">Facials, Hair Styling, Beard…</div>
+        </a>
+        <a class="ln-item" href="service.html">
+          <span class="ln-count">18</span>
+          <div class="ln-step"><i class="fa-solid fa-scissors"></i> Level 3</div>
+          <div class="ln-name">Services</div>
+          <div class="ln-desc">Gold Facial, Keratin, Bridal Makeup…</div>
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card" style="animation-delay:.00s">
+          <div class="stat-icon"><i class="fa-solid fa-folder"></i></div>
+          <div class="stat-label">Total Categories</div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-sub">Top-level groups</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.07s">
+          <div class="stat-icon"><i class="fa-solid fa-folder-open"></i></div>
+          <div class="stat-label">Sub-Categories</div>
+          <div class="stat-value">16</div>
+          <div class="stat-sub">Across all categories</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.14s">
+          <div class="stat-icon"><i class="fa-solid fa-scissors"></i></div>
+          <div class="stat-label">Total Services</div>
+          <div class="stat-value">18</div>
+          <div class="stat-sub">Individual services</div>
+        </div>
+        <div class="stat-card" style="animation-delay:.21s">
+          <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="stat-label">Active Bookings</div>
+          <div class="stat-value">142</div>
+          <div class="stat-sub">This month</div>
+        </div>
+      </div>
+
+      <!-- Main Card -->
+      <div class="kc-card">
+        <div class="card-head">
+          <div class="head-left">
+            <div class="head-icon"><i class="fa-solid fa-folder"></i></div>
+            <div>
+              <div class="head-title">Service Categories</div>
+              <div class="head-sub">Top-level groupings — each contains sub-categories and services</div>
+            </div>
+          </div>
+          <div class="head-right">
+            <div class="search-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" class="search-input" id="catSearch" placeholder="Search categories…" oninput="handleSearch(this.value)">
+            </div>
+            <a href="forms/service_category_form.html" class="btn btn-gold">
+              <i class="fa-solid fa-plus"></i> Add Category
+            </a>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tab-nav">
+          <button class="tab-link active" data-tab="all">All <span class="tc" id="cnt-all">0</span></button>
+          <button class="tab-link" data-tab="active"><i class="fa-solid fa-circle" style="font-size:7px;color:#2e7d32"></i> Active <span class="tc" id="cnt-active">0</span></button>
+          <button class="tab-link" data-tab="inactive"><i class="fa-solid fa-circle" style="font-size:7px;color:#c62828"></i> Inactive <span class="tc" id="cnt-inactive">0</span></button>
+        </div>
+
+        <!-- All Pane -->
+        <div class="tab-pane active" id="pane-all">
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr>
+                <th style="width:52px">#</th>
+                <th style="width:70px">Icon</th>
+                <th>Category Name</th>
+                <th>Color Theme</th>
+                <th>Sub-Cats</th>
+                <th>Services</th>
+                <th>Bookings</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr></thead>
+              <tbody id="tbody-all"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="empty-all">
+            <div class="empty-ring"><i class="fa-solid fa-folder-open"></i></div>
+            <h6>No categories yet</h6>
+            <p>Click <strong>Add Category</strong> to create your first service category.</p>
+          </div>
+        </div>
+
+        <!-- Active Pane -->
+        <div class="tab-pane" id="pane-active">
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Icon</th><th>Category Name</th><th>Color Theme</th><th>Sub-Cats</th><th>Services</th><th>Bookings</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-active"></tbody></table></div>
+          <div class="empty-state" id="empty-active"><div class="empty-ring"><i class="fa-solid fa-folder"></i></div><h6>No active categories</h6><p>No categories are currently active.</p></div>
+        </div>
+
+        <!-- Inactive Pane -->
+        <div class="tab-pane" id="pane-inactive">
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Icon</th><th>Category Name</th><th>Color Theme</th><th>Sub-Cats</th><th>Services</th><th>Bookings</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tbody-inactive"></tbody></table></div>
+          <div class="empty-state" id="empty-inactive"><div class="empty-ring"><i class="fa-solid fa-folder"></i></div><h6>No inactive categories</h6><p>All categories are currently active.</p></div>
+        </div>
+
+        <div class="pag">
+          <div class="pag-info" id="pagInfo">Showing all categories</div>
+          <div class="pag-btns" id="pagBtns">
+            <button class="pag-btn">&#8249;</button>
+            <button class="pag-btn active">1</button>
+            <button class="pag-btn">&#8250;</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- View Drawer -->
+  <div class="overlay" id="viewOverlay" onclick="if(event.target===this)closeView()">
+    <div class="drawer">
+      <div class="drawer-head">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="drawer-icon"><i class="fa-solid fa-folder"></i></div>
+          <div>
+            <div class="drawer-title" id="drawerTitle">Category Details</div>
+            <div class="drawer-sub-lbl" id="drawerSub">Level 1 — Service Category</div>
+          </div>
+        </div>
+        <button class="drawer-close" onclick="closeView()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+      <div class="drawer-foot">
+        <button class="btn btn-out" style="flex:1" onclick="closeView()">Close</button>
+        <button class="btn btn-gold" style="flex:1" id="drawerEditBtn"><i class="fa-solid fa-pen-to-square"></i> Edit Category</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="del-overlay" id="delOverlay">
+    <div class="modal">
+      <div class="modal-ring"><i class="fa-solid fa-trash-can"></i></div>
+      <h5>Delete Category?</h5>
+      <p>This category will be removed. Sub-categories and services inside it <strong>won't</strong> be deleted — they'll become unlinked.</p>
+      <div class="modal-row">
+        <button class="m-cancel" onclick="closeDelModal()">Cancel</button>
+        <button class="m-confirm" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/shared-components.js"></script>
+  <script>
+    KcozmAdmin.init({ activePage:'service_category', pageTitle:'Categories', depth:'../../' });
+
+    var THEMES = {
+      rose:  { bg:'linear-gradient(135deg,#c97b84,#a85560)', label:'Rose / Pink',     cls:'rose'   },
+      gold:  { bg:'linear-gradient(135deg,#c8a040,#9a7020)', label:'Gold / Brown',    cls:'gold'   },
+      blue:  { bg:'linear-gradient(135deg,#2196f3,#1565c0)', label:'Blue / Navy',     cls:'blue'   },
+      green: { bg:'linear-gradient(135deg,#4caf50,#2e7d32)', label:'Green / Emerald', cls:'green'  },
+      purple:{ bg:'linear-gradient(135deg,#9c27b0,#6a1b9a)', label:'Purple / Violet', cls:'purple' },
+    };
+
+    var SEED = [
+      { id:1, name:'Ladies', icon:'fa-venus', color:'rose',  status:'active',   desc:'Hair, skin, nail, styling and mehendi services exclusively for women.', subCats:6, services:12, bookings:89 },
+      { id:2, name:'Gents',  icon:'fa-mars',  color:'blue',  status:'active',   desc:'Haircut, beard grooming, shaving and head massage services for men.',    subCats:4, services:4,  bookings:31 },
+      { id:3, name:'Bridal', icon:'fa-heart', color:'gold',  status:'active',   desc:'Full bridal, pre-bridal, reception and engagement packages.',            subCats:4, services:4,  bookings:18 },
+      { id:4, name:'Kids',   icon:'fa-child', color:'green', status:'active',   desc:'Gentle haircut and nail art services tailored for children.',            subCats:2, services:2,  bookings:4  },
+    ];
+
+    var stored = sessionStorage.getItem('kc_categories_data');
+    var DATA   = stored ? JSON.parse(stored) : SEED;
+    sessionStorage.setItem('kc_categories_data', JSON.stringify(DATA));
+
+    /* Toast on return from form */
+    var toastRaw = sessionStorage.getItem('kc_categories_toast');
+    if (toastRaw) {
+      try { var t=JSON.parse(toastRaw); sessionStorage.removeItem('kc_categories_toast'); setTimeout(function(){ KcozmAdmin.showToast(t.msg,t.type); },300); } catch(e){}
+    }
+
+    var pendingDelId = null, searchQ = '';
+
+    function colorBadge(c) {
+      var th = THEMES[c] || THEMES.gold;
+      return '<span class="color-badge '+th.cls+'">'+th.label+'</span>';
+    }
+
+    function swToggle(id, chk) {
+      return '<label class="sw"><input type="checkbox"'+(chk?' checked':'')+' onchange="toggleStatus('+id+',this.checked)"><span class="sw-track"></span></label>';
+    }
+
+    function toggleStatus(id, val) {
+      var c = DATA.find(function(x){ return x.id===id; });
+      if (c) { c.status = val ? 'active' : 'inactive'; saveData(); refreshAll(); }
+      KcozmAdmin.showToast(val ? 'Category activated' : 'Category deactivated', val ? 'success' : 'info');
+    }
+
+    function saveData() { sessionStorage.setItem('kc_categories_data', JSON.stringify(DATA)); }
+
+    function buildRows(data) {
+      return data.map(function(c, i) {
+        var th = THEMES[c.color] || THEMES.gold;
+        return '<tr style="animation-delay:'+(i*.04)+'s">'
+          +'<td><span class="serial">'+String(i+1).padStart(2,'0')+'</span></td>'
+          +'<td><div class="thumb-ph" style="background:'+th.bg+'"><i class="fa-solid '+c.icon+'" style="color:#fff;font-size:18px"></i></div></td>'
+          +'<td><div class="cell-name">'+c.name+'</div><div class="cell-desc">'+c.desc+'</div></td>'
+          +'<td>'+colorBadge(c.color)+'</td>'
+          +'<td><div class="num-val">'+c.subCats+'</div><div class="num-lbl">sub-cats</div></td>'
+          +'<td><div class="num-val">'+c.services+'</div><div class="num-lbl">services</div></td>'
+          +'<td><div class="num-val">'+c.bookings+'</div><div class="num-lbl">bookings</div></td>'
+          +'<td>'+swToggle(c.id, c.status==='active')+'</td>'
+          +'<td><div class="row-acts">'
+            +'<button class="act view" title="View" onclick="openView('+c.id+')"><i class="fa-solid fa-eye"></i></button>'
+            +'<a class="act sub" href="service_subcategory.html" title="Sub-Categories"><i class="fa-solid fa-folder-open"></i></a>'
+            +'<button class="act edit" title="Edit" onclick="editRow('+c.id+')"><i class="fa-solid fa-pen"></i></button>'
+            +'<button class="act del" title="Delete" onclick="openDelModal('+c.id+')"><i class="fa-solid fa-trash"></i></button>'
+          +'</div></td>'
+        +'</tr>';
+      }).join('');
+    }
+
+    function renderTab(tab) {
+      var data;
+      if (tab === 'all') {
+        data = searchQ ? DATA.filter(function(c){ return c.name.toLowerCase().indexOf(searchQ)>=0||c.desc.toLowerCase().indexOf(searchQ)>=0; }) : DATA;
+      } else {
+        data = DATA.filter(function(c){ return c.status === tab; });
+      }
+      var tbody = document.getElementById('tbody-'+tab);
+      var empty = document.getElementById('empty-'+tab);
+      if (!data.length) { tbody.innerHTML=''; empty.style.display='block'; return; }
+      empty.style.display='none';
+      tbody.innerHTML = buildRows(data);
+    }
+
+    function refreshAll() {
+      ['all','active','inactive'].forEach(renderTab);
+      var tot   = DATA.length;
+      var act   = DATA.filter(function(c){ return c.status==='active'; }).length;
+      var inact = DATA.filter(function(c){ return c.status==='inactive'; }).length;
+      document.getElementById('cnt-all').textContent      = tot;
+      document.getElementById('cnt-active').textContent   = act;
+      document.getElementById('cnt-inactive').textContent = inact;
+      document.getElementById('statTotal').textContent    = tot;
+      document.getElementById('lnCount').textContent      = tot;
+      document.getElementById('heroCount').textContent    = tot+' categor'+(tot!==1?'ies':'y');
+      document.getElementById('pagInfo').textContent      = 'Showing '+tot+' categor'+(tot!==1?'ies':'y');
+    }
+    refreshAll();
+
+    /* Tab switching */
+    document.querySelectorAll('.tab-link').forEach(function(t) {
+      t.addEventListener('click', function() {
+        document.querySelectorAll('.tab-link').forEach(function(x){ x.classList.remove('active'); });
+        document.querySelectorAll('.tab-pane').forEach(function(x){ x.classList.remove('active'); });
+        t.classList.add('active');
+        document.getElementById('pane-'+t.dataset.tab).classList.add('active');
+      });
+    });
+
+    function handleSearch(q) { searchQ=q.toLowerCase(); renderTab('all'); }
+
+    function editRow(id) { window.location.href = 'forms/service_category_form.html?id='+id; }
+
+    /* View Drawer */
+    function openView(id) {
+      var c = DATA.find(function(x){ return x.id===id; }); if(!c) return;
+      var th = THEMES[c.color] || THEMES.gold;
+      document.getElementById('drawerTitle').textContent = c.name;
+      document.getElementById('drawerSub').textContent   = 'Level 1 — Service Category';
+      document.getElementById('drawerEditBtn').onclick   = function(){ editRow(c.id); };
+      document.getElementById('drawerBody').innerHTML =
+        '<div class="dw-banner" style="background:'+th.bg+'"><i class="fa-solid '+c.icon+'" style="color:#fff;font-size:56px;opacity:.9"></i></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-folder"></i> Name</div><div class="dw-val" style="font-weight:700;font-size:16px">'+c.name+'</div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-align-left"></i> Description</div><div class="dw-val">'+c.desc+'</div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-palette"></i> Color Theme</div><div class="dw-val">'+colorBadge(c.color)+'</div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-folder-open"></i> Sub-Cats</div><div class="dw-val" style="font-family:Playfair Display,serif;font-size:22px;font-weight:700">'+c.subCats+'</div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-scissors"></i> Services</div><div class="dw-val" style="font-family:Playfair Display,serif;font-size:22px;font-weight:700">'+c.services+'</div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-calendar-check"></i> Bookings</div><div class="dw-val" style="font-family:Playfair Display,serif;font-size:22px;font-weight:700">'+c.bookings+'</div></div>'
+        +'<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-circle-dot"></i> Status</div><div class="dw-val">'
+          +(c.status==='active'
+            ? '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#2e7d32;background:#e8f5e9;padding:4px 12px;border-radius:20px"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>'
+            : '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#c62828;background:#fce4ec;padding:4px 12px;border-radius:20px"><i class="fa-solid fa-circle" style="font-size:7px"></i> Inactive</span>')
+        +'</div></div>';
+      document.getElementById('viewOverlay').classList.add('show');
+      document.body.style.overflow='hidden';
+    }
+    function closeView() { document.getElementById('viewOverlay').classList.remove('show'); document.body.style.overflow=''; }
+
+    /* Delete */
+    function openDelModal(id)  { pendingDelId=id; document.getElementById('delOverlay').classList.add('show'); }
+    function closeDelModal()   { document.getElementById('delOverlay').classList.remove('show'); pendingDelId=null; }
+    function confirmDelete() {
+      if (pendingDelId===null) return;
+      var c = DATA.find(function(x){ return x.id===pendingDelId; });
+      DATA = DATA.filter(function(x){ return x.id!==pendingDelId; });
+      saveData(); closeDelModal(); refreshAll();
+      KcozmAdmin.showToast((c?'"'+c.name+'"':'Category')+' deleted.','success');
+    }
+    document.getElementById('delOverlay').addEventListener('click',function(e){ if(e.target===this) closeDelModal(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeView(); closeDelModal(); } });
+  </script>
+</body>
+</html>

@@ -610,8 +610,8 @@
     { sec:'SALON', items:[
       { slug:'services', label:'Services', icon:'fa-scissors', badge:null, children:[
         { slug:'services',            label:'All Services',       icon:'fa-list',               href:'pages/ui-features/service.html'            },
-        { slug:'categorylist',        label:'Categories',         icon:'fa-folder',             href:'pages/ui-features/tables/categorylist.html'        },
-        { slug:'service_categories',  label:'Sub-Categories',     icon:'fa-folder-open',        href:'pages/ui-features/tables/service_categories.html'  },
+        { slug:'categorylist',        label:'Categories',         icon:'fa-folder',             href:'pages/ui-features/service_category.html'        },
+        { slug:'service_categories',  label:'Sub-Categories',     icon:'fa-folder-open',        href:'pages/ui-features/service_subcategory.html'  },
         { slug:'styling',             label:'Styling',            icon:'fa-wand-magic-sparkles', href:'pages/ui-features/styling.html'            }
       ]},
       { slug:'products', label:'Products', icon:'fa-bottle-droplet', href:'pages/ui-features/e_shop.html', badge:null },

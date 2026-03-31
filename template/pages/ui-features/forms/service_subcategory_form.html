@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin — Sub-Category Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#9a7020; --gold-ddk:#7a5010;
+      --gold-lt:#fdf6e8; --gold-glow:rgba(200,160,64,.18);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#18120f; --ink-2:#3d3028; --ink-3:#907860; --ink-4:#c4b098;
+      --surface:#fff; --surface-2:#faf8f6;
+      --border:#ebe5de; --border-lt:#f2ede6;
+      --shadow-sm:0 1px 6px rgba(24,18,12,.06); --shadow:0 2px 24px rgba(24,18,12,.08);
+      --r:14px; --t:.2s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink);line-height:1.5}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none}}
+
+    .kc-page-content{padding:28px 28px 48px;width:100%;min-width:0}
+    @media(max-width:640px){.kc-page-content{padding:18px 16px 40px}}
+
+    /* ── Breadcrumb ── */
+    .kc-bc{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold-dk);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.7}
+    .kc-bc .sep{font-size:9px;color:var(--ink-4)}
+
+    /* ── Card ── */
+    .kc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:28px;animation:fadeUp .45s ease both;width:100%}
+
+    /* ── Card Header ── */
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:48px;height:48px;border-radius:12px;background:var(--rose-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--rose-dk);font-size:20px}
+    .kc-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);line-height:1.2}
+    .kc-title-sub{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:3px}
+
+    /* ── Edit Banner ── */
+    .kc-edit-banner{display:none;background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:10px;padding:10px 16px;margin:16px 28px 0;font-size:13px;color:var(--gold-dk);align-items:center;gap:8px}
+    .kc-edit-banner.show{display:flex}
+    .kc-edit-banner i{flex-shrink:0}
+
+    /* ── Form Body ── */
+    .kc-form-body{padding:28px;display:flex;flex-direction:column;gap:20px}
+
+    /* ── Section ── */
+    .kc-section{border:1px solid var(--border);border-radius:12px;padding:22px 24px}
+    .kc-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+    .kc-sec-lbl i{color:var(--gold-dk)}
+
+    /* ── Grids ── */
+    .kc-ff-row  {display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .kc-ff-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+    @media(max-width:700px){.kc-ff-row-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.kc-ff-row,.kc-ff-row-3{grid-template-columns:1fr}}
+
+    /* ── Field ── */
+    .kc-ff{display:flex;flex-direction:column;gap:6px}
+    .kc-flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-req{color:var(--rose-dk);margin-left:2px}
+
+    /* ── Inputs ── */
+    .kc-finp,.kc-fsel,.kc-ftxt{padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;width:100%;transition:border-color var(--t),box-shadow var(--t),background var(--t)}
+    .kc-finp:focus,.kc-fsel:focus,.kc-ftxt:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp::placeholder,.kc-ftxt::placeholder{color:var(--ink-4)}
+    .kc-ftxt{resize:vertical;min-height:90px;line-height:1.55}
+    .kc-fsel{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;background-color:var(--surface-2)}
+    .kc-fsel:focus{background-color:#fff}
+
+    /* ── Parent Category Preview ── */
+    .parent-preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .parent-opt{position:relative}
+    .parent-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+    .parent-opt label{display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:2px solid var(--border);cursor:pointer;transition:all var(--t);background:var(--surface-2);font-size:13px;font-weight:600;color:var(--ink-3)}
+    .parent-opt label:hover{border-color:var(--gold);background:var(--gold-lt);color:var(--ink)}
+    .parent-opt input:checked+label{border-color:var(--gold-dk);background:var(--gold-lt);color:var(--gold-dk);box-shadow:0 0 0 3px var(--gold-glow)}
+    .parent-opt input:checked+label.rose-lbl  {border-color:var(--rose-dk);background:var(--rose-lt);color:var(--rose-dk);box-shadow:0 0 0 3px rgba(201,123,132,.18)}
+    .parent-opt input:checked+label.blue-lbl  {border-color:#1565c0;background:#e3f2fd;color:#1565c0;box-shadow:0 0 0 3px rgba(33,150,243,.18)}
+    .parent-opt input:checked+label.green-lbl {border-color:#2e7d32;background:#e8f5e9;color:#2e7d32;box-shadow:0 0 0 3px rgba(76,175,80,.18)}
+    .parent-opt label .cat-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0}
+
+    /* ── Image Upload Zone ── */
+    .kc-img-zone{border:2px dashed var(--border);border-radius:10px;padding:28px 16px;text-align:center;cursor:pointer;transition:all var(--t);background:var(--surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:130px}
+    .kc-img-zone:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .kc-img-zone input{display:none}
+    .kc-img-zone .zi{font-size:26px;color:var(--gold-dk);margin-bottom:8px}
+    .kc-img-zone .zt{font-size:12px;color:var(--ink-3)}
+    .kc-img-zone img.zprev{width:100%;max-height:150px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);display:block}
+    .kc-img-zone .zch{font-size:10.5px;color:var(--ink-3);margin-top:6px}
+    .kc-url-lnk{font-size:11px;color:var(--gold-dk);cursor:pointer;text-decoration:underline;margin-top:6px;display:inline-block}
+    .kc-url-lnk:hover{opacity:.75}
+    .kc-url-wrap{display:none;margin-top:8px}
+
+    /* ── Services Tag Input ── */
+    .tag-input-wrap{border:1.5px solid var(--border);border-radius:10px;padding:8px 10px;background:var(--surface-2);min-height:54px;display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;cursor:text;transition:all var(--t)}
+    .tag-input-wrap:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .tag{display:inline-flex;align-items:center;gap:5px;background:var(--gold-lt);color:var(--gold-dk);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid rgba(200,160,64,.25)}
+    .tag-x{cursor:pointer;font-size:10px;opacity:.7;line-height:1}
+    .tag-x:hover{opacity:1}
+    .tag-inp{border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);min-width:140px;padding:2px 4px}
+    .tag-inp::placeholder{color:var(--ink-4)}
+    .tag-hint{font-size:11px;color:var(--ink-3);margin-top:6px}
+
+    /* ── Footer ── */
+    .kc-form-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;align-items:center;background:var(--surface-2)}
+    .kc-btn-sec{padding:10px 22px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background var(--t)}
+    .kc-btn-sec:hover{background:var(--surface-2)}
+    .kc-btn-pri{padding:10px 28px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--rose),var(--rose-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 16px rgba(201,123,132,.28);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-pri:hover{opacity:.88;transform:translateY(-1px)}
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../service_category.html"><i class="fa-solid fa-folder"></i> Categories</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../service_subcategory.html"><i class="fa-solid fa-folder-open"></i> Sub-Categories</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span id="bcLabel">Add Sub-Category</span>
+    </nav>
+
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-folder-plus"></i></div>
+          <h4 class="kc-title">
+            <span id="pageHeading">Add New Sub-Category</span>
+            <span class="kc-title-sub" id="pageSubtitle">Group services under a parent category</span>
+          </h4>
+        </div>
+      </div>
+
+      <!-- Edit Banner -->
+      <div class="kc-edit-banner" id="editBanner">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>You are editing an existing sub-category. Changes will be saved back to the Sub-Categories list.</span>
+      </div>
+
+      <!-- Form Body -->
+      <div class="kc-form-body">
+
+        <!-- ── BANNER IMAGE ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-image"></i> Sub-Category Banner</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Banner Image</label>
+            <div class="kc-img-zone" id="subImgZone" onclick="document.getElementById('subFile').click()">
+              <input type="file" id="subFile" accept="image/*" onchange="onFilePick(this)">
+              <i class="fa-solid fa-cloud-arrow-up zi"></i>
+              <div class="zt">Click to upload banner image — PNG, JPG up to 5MB</div>
+            </div>
+            <span class="kc-url-lnk" onclick="toggleUrlBox()">↳ Or paste image URL</span>
+            <div class="kc-url-wrap" id="subImgUrlBox">
+              <input type="text" class="kc-finp" id="subImgUrl" placeholder="https://…/banner.jpg" oninput="onUrlPick(this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PARENT CATEGORY ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-folder"></i> Parent Category <span style="color:var(--rose-dk);margin-left:2px">*</span></div>
+          <div class="parent-preview">
+            <div class="parent-opt">
+              <input type="radio" name="subParent" id="par-ladies" value="Ladies">
+              <label for="par-ladies" class="rose-lbl">
+                <div class="cat-icon" style="background:linear-gradient(135deg,#c97b84,#a85560)"><i class="fa-solid fa-venus"></i></div>
+                Ladies
+              </label>
+            </div>
+            <div class="parent-opt">
+              <input type="radio" name="subParent" id="par-gents" value="Gents">
+              <label for="par-gents" class="blue-lbl">
+                <div class="cat-icon" style="background:linear-gradient(135deg,#2196f3,#1565c0)"><i class="fa-solid fa-mars"></i></div>
+                Gents
+              </label>
+            </div>
+            <div class="parent-opt">
+              <input type="radio" name="subParent" id="par-bridal" value="Bridal">
+              <label for="par-bridal">
+                <div class="cat-icon" style="background:linear-gradient(135deg,#c8a040,#9a7020)"><i class="fa-solid fa-heart"></i></div>
+                Bridal
+              </label>
+            </div>
+            <div class="parent-opt">
+              <input type="radio" name="subParent" id="par-kids" value="Kids">
+              <label for="par-kids" class="green-lbl">
+                <div class="cat-icon" style="background:linear-gradient(135deg,#4caf50,#2e7d32)"><i class="fa-solid fa-child"></i></div>
+                Kids
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SUB-CATEGORY DETAILS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-file-lines"></i> Sub-Category Details</div>
+
+          <!-- Name — full width -->
+          <div class="kc-ff" style="margin-bottom:16px">
+            <label class="kc-flbl">Sub-Category Name <span class="kc-req">*</span></label>
+            <input type="text" class="kc-finp" id="subName" placeholder="e.g. Facials, Hair Styling, Beard Grooming…">
+          </div>
+
+          <!-- Status + Display Order -->
+          <div class="kc-ff-row">
+            <div class="kc-ff">
+              <label class="kc-flbl">Status</label>
+              <select class="kc-fsel" id="subStatus">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Display Order</label>
+              <input type="number" class="kc-finp" id="subOrder" placeholder="e.g. 1" min="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── LINKED SERVICES ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-scissors"></i> Linked Services</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Service Names</label>
+            <div class="tag-input-wrap" id="tagWrap" onclick="document.getElementById('tagInp').focus()">
+              <input type="text" class="tag-inp" id="tagInp" placeholder="Type a service name and press Enter…" onkeydown="onTagKey(event)">
+            </div>
+            <span class="tag-hint"><i class="fa-solid fa-circle-info" style="color:var(--gold-dk)"></i> Press <strong>Enter</strong> or <strong>comma</strong> after each service name to add it as a tag</span>
+          </div>
+        </div>
+
+      </div><!-- /kc-form-body -->
+
+      <!-- Footer -->
+      <div class="kc-form-footer">
+        <a href="../service_subcategory.html" class="kc-btn-sec">
+          <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-check" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Add Sub-Category</span>
+        </button>
+      </div>
+
+    </div><!-- /kc-card -->
+  </div>
+</div>
+
+<script src="../../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({ activePage:'service_subcategory', pageTitle:'Sub-Category Form', depth:'../../../' });</script>
+<script>
+  /* ── Tag system ── */
+  var tags = [];
+
+  function renderTags() {
+    var wrap = document.getElementById('tagWrap');
+    var inp  = document.getElementById('tagInp');
+    /* Remove old tags */
+    wrap.querySelectorAll('.tag').forEach(function(t){ t.remove(); });
+    tags.forEach(function(t, i) {
+      var el = document.createElement('span');
+      el.className = 'tag';
+      el.innerHTML = t + '<span class="tag-x" onclick="removeTag('+i+')">&#10005;</span>';
+      wrap.insertBefore(el, inp);
+    });
+  }
+
+  function addTag(val) {
+    val = val.trim().replace(/,$/,'').trim();
+    if (val && tags.indexOf(val) === -1) { tags.push(val); renderTags(); }
+    document.getElementById('tagInp').value = '';
+  }
+
+  function removeTag(i) { tags.splice(i,1); renderTags(); }
+
+  function onTagKey(e) {
+    if (e.key==='Enter'||e.key===',') { e.preventDefault(); addTag(document.getElementById('tagInp').value); }
+    if (e.key==='Backspace' && !document.getElementById('tagInp').value && tags.length) { tags.pop(); renderTags(); }
+  }
+
+  /* ── URL param ── */
+  var params = new URLSearchParams(window.location.search);
+  var editId = params.get('id') ? parseInt(params.get('id')) : null;
+  var isEdit = !!editId;
+
+  /* ── Load data ── */
+  var SEED_DATA = [
+    { id:1,  name:'Facials',       parent:'Ladies', count:5, status:'active',   services:['Gold Facial','Diamond Facial','Cleanup','Fruit Facial','Anti-Tan Facial'] },
+    { id:2,  name:'Hair Styling',  parent:'Ladies', count:6, status:'active',   services:['Hair Colour','Highlights','Keratin Treatment','Smoothening','Blow Dry','Hair Spa'] },
+    { id:3,  name:'Nail Care',     parent:'Ladies', count:4, status:'active',   services:['Manicure','Pedicure','Nail Art','Gel Nails'] },
+    { id:4,  name:'Styling',       parent:'Ladies', count:3, status:'active',   services:['Saree Draping','Lehenga Draping','Dupatta Setting'] },
+    { id:5,  name:'Mehendi',       parent:'Ladies', count:3, status:'active',   services:['Bridal Mehendi','Simple Mehendi','Arabic Mehendi'] },
+    { id:6,  name:'Waxing',        parent:'Ladies', count:4, status:'active',   services:['Full Body Wax','Arms Wax','Legs Wax','Bikini Wax'] },
+    { id:7,  name:'Hair',          parent:'Gents',  count:3, status:'active',   services:['Haircut','Hair Wash','Hair Colour'] },
+    { id:8,  name:'Beard',         parent:'Gents',  count:4, status:'active',   services:['Beard Trim','Beard Shape','Beard Colour','Beard Spa'] },
+    { id:9,  name:'Shaving',       parent:'Gents',  count:2, status:'active',   services:['Clean Shave','Luxury Shave'] },
+    { id:10, name:'Head Massage',  parent:'Gents',  count:2, status:'active',   services:['Oil Head Massage','Dry Head Massage'] },
+    { id:11, name:'Full Bridal',   parent:'Bridal', count:3, status:'active',   services:['Bridal Makeup','Hair Styling','Saree Draping'] },
+    { id:12, name:'Pre-Bridal',    parent:'Bridal', count:4, status:'active',   services:['Bridal Trial','Facial','Body Polishing','Threading'] },
+    { id:13, name:'Reception',     parent:'Bridal', count:3, status:'active',   services:['Reception Makeup','Hair Set','Draping'] },
+    { id:14, name:'Engagement',    parent:'Bridal', count:3, status:'inactive', services:['Engagement Makeup','Light Styling','Mehendi'] },
+    { id:15, name:'Kids Haircut',  parent:'Kids',   count:2, status:'active',   services:['Boy Haircut','Girl Haircut'] },
+    { id:16, name:'Kids Nail Art', parent:'Kids',   count:2, status:'active',   services:['Basic Nail Art','Glitter Nails'] },
+  ];
+  var DATA = SEED_DATA;
+
+  /* ── Configure Add vs Edit ── */
+  if (isEdit) {
+    document.getElementById('bcLabel').textContent      = 'Edit Sub-Category';
+    document.getElementById('pageHeading').textContent  = 'Edit Sub-Category';
+    document.getElementById('pageSubtitle').textContent = 'Update the details for this sub-category';
+    document.getElementById('fmBtnLabel').textContent   = 'Save Changes';
+    document.getElementById('editBanner').classList.add('show');
+
+    var r = DATA.find(function(x){ return x.id===editId; });
+    if (r) {
+      document.getElementById('subName').value   = r.name   || '';
+      document.getElementById('subStatus').value = r.status || 'active';
+      /* Set parent radio */
+      var pInput = document.querySelector('input[name="subParent"][value="'+r.parent+'"]');
+      if (pInput) pInput.checked = true;
+      /* Load services into tag system */
+      tags = r.services ? r.services.slice() : [];
+      renderTags();
+      /* Banner */
+      if (r.image) { setZoneImg(r.image); document.getElementById('subImgUrl').value=r.image; document.getElementById('subImgUrlBox').style.display='block'; }
+    }
+  }
+
+  /* ── Submit ── */
+  function submitForm() {
+    var name   = document.getElementById('subName').value.trim();
+    var status = document.getElementById('subStatus').value;
+    var imgUrl = document.getElementById('subImgUrl').value.trim();
+    var pInput = document.querySelector('input[name="subParent"]:checked');
+    var parent = pInput ? pInput.value : '';
+
+    /* Flush any pending tag text */
+    var pending = document.getElementById('tagInp').value.trim();
+    if (pending) addTag(pending);
+
+    if (!name)   { showErr('Please enter a sub-category name');   return; }
+    if (!parent) { showErr('Please select a parent category');    return; }
+
+    if (isEdit) {
+      var rec = DATA.find(function(x){ return x.id===editId; });
+      if (rec) {
+        rec.name     = name;
+        rec.parent   = parent;
+        rec.status   = status;
+        rec.services = tags.slice();
+        rec.count    = tags.length;
+        if (imgUrl) rec.image = imgUrl;
+      }
+    } else {
+      var nid = DATA.length ? Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1 : 1;
+      DATA.push({ id:nid, name:name, parent:parent, count:tags.length, status:status, services:tags.slice(), image:imgUrl||'' });
+    }
+
+    sessionStorage.setItem('kc_subcategories_toast', JSON.stringify({
+      msg:  '"'+name+'" '+(isEdit?'updated successfully!':'added to '+parent+'!'),
+      type: 'success'
+    }));
+    window.location.href = '../service_subcategory.html';
+  }
+
+  function showErr(msg) { try { KcozmAdmin.showToast(msg,'error'); } catch(e){ alert(msg); } }
+
+  /* ── Image helpers ── */
+  function onFilePick(input) {
+    var f = input.files[0]; if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) { setZoneImg(e.target.result); document.getElementById('subImgUrl').value=''; };
+    reader.readAsDataURL(f);
+  }
+  function onUrlPick(url) { if (url.trim()) setZoneImg(url.trim()); else resetZone(); }
+  function toggleUrlBox() {
+    var b = document.getElementById('subImgUrlBox');
+    b.style.display = (b.style.display==='none'||b.style.display==='') ? 'block' : 'none';
+  }
+  function setZoneImg(src) {
+    var z  = document.getElementById('subImgZone');
+    var ex = z.querySelector('img.zprev'); if (ex) ex.remove();
+    var ic = z.querySelector('.zi'), tx = z.querySelector('.zt');
+    if (ic) ic.style.display='none'; if (tx) tx.style.display='none';
+    var img = document.createElement('img'); img.className='zprev'; img.src=src;
+    z.insertBefore(img, z.firstChild);
+    var lbl = z.querySelector('.zch');
+    if (!lbl) { lbl=document.createElement('div'); lbl.className='zch'; lbl.textContent='Click to change image'; z.appendChild(lbl); }
+  }
+  function resetZone() {
+    var z  = document.getElementById('subImgZone');
+    var p  = z.querySelector('img.zprev'); if (p) p.remove();
+    var l  = z.querySelector('.zch');     if (l) l.remove();
+    var ic = z.querySelector('.zi'), tx = z.querySelector('.zt');
+    if (ic) ic.style.display=''; if (tx) tx.style.display='';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin — Category Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#9a7020; --gold-ddk:#7a5010;
+      --gold-lt:#fdf6e8; --gold-glow:rgba(200,160,64,.18);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#18120f; --ink-2:#3d3028; --ink-3:#907860; --ink-4:#c4b098;
+      --surface:#fff; --surface-2:#faf8f6;
+      --border:#ebe5de; --border-lt:#f2ede6;
+      --shadow-sm:0 1px 6px rgba(24,18,12,.06); --shadow:0 2px 24px rgba(24,18,12,.08);
+      --r:14px; --t:.2s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink);line-height:1.5}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none}}
+
+    .kc-page-content{padding:28px 28px 48px;width:100%;min-width:0}
+    @media(max-width:640px){.kc-page-content{padding:18px 16px 40px}}
+
+    /* ── Breadcrumb ── */
+    .kc-bc{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold-dk);font-weight:600;display:inline-flex;align-items:center;gap:4px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.7}
+    .kc-bc .sep{font-size:9px;color:var(--ink-4)}
+
+    /* ── Card ── */
+    .kc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:28px;animation:fadeUp .45s ease both;width:100%}
+
+    /* ── Card Header ── */
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:48px;height:48px;border-radius:12px;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:20px}
+    .kc-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);line-height:1.2}
+    .kc-title-sub{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:3px}
+
+    /* ── Edit Banner ── */
+    .kc-edit-banner{display:none;background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:10px;padding:10px 16px;margin:16px 28px 0;font-size:13px;color:var(--gold-dk);align-items:center;gap:8px}
+    .kc-edit-banner.show{display:flex}
+    .kc-edit-banner i{flex-shrink:0}
+
+    /* ── Form Body ── */
+    .kc-form-body{padding:28px;display:flex;flex-direction:column;gap:20px}
+
+    /* ── Section ── */
+    .kc-section{border:1px solid var(--border);border-radius:12px;padding:22px 24px}
+    .kc-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+    .kc-sec-lbl i{color:var(--gold-dk)}
+
+    /* ── Grids ── */
+    .kc-ff-row  {display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .kc-ff-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+    @media(max-width:700px){.kc-ff-row-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.kc-ff-row,.kc-ff-row-3{grid-template-columns:1fr}}
+
+    /* ── Field ── */
+    .kc-ff{display:flex;flex-direction:column;gap:6px}
+    .kc-flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-req{color:var(--rose-dk);margin-left:2px}
+
+    /* ── Inputs ── */
+    .kc-finp,.kc-fsel,.kc-ftxt{padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;width:100%;transition:border-color var(--t),box-shadow var(--t),background var(--t)}
+    .kc-finp:focus,.kc-fsel:focus,.kc-ftxt:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp::placeholder,.kc-ftxt::placeholder{color:var(--ink-4)}
+    .kc-ftxt{resize:vertical;min-height:90px;line-height:1.55}
+    .kc-fsel{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23907860' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;background-color:var(--surface-2)}
+    .kc-fsel:focus{background-color:#fff}
+
+    /* ── Colour Picker Grid ── */
+    .color-picker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:4px}
+    .color-opt{position:relative}
+    .color-opt input[type=radio]{position:absolute;opacity:0;width:0;height:0}
+    .color-opt label{display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;padding:10px 6px;border-radius:10px;border:2px solid var(--border);transition:all var(--t);background:var(--surface-2)}
+    .color-opt label:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .color-opt input:checked+label{border-color:var(--gold-dk);background:var(--gold-lt);box-shadow:0 0 0 3px var(--gold-glow)}
+    .color-swatch{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+    .color-name{font-size:10.5px;font-weight:700;color:var(--ink-3);text-align:center;line-height:1.3}
+    .color-opt input:checked+label .color-name{color:var(--gold-dk)}
+
+    /* ── Icon Preview ── */
+    .icon-preview-wrap{display:flex;align-items:center;gap:12px;margin-top:4px}
+    .icon-preview{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--gold-lt);border:1.5px solid var(--border);color:var(--gold-dk);flex-shrink:0;transition:all var(--t)}
+    .icon-preview-wrap .kc-finp{flex:1;margin-top:0}
+
+    /* ── Image Upload Zone ── */
+    .kc-img-zone{border:2px dashed var(--border);border-radius:10px;padding:28px 16px;text-align:center;cursor:pointer;transition:all var(--t);background:var(--surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:130px}
+    .kc-img-zone:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .kc-img-zone input{display:none}
+    .kc-img-zone .zi{font-size:26px;color:var(--gold-dk);margin-bottom:8px}
+    .kc-img-zone .zt{font-size:12px;color:var(--ink-3)}
+    .kc-img-zone img.zprev{width:100%;max-height:150px;object-fit:cover;border-radius:8px;border:1.5px solid var(--border);display:block}
+    .kc-img-zone .zch{font-size:10.5px;color:var(--ink-3);margin-top:6px}
+    .kc-url-lnk{font-size:11px;color:var(--gold-dk);cursor:pointer;text-decoration:underline;margin-top:6px;display:inline-block}
+    .kc-url-lnk:hover{opacity:.75}
+    .kc-url-wrap{display:none;margin-top:8px}
+
+    /* ── Footer ── */
+    .kc-form-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;align-items:center;background:var(--surface-2)}
+    .kc-btn-sec{padding:10px 22px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background var(--t)}
+    .kc-btn-sec:hover{background:var(--surface-2)}
+    .kc-btn-pri{padding:10px 28px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 16px var(--gold-glow);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-pri:hover{opacity:.88;transform:translateY(-1px)}
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../service_category.html"><i class="fa-solid fa-folder"></i> Categories</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span id="bcLabel">Add Category</span>
+    </nav>
+
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-folder-plus"></i></div>
+          <h4 class="kc-title">
+            <span id="pageHeading">Add New Category</span>
+            <span class="kc-title-sub" id="pageSubtitle">Fill in the details to create a top-level service category</span>
+          </h4>
+        </div>
+      </div>
+
+      <!-- Edit banner -->
+      <div class="kc-edit-banner" id="editBanner">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>You are editing an existing category. Changes will be saved back to the Categories list.</span>
+      </div>
+
+      <!-- Form Body -->
+      <div class="kc-form-body">
+
+        <!-- ── BANNER IMAGE ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-image"></i> Category Banner</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Banner Image</label>
+            <div class="kc-img-zone" id="catImgZone" onclick="document.getElementById('catFile').click()">
+              <input type="file" id="catFile" accept="image/*" onchange="onFilePick(this)">
+              <i class="fa-solid fa-cloud-arrow-up zi"></i>
+              <div class="zt">Click to upload banner image — PNG, JPG up to 5MB</div>
+            </div>
+            <span class="kc-url-lnk" onclick="toggleUrlBox()">↳ Or paste image URL</span>
+            <div class="kc-url-wrap" id="catImgUrlBox">
+              <input type="text" class="kc-finp" id="catImgUrl" placeholder="https://…/banner.jpg" oninput="onUrlPick(this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CATEGORY DETAILS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-file-lines"></i> Category Details</div>
+
+          <!-- Name — full width -->
+          <div class="kc-ff" style="margin-bottom:16px">
+            <label class="kc-flbl">Category Name <span class="kc-req">*</span></label>
+            <input type="text" class="kc-finp" id="catName" placeholder="e.g. Ladies, Gents, Bridal, Kids…">
+          </div>
+
+          <!-- Description — full width -->
+          <div class="kc-ff" style="margin-bottom:16px">
+            <label class="kc-flbl">Description</label>
+            <textarea class="kc-ftxt" id="catDesc" placeholder="Short description of what this category includes…"></textarea>
+          </div>
+
+          <!-- Status -->
+          <div class="kc-ff-row">
+            <div class="kc-ff">
+              <label class="kc-flbl">Status</label>
+              <select class="kc-fsel" id="catStatus">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Display Order</label>
+              <input type="number" class="kc-finp" id="catOrder" placeholder="e.g. 1" min="1">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ICON ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-icons"></i> Category Icon</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Font Awesome Icon Class</label>
+            <div class="icon-preview-wrap">
+              <div class="icon-preview" id="iconPreview"><i class="fa-solid fa-folder" id="iconPreviewI"></i></div>
+              <input type="text" class="kc-finp" id="catIcon" placeholder="e.g. fa-venus, fa-mars, fa-heart, fa-child…" oninput="previewIcon(this.value)">
+            </div>
+            <span style="font-size:11px;color:var(--ink-3);margin-top:6px">Browse icons at <a href="https://fontawesome.com/icons" target="_blank" style="color:var(--gold-dk);font-weight:600">fontawesome.com/icons</a></span>
+          </div>
+        </div>
+
+        <!-- ── COLOR THEME ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-palette"></i> Card Color Theme</div>
+          <div class="color-picker-grid" id="colorPicker">
+            <div class="color-opt">
+              <input type="radio" name="catColor" id="col-rose" value="rose" checked>
+              <label for="col-rose">
+                <div class="color-swatch" style="background:linear-gradient(135deg,#c97b84,#a85560)"><i class="fa-solid fa-venus"></i></div>
+                <span class="color-name">Rose<br>Pink</span>
+              </label>
+            </div>
+            <div class="color-opt">
+              <input type="radio" name="catColor" id="col-gold" value="gold">
+              <label for="col-gold">
+                <div class="color-swatch" style="background:linear-gradient(135deg,#c8a040,#9a7020)"><i class="fa-solid fa-star"></i></div>
+                <span class="color-name">Gold<br>Brown</span>
+              </label>
+            </div>
+            <div class="color-opt">
+              <input type="radio" name="catColor" id="col-blue" value="blue">
+              <label for="col-blue">
+                <div class="color-swatch" style="background:linear-gradient(135deg,#2196f3,#1565c0)"><i class="fa-solid fa-mars"></i></div>
+                <span class="color-name">Blue<br>Navy</span>
+              </label>
+            </div>
+            <div class="color-opt">
+              <input type="radio" name="catColor" id="col-green" value="green">
+              <label for="col-green">
+                <div class="color-swatch" style="background:linear-gradient(135deg,#4caf50,#2e7d32)"><i class="fa-solid fa-leaf"></i></div>
+                <span class="color-name">Green<br>Emerald</span>
+              </label>
+            </div>
+            <div class="color-opt">
+              <input type="radio" name="catColor" id="col-purple" value="purple">
+              <label for="col-purple">
+                <div class="color-swatch" style="background:linear-gradient(135deg,#9c27b0,#6a1b9a)"><i class="fa-solid fa-gem"></i></div>
+                <span class="color-name">Purple<br>Violet</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /kc-form-body -->
+
+      <!-- Footer -->
+      <div class="kc-form-footer">
+        <a href="../service_category.html" class="kc-btn-sec">
+          <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-check" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Add Category</span>
+        </button>
+      </div>
+
+    </div><!-- /kc-card -->
+  </div>
+</div>
+
+<script src="../../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({ activePage:'service_category', pageTitle:'Category Form', depth:'../../../' });</script>
+<script>
+  /* ── URL param ── */
+  var params = new URLSearchParams(window.location.search);
+  var editId = params.get('id') ? parseInt(params.get('id')) : null;
+  var isEdit = !!editId;
+
+  /* ── Load data ── */
+  var SEED = [
+    { id:1, name:'Ladies', icon:'fa-venus', color:'rose',  status:'active',   desc:'Hair, skin, nail, styling and mehendi services exclusively for women.', subCats:6, services:12, bookings:89 },
+    { id:2, name:'Gents',  icon:'fa-mars',  color:'blue',  status:'active',   desc:'Haircut, beard grooming, shaving and head massage services for men.',    subCats:4, services:4,  bookings:31 },
+    { id:3, name:'Bridal', icon:'fa-heart', color:'gold',  status:'active',   desc:'Full bridal, pre-bridal, reception and engagement packages.',            subCats:4, services:4,  bookings:18 },
+    { id:4, name:'Kids',   icon:'fa-child', color:'green', status:'active',   desc:'Gentle haircut and nail art services tailored for children.',            subCats:2, services:2,  bookings:4  },
+  ];
+  var DATA = [];
+  try { DATA = JSON.parse(sessionStorage.getItem('kc_categories_data') || 'null') || SEED; } catch(e){ DATA = SEED; }
+
+  /* ── Configure Add vs Edit ── */
+  if (isEdit) {
+    document.getElementById('bcLabel').textContent      = 'Edit Category';
+    document.getElementById('pageHeading').textContent  = 'Edit Category';
+    document.getElementById('pageSubtitle').textContent = 'Update the details for this service category';
+    document.getElementById('fmBtnLabel').textContent   = 'Save Changes';
+    document.getElementById('editBanner').classList.add('show');
+
+    var r = DATA.find(function(x){ return x.id === editId; });
+    if (r) {
+      document.getElementById('catName').value   = r.name   || '';
+      document.getElementById('catDesc').value   = r.desc   || '';
+      document.getElementById('catStatus').value = r.status || 'active';
+      document.getElementById('catIcon').value   = r.icon   || '';
+      previewIcon(r.icon || '');
+      /* Set color radio */
+      var colInput = document.querySelector('input[name="catColor"][value="'+r.color+'"]');
+      if (colInput) colInput.checked = true;
+      /* Banner */
+      if (r.image) { setZoneImg(r.image); document.getElementById('catImgUrl').value = r.image; document.getElementById('catImgUrlBox').style.display='block'; }
+    }
+  }
+
+  /* ── Icon preview ── */
+  function previewIcon(val) {
+    var cls = (val||'').trim() || 'fa-folder';
+    var el  = document.getElementById('iconPreviewI');
+    el.className = 'fa-solid ' + cls;
+  }
+
+  /* ── Submit ── */
+  function submitForm() {
+    var name   = document.getElementById('catName').value.trim();
+    var desc   = document.getElementById('catDesc').value.trim();
+    var status = document.getElementById('catStatus').value;
+    var icon   = (document.getElementById('catIcon').value.trim() || 'fa-folder');
+    var color  = document.querySelector('input[name="catColor"]:checked').value;
+    var imgUrl = document.getElementById('catImgUrl').value.trim();
+
+    if (!name) { showErr('Please enter a category name'); return; }
+
+    if (isEdit) {
+      var rec = DATA.find(function(x){ return x.id === editId; });
+      if (rec) {
+        rec.name   = name;
+        rec.desc   = desc;
+        rec.status = status;
+        rec.icon   = icon;
+        rec.color  = color;
+        if (imgUrl) rec.image = imgUrl;
+      }
+    } else {
+      var nid = DATA.length ? Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1 : 1;
+      DATA.push({ id:nid, name:name, icon:icon, color:color, status:status, desc:desc, subCats:0, services:0, bookings:0, image:imgUrl||'' });
+    }
+
+    sessionStorage.setItem('kc_categories_data', JSON.stringify(DATA));
+    sessionStorage.setItem('kc_categories_toast', JSON.stringify({
+      msg:  '"'+name+'" '+(isEdit?'updated successfully!':'added successfully!'),
+      type: 'success'
+    }));
+    window.location.href = '../service_category.html';
+  }
+
+  function showErr(msg) { try { KcozmAdmin.showToast(msg,'error'); } catch(e){ alert(msg); } }
+
+  /* ── Image helpers ── */
+  function onFilePick(input) {
+    var f = input.files[0]; if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) { setZoneImg(e.target.result); document.getElementById('catImgUrl').value=''; };
+    reader.readAsDataURL(f);
+  }
+  function onUrlPick(url) { if (url.trim()) setZoneImg(url.trim()); else resetZone(); }
+  function toggleUrlBox() {
+    var b = document.getElementById('catImgUrlBox');
+    b.style.display = (b.style.display==='none'||b.style.display==='') ? 'block' : 'none';
+  }
+  function setZoneImg(src) {
+    var z = document.getElementById('catImgZone');
+    var ex = z.querySelector('img.zprev'); if (ex) ex.remove();
+    var ic = z.querySelector('.zi'), tx = z.querySelector('.zt');
+    if (ic) ic.style.display='none'; if (tx) tx.style.display='none';
+    var img = document.createElement('img'); img.className='zprev'; img.src=src;
+    z.insertBefore(img, z.firstChild);
+    var lbl = z.querySelector('.zch');
+    if (!lbl) { lbl=document.createElement('div'); lbl.className='zch'; lbl.textContent='Click to change image'; z.appendChild(lbl); }
+  }
+  function resetZone() {
+    var z = document.getElementById('catImgZone');
+    var p = z.querySelector('img.zprev'); if (p) p.remove();
+    var l = z.querySelector('.zch'); if (l) l.remove();
+    var ic = z.querySelector('.zi'), tx = z.querySelector('.zt');
+    if (ic) ic.style.display=''; if (tx) tx.style.display='';
+  }
+</script>
+</body>
+</html>
