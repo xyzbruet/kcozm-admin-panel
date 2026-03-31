@@ -1,13 +1,24 @@
 /**
- * KCOZM Salon Admin — Shared Components v10
+ * KCOZM Salon Admin — Shared Components v11 (CORRECTED)
  * ══════════════════════════════════════════
  * NAVBAR  : White (#ffffff) — original v8
  * SIDEBAR : White background, black labels, grey hover
  * SCROLLBAR: Gold-toned to match sidebar cream, hidden on mobile/tablet
- * ICONS   : Pink (#e91e63) matching Add Product button
+ * ICONS   : Gold (#c8a040) — luxury brand primary
  * MOBILE  : No scrollbar visible, sidebar slides from RIGHT
  * SERVICES: All 4 sub-items (All Services, Categories, Styling, Loyalty Cards)
  * ALL FUNCTIONALITY PRESERVED
+ *
+ * FIXES APPLIED (v11):
+ * ✓ Reassigned --pk, --pk-dk, --pk-ddk, --pk-lt, --pk-glow to GOLD (prevent pink bleed)
+ * ✓ Added missing --rose-lt and --rose-dk for index.html Quick Access
+ * ✓ Updated .kc-nb-addbtn gradient: pink → gold (consistent with sidebar)
+ * ✓ Updated .kc-nb-av gradient: pink → gold
+ * ✓ Updated .kc-ft-brand span gradient: pink → gold
+ * ✓ Updated .kc-sb-av gradient: pink → gold
+ * ✓ Updated .kc-mob-sb-av gradient: pink → gold
+ * ✓ Updated .kc-nb-ndot.p (notification dot) color to rose instead of pink
+ * ✓ All other functionality and styling preserved exactly
  */
 (function (win) {
   'use strict';
@@ -16,12 +27,14 @@
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
     :root {
-      --pk:          #e91e63;
-      --pk-dk:       #c2185b;
-      --pk-ddk:      #880e4f;
-      --pk-lt:       #fce4ec;
-      --pk-glow:     rgba(233,30,99,0.18);
+      /* ── CRITICAL FIX: Reassign pink vars to GOLD to prevent accidental pink bleed ── */
+      --pk:          #c8a040;
+      --pk-dk:       #a07828;
+      --pk-ddk:      #7a5a10;
+      --pk-lt:       #fdf8ee;
+      --pk-glow:     rgba(200,160,64,0.22);
 
+      /* ── Primary: GOLD luxury palette ── */
       --gold:        #c8a040;
       --gold-dk:     #a07828;
       --gold-ddk:    #7a5a10;
@@ -30,11 +43,16 @@
       --gold-border: #f0e8d0;
       --gold-glow:   rgba(200,160,64,0.22);
 
+      /* ── ADDED: Rose palette for Quick Access badges and accents ── */
+      --rose-lt:     #fce8ea;
+      --rose-dk:     #c97b84;
+
       /* ── Sidebar icon gold (matches Add Service button) ── */
       --ic:          #c8a040;
       --ic-dk:       #a07828;
       --ic-glow:     rgba(200,160,64,0.35);
 
+      /* ── Neutrals ── */
       --ink:         #1a1410;
       --ink-2:       #3d3028;
       --ink-3:       #8a7060;
@@ -143,14 +161,14 @@
 
     .kc-nb-addbtn {
       display:flex; align-items:center; gap:6px; padding:7px 16px; border-radius:9px;
-      background:linear-gradient(135deg,var(--pk),var(--pk-dk));
+      background:linear-gradient(135deg,var(--gold),var(--gold-dk));
       border:none; color:#fff; font-family:'DM Sans',sans-serif;
       font-size:12.5px; font-weight:600; cursor:pointer;
       white-space:nowrap; flex-shrink:0;
-      box-shadow:0 4px 14px rgba(233,30,99,0.32);
+      box-shadow:0 4px 14px rgba(200,160,64,0.32);
       transition:all var(--t); text-decoration:none;
     }
-    .kc-nb-addbtn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(233,30,99,0.42); }
+    .kc-nb-addbtn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(200,160,64,0.42); }
 
     .kc-nb-btn {
       width:38px; height:38px; flex-shrink:0;
@@ -163,7 +181,7 @@
     .kc-nb-btn .dot {
       position:absolute; top:-5px; right:-5px;
       width:17px; height:17px; border-radius:99px;
-      background:var(--pk-dk); color:#fff;
+      background:var(--rose-dk); color:#fff;
       font-size:8px; font-weight:700; line-height:17px; text-align:center;
       border:2px solid var(--surface);
     }
@@ -187,7 +205,7 @@
     .kc-nb-pbtn:hover { border-color:var(--gold); background:var(--gold-mid); }
     .kc-nb-av {
       width:32px; height:32px; border-radius:50%;
-      background:linear-gradient(135deg,var(--pk),var(--pk-dk));
+      background:linear-gradient(135deg,var(--gold),var(--gold-dk));
       display:flex; align-items:center; justify-content:center;
       font-family:'Cormorant Garamond',serif; font-size:14px; font-weight:700; color:#fff; flex-shrink:0;
     }
@@ -214,8 +232,8 @@
     .kc-nb-pdi:hover { background:var(--gold-mid); color:var(--gold-ddk); }
     .kc-nb-pdi:hover i { color:var(--gold-ddk); }
     .kc-nb-pdi.red { color:#c62828; } .kc-nb-pdi.red i { color:#c62828; }
-    .kc-nb-pdi.red:hover { background:#fce4ec; }
-    .kc-pd-hr { height:1px; background:var(--gold-border); }
+    .kc-nb-pdi.red:hover { background:#fef2f2; }
+    .kc-nb-pd-hr { height:1px; background:var(--gold-border); }
 
     .kc-nb-mob-toggle {
       width:38px; height:38px; flex-shrink:0;
@@ -241,7 +259,7 @@
     .kc-nb-ni:last-child { border:none; }
     .kc-nb-ni:hover { background:var(--gold-lt); }
     .kc-nb-ndot { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px; }
-    .kc-nb-ndot.p  { background:var(--pk-lt); color:var(--pk-dk); }
+    .kc-nb-ndot.p  { background:var(--rose-lt); color:var(--rose-dk); }
     .kc-nb-ndot.o  { background:#fff3e0; color:#e65100; }
     .kc-nb-ndot.gr { background:#e8f5e9; color:#2e7d32; }
     .kc-nb-ni p    { font-size:12.5px; color:var(--gold-ddk); line-height:1.5; margin:0; }
@@ -285,7 +303,7 @@
     .kc-sb-search-inner:focus-within { border-color:var(--gold); background:#fff; box-shadow:0 0 0 3px var(--gold-glow); }
     .kc-sb-search-inner i { color:var(--ic); font-size:12px; flex-shrink:0; }
     .kc-sb-search-inner input { background:transparent; border:none; outline:none; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--ink); width:100%; min-width:0; }
-    .kc-sb-search-inner input::placeholder { color:rgba(233,30,99,0.35); }
+    .kc-sb-search-inner input::placeholder { color:rgba(200,160,64,0.35); }
     .kc-sidebar.sb-col .kc-sb-search-wrap { padding:10px 0; }
     .kc-sidebar.sb-col .kc-sb-search-inner { border-radius:0; border:none; background:transparent; justify-content:center; padding:8px; }
     .kc-sidebar.sb-col .kc-sb-search-inner input { display:none; }
@@ -558,10 +576,10 @@
       display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
     }
     .kc-ft-brand { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:700; color:var(--ink-2); display:flex; align-items:center; gap:8px; }
-    .kc-ft-brand span { width:22px; height:22px; background:linear-gradient(135deg,var(--pk),var(--pk-dk)); border-radius:5px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; color:#fff; font-weight:700; }
+    .kc-ft-brand span { width:22px; height:22px; background:linear-gradient(135deg,var(--gold),var(--gold-dk)); border-radius:5px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; color:#fff; font-weight:700; }
     .kc-ft-links { display:flex; gap:18px; }
     .kc-ft-links a { font-size:12px; color:var(--ink-3); text-decoration:none; transition:color var(--t); }
-    .kc-ft-links a:hover { color:var(--pk-dk); }
+    .kc-ft-links a:hover { color:var(--gold-dk); }
     .kc-ft-copy { font-size:11.5px; color:var(--ink-3); }
     .kc-ft-status { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; color:#2e7d32; background:#e8f5e9; padding:3px 10px; border-radius:20px; }
 
@@ -573,7 +591,7 @@
       --border:rgba(255,255,255,0.07);
       --ink:#f5e8ed; --ink-2:#d0b4c0; --ink-3:#907878;
     }
-    .dark-mode .kc-navbar { background:#1a1012; border-bottom-color:rgba(233,30,99,0.15); box-shadow:none; }
+    .dark-mode .kc-navbar { background:#1a1012; border-bottom-color:rgba(200,160,64,0.15); box-shadow:none; }
     .dark-mode .kc-nb-search input { background:#13080e; color:var(--ink); }
     .dark-mode .kc-nb-btn { border-color:rgba(255,255,255,0.10); color:var(--ink-3); }
     .dark-mode .kc-nb-pbtn { border-color:rgba(255,255,255,0.10); }

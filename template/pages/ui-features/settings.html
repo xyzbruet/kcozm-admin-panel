@@ -11,7 +11,6 @@
     :root {
       --gold:#c8a040; --gold-dk:#9a7020; --gold-ddk:#7a5010;
       --gold-lt:#fdf6e8; --gold-mid:#fdf0d0; --gold-glow:rgba(200,160,64,.18);
-      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
       --ink:#18120f; --ink-2:#3d3028; --ink-3:#907860; --ink-4:#c4b098;
       --surface:#fff; --surface-2:#faf8f6; --surface-3:#f4f0eb;
       --border:#ebe5de; --border-lt:#f2ede6;
@@ -49,7 +48,7 @@
       content: '';
       position: absolute; inset: 0;
       background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,160,64,.14) 0%, transparent 70%),
-                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,123,132,.08) 0%, transparent 60%);
+                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,160,64,.08) 0%, transparent 60%);
       pointer-events: none;
     }
     .settings-hero::after {
@@ -136,7 +135,7 @@
     .snav-text { flex: 1; }
     .snav-badge {
       font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 20px;
-      background: var(--rose-lt); color: var(--rose-dk);
+      background: #fef2f2; color: #c62828;
     }
     .snav-divider { height: 1px; background: var(--border-lt); margin: 8px 20px; }
 
@@ -190,7 +189,6 @@
       font-size: 16px; flex-shrink: 0;
     }
     .sc-head-icon.gold  { background: var(--gold-lt); color: var(--gold-dk); }
-    .sc-head-icon.rose  { background: var(--rose-lt); color: var(--rose-dk); }
     .sc-head-icon.blue  { background: var(--blue-lt); color: var(--blue); }
     .sc-head-icon.green { background: var(--green-lt); color: var(--green); }
     .sc-head-icon.dark  { background: #1c1409; color: var(--gold); }
@@ -322,11 +320,11 @@
     .avatar-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px 24px; }
     .avatar-preview {
       width: 72px; height: 72px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--rose), var(--rose-dk));
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       display: flex; align-items: center; justify-content: center;
       font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700;
       color: #fff; border: 3px solid rgba(200,160,64,.30);
-      box-shadow: 0 4px 16px rgba(201,123,132,.25); flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(200,160,64,.25); flex-shrink: 0;
     }
     .avatar-info { flex: 1; }
     .avatar-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
@@ -360,12 +358,10 @@
     }
     .btn-gold { background: linear-gradient(135deg,var(--gold),var(--gold-dk)); color: #fff; box-shadow: 0 3px 12px var(--gold-glow); }
     .btn-gold:hover { box-shadow: 0 6px 20px rgba(200,160,64,.42); transform: translateY(-1px); }
-    .btn-rose { background: linear-gradient(135deg,var(--rose),var(--rose-dk)); color: #fff; box-shadow: 0 3px 12px rgba(201,123,132,.25); }
-    .btn-rose:hover { box-shadow: 0 6px 20px rgba(201,123,132,.38); transform: translateY(-1px); }
     .btn-out { background: transparent; border: 1.5px solid var(--border); color: var(--ink-2); }
     .btn-out:hover { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
     .btn-danger { background: transparent; border: 1.5px solid #f48fb1; color: #c62828; }
-    .btn-danger:hover { background: #fce4ec; }
+    .btn-danger:hover { background: #fef2f2; }
     .btn-sm { padding: 7px 14px; font-size: 12px; border-radius: 8px; }
 
     /* ── Card Footer ── */
@@ -416,7 +412,7 @@
       margin-bottom: 20px;
     }
     .dz-head {
-      padding: 14px 22px; background: #fce4ec;
+      padding: 14px 22px; background: #fef2f2;
       display: flex; align-items: center; gap: 10px;
     }
     .dz-head i { color: #c62828; font-size: 16px; }
@@ -588,7 +584,7 @@
             <span class="snav-text">Security</span>
           </div>
           <div class="snav-item" onclick="switchTab(this,'danger')">
-            <div class="snav-icon" style="background:#fce4ec;color:#c62828"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="snav-icon" style="background:#fef2f2;color:#c62828"><i class="fa-solid fa-triangle-exclamation"></i></div>
             <span class="snav-text" style="color:#c62828">Danger Zone</span>
           </div>
         </div>
@@ -604,7 +600,7 @@
 
           <div class="setting-card">
             <div class="sc-head">
-              <div class="sc-head-icon rose"><i class="fa-solid fa-id-card"></i></div>
+              <div class="sc-head-icon gold"><i class="fa-solid fa-id-card"></i></div>
               <div>
                 <div class="sc-title">Profile Photo & Name</div>
                 <div class="sc-sub">Your display name and avatar across the admin panel</div>
@@ -659,7 +655,7 @@
               </div>
             </div>
             <div class="sc-footer">
-              <button class="btn btn-rose" onclick="KcozmAdmin.showToast('Password updated!','success')"><i class="fa-solid fa-key"></i> Update Password</button>
+              <button class="btn btn-gold" onclick="KcozmAdmin.showToast('Password updated!','success')"><i class="fa-solid fa-key"></i> Update Password</button>
             </div>
           </div>
         </div>
@@ -705,7 +701,7 @@
               <div><div class="sc-title">Salon Details</div><div class="sc-sub">Basic information about your salon</div></div>
             </div>
             <div class="form-grid-2">
-              <div class="fg full"><label class="flbl">Salon Name <span style="color:var(--rose-dk)">*</span></label><input type="text" class="finp" value="KCOZM — The Luxury Salon"></div>
+              <div class="fg full"><label class="flbl">Salon Name <span style="color:#c62828">*</span></label><input type="text" class="finp" value="KCOZM — The Luxury Salon"></div>
               <div class="fg"><label class="flbl">Business Type</label>
                 <select class="fsel"><option selected>Luxury Salon</option><option>Unisex Salon</option><option>Bridal Studio</option><option>Spa & Wellness</option></select>
               </div>
@@ -857,7 +853,7 @@
 
           <div class="setting-card">
             <div class="sc-head">
-              <div class="sc-head-icon rose"><i class="fa-solid fa-mobile"></i></div>
+              <div class="sc-head-icon gold"><i class="fa-solid fa-mobile"></i></div>
               <div><div class="sc-title">Push & SMS Notifications</div><div class="sc-sub">Real-time alerts on your devices</div></div>
             </div>
             <div class="sc-body">
@@ -1023,7 +1019,7 @@
 
           <div class="setting-card">
             <div class="sc-head">
-              <div class="sc-head-icon rose"><i class="fa-solid fa-users-gear"></i></div>
+              <div class="sc-head-icon gold"><i class="fa-solid fa-users-gear"></i></div>
               <div><div class="sc-title">Staff General Settings</div><div class="sc-sub">Configure staff-related preferences</div></div>
             </div>
             <div class="sc-body">
@@ -1068,7 +1064,7 @@
                   <div class="api-key-display" id="secKey">sk_live_kczm_••••••••••••••••••••••••••••••••</div>
                   <button class="btn btn-out btn-sm" onclick="toggleKey('secKey','sk_live_kczm_9f3a7e1c5d8b2f4a6e0c1d9')"><i class="fa-solid fa-eye"></i></button>
                   <button class="btn btn-out btn-sm" onclick="copyKey('sk_live_kczm_9f3a7e1c5d8b2f4a6e0c1d9')"><i class="fa-solid fa-copy"></i></button>
-                  <button class="btn btn-rose btn-sm" onclick="KcozmAdmin.showToast('New key generated!','success')"><i class="fa-solid fa-rotate"></i> Regenerate</button>
+                  <button class="btn btn-gold btn-sm" onclick="KcozmAdmin.showToast('New key generated!','success')"><i class="fa-solid fa-rotate"></i> Regenerate</button>
                 </div>
               </div>
             </div>

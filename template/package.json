@@ -1,5 +1,5 @@
 {
-  "name": "Celestialui_admin",
+  "name": "kcozm-admin",
   "version": "1.0.2",
   "description": "KCOZM Admin Panel",
   "main": "index.html",
@@ -10,6 +10,6 @@
   "devDependencies": {
     "http-server": "^14.1.1"
   },
-  "author": "bootstrapdash",
+  "author": "KCOZM Team",
   "license": "ISC"
 }

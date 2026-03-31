@@ -4,21 +4,46 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>KCOZM Admin — My Profile</title>
-  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../../images/favicon.png" />
   <style>
+    :root {
+      --gold: #c8a040;
+      --gold-dk: #a07828;
+      --gold-lt: #fdf8ee;
+      --gold-glow: rgba(200,160,64,.18);
+      --ink: #18120f;
+      --ink-2: #3d3028;
+      --ink-3: #7a6a62;
+      --surface: #fff;
+      --surface-2: #faf8f6;
+      --border: #ebe5e0;
+      --border-lt: #f2ede6;
+      --radius-sm: 9px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 6px rgba(24,18,12,.06);
+      --shadow: 0 2px 24px rgba(24,18,12,.08);
+      --shadow-md: 0 6px 32px rgba(24,18,12,.11);
+      --shadow-lg: 0 12px 48px rgba(24,18,12,.16);
+      --t: 0.2s ease;
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface-2); color: var(--ink); line-height: 1.5; }
+    a { text-decoration: none; }
+
     /* ── Profile page scoped styles ── */
-    .kc-profile-page { padding: 28px 28px 0; }
+    .main-panel { min-width: 0; overflow-x: hidden; }
+    .kc-profile-page { padding: 28px 28px 0; flex: 1; width: 100%; }
 
     /* ── Breadcrumb ── */
     .kc-bc {
       display: flex; align-items: center; gap: 7px;
-      font-size: 12px; font-weight: 500; color: var(--ink-3, #7a6a62);
+      font-size: 12px; font-weight: 500; color: var(--ink-3);
       margin-bottom: 24px;
     }
-    .kc-bc a { color: var(--rose, #c97b84); text-decoration: none; }
+    .kc-bc a { color: var(--gold); text-decoration: none; font-weight: 600; }
     .kc-bc a:hover { opacity: 0.75; }
     .kc-bc i { font-size: 9px; opacity: 0.5; }
 
@@ -26,7 +51,7 @@
     .kc-cover {
       height: 180px;
       border-radius: 20px 20px 0 0;
-      background: linear-gradient(135deg, #18120f 0%, #3d2020 45%, #c97b84 100%);
+      background: linear-gradient(135deg, #1e1208 0%, #2e1c0a 45%, #a07828 100%);
       position: relative;
       overflow: hidden;
     }
@@ -51,8 +76,8 @@
 
     /* ── Profile card ── */
     .kc-profile-card {
-      background: var(--surface, #fff);
-      border: 1px solid var(--border, #ebe5e0);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-top: none;
       border-radius: 0 0 20px 20px;
       padding: 0 32px 28px;
@@ -75,34 +100,34 @@
     .kc-avatar {
       width: 104px; height: 104px;
       border-radius: 50%;
-      border: 4px solid var(--surface, #fff);
+      border: 4px solid var(--surface);
       box-shadow: 0 4px 20px rgba(24,18,15,0.16);
-      background: linear-gradient(135deg, #fce4ec, #fdf8ef);
+      background: linear-gradient(135deg, #fdf8ee, #fdf3d0);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Cormorant Garamond', 'Georgia', serif;
       font-size: 38px; font-weight: 700;
-      color: #c97b84;
+      color: var(--gold-dk);
       overflow: hidden;
     }
     .kc-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
     .kc-avatar-upload {
       position: absolute; bottom: 4px; right: 4px;
       width: 28px; height: 28px;
-      background: #c97b84;
+      background: var(--gold);
       border: 2px solid #fff;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; font-size: 11px; color: #fff;
       transition: background 0.2s ease;
     }
-    .kc-avatar-upload:hover { background: #a85560; }
+    .kc-avatar-upload:hover { background: var(--gold-dk); }
     .kc-avatar-upload input { display: none; }
 
     .kc-profile-meta { flex: 1; padding-bottom: 6px; }
     .kc-profile-name {
       font-family: 'Cormorant Garamond', 'Georgia', serif;
       font-size: 26px; font-weight: 700;
-      color: var(--ink, #18120f);
+      color: var(--ink);
       line-height: 1.2;
     }
     .kc-profile-role-tag {
@@ -110,33 +135,33 @@
       margin-top: 4px;
       font-size: 11px; font-weight: 700;
       letter-spacing: 1px; text-transform: uppercase;
-      color: #c97b84;
-      background: #f9eced;
+      color: var(--gold-dk);
+      background: var(--gold-lt);
       padding: 3px 12px; border-radius: 20px;
-      border: 1px solid rgba(201,123,132,0.25);
+      border: 1px solid rgba(200,160,64,0.25);
     }
-    .kc-profile-since { font-size: 12px; color: var(--ink-3, #7a6a62); margin-top: 6px; }
+    .kc-profile-since { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
 
     /* Stats strip */
     .kc-profile-stats {
       display: flex;
       gap: 0;
-      border: 1px solid var(--border, #ebe5e0);
+      border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
       margin-bottom: 24px;
     }
     .kc-ps {
       flex: 1; text-align: center; padding: 16px 12px;
-      border-right: 1px solid var(--border, #ebe5e0);
+      border-right: 1px solid var(--border);
     }
     .kc-ps:last-child { border-right: none; }
     .kc-ps-num {
       font-family: 'Cormorant Garamond', 'Georgia', serif;
       font-size: 26px; font-weight: 700;
-      color: #c97b84; line-height: 1;
+      color: var(--gold); line-height: 1;
     }
-    .kc-ps-lbl { font-size: 11px; color: var(--ink-3, #7a6a62); margin-top: 3px; font-weight: 500; }
+    .kc-ps-lbl { font-size: 11px; color: var(--ink-3); margin-top: 3px; font-weight: 500; }
 
     /* ── Grid ── */
     .kc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -144,8 +169,8 @@
 
     /* ── Section card ── */
     .kc-sec {
-      background: var(--surface, #fff);
-      border: 1px solid var(--border, #ebe5e0);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 2px 16px rgba(24,18,15,0.06);
@@ -154,23 +179,23 @@
     .kc-sec.full { grid-column: 1 / -1; }
     .kc-sec-head {
       padding: 18px 22px;
-      border-bottom: 1px solid var(--border, #ebe5e0);
+      border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 12px;
     }
     .kc-sec-icon {
       width: 36px; height: 36px;
-      background: #f9eced;
+      background: var(--gold-lt);
       border-radius: 9px;
       display: flex; align-items: center; justify-content: center;
-      color: #c97b84; font-size: 14px;
+      color: var(--gold-dk); font-size: 14px;
       flex-shrink: 0;
     }
     .kc-sec-title {
       font-family: 'Cormorant Garamond', 'Georgia', serif;
       font-size: 17px; font-weight: 700;
-      color: var(--ink, #18120f);
+      color: var(--ink);
     }
-    .kc-sec-sub { font-size: 11.5px; color: var(--ink-3, #7a6a62); margin-top: 1px; }
+    .kc-sec-sub { font-size: 11.5px; color: var(--ink-3); margin-top: 1px; }
     .kc-sec-body { padding: 22px; }
 
     /* Form fields */
@@ -180,26 +205,26 @@
       display: block;
       font-size: 11px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.8px;
-      color: var(--ink-3, #7a6a62); margin-bottom: 7px;
+      color: var(--ink-3); margin-bottom: 7px;
     }
     .kc-input, .kc-select, .kc-textarea {
       width: 100%;
       padding: 10px 14px;
-      border: 1.5px solid var(--border, #ebe5e0);
+      border: 1.5px solid var(--border);
       border-radius: 9px;
-      background: var(--surface-2, #faf8f6);
+      background: var(--surface-2);
       font-family: 'DM Sans', sans-serif;
-      font-size: 13.5px; color: var(--ink, #18120f);
+      font-size: 13.5px; color: var(--ink);
       outline: none;
       transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
     .kc-input:focus, .kc-select:focus, .kc-textarea:focus {
-      border-color: #c97b84;
-      box-shadow: 0 0 0 3px rgba(201,123,132,0.13);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-glow);
       background: #fff;
     }
     .kc-input:disabled {
-      opacity: 0.6; cursor: not-allowed; background: var(--surface-2, #faf8f6);
+      opacity: 0.6; cursor: not-allowed; background: var(--surface-2);
     }
     .kc-textarea { resize: vertical; min-height: 90px; line-height: 1.65; }
     .kc-select { cursor: pointer; }
@@ -212,12 +237,12 @@
       display: flex; align-items: center;
       justify-content: space-between;
       padding: 14px 0;
-      border-bottom: 1px solid var(--border, #ebe5e0);
+      border-bottom: 1px solid var(--border);
     }
     .kc-toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
     .kc-toggle-info { flex: 1; }
-    .kc-toggle-label { font-size: 13.5px; font-weight: 600; color: var(--ink, #18120f); }
-    .kc-toggle-desc  { font-size: 12px; color: var(--ink-3, #7a6a62); margin-top: 2px; }
+    .kc-toggle-label { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+    .kc-toggle-desc  { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
     .kc-toggle {
       position: relative; width: 44px; height: 24px; flex-shrink: 0;
     }
@@ -235,7 +260,7 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.2);
       transition: transform 0.2s ease;
     }
-    .kc-toggle input:checked + .kc-slider { background: #c97b84; }
+    .kc-toggle input:checked + .kc-slider { background: var(--gold); }
     .kc-toggle input:checked + .kc-slider::before { transform: translateX(20px); }
 
     /* Activity log */
@@ -243,26 +268,25 @@
     .kc-act-item {
       display: flex; align-items: flex-start; gap: 14px;
       padding: 14px 0;
-      border-bottom: 1px solid var(--border, #ebe5e0);
+      border-bottom: 1px solid var(--border);
     }
     .kc-act-item:last-child { border-bottom: none; padding-bottom: 0; }
     .kc-act-dot {
       width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center; font-size: 13px;
     }
-    .kc-act-dot.rose  { background: #f9eced; color: #c97b84; }
-    .kc-act-dot.gold  { background: #faf3e8; color: #b89060; }
+    .kc-act-dot.gold  { background: var(--gold-lt); color: var(--gold-dk); }
     .kc-act-dot.green { background: #e8f5e9; color: #2e7d32; }
     .kc-act-dot.blue  { background: #e3f2fd; color: #1565c0; }
     .kc-act-body { flex: 1; }
-    .kc-act-title { font-size: 13.5px; font-weight: 600; color: var(--ink, #18120f); }
-    .kc-act-desc  { font-size: 12px; color: var(--ink-3, #7a6a62); margin-top: 2px; }
-    .kc-act-time  { font-size: 11px; color: var(--ink-3, #7a6a62); flex-shrink: 0; margin-top: 3px; }
+    .kc-act-title { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+    .kc-act-desc  { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+    .kc-act-time  { font-size: 11px; color: var(--ink-3); flex-shrink: 0; margin-top: 3px; }
 
     /* Danger zone */
     .kc-danger-zone {
       background: #fff5f5;
-      border: 1.5px solid #ffd7d7;
+      border: 1.5px solid #fecccf;
       border-radius: 12px;
       padding: 20px 22px;
       display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
@@ -282,42 +306,42 @@
     /* Buttons */
     .kc-btn-primary {
       padding: 10px 24px; border-radius: 9px;
-      background: linear-gradient(135deg, #c97b84, #a85560);
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       color: #fff; border: none;
       font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 4px 16px rgba(201,123,132,0.30);
+      box-shadow: 0 4px 16px var(--gold-glow);
       transition: transform 0.18s ease, box-shadow 0.18s ease;
       display: inline-flex; align-items: center; gap: 7px;
     }
-    .kc-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(201,123,132,0.42); }
+    .kc-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(200,160,64,.42); }
     .kc-btn-outline {
       padding: 10px 20px; border-radius: 9px;
-      border: 1.5px solid var(--border, #ebe5e0);
+      border: 1.5px solid var(--border);
       background: transparent;
       font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600;
-      color: var(--ink-2, #3d3028); cursor: pointer;
+      color: var(--ink-2); cursor: pointer;
       display: inline-flex; align-items: center; gap: 7px;
       transition: all 0.18s ease;
     }
-    .kc-btn-outline:hover { border-color: #c97b84; color: #c97b84; background: #f9eced; }
+    .kc-btn-outline:hover { border-color: var(--gold); color: var(--gold-dk); background: var(--gold-lt); }
 
     .kc-sec-footer {
       padding: 16px 22px;
-      border-top: 1px solid var(--border, #ebe5e0);
+      border-top: 1px solid var(--border);
       display: flex; align-items: center; gap: 10px; justify-content: flex-end;
     }
 
     /* Password strength */
     .kc-pw-strength { margin-top: 8px; display: flex; gap: 4px; }
     .kc-pw-bar {
-      flex: 1; height: 3px; border-radius: 3px; background: var(--border, #ebe5e0);
+      flex: 1; height: 3px; border-radius: 3px; background: var(--border);
       transition: background 0.3s ease;
     }
     .kc-pw-bar.weak   { background: #e53935; }
     .kc-pw-bar.medium { background: #fb8c00; }
     .kc-pw-bar.strong { background: #43a047; }
-    .kc-pw-label { font-size: 11px; color: var(--ink-3, #7a6a62); margin-top: 4px; }
+    .kc-pw-label { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
 
     /* Saved badge animation */
     @keyframes kc-pop { 0%{transform:scale(0.8);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
@@ -326,419 +350,408 @@
 </head>
 
 <body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper">
-      <div class="main-panel">
-        <div class="content-wrapper kc-profile-page">
+  <div class="main-panel">
+    <div class="kc-profile-page">
 
-          <!-- Breadcrumb -->
-          <nav class="kc-bc">
-            <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-            <i class="fa-solid fa-chevron-right"></i>
-            <span>My Profile</span>
-          </nav>
+      <!-- Breadcrumb -->
+      <nav class="kc-bc">
+        <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span>My Profile</span>
+      </nav>
 
-          <!-- Cover + Identity -->
-          <div class="kc-cover">
-            <button class="kc-cover-edit" onclick="document.getElementById('coverUpload').click()">
-              <i class="fa-solid fa-camera"></i> Edit Cover
-            </button>
-            <input type="file" id="coverUpload" accept="image/*" style="display:none" onchange="handleCover(this)">
+      <!-- Cover + Identity -->
+      <div class="kc-cover">
+        <button class="kc-cover-edit" onclick="document.getElementById('coverUpload').click()">
+          <i class="fa-solid fa-camera"></i> Edit Cover
+        </button>
+        <input type="file" id="coverUpload" accept="image/*" style="display:none" onchange="handleCover(this)">
+      </div>
+
+      <div class="kc-profile-card">
+        <div class="kc-avatar-row">
+          <div class="kc-avatar-wrap">
+            <div class="kc-avatar" id="kcAvatar">A</div>
+            <label class="kc-avatar-upload" title="Change photo">
+              <i class="fa-solid fa-camera"></i>
+              <input type="file" accept="image/*" onchange="handleAvatar(this)">
+            </label>
           </div>
+          <div class="kc-profile-meta">
+            <div class="kc-profile-name" id="displayName">Salon Admin</div>
+            <div class="kc-profile-role-tag"><i class="fa-solid fa-shield-halved"></i> Super Administrator</div>
+            <div class="kc-profile-since">
+              <i class="fa-regular fa-clock" style="margin-right:4px;color:var(--gold)"></i>
+              Member since March 2023 &nbsp;·&nbsp;
+              <i class="fa-solid fa-location-dot" style="margin-right:4px;color:var(--gold)"></i>
+              Main Branch, Mumbai
+            </div>
+          </div>
+          <div style="padding-bottom:6px;display:flex;gap:10px;margin-left:auto;">
+            <button class="kc-btn-outline" onclick="window.history.back()">
+              <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <button class="kc-btn-primary" onclick="saveAll()">
+              <i class="fa-solid fa-floppy-disk"></i> Save Changes
+            </button>
+          </div>
+        </div>
 
-          <div class="kc-profile-card">
-            <div class="kc-avatar-row">
-              <div class="kc-avatar-wrap">
-                <div class="kc-avatar" id="kcAvatar">A</div>
-                <label class="kc-avatar-upload" title="Change photo">
-                  <i class="fa-solid fa-camera"></i>
-                  <input type="file" accept="image/*" onchange="handleAvatar(this)">
+        <!-- Stats -->
+        <div class="kc-profile-stats">
+          <div class="kc-ps">
+            <div class="kc-ps-num">247</div>
+            <div class="kc-ps-lbl">Appointments Managed</div>
+          </div>
+          <div class="kc-ps">
+            <div class="kc-ps-num">38</div>
+            <div class="kc-ps-lbl">Staff Members</div>
+          </div>
+          <div class="kc-ps">
+            <div class="kc-ps-num">12</div>
+            <div class="kc-ps-lbl">Active Services</div>
+          </div>
+          <div class="kc-ps">
+            <div class="kc-ps-num">4.9★</div>
+            <div class="kc-ps-lbl">Average Rating</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="kc-grid">
+
+        <!-- Personal Information -->
+        <div class="kc-sec">
+          <div class="kc-sec-head">
+            <div class="kc-sec-icon"><i class="fa-solid fa-user"></i></div>
+            <div>
+              <div class="kc-sec-title">Personal Information</div>
+              <div class="kc-sec-sub">Update your name, bio and contact details</div>
+            </div>
+          </div>
+          <div class="kc-sec-body">
+            <div class="kc-field-row">
+              <div class="kc-field">
+                <label class="kc-label">First Name</label>
+                <input type="text" class="kc-input" id="firstName" value="Salon" placeholder="First name">
+              </div>
+              <div class="kc-field">
+                <label class="kc-label">Last Name</label>
+                <input type="text" class="kc-input" id="lastName" value="Admin" placeholder="Last name">
+              </div>
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">Display Name</label>
+              <input type="text" class="kc-input" id="displayNameInput" value="Salon Admin" placeholder="How your name appears"
+                oninput="document.getElementById('displayName').textContent=this.value">
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">Email Address</label>
+              <input type="email" class="kc-input" value="admin@kcozm.com" placeholder="Email">
+            </div>
+            <div class="kc-field-row">
+              <div class="kc-field">
+                <label class="kc-label">Phone</label>
+                <input type="tel" class="kc-input" value="+91 98765 43210" placeholder="Phone number">
+              </div>
+              <div class="kc-field">
+                <label class="kc-label">Date of Birth</label>
+                <input type="date" class="kc-input" value="1990-06-15">
+              </div>
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">Branch</label>
+              <select class="kc-select">
+                <option selected>Main Branch — Mumbai</option>
+                <option>Andheri Branch</option>
+                <option>Bandra Branch</option>
+                <option>Pune Branch</option>
+              </select>
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">Bio</label>
+              <textarea class="kc-textarea" placeholder="A short bio about yourself…">Managing KCOZM's beauty operations since 2023. Passionate about delivering exceptional salon experiences and building a world-class team.</textarea>
+            </div>
+          </div>
+          <div class="kc-sec-footer">
+            <button class="kc-btn-outline" onclick="resetPersonal()">Reset</button>
+            <button class="kc-btn-primary" onclick="saveSection('personal')">
+              <i class="fa-solid fa-check"></i> Save
+            </button>
+          </div>
+        </div>
+
+        <!-- Account & Security -->
+        <div class="kc-sec">
+          <div class="kc-sec-head">
+            <div class="kc-sec-icon"><i class="fa-solid fa-lock"></i></div>
+            <div>
+              <div class="kc-sec-title">Account & Security</div>
+              <div class="kc-sec-sub">Manage your password and login security</div>
+            </div>
+          </div>
+          <div class="kc-sec-body">
+            <div class="kc-field">
+              <label class="kc-label">Username</label>
+              <input type="text" class="kc-input" value="salon_admin" disabled>
+              <small style="font-size:11px;color:#7a6a62;margin-top:5px;display:block;">
+                <i class="fa-solid fa-circle-info" style="color:var(--gold)"></i>
+                Username cannot be changed. Contact support if needed.
+              </small>
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">Current Password</label>
+              <div style="position:relative">
+                <input type="password" class="kc-input" id="currPw" placeholder="Enter current password" style="padding-right:40px">
+                <i class="fa-solid fa-eye" onclick="togglePw('currPw',this)"
+                  style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
+              </div>
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">New Password</label>
+              <div style="position:relative">
+                <input type="password" class="kc-input" id="newPw" placeholder="Min. 8 characters" oninput="checkStrength(this)" style="padding-right:40px">
+                <i class="fa-solid fa-eye" onclick="togglePw('newPw',this)"
+                  style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
+              </div>
+              <div class="kc-pw-strength" id="pwBars">
+                <div class="kc-pw-bar" id="bar1"></div>
+                <div class="kc-pw-bar" id="bar2"></div>
+                <div class="kc-pw-bar" id="bar3"></div>
+                <div class="kc-pw-bar" id="bar4"></div>
+              </div>
+              <div class="kc-pw-label" id="pwLabel">Enter a new password</div>
+            </div>
+            <div class="kc-field">
+              <label class="kc-label">Confirm New Password</label>
+              <div style="position:relative">
+                <input type="password" class="kc-input" id="confirmPw" placeholder="Repeat new password" style="padding-right:40px">
+                <i class="fa-solid fa-eye" onclick="togglePw('confirmPw',this)"
+                  style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
+              </div>
+            </div>
+            <div style="padding:14px;background:var(--gold-lt);border-radius:10px;border:1px solid rgba(200,160,64,.20);display:flex;align-items:center;gap:10px;">
+              <i class="fa-solid fa-shield-halved" style="color:var(--gold-dk);font-size:18px;flex-shrink:0;"></i>
+              <div>
+                <div style="font-size:12.5px;font-weight:600;color:var(--ink);">Two-Factor Authentication</div>
+                <div style="font-size:11.5px;color:var(--ink-3);margin-top:2px;">Add an extra layer of security to your account.</div>
+              </div>
+              <button class="kc-btn-outline" style="margin-left:auto;font-size:12px;padding:7px 14px;">Enable 2FA</button>
+            </div>
+          </div>
+          <div class="kc-sec-footer">
+            <button class="kc-btn-primary" onclick="saveSection('password')">
+              <i class="fa-solid fa-key"></i> Update Password
+            </button>
+          </div>
+        </div>
+
+        <!-- Notifications Preferences -->
+        <div class="kc-sec">
+          <div class="kc-sec-head">
+            <div class="kc-sec-icon"><i class="fa-solid fa-bell"></i></div>
+            <div>
+              <div class="kc-sec-title">Notification Preferences</div>
+              <div class="kc-sec-sub">Control what alerts you receive</div>
+            </div>
+          </div>
+          <div class="kc-sec-body">
+            <div class="kc-toggle-row">
+              <div class="kc-toggle-info">
+                <div class="kc-toggle-label">New Appointments</div>
+                <div class="kc-toggle-desc">Get notified when a new appointment is booked</div>
+              </div>
+              <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
+            </div>
+            <div class="kc-toggle-row">
+              <div class="kc-toggle-info">
+                <div class="kc-toggle-label">Customer Reviews</div>
+                <div class="kc-toggle-desc">Alerts for new ratings and feedback</div>
+              </div>
+              <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
+            </div>
+            <div class="kc-toggle-row">
+              <div class="kc-toggle-info">
+                <div class="kc-toggle-label">Staff Activity</div>
+                <div class="kc-toggle-desc">Notified when staff logs in or updates schedules</div>
+              </div>
+              <label class="kc-toggle"><input type="checkbox"><span class="kc-slider"></span></label>
+            </div>
+            <div class="kc-toggle-row">
+              <div class="kc-toggle-info">
+                <div class="kc-toggle-label">Monthly Reports</div>
+                <div class="kc-toggle-desc">Summary report emailed at end of every month</div>
+              </div>
+              <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
+            </div>
+            <div class="kc-toggle-row">
+              <div class="kc-toggle-info">
+                <div class="kc-toggle-label">Promotional Campaigns</div>
+                <div class="kc-toggle-desc">Offer launches and marketing updates</div>
+              </div>
+              <label class="kc-toggle"><input type="checkbox"><span class="kc-slider"></span></label>
+            </div>
+          </div>
+          <div class="kc-sec-footer">
+            <button class="kc-btn-primary" onclick="saveSection('notifications')">
+              <i class="fa-solid fa-check"></i> Save Preferences
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="kc-sec">
+          <div class="kc-sec-head">
+            <div class="kc-sec-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div>
+              <div class="kc-sec-title">Recent Activity</div>
+              <div class="kc-sec-sub">Your last 5 admin actions</div>
+            </div>
+          </div>
+          <div class="kc-sec-body">
+            <div class="kc-activity">
+              <div class="kc-act-item">
+                <div class="kc-act-dot gold"><i class="fa-solid fa-calendar-check"></i></div>
+                <div class="kc-act-body">
+                  <div class="kc-act-title">Confirmed appointment #1042</div>
+                  <div class="kc-act-desc">Bridal package — Priya Sharma</div>
+                </div>
+                <div class="kc-act-time">2 min ago</div>
+              </div>
+              <div class="kc-act-item">
+                <div class="kc-act-dot gold"><i class="fa-solid fa-user-plus"></i></div>
+                <div class="kc-act-body">
+                  <div class="kc-act-title">Added new staff member</div>
+                  <div class="kc-act-desc">Anika Sharma — Hair Stylist</div>
+                </div>
+                <div class="kc-act-time">1 hour ago</div>
+              </div>
+              <div class="kc-act-item">
+                <div class="kc-act-dot green"><i class="fa-solid fa-tag"></i></div>
+                <div class="kc-act-body">
+                  <div class="kc-act-title">Published new offer</div>
+                  <div class="kc-act-desc">Summer Bridal Special — 20% off</div>
+                </div>
+                <div class="kc-act-time">3 hours ago</div>
+              </div>
+              <div class="kc-act-item">
+                <div class="kc-act-dot blue"><i class="fa-solid fa-pen-to-square"></i></div>
+                <div class="kc-act-body">
+                  <div class="kc-act-title">Updated service pricing</div>
+                  <div class="kc-act-desc">Hair Spa — ₹850 → ₹950</div>
+                </div>
+                <div class="kc-act-time">Yesterday</div>
+              </div>
+              <div class="kc-act-item">
+                <div class="kc-act-dot gold"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="kc-act-body">
+                  <div class="kc-act-title">Password changed</div>
+                  <div class="kc-act-desc">Successful security update</div>
+                </div>
+                <div class="kc-act-time">3 days ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Appearance -->
+        <div class="kc-sec full">
+          <div class="kc-sec-head">
+            <div class="kc-sec-icon"><i class="fa-solid fa-palette"></i></div>
+            <div>
+              <div class="kc-sec-title">Appearance & Preferences</div>
+              <div class="kc-sec-sub">Customize your admin panel experience</div>
+            </div>
+          </div>
+          <div class="kc-sec-body">
+            <div class="kc-field-row" style="grid-template-columns:1fr 1fr 1fr;">
+              <div class="kc-field">
+                <label class="kc-label">Language</label>
+                <select class="kc-select">
+                  <option selected>English (EN)</option>
+                  <option>हिंदी (HI)</option>
+                  <option>मराठी (MR)</option>
+                </select>
+              </div>
+              <div class="kc-field">
+                <label class="kc-label">Timezone</label>
+                <select class="kc-select">
+                  <option selected>Asia/Kolkata (IST +5:30)</option>
+                  <option>UTC</option>
+                  <option>Asia/Dubai (GST +4)</option>
+                </select>
+              </div>
+              <div class="kc-field">
+                <label class="kc-label">Date Format</label>
+                <select class="kc-select">
+                  <option selected>DD/MM/YYYY</option>
+                  <option>MM/DD/YYYY</option>
+                  <option>YYYY-MM-DD</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-top:8px;">
+              <div class="kc-toggle-row">
+                <div class="kc-toggle-info">
+                  <div class="kc-toggle-label">Dark Mode</div>
+                  <div class="kc-toggle-desc">Switch to dark theme for comfortable night viewing</div>
+                </div>
+                <label class="kc-toggle">
+                  <input type="checkbox" id="darkToggle" onchange="KcozmAdmin._toggleDark(); document.getElementById('darkToggle').checked = document.body.classList.contains('dark-mode')">
+                  <span class="kc-slider"></span>
                 </label>
               </div>
-              <div class="kc-profile-meta">
-                <div class="kc-profile-name" id="displayName">Salon Admin</div>
-                <div class="kc-profile-role-tag"><i class="fa-solid fa-shield-halved"></i> Super Administrator</div>
-                <div class="kc-profile-since">
-                  <i class="fa-regular fa-clock" style="margin-right:4px;color:#c97b84"></i>
-                  Member since March 2023 &nbsp;·&nbsp;
-                  <i class="fa-solid fa-location-dot" style="margin-right:4px;color:#c97b84"></i>
-                  Main Branch, Mumbai
+              <div class="kc-toggle-row">
+                <div class="kc-toggle-info">
+                  <div class="kc-toggle-label">Compact Sidebar</div>
+                  <div class="kc-toggle-desc">Show icons only in the sidebar</div>
                 </div>
-              </div>
-              <div style="padding-bottom:6px;display:flex;gap:10px;margin-left:auto;">
-                <button class="kc-btn-outline" onclick="window.history.back()">
-                  <i class="fa-solid fa-arrow-left"></i> Back
-                </button>
-                <button class="kc-btn-primary" onclick="saveAll()">
-                  <i class="fa-solid fa-floppy-disk"></i> Save Changes
-                </button>
-              </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="kc-profile-stats">
-              <div class="kc-ps">
-                <div class="kc-ps-num">247</div>
-                <div class="kc-ps-lbl">Appointments Managed</div>
-              </div>
-              <div class="kc-ps">
-                <div class="kc-ps-num">38</div>
-                <div class="kc-ps-lbl">Staff Members</div>
-              </div>
-              <div class="kc-ps">
-                <div class="kc-ps-num">12</div>
-                <div class="kc-ps-lbl">Active Services</div>
-              </div>
-              <div class="kc-ps">
-                <div class="kc-ps-num">4.9★</div>
-                <div class="kc-ps-lbl">Average Rating</div>
+                <label class="kc-toggle">
+                  <input type="checkbox" onchange="KcozmAdmin._toggleSidebar()">
+                  <span class="kc-slider"></span>
+                </label>
               </div>
             </div>
           </div>
+          <div class="kc-sec-footer">
+            <button class="kc-btn-primary" onclick="saveSection('appearance')">
+              <i class="fa-solid fa-check"></i> Save Preferences
+            </button>
+          </div>
+        </div>
 
-          <!-- Grid -->
-          <div class="kc-grid">
-
-            <!-- Personal Information -->
-            <div class="kc-sec">
-              <div class="kc-sec-head">
-                <div class="kc-sec-icon"><i class="fa-solid fa-user"></i></div>
-                <div>
-                  <div class="kc-sec-title">Personal Information</div>
-                  <div class="kc-sec-sub">Update your name, bio and contact details</div>
-                </div>
-              </div>
-              <div class="kc-sec-body">
-                <div class="kc-field-row">
-                  <div class="kc-field">
-                    <label class="kc-label">First Name</label>
-                    <input type="text" class="kc-input" id="firstName" value="Salon" placeholder="First name">
-                  </div>
-                  <div class="kc-field">
-                    <label class="kc-label">Last Name</label>
-                    <input type="text" class="kc-input" id="lastName" value="Admin" placeholder="Last name">
-                  </div>
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">Display Name</label>
-                  <input type="text" class="kc-input" id="displayNameInput" value="Salon Admin" placeholder="How your name appears"
-                    oninput="document.getElementById('displayName').textContent=this.value">
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">Email Address</label>
-                  <input type="email" class="kc-input" value="admin@kcozm.com" placeholder="Email">
-                </div>
-                <div class="kc-field-row">
-                  <div class="kc-field">
-                    <label class="kc-label">Phone</label>
-                    <input type="tel" class="kc-input" value="+91 98765 43210" placeholder="Phone number">
-                  </div>
-                  <div class="kc-field">
-                    <label class="kc-label">Date of Birth</label>
-                    <input type="date" class="kc-input" value="1990-06-15">
-                  </div>
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">Branch</label>
-                  <select class="kc-select">
-                    <option selected>Main Branch — Mumbai</option>
-                    <option>Andheri Branch</option>
-                    <option>Bandra Branch</option>
-                    <option>Pune Branch</option>
-                  </select>
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">Bio</label>
-                  <textarea class="kc-textarea" placeholder="A short bio about yourself…">Managing KCOZM's beauty operations since 2023. Passionate about delivering exceptional salon experiences and building a world-class team.</textarea>
-                </div>
-              </div>
-              <div class="kc-sec-footer">
-                <button class="kc-btn-outline" onclick="resetPersonal()">Reset</button>
-                <button class="kc-btn-primary" onclick="saveSection('personal')">
-                  <i class="fa-solid fa-check"></i> Save
-                </button>
-              </div>
+        <!-- Danger Zone -->
+        <div class="kc-sec full">
+          <div class="kc-sec-head">
+            <div class="kc-sec-icon" style="background:#fef2f2;color:#c62828;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div>
+              <div class="kc-sec-title" style="color:#c62828;">Danger Zone</div>
+              <div class="kc-sec-sub">These actions are irreversible — proceed with caution</div>
             </div>
-
-            <!-- Account & Security -->
-            <div class="kc-sec">
-              <div class="kc-sec-head">
-                <div class="kc-sec-icon"><i class="fa-solid fa-lock"></i></div>
-                <div>
-                  <div class="kc-sec-title">Account & Security</div>
-                  <div class="kc-sec-sub">Manage your password and login security</div>
-                </div>
+          </div>
+          <div class="kc-sec-body" style="display:flex;flex-direction:column;gap:14px;">
+            <div class="kc-danger-zone">
+              <div class="kc-danger-info">
+                <div class="kc-danger-title">Log out all sessions</div>
+                <div class="kc-danger-desc">Sign out from all devices where you are currently logged in.</div>
               </div>
-              <div class="kc-sec-body">
-                <div class="kc-field">
-                  <label class="kc-label">Username</label>
-                  <input type="text" class="kc-input" value="salon_admin" disabled>
-                  <small style="font-size:11px;color:#7a6a62;margin-top:5px;display:block;">
-                    <i class="fa-solid fa-circle-info" style="color:#c97b84"></i>
-                    Username cannot be changed. Contact support if needed.
-                  </small>
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">Current Password</label>
-                  <div style="position:relative">
-                    <input type="password" class="kc-input" id="currPw" placeholder="Enter current password" style="padding-right:40px">
-                    <i class="fa-solid fa-eye" onclick="togglePw('currPw',this)"
-                      style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
-                  </div>
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">New Password</label>
-                  <div style="position:relative">
-                    <input type="password" class="kc-input" id="newPw" placeholder="Min. 8 characters" oninput="checkStrength(this)" style="padding-right:40px">
-                    <i class="fa-solid fa-eye" onclick="togglePw('newPw',this)"
-                      style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
-                  </div>
-                  <div class="kc-pw-strength" id="pwBars">
-                    <div class="kc-pw-bar" id="bar1"></div>
-                    <div class="kc-pw-bar" id="bar2"></div>
-                    <div class="kc-pw-bar" id="bar3"></div>
-                    <div class="kc-pw-bar" id="bar4"></div>
-                  </div>
-                  <div class="kc-pw-label" id="pwLabel">Enter a new password</div>
-                </div>
-                <div class="kc-field">
-                  <label class="kc-label">Confirm New Password</label>
-                  <div style="position:relative">
-                    <input type="password" class="kc-input" id="confirmPw" placeholder="Repeat new password" style="padding-right:40px">
-                    <i class="fa-solid fa-eye" onclick="togglePw('confirmPw',this)"
-                      style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;color:#7a6a62;font-size:13px;"></i>
-                  </div>
-                </div>
-                <div style="padding:14px;background:#f9eced;border-radius:10px;border:1px solid rgba(201,123,132,0.20);display:flex;align-items:center;gap:10px;">
-                  <i class="fa-solid fa-shield-halved" style="color:#c97b84;font-size:18px;flex-shrink:0;"></i>
-                  <div>
-                    <div style="font-size:12.5px;font-weight:600;color:#18120f;">Two-Factor Authentication</div>
-                    <div style="font-size:11.5px;color:#7a6a62;margin-top:2px;">Add an extra layer of security to your account.</div>
-                  </div>
-                  <button class="kc-btn-outline" style="margin-left:auto;font-size:12px;padding:7px 14px;">Enable 2FA</button>
-                </div>
-              </div>
-              <div class="kc-sec-footer">
-                <button class="kc-btn-primary" onclick="saveSection('password')">
-                  <i class="fa-solid fa-key"></i> Update Password
-                </button>
-              </div>
+              <button class="kc-btn-danger" onclick="KcozmAdmin.showToast('All sessions terminated.','info')">Log out all</button>
             </div>
-
-            <!-- Notifications Preferences -->
-            <div class="kc-sec">
-              <div class="kc-sec-head">
-                <div class="kc-sec-icon"><i class="fa-solid fa-bell"></i></div>
-                <div>
-                  <div class="kc-sec-title">Notification Preferences</div>
-                  <div class="kc-sec-sub">Control what alerts you receive</div>
-                </div>
+            <div class="kc-danger-zone">
+              <div class="kc-danger-info">
+                <div class="kc-danger-title">Delete Account</div>
+                <div class="kc-danger-desc">Permanently delete your admin account. All data will be removed and cannot be recovered.</div>
               </div>
-              <div class="kc-sec-body">
-                <div class="kc-toggle-row">
-                  <div class="kc-toggle-info">
-                    <div class="kc-toggle-label">New Appointments</div>
-                    <div class="kc-toggle-desc">Get notified when a new appointment is booked</div>
-                  </div>
-                  <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
-                </div>
-                <div class="kc-toggle-row">
-                  <div class="kc-toggle-info">
-                    <div class="kc-toggle-label">Customer Reviews</div>
-                    <div class="kc-toggle-desc">Alerts for new ratings and feedback</div>
-                  </div>
-                  <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
-                </div>
-                <div class="kc-toggle-row">
-                  <div class="kc-toggle-info">
-                    <div class="kc-toggle-label">Staff Activity</div>
-                    <div class="kc-toggle-desc">Notified when staff logs in or updates schedules</div>
-                  </div>
-                  <label class="kc-toggle"><input type="checkbox"><span class="kc-slider"></span></label>
-                </div>
-                <div class="kc-toggle-row">
-                  <div class="kc-toggle-info">
-                    <div class="kc-toggle-label">Monthly Reports</div>
-                    <div class="kc-toggle-desc">Summary report emailed at end of every month</div>
-                  </div>
-                  <label class="kc-toggle"><input type="checkbox" checked><span class="kc-slider"></span></label>
-                </div>
-                <div class="kc-toggle-row">
-                  <div class="kc-toggle-info">
-                    <div class="kc-toggle-label">Promotional Campaigns</div>
-                    <div class="kc-toggle-desc">Offer launches and marketing updates</div>
-                  </div>
-                  <label class="kc-toggle"><input type="checkbox"><span class="kc-slider"></span></label>
-                </div>
-              </div>
-              <div class="kc-sec-footer">
-                <button class="kc-btn-primary" onclick="saveSection('notifications')">
-                  <i class="fa-solid fa-check"></i> Save Preferences
-                </button>
-              </div>
+              <button class="kc-btn-danger" onclick="KcozmAdmin.showToast('Please contact super admin to delete account.','error')">Delete account</button>
             </div>
+          </div>
+        </div>
 
-            <!-- Recent Activity -->
-            <div class="kc-sec">
-              <div class="kc-sec-head">
-                <div class="kc-sec-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <div>
-                  <div class="kc-sec-title">Recent Activity</div>
-                  <div class="kc-sec-sub">Your last 5 admin actions</div>
-                </div>
-              </div>
-              <div class="kc-sec-body">
-                <div class="kc-activity">
-                  <div class="kc-act-item">
-                    <div class="kc-act-dot rose"><i class="fa-solid fa-calendar-check"></i></div>
-                    <div class="kc-act-body">
-                      <div class="kc-act-title">Confirmed appointment #1042</div>
-                      <div class="kc-act-desc">Bridal package — Priya Sharma</div>
-                    </div>
-                    <div class="kc-act-time">2 min ago</div>
-                  </div>
-                  <div class="kc-act-item">
-                    <div class="kc-act-dot gold"><i class="fa-solid fa-user-plus"></i></div>
-                    <div class="kc-act-body">
-                      <div class="kc-act-title">Added new staff member</div>
-                      <div class="kc-act-desc">Anika Sharma — Hair Stylist</div>
-                    </div>
-                    <div class="kc-act-time">1 hour ago</div>
-                  </div>
-                  <div class="kc-act-item">
-                    <div class="kc-act-dot green"><i class="fa-solid fa-tag"></i></div>
-                    <div class="kc-act-body">
-                      <div class="kc-act-title">Published new offer</div>
-                      <div class="kc-act-desc">Summer Bridal Special — 20% off</div>
-                    </div>
-                    <div class="kc-act-time">3 hours ago</div>
-                  </div>
-                  <div class="kc-act-item">
-                    <div class="kc-act-dot blue"><i class="fa-solid fa-pen-to-square"></i></div>
-                    <div class="kc-act-body">
-                      <div class="kc-act-title">Updated service pricing</div>
-                      <div class="kc-act-desc">Hair Spa — ₹850 → ₹950</div>
-                    </div>
-                    <div class="kc-act-time">Yesterday</div>
-                  </div>
-                  <div class="kc-act-item">
-                    <div class="kc-act-dot rose"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="kc-act-body">
-                      <div class="kc-act-title">Password changed</div>
-                      <div class="kc-act-desc">Successful security update</div>
-                    </div>
-                    <div class="kc-act-time">3 days ago</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      </div><!-- /kc-grid -->
 
-            <!-- Appearance -->
-            <div class="kc-sec full">
-              <div class="kc-sec-head">
-                <div class="kc-sec-icon"><i class="fa-solid fa-palette"></i></div>
-                <div>
-                  <div class="kc-sec-title">Appearance & Preferences</div>
-                  <div class="kc-sec-sub">Customize your admin panel experience</div>
-                </div>
-              </div>
-              <div class="kc-sec-body">
-                <div class="kc-field-row" style="grid-template-columns:1fr 1fr 1fr;">
-                  <div class="kc-field">
-                    <label class="kc-label">Language</label>
-                    <select class="kc-select">
-                      <option selected>English (EN)</option>
-                      <option>हिंदी (HI)</option>
-                      <option>मराठी (MR)</option>
-                    </select>
-                  </div>
-                  <div class="kc-field">
-                    <label class="kc-label">Timezone</label>
-                    <select class="kc-select">
-                      <option selected>Asia/Kolkata (IST +5:30)</option>
-                      <option>UTC</option>
-                      <option>Asia/Dubai (GST +4)</option>
-                    </select>
-                  </div>
-                  <div class="kc-field">
-                    <label class="kc-label">Date Format</label>
-                    <select class="kc-select">
-                      <option selected>DD/MM/YYYY</option>
-                      <option>MM/DD/YYYY</option>
-                      <option>YYYY-MM-DD</option>
-                    </select>
-                  </div>
-                </div>
-                <div style="margin-top:8px;">
-                  <div class="kc-toggle-row">
-                    <div class="kc-toggle-info">
-                      <div class="kc-toggle-label">Dark Mode</div>
-                      <div class="kc-toggle-desc">Switch to dark theme for comfortable night viewing</div>
-                    </div>
-                    <label class="kc-toggle">
-                      <input type="checkbox" id="darkToggle" onchange="KcozmAdmin._toggleDark(); document.getElementById('darkToggle').checked = document.body.classList.contains('dark-mode')">
-                      <span class="kc-slider"></span>
-                    </label>
-                  </div>
-                  <div class="kc-toggle-row">
-                    <div class="kc-toggle-info">
-                      <div class="kc-toggle-label">Compact Sidebar</div>
-                      <div class="kc-toggle-desc">Show icons only in the sidebar</div>
-                    </div>
-                    <label class="kc-toggle">
-                      <input type="checkbox" onchange="KcozmAdmin._toggleSidebar()">
-                      <span class="kc-slider"></span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="kc-sec-footer">
-                <button class="kc-btn-primary" onclick="saveSection('appearance')">
-                  <i class="fa-solid fa-check"></i> Save Preferences
-                </button>
-              </div>
-            </div>
-
-            <!-- Danger Zone -->
-            <div class="kc-sec full">
-              <div class="kc-sec-head">
-                <div class="kc-sec-icon" style="background:#fff0f0;color:#c62828;"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                <div>
-                  <div class="kc-sec-title" style="color:#c62828;">Danger Zone</div>
-                  <div class="kc-sec-sub">These actions are irreversible — proceed with caution</div>
-                </div>
-              </div>
-              <div class="kc-sec-body" style="display:flex;flex-direction:column;gap:14px;">
-                <div class="kc-danger-zone">
-                  <div class="kc-danger-info">
-                    <div class="kc-danger-title">Log out all sessions</div>
-                    <div class="kc-danger-desc">Sign out from all devices where you are currently logged in.</div>
-                  </div>
-                  <button class="kc-btn-danger" onclick="KcozmAdmin.showToast('All sessions terminated.','info')">Log out all</button>
-                </div>
-                <div class="kc-danger-zone">
-                  <div class="kc-danger-info">
-                    <div class="kc-danger-title">Delete Account</div>
-                    <div class="kc-danger-desc">Permanently delete your admin account. All data will be removed and cannot be recovered.</div>
-                  </div>
-                  <button class="kc-btn-danger" onclick="KcozmAdmin.showToast('Please contact super admin to delete account.','error')">Delete account</button>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /kc-grid -->
-
-        </div><!-- /content-wrapper -->
-      </div><!-- /main-panel -->
-    </div>
+    </div><!-- /kc-profile-page -->
   </div>
-
-  <!-- Vendor JS -->
-  <script src="../../vendors/js/vendor.bundle.base.js"></script>
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
 
   <!-- Shared Components -->
   <script src="../../js/shared-components.js"></script>
