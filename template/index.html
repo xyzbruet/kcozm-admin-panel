@@ -5,14 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>KCOZM Admin — Dashboard</title>
   <link rel="shortcut icon" href="images/favicon.png" />
+  <!-- Google Fonts: loaded directly so fonts work even before shared-components.js runs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* ── Fix: define --shadow-page used by KPI cards & cards ── */
+    :root {
+      --shadow-page: 0 2px 24px rgba(26,18,8,0.08);
+    }
+
     .kc-dash { padding: 28px 28px 0; }
     .kc-anim { opacity:0; transform:translateY(16px); animation:kcRise .45s ease forwards; }
     @keyframes kcRise { to { opacity:1; transform:none; } }
 
     /* ── HERO ── */
     .kc-hero {
-      background: linear-gradient(115deg, #1e1208 0%, #2e1c0a 45%, #1a1006 100%);
+      background: linear-gradient(135deg, var(--gold-lt) 0%, rgba(200,160,64,.09) 100%);
+      border: 1px solid rgba(200,160,64,.24);
       border-radius: 20px; padding: 28px 32px;
       display: flex; align-items: center; justify-content: space-between;
       gap: 20px; flex-wrap: wrap; margin-bottom: 24px;
@@ -21,29 +31,29 @@
     .kc-hero::before {
       content:''; position:absolute; right:-60px; top:-60px;
       width:280px; height:280px; border-radius:50%;
-      background:radial-gradient(circle,rgba(200,160,64,.18) 0%,transparent 70%);
+      background:radial-gradient(circle,rgba(200,160,64,.13) 0%,transparent 70%);
       pointer-events:none;
     }
     .kc-hero::after {
       content:''; position:absolute; left:36%; bottom:-40px;
       width:200px; height:200px; border-radius:50%;
-      background:radial-gradient(circle,rgba(200,160,64,.07) 0%,transparent 70%);
+      background:radial-gradient(circle,rgba(200,160,64,.06) 0%,transparent 70%);
       pointer-events:none;
     }
     .kc-hero-left { position:relative; z-index:1; }
-    .kc-hero-eyebrow { font-size:10.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(200,160,64,.68); margin-bottom:8px; }
-    .kc-hero-name { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:700; color:#fff; margin:0 0 6px; line-height:1.1; }
-    .kc-hero-name em { color:#ddb84e; font-style:normal; }
-    .kc-hero-sub { font-size:13px; color:rgba(238,218,185,.52); }
+    .kc-hero-eyebrow { font-size:10.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold-dk); margin-bottom:8px; opacity:.75; }
+    .kc-hero-name { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:700; color:var(--ink); margin:0 0 6px; line-height:1.1; }
+    .kc-hero-name em { color:var(--gold-dk); font-style:normal; }
+    .kc-hero-sub { font-size:13px; color:var(--ink-3); }
     .kc-hero-right { display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:1; }
     .kc-hero-btn {
       display:inline-flex; align-items:center; gap:7px; padding:9px 18px; border-radius:9px;
       font-family:'DM Sans',sans-serif; font-size:12.5px; font-weight:600;
       cursor:pointer; transition:all .18s; border:none; text-decoration:none;
     }
-    .kc-hero-btn.out { background:rgba(255,255,255,.07); border:1.5px solid rgba(200,160,64,.28); color:rgba(238,218,185,.85); }
-    .kc-hero-btn.out:hover { background:rgba(200,160,64,.14); border-color:rgba(200,160,64,.60); color:#e8c068; }
-    .kc-hero-btn.solid { background:linear-gradient(135deg,#c8a040,#9a7020); color:#fff; box-shadow:0 4px 16px rgba(200,160,64,.28); }
+    .kc-hero-btn.out { background:transparent; border:1.5px solid rgba(200,160,64,.35); color:var(--gold-dk); }
+    .kc-hero-btn.out:hover { background:rgba(200,160,64,.12); border-color:var(--gold); color:var(--gold-ddk); }
+    .kc-hero-btn.solid { background:linear-gradient(135deg,#c8a040,#9a7020); color:#fff; box-shadow:0 4px 16px rgba(200,160,64,.28); border:none; }
     .kc-hero-btn.solid:hover { box-shadow:0 6px 22px rgba(200,160,64,.45); transform:translateY(-1px); }
 
     /* ── KPI CARDS ── */
@@ -350,7 +360,7 @@
         <div class="kc-card kc-anim" style="animation-delay:.40s">
           <div class="kc-card-head"><div class="kc-card-title">Quick Access</div></div>
           <div class="kc-quick-grid">
-            <a class="kc-quick-item" href="pages/ui-features/idal.html"><div class="kc-quick-icon" style="background:var(--rose-lt);color:var(--rose-dk)"><i class="fa-solid fa-heart"></i></div><span>Bridal</span></a>
+            <a class="kc-quick-item" href="pages/ui-features/bridal.html"><div class="kc-quick-icon" style="background:var(--rose-lt);color:var(--rose-dk)"><i class="fa-solid fa-heart"></i></div><span>Bridal</span></a>
             <a class="kc-quick-item" href="pages/ui-features/service.html"><div class="kc-quick-icon" style="background:var(--gold-lt);color:var(--gold-dk)"><i class="fa-solid fa-scissors"></i></div><span>Services</span></a>
             <a class="kc-quick-item" href="pages/ui-features/e_shop.html"><div class="kc-quick-icon" style="background:#e3f2fd;color:#1565c0"><i class="fa-solid fa-bottle-droplet"></i></div><span>Products</span></a>
             <a class="kc-quick-item" href="pages/ui-features/Offers_new.html"><div class="kc-quick-icon" style="background:#e8f5e9;color:#2e7d32"><i class="fa-solid fa-tag"></i></div><span>Offers</span></a>

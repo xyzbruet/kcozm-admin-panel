@@ -36,25 +36,23 @@
     @keyframes slideRight{from{transform:translateX(-20px);opacity:0}to{transform:none;opacity:1}}
 
     /* ══════════════════════════════════════
-       PAGE HERO
+       PAGE HERO  (matches service.html style)
     ══════════════════════════════════════ */
     .settings-hero {
-      background: linear-gradient(135deg, #1c1409 0%, #2a1c0a 40%, #1a1008 100%);
-      padding: 36px 40px 32px;
+      background: linear-gradient(135deg, var(--gold-lt) 0%, rgba(200,160,64,.07) 100%);
+      border: 1px solid rgba(200,160,64,.22);
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin: 0 0 0 0;
       position: relative; overflow: hidden;
       animation: fadeDown .4s ease both;
     }
     .settings-hero::before {
       content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,160,64,.14) 0%, transparent 70%),
-                  radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,160,64,.08) 0%, transparent 60%);
+      position: absolute; right: -60px; top: -60px;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,160,64,.10) 0%, transparent 70%);
       pointer-events: none;
-    }
-    .settings-hero::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(200,160,64,.35) 30%, rgba(200,160,64,.55) 50%, rgba(200,160,64,.35) 70%, transparent);
     }
     .hero-inner {
       position: relative; z-index: 1;
@@ -63,27 +61,26 @@
     }
     .hero-left { display: flex; align-items: center; gap: 20px; }
     .hero-icon {
-      width: 60px; height: 60px; border-radius: 16px;
-      background: linear-gradient(135deg, rgba(200,160,64,.25), rgba(200,160,64,.10));
-      border: 1px solid rgba(200,160,64,.30);
+      width: 56px; height: 56px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       display: flex; align-items: center; justify-content: center;
-      font-size: 24px; color: var(--gold); flex-shrink: 0;
-      box-shadow: 0 0 24px rgba(200,160,64,.15);
+      font-size: 22px; color: #fff; flex-shrink: 0;
+      box-shadow: 0 4px 16px var(--gold-glow);
     }
     .hero-title {
       font-family: 'Playfair Display', 'Cormorant Garamond', serif;
-      font-size: 28px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 5px;
+      font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.2; margin-bottom: 5px;
     }
     .hero-sub {
-      font-size: 13px; color: rgba(200,160,100,.65);
+      font-size: 13px; color: var(--ink-3);
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     }
-    .hero-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(200,160,64,.40); }
+    .hero-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-4); }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 5px;
       font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
-      background: rgba(200,160,64,.15); color: var(--gold);
-      border: 1px solid rgba(200,160,64,.25); letter-spacing: .5px;
+      background: var(--gold-lt); color: var(--gold-dk);
+      border: 1px solid rgba(200,160,64,.30); letter-spacing: .5px;
     }
     .hero-actions { display: flex; gap: 10px; align-items: center; }
 

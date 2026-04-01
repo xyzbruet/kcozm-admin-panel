@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KCOZM — Admin Login</title>
-  <link rel="shortcut icon" href="../../images/favicon.png"/>
+  <link rel="shortcut icon" href="../../images/favicon.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Mulish:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
-      --gold:    #b8900a;
+      --gold: #b8900a;
       --gold-lt: #d4a820;
       --gold-dk: #8a6808;
-      --cream:   #f5f0e8;
+      --cream: #f5f0e8;
       --cream-2: #ede5d0;
       --cream-3: #e8dfc8;
-      --bg-inp:  #fdf9f0;
-      --white:   #ffffff;
-      --border:  #e2d5b0;
-      --ink:     #1a1408;
-      --ink-2:   #3a2e10;
-      --ink-3:   #7a6830;
-      --ink-4:   #b0a070;
+      --white: #ffffff;
+      --border: #e2d5b0;
+      --ink: #1a1408;
+      --ink-3: #7a6830;
+      --ink-4: #b0a070;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
 
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
     body {
-      font-family: 'Mulish', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      /* WHITE background for entire page */
-      background: var(--white);
+      height: 100%;
       overflow: hidden;
     }
 
+    body {
+      font-family: 'Mulish', sans-serif;
+      display: flex;
+      height: 100vh;
+      background: var(--white);
+    }
+
     /* ═══════════════════════════════════
-       LEFT — LOGO PANEL  (35%)
-       White bg with dot pattern
+       LEFT — BRAND PANEL
     ═══════════════════════════════════ */
     .p-brand {
-      flex: 0 0 35%;
+      flex: 0 0 38%;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -48,160 +58,177 @@
       justify-content: center;
       background: var(--white);
       overflow: hidden;
-      padding: 48px 36px;
     }
 
-    /* dot pattern */
     .p-brand::before {
       content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(184,144,10,0.16) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.55;
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(184, 144, 10, 0.18) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: 0.5;
+      pointer-events: none;
     }
 
-    /* warm center glow */
     .p-brand::after {
       content: '';
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 340px; height: 340px;
-      background: radial-gradient(circle, rgba(184,144,10,0.07) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(184, 144, 10, 0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
     /* corner brackets */
     .brk {
       position: absolute;
-      width: 28px; height: 28px;
-      border-color: rgba(184,144,10,0.32); border-style: solid;
+      width: 24px;
+      height: 24px;
+      border-color: rgba(184, 144, 10, 0.35);
+      border-style: solid;
       z-index: 2;
     }
-    .brk-tl { top:24px; left:24px;   border-width:1.5px 0 0 1.5px; }
-    .brk-tr { top:24px; right:24px;  border-width:1.5px 1.5px 0 0; }
-    .brk-bl { bottom:24px; left:24px;  border-width:0 0 1.5px 1.5px; }
-    .brk-br { bottom:24px; right:24px; border-width:0 1.5px 1.5px 0; }
 
-    /* dashed ring */
-    .dring {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 260px; height: 260px;
-      border-radius: 50%;
-      border: 2px dashed rgba(139,104,8,0.85);
-      animation: spinRing 18s linear infinite;
-      pointer-events: none; z-index: 1;
+    .brk-tl {
+      top: 20px;
+      left: 20px;
+      border-width: 1.5px 0 0 1.5px;
     }
+
+    .brk-tr {
+      top: 20px;
+      right: 20px;
+      border-width: 1.5px 1.5px 0 0;
+    }
+
+    .brk-bl {
+      bottom: 20px;
+      left: 20px;
+      border-width: 0 0 1.5px 1.5px;
+    }
+
+    .brk-br {
+      bottom: 20px;
+      right: 20px;
+      border-width: 0 1.5px 1.5px 0;
+    }
+
+    /*
+      Logo = 150px wide
+      Ring 1 (dring-2) = 260px  →  55px clearance on each side ✓
+      Ring 2 (dring-3) = 340px  →  outer decorative ring       ✓
+    */
     .dring-2 {
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 320px; height: 320px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
-      border: 1.5px dashed rgba(184,144,10,0.60);
-      animation: spinRing 30s linear infinite reverse;
-      pointer-events: none; z-index: 1;
+      border: 1.5px dashed rgba(139, 104, 8, 0.72);
+      animation: spinRing 28s linear infinite reverse;
+      pointer-events: none;
+      z-index: 1;
     }
+
     .dring-3 {
       position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 390px; height: 390px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 340px;
+      height: 340px;
       border-radius: 50%;
-      border: 1px dashed rgba(184,144,10,0.35);
+      border: 1px dashed rgba(184, 144, 10, 0.38);
       animation: spinRing 45s linear infinite;
-      pointer-events: none; z-index: 1;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .brand-inner {
-      position: relative; z-index: 3;
+      position: relative;
+      z-index: 3;
       text-align: center;
-      animation: fadeRise .9s .05s cubic-bezier(.22,.68,.36,1) both;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeRise .9s .05s cubic-bezier(.22, .68, .36, 1) both;
       opacity: 0;
     }
 
+    /* Logo strictly smaller than innermost ring */
     .brand-logo {
-      width: 240px; max-width: 88%;
-      margin-bottom: 28px;
-      filter: drop-shadow(0 4px 18px rgba(120,96,8,0.28));
+      width: 150px;
+      max-width: 60%;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 4px 16px rgba(120, 96, 8, 0.22));
     }
 
     .deco {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      width: 150px;
     }
+
     .deco-l {
-      flex: 1; height: 1px;
-      background: linear-gradient(to right, transparent, rgba(184,144,10,0.5));
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(184, 144, 10, 0.5));
     }
+
     .deco-r {
-      flex: 1; height: 1px;
-      background: linear-gradient(to left, transparent, rgba(184,144,10,0.5));
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to left, transparent, rgba(184, 144, 10, 0.5));
     }
+
     .deco-gem {
-      width: 6px; height: 6px;
+      width: 5px;
+      height: 5px;
       background: var(--gold);
       transform: rotate(45deg);
-      opacity: 0.75;
+      flex-shrink: 0;
     }
 
     .brand-quote {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 13.5px;
+      font-size: 12.5px;
       color: var(--ink-3);
-      line-height: 1.9;
+      line-height: 1.85;
+      max-width: 200px;
     }
 
-    /* stats — slight cream tint to distinguish from white bg */
-    .stats {
-      display: flex; gap: 0;
-      margin-top: 36px;
-      border: 1px solid var(--cream-2);
-      border-radius: 12px;
-      background: rgba(245,240,232,0.6);
-      overflow: hidden;
-    }
-    .stat {
-      flex: 1; padding: 14px 8px;
-      text-align: center;
-      border-right: 1px solid var(--cream-2);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-n {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px; font-weight: 700;
-      color: var(--gold); line-height: 1;
-      margin-bottom: 3px;
-    }
-    .stat-l {
-      font-size: 8.5px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--ink-4);
-    }
-
-    /* separator */
+    /* vertical separator */
     .sep {
-      flex-shrink: 0; width: 1px;
+      flex-shrink: 0;
+      width: 1px;
       background: linear-gradient(to bottom,
-        transparent 0%, var(--gold-dk) 25%,
-        var(--gold-lt) 50%, var(--gold-dk) 75%, transparent 100%);
+          transparent 0%, var(--gold-dk) 25%,
+          var(--gold-lt) 50%, var(--gold-dk) 75%, transparent 100%);
       position: relative;
     }
+
     .sep::before {
       content: '';
-      position: absolute; top:50%; left:50%;
-      transform: translate(-50%,-50%) rotate(45deg);
-      width: 7px; height: 7px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 7px;
+      height: 7px;
       background: var(--gold);
-      box-shadow: 0 0 8px rgba(200,160,40,0.6);
+      box-shadow: 0 0 8px rgba(200, 160, 40, 0.6);
     }
 
     /* ═══════════════════════════════════
-       RIGHT — FORM PANEL  (65%)
-       White background — clean
+       RIGHT — FORM PANEL
     ═══════════════════════════════════ */
     .p-form {
       flex: 1;
@@ -211,255 +238,540 @@
       background: var(--white);
       position: relative;
       overflow: hidden;
-      padding: 60px 80px;
+      padding: 36px 60px;
     }
 
-    /* faint dot pattern right side too */
     .p-form::before {
       content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(184,144,10,0.10) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.30;
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(184, 144, 10, 0.10) 1px, transparent 1px);
+      background-size: 22px 22px;
+      opacity: 0.28;
       pointer-events: none;
     }
 
     .form-inner {
-      position: relative; z-index: 1;
-      width: 100%; max-width: 480px;
-      animation: fadeRise .9s .15s cubic-bezier(.22,.68,.36,1) both;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 460px;
+      animation: fadeRise .9s .15s cubic-bezier(.22, .68, .36, 1) both;
       opacity: 0;
     }
 
-    /* ═══════════════════════════════════
-       BIG CARD — cream bg, wraps everything
-       from eyebrow down to footer
-    ═══════════════════════════════════ */
     .form-card {
       background: var(--cream);
       border: 1.5px solid var(--border);
       border-radius: 20px;
-      padding: 36px 40px 32px;
+      padding: 30px 34px 26px;
       position: relative;
-      box-shadow:
-        0 4px 32px rgba(120,96,8,0.10),
-        0 1px 4px rgba(120,96,8,0.06);
+      box-shadow: 0 4px 28px rgba(120, 96, 8, 0.10), 0 1px 4px rgba(120, 96, 8, 0.06);
     }
 
-    /* gold top accent line on card */
     .form-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 32px; right: 32px; height: 2.5px;
+      top: 0;
+      left: 28px;
+      right: 28px;
+      height: 2.5px;
       background: linear-gradient(to right, transparent, var(--gold-lt), transparent);
       border-radius: 2px;
     }
 
-    /* eyebrow inside card */
     .eyebrow {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 9px; font-weight: 700;
-      letter-spacing: 4px; text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 14px;
-    }
-    .eyebrow::before {
-      content: ''; display: block;
-      width: 20px; height: 1.5px;
-      background: var(--gold); border-radius: 2px;
+      margin-bottom: 10px;
     }
 
-    /* title */
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
     .ftitle {
       font-family: 'Playfair Display', serif;
-      font-size: 46px; font-weight: 700;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 700;
       color: var(--ink);
-      line-height: 1.0;
-      margin-bottom: 8px;
+      line-height: 1;
+      margin-bottom: 6px;
       letter-spacing: -0.5px;
     }
+
     .ftitle em {
-      display: inline;
-      font-style: italic; font-weight: 500;
+      font-style: italic;
+      font-weight: 500;
       color: var(--gold);
     }
 
-    /* thin gold rule after title */
     .title-rule {
-      display: flex; align-items: center; gap: 10px;
-      margin: 14px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0 8px;
     }
+
     .title-rule::before {
-      content: ''; flex: 0 0 36px; height: 1px;
+      content: '';
+      flex: 0 0 32px;
+      height: 1px;
       background: var(--gold-dk);
     }
+
     .title-rule::after {
-      content: ''; flex: 1; height: 1px;
+      content: '';
+      flex: 1;
+      height: 1px;
       background: var(--cream-3);
     }
+
     .title-rule-gem {
-      width: 5px; height: 5px;
+      width: 5px;
+      height: 5px;
       background: var(--gold);
       transform: rotate(45deg);
       flex-shrink: 0;
     }
 
     .fsub {
-      font-size: 12.5px; font-weight: 400;
-      color: var(--ink-3); line-height: 1.7;
-      margin-bottom: 24px;
+      font-size: 12px;
+      color: var(--ink-3);
+      line-height: 1.65;
+      margin-bottom: 18px;
     }
 
-    /* section label above fields group */
     .fields-section {
       border-top: 1px solid var(--cream-3);
-      padding-top: 20px;
+      padding-top: 16px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field:last-of-type {
       margin-bottom: 0;
     }
 
-    /* fields */
-    .field { margin-bottom: 14px; }
-    .field:last-of-type { margin-bottom: 0; }
-
     .flabel {
       display: block;
-      font-size: 9px; font-weight: 700;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--ink-3); margin-bottom: 7px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 6px;
       transition: color .2s;
     }
-    .field:focus-within .flabel { color: var(--gold); }
 
-    .fw { position: relative; }
+    .field:focus-within .flabel {
+      color: var(--gold);
+    }
+
+    .fw {
+      position: relative;
+    }
 
     .ficon {
-      position: absolute; left: 16px; top: 50%;
+      position: absolute;
+      left: 15px;
+      top: 50%;
       transform: translateY(-50%);
-      font-size: 13px; color: var(--gold-dk);
-      pointer-events: none; transition: color .2s;
+      font-size: 13px;
+      color: var(--gold-dk);
+      pointer-events: none;
+      transition: color .2s;
     }
-    .field:focus-within .ficon { color: var(--gold-lt); }
 
-    /* inputs WHITE inside the cream card */
+    .field:focus-within .ficon {
+      color: var(--gold);
+    }
+
     .finput {
       width: 100%;
-      padding: 13px 16px 13px 46px;
+      padding: 12px 14px 12px 44px;
       background: var(--white);
       border: 1.5px solid var(--border);
       border-radius: 9px;
       font-family: 'Mulish', sans-serif;
-      font-size: 14px; font-weight: 500;
-      color: var(--ink); outline: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      outline: none;
       transition: border-color .25s, box-shadow .25s;
     }
-    .finput::placeholder { color: var(--ink-4); font-weight: 400; }
+
+    .finput::placeholder {
+      color: var(--ink-4);
+      font-weight: 400;
+    }
+
     .finput:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(184,144,10,0.10);
+      box-shadow: 0 0 0 3px rgba(184, 144, 10, 0.10);
     }
 
     .eye-btn {
-      position: absolute; right: 13px; top: 50%;
+      position: absolute;
+      right: 13px;
+      top: 50%;
       transform: translateY(-50%);
-      background: none; border: none; cursor: pointer;
-      color: var(--ink-4); font-size: 13px; padding: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-4);
+      font-size: 13px;
+      padding: 4px;
       transition: color .2s;
     }
-    .eye-btn:hover { color: var(--gold); }
+
+    .eye-btn:hover {
+      color: var(--gold);
+    }
 
     .forgot-row {
-      display: flex; justify-content: flex-end;
-      margin-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
     }
+
     .forgot {
-      font-size: 11.5px; font-weight: 600;
-      color: var(--gold-dk); text-decoration: none;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--gold-dk);
+      text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color .2s, color .2s;
     }
-    .forgot:hover { color: var(--gold); border-color: var(--gold); }
 
-    /* divider inside card before button */
+    .forgot:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
     .card-divider {
       height: 1px;
       background: var(--cream-3);
-      margin: 24px 0;
+      margin: 18px 0;
     }
 
-    /* SIGN IN BUTTON — inside card */
     .cta {
-      width: 100%; padding: 15px;
-      border: none; border-radius: 10px;
-      position: relative; overflow: hidden; cursor: pointer;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
       background: linear-gradient(110deg, #c9a218 0%, #9a7808 100%);
       font-family: 'Mulish', sans-serif;
-      font-size: 11px; font-weight: 800;
-      letter-spacing: 5px; text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 5px;
+      text-transform: uppercase;
       color: #fff;
       transition: transform .2s, box-shadow .2s, filter .2s;
-      box-shadow: 0 6px 28px rgba(184,144,10,0.30);
-      margin-bottom: 0;
+      box-shadow: 0 6px 24px rgba(184, 144, 10, 0.30);
     }
+
     .cta::before {
       content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 55%);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 55%);
     }
-    .cta:hover  { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(184,144,10,0.40); filter: brightness(1.06); }
-    .cta:active { transform: translateY(0); }
-    .cta.loading { pointer-events: none; opacity: .85; }
-    .cta-text { position: relative; z-index: 1; transition: opacity .15s; }
-    .cta-spin  { display:none; position:absolute; inset:0; z-index:2; align-items:center; justify-content:center; }
-    .cta.loading .cta-text { opacity: 0; }
-    .cta.loading .cta-spin  { display: flex; }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(184, 144, 10, 0.40);
+      filter: brightness(1.06);
+    }
+
+    .cta:active {
+      transform: translateY(0);
+    }
+
+    .cta.loading {
+      pointer-events: none;
+      opacity: .85;
+    }
+
+    .cta-text {
+      position: relative;
+      z-index: 1;
+      transition: opacity .15s;
+    }
+
+    .cta-spin {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta.loading .cta-text {
+      opacity: 0;
+    }
+
+    .cta.loading .cta-spin {
+      display: flex;
+    }
+
     .spin-ring {
-      width: 18px; height: 18px;
-      border: 2px solid rgba(255,255,255,.3);
-      border-top-color: #fff; border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, .3);
+      border-top-color: #fff;
+      border-radius: 50%;
       animation: spin .65s linear infinite;
     }
 
-    /* footer inside card */
     .card-footer {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-top: 20px;
-      padding-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+      padding-top: 14px;
       border-top: 1px solid var(--cream-3);
     }
+
     .secured-row {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
       color: var(--ink-4);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       justify-content: center;
     }
-    .secured-row i { color: var(--gold-dk); font-size: 11px; }
+
+    .secured-row i {
+      color: var(--gold-dk);
+      font-size: 11px;
+    }
+
     .ssl-txt {
-      font-size: 10.5px; color: var(--ink-4);
-      text-align: center; display: block;
+      font-size: 10px;
+      color: var(--ink-4);
+      text-align: center;
+      display: block;
     }
 
-    /* animations */
+    /* ═══════════════════════════════════
+       KEYFRAMES
+    ═══════════════════════════════════ */
     @keyframes fadeRise {
-      from { opacity:0; transform:translateY(18px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-    @keyframes spinRing { to { transform: translate(-50%,-50%) rotate(360deg); } }
-    @keyframes spin { to { transform: rotate(360deg); } }
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
 
-    @media (max-width:900px) {
-      body { flex-direction: column-reverse; overflow: auto; }
-      .sep  { width:auto; height:1px; align-self:auto;
-              background: linear-gradient(to right, transparent, var(--gold), transparent); }
-      .sep::before { top:50%; left:50%; }
-      .p-brand { flex:none; min-height:42vh; padding:40px 24px; }
-      .p-form  { padding:48px 28px; }
-      .ftitle  { font-size:40px; }
-      .form-card { padding: 22px 20px 18px; }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spinRing {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .p-brand {
+        flex: 0 0 34%;
+      }
+
+      .p-form {
+        padding: 28px 36px;
+      }
+
+      .dring-2 {
+        width: 230px;
+        height: 230px;
+      }
+
+      .dring-3 {
+        width: 304px;
+        height: 304px;
+      }
+
+      .brand-logo {
+        width: 130px;
+      }
+    }
+
+    /* Stack vertically on tablet/mobile */
+    @media (max-width: 768px) {
+
+      html,
+      body {
+        height: auto;
+        overflow: auto;
+      }
+
+      body {
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .sep {
+        width: 100%;
+        height: 1px;
+        flex-shrink: 0;
+        background: linear-gradient(to right, transparent, var(--gold), transparent);
+      }
+
+      .sep::before {
+        top: 50%;
+        left: 50%;
+      }
+
+      .p-brand {
+        flex: none;
+        padding: 44px 24px 36px;
+        min-height: 280px;
+      }
+
+      .dring-2 {
+        width: 196px;
+        height: 196px;
+      }
+
+      .dring-3 {
+        width: 260px;
+        height: 260px;
+      }
+
+      .brand-logo {
+        width: 110px;
+        margin-bottom: 18px;
+      }
+
+      .brand-quote {
+        font-size: 12px;
+      }
+
+      .p-form {
+        padding: 32px 24px 44px;
+        overflow: visible;
+      }
+
+      .form-card {
+        padding: 22px 20px 20px;
+      }
+
+      .ftitle {
+        font-size: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .p-brand {
+        padding: 32px 16px 28px;
+        min-height: 240px;
+      }
+
+      .brand-logo {
+        width: 90px;
+        margin-bottom: 14px;
+      }
+
+      .dring-2 {
+        width: 160px;
+        height: 160px;
+      }
+
+      .dring-3 {
+        width: 214px;
+        height: 214px;
+      }
+
+      .brand-quote {
+        font-size: 11px;
+        max-width: 170px;
+      }
+
+      .p-form {
+        padding: 20px 14px 32px;
+      }
+
+      .form-card {
+        padding: 18px 14px 16px;
+        border-radius: 14px;
+      }
+
+      .ftitle {
+        font-size: 26px;
+      }
+
+      .finput {
+        font-size: 13px;
+        padding: 11px 12px 11px 40px;
+      }
+
+      .cta {
+        font-size: 10px;
+        letter-spacing: 4px;
+        padding: 13px;
+      }
+
+      .fsub {
+        font-size: 11px;
+        margin-bottom: 14px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand-logo {
+        width: 78px;
+      }
+
+      .dring-2 {
+        width: 138px;
+        height: 138px;
+      }
+
+      .dring-3 {
+        width: 186px;
+        height: 186px;
+      }
+
+      .ftitle {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ══ LEFT — BRAND ══ -->
@@ -468,7 +780,8 @@
     <div class="brk brk-tr"></div>
     <div class="brk brk-bl"></div>
     <div class="brk brk-br"></div>
-    <div class="dring"></div>
+
+    <!-- Rings are 260px & 340px — logo is only 150px, so rings are well outside -->
     <div class="dring-2"></div>
     <div class="dring-3"></div>
 
@@ -483,6 +796,7 @@
 
       <p class="brand-quote">"Where luxury meets artistry,<br>every visit is a ritual."</p>
 
+      <!-- Stats banner REMOVED as requested -->
     </div>
   </div>
 
@@ -491,28 +805,22 @@
 
   <!-- ══ RIGHT — FORM ══ -->
   <div class="p-form">
-
     <div class="form-inner">
-
-      <!-- ONE BIG CREAM CARD — eyebrow to footer -->
       <div class="form-card">
 
         <div class="eyebrow">Admin Portal</div>
-
         <h1 class="ftitle">Welcome <em>Back</em></h1>
-
-        <div class="title-rule"><div class="title-rule-gem"></div></div>
-
+        <div class="title-rule">
+          <div class="title-rule-gem"></div>
+        </div>
         <p class="fsub">Sign in to access your KCOZM dashboard and manage your luxury salon experience.</p>
 
         <div class="fields-section">
-
           <div class="field">
             <label class="flabel">Email Address</label>
             <div class="fw">
               <i class="fa-solid fa-envelope ficon"></i>
-              <input type="email" id="email" class="finput"
-                     placeholder="admin@kcozm.com" value="admin@kcozm.com">
+              <input type="email" id="email" class="finput" placeholder="admin@kcozm.com" value="admin@kcozm.com">
             </div>
           </div>
 
@@ -520,9 +828,8 @@
             <label class="flabel">Password</label>
             <div class="fw">
               <i class="fa-solid fa-lock ficon"></i>
-              <input type="password" id="pwd" class="finput"
-                     placeholder="••••••••••" value="password123"
-                     style="padding-right:48px;">
+              <input type="password" id="pwd" class="finput" placeholder="••••••••••" value="password123"
+                style="padding-right:46px;">
               <button class="eye-btn" type="button" onclick="togglePwd()">
                 <i class="fa-solid fa-eye" id="eyeIco"></i>
               </button>
@@ -532,14 +839,15 @@
           <div class="forgot-row">
             <a href="#" class="forgot">Forgot password?</a>
           </div>
-
         </div>
 
         <div class="card-divider"></div>
 
         <button class="cta" id="ctaBtn" onclick="doLogin()">
           <span class="cta-text">Sign In</span>
-          <span class="cta-spin"><div class="spin-ring"></div></span>
+          <span class="cta-spin">
+            <div class="spin-ring"></div>
+          </span>
         </button>
 
         <div class="card-footer">
@@ -553,8 +861,6 @@
         </div>
 
       </div>
-      <!-- END BIG CARD -->
-
     </div>
   </div>
 
@@ -575,4 +881,5 @@
     }
   </script>
 </body>
+
 </html>

@@ -10,7 +10,6 @@
   <style>
     :root {
       --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
-      --pk:#e91e63; --pk-dk:#c2185b; --pk-lt:#fce4ec;
       --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060;
       --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
       --r-sm:8px; --r-md:14px; --r-lg:20px;
@@ -38,12 +37,12 @@
     .kc-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
     .kc-stat:nth-child(1)::before{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
     .kc-stat:nth-child(2)::before{background:linear-gradient(90deg,#4caf50,#2e7d32)}
-    .kc-stat:nth-child(3)::before{background:linear-gradient(90deg,var(--pk),var(--pk-dk))}
+    .kc-stat:nth-child(3)::before{background:linear-gradient(90deg,#e91e63,#c2185b)}
     .kc-stat:nth-child(4)::before{background:linear-gradient(90deg,#2196f3,#1565c0)}
     .kc-stat-icon{position:absolute;right:18px;top:18px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
     .kc-stat:nth-child(1) .kc-stat-icon{background:var(--gold-lt);color:var(--gold-dk)}
     .kc-stat:nth-child(2) .kc-stat-icon{background:#e8f5e9;color:#2e7d32}
-    .kc-stat:nth-child(3) .kc-stat-icon{background:var(--pk-lt);color:var(--pk-dk)}
+    .kc-stat:nth-child(3) .kc-stat-icon{background:#fce4ec;color:#c2185b}
     .kc-stat:nth-child(4) .kc-stat-icon{background:#e3f2fd;color:#1565c0}
     .kc-stat-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin-bottom:10px}
     .kc-stat-val{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:800;color:var(--ink);line-height:1}
@@ -94,7 +93,7 @@
     .kc-badge.active {background:#e8f5e9;color:#2e7d32}
     .kc-badge.leave  {background:#fff3e0;color:#e65100}
     .kc-badge.vip    {background:var(--gold-lt);color:var(--gold-dk)}
-    .kc-badge.new    {background:var(--pk-lt);color:var(--pk-dk)}
+    .kc-badge.new    {background:#fce4ec;color:#c2185b}
     .kc-scard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;border-top:1px solid var(--border);padding-top:14px}
     .kc-ss{text-align:center}
     .kc-ss-val{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:800;color:var(--ink)}
@@ -102,7 +101,7 @@
     .kc-scard-acts{display:flex;gap:8px}
     .kc-sact{flex:1;padding:8px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all var(--t)}
     .kc-sact:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
-    .kc-sact.danger:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+    .kc-sact.danger:hover{border-color:#e91e63;color:#c2185b;background:#fce4ec}
 
     /* Pagination */
     .kc-pag{padding:16px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
@@ -119,7 +118,7 @@
     .kc-modal-head{padding:22px 24px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
     .kc-modal-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:800;color:var(--ink)}
     .kc-modal-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
-    .kc-modal-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+    .kc-modal-close:hover{border-color:#e91e63;color:#c2185b;background:#fce4ec}
     .kc-modal-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
     .kc-field{display:flex;flex-direction:column;gap:5px}
     .kc-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
