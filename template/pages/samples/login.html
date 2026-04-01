@@ -56,10 +56,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 24px;
+      /* space between ring-wrap and quote */
       background: var(--white);
       overflow: hidden;
+      padding: 32px 24px;
     }
 
+    /* dot pattern */
     .p-brand::before {
       content: '';
       position: absolute;
@@ -67,18 +71,6 @@
       background-image: radial-gradient(circle, rgba(184, 144, 10, 0.18) 1px, transparent 1px);
       background-size: 22px 22px;
       opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .p-brand::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(184, 144, 10, 0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -116,25 +108,35 @@
       border-width: 0 1.5px 1.5px 0;
     }
 
-    /*
-      Logo = 150px wide
-      Ring 1 (dring-2) = 260px  →  55px clearance on each side ✓
-      Ring 2 (dring-3) = 340px  →  outer decorative ring       ✓
-    */
-    .dring-2 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    /* ─────────────────────────────────
+       RING WRAP — self-contained box
+       Rings live HERE, logo centered inside
+    ───────────────────────────────── */
+    .ring-wrap {
+      position: relative;
+      /* size = innermost ring diameter */
       width: 260px;
       height: 260px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeRise .9s .05s cubic-bezier(.22, .68, .36, 1) both;
+      opacity: 0;
+      z-index: 3;
+    }
+
+    /* Inner ring — fills ring-wrap exactly */
+    .dring-2 {
+      position: absolute;
+      inset: 0;
       border-radius: 50%;
       border: 1.5px dashed rgba(139, 104, 8, 0.72);
       animation: spinRing 28s linear infinite reverse;
       pointer-events: none;
-      z-index: 1;
     }
 
+    /* Outer ring — larger, overflows ring-wrap (clipped by p-brand overflow:hidden) */
     .dring-3 {
       position: absolute;
       top: 50%;
@@ -146,34 +148,44 @@
       border: 1px dashed rgba(184, 144, 10, 0.38);
       animation: spinRing 45s linear infinite;
       pointer-events: none;
-      z-index: 1;
     }
 
-    .brand-inner {
-      position: relative;
-      z-index: 3;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeRise .9s .05s cubic-bezier(.22, .68, .36, 1) both;
-      opacity: 0;
+    /* soft glow behind logo */
+    .ring-glow {
+      position: absolute;
+      inset: 30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184, 144, 10, 0.07) 0%, transparent 70%);
+      pointer-events: none;
     }
 
-    /* Logo strictly smaller than innermost ring */
+    /* LOGO — sits on top, centered in ring-wrap */
     .brand-logo {
-      width: 150px;
-      max-width: 60%;
-      margin-bottom: 22px;
-      filter: drop-shadow(0 4px 16px rgba(120, 96, 8, 0.22));
+      position: relative;
+      z-index: 2;
+      width: 180px;
+      max-width: 65%;
+      filter: drop-shadow(0 4px 16px rgba(120, 96, 8, 0.24));
+    }
+
+    /* ─────────────────────────────────
+       QUOTE — sits BELOW the ring-wrap
+    ───────────────────────────────── */
+    .brand-quote-block {
+      text-align: center;
+      animation: fadeRise .9s .2s cubic-bezier(.22, .68, .36, 1) both;
+      opacity: 0;
+      z-index: 3;
     }
 
     .deco {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       width: 150px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .deco-l {
@@ -199,10 +211,10 @@
     .brand-quote {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 12.5px;
+      font-size: 13px;
       color: var(--ink-3);
       line-height: 1.85;
-      max-width: 200px;
+      max-width: 210px;
     }
 
     /* vertical separator */
@@ -596,10 +608,21 @@
       }
     }
 
+    @keyframes spinRingInset {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     @keyframes spin {
       to {
         transform: rotate(360deg);
       }
+    }
+
+    /* Fix: dring-2 uses inset:0 so needs different keyframe */
+    .dring-2 {
+      animation-name: spinRingInset;
     }
 
     /* ═══════════════════════════════════
@@ -608,28 +631,28 @@
     @media (max-width: 1100px) {
       .p-brand {
         flex: 0 0 34%;
+        gap: 20px;
       }
 
       .p-form {
         padding: 28px 36px;
       }
 
-      .dring-2 {
+      .ring-wrap {
         width: 230px;
         height: 230px;
       }
 
       .dring-3 {
-        width: 304px;
-        height: 304px;
+        width: 306px;
+        height: 306px;
       }
 
       .brand-logo {
-        width: 130px;
+        width: 155px;
       }
     }
 
-    /* Stack vertically on tablet/mobile */
     @media (max-width: 768px) {
 
       html,
@@ -657,23 +680,22 @@
 
       .p-brand {
         flex: none;
-        padding: 44px 24px 36px;
-        min-height: 280px;
+        padding: 40px 24px 32px;
+        gap: 18px;
       }
 
-      .dring-2 {
-        width: 196px;
-        height: 196px;
+      .ring-wrap {
+        width: 200px;
+        height: 200px;
       }
 
       .dring-3 {
-        width: 260px;
-        height: 260px;
+        width: 266px;
+        height: 266px;
       }
 
       .brand-logo {
-        width: 110px;
-        margin-bottom: 18px;
+        width: 134px;
       }
 
       .brand-quote {
@@ -697,27 +719,26 @@
     @media (max-width: 480px) {
       .p-brand {
         padding: 32px 16px 28px;
-        min-height: 240px;
+        gap: 14px;
       }
 
-      .brand-logo {
-        width: 90px;
-        margin-bottom: 14px;
-      }
-
-      .dring-2 {
-        width: 160px;
-        height: 160px;
+      .ring-wrap {
+        width: 166px;
+        height: 166px;
       }
 
       .dring-3 {
-        width: 214px;
-        height: 214px;
+        width: 220px;
+        height: 220px;
+      }
+
+      .brand-logo {
+        width: 110px;
       }
 
       .brand-quote {
         font-size: 11px;
-        max-width: 170px;
+        max-width: 180px;
       }
 
       .p-form {
@@ -743,26 +764,21 @@
         letter-spacing: 4px;
         padding: 13px;
       }
-
-      .fsub {
-        font-size: 11px;
-        margin-bottom: 14px;
-      }
     }
 
     @media (max-width: 360px) {
-      .brand-logo {
-        width: 78px;
-      }
-
-      .dring-2 {
-        width: 138px;
-        height: 138px;
+      .ring-wrap {
+        width: 144px;
+        height: 144px;
       }
 
       .dring-3 {
-        width: 186px;
-        height: 186px;
+        width: 192px;
+        height: 192px;
+      }
+
+      .brand-logo {
+        width: 94px;
       }
 
       .ftitle {
@@ -781,22 +797,22 @@
     <div class="brk brk-bl"></div>
     <div class="brk brk-br"></div>
 
-    <!-- Rings are 260px & 340px — logo is only 150px, so rings are well outside -->
-    <div class="dring-2"></div>
-    <div class="dring-3"></div>
-
-    <div class="brand-inner">
+    <!-- RING WRAP: logo perfectly centered, rings orbit around it -->
+    <div class="ring-wrap">
+      <div class="ring-glow"></div>
+      <div class="dring-2"></div> <!-- inner ring = 260px, same as wrap -->
+      <div class="dring-3"></div> <!-- outer ring = 340px, overflows wrap -->
       <img class="brand-logo" src="../../images/logo.png" alt="KCOZM The Luxury Salon">
+    </div>
 
+    <!-- QUOTE: completely below the ring -->
+    <div class="brand-quote-block">
       <div class="deco">
         <div class="deco-l"></div>
         <div class="deco-gem"></div>
         <div class="deco-r"></div>
       </div>
-
       <p class="brand-quote">"Where luxury meets artistry,<br>every visit is a ritual."</p>
-
-      <!-- Stats banner REMOVED as requested -->
     </div>
   </div>
 
