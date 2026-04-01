@@ -224,11 +224,11 @@
       </div>
       <div class="kc-modal-body">
         <div class="kc-row2">
-          <div class="kc-field"><label class="kc-lbl">First Name</label><input class="kc-inp" type="text" placeholder="e.g. Aisha"></div>
-          <div class="kc-field"><label class="kc-lbl">Last Name</label><input class="kc-inp" type="text" placeholder="e.g. Khan"></div>
+          <div class="kc-field"><label class="kc-lbl">First Name</label><input class="kc-inp" id="mFirstName" type="text" placeholder="e.g. Aisha"></div>
+          <div class="kc-field"><label class="kc-lbl">Last Name</label><input class="kc-inp" id="mLastName" type="text" placeholder="e.g. Khan"></div>
         </div>
         <div class="kc-field"><label class="kc-lbl">Role / Designation</label>
-          <select class="kc-inp">
+          <select class="kc-inp" id="mRole">
             <option value="">Select role…</option>
             <option>Senior Stylist</option><option>Hair Stylist</option>
             <option>Makeup Artist</option><option>Nail Technician</option>
@@ -236,22 +236,23 @@
           </select>
         </div>
         <div class="kc-row2">
-          <div class="kc-field"><label class="kc-lbl">Phone</label><input class="kc-inp" type="tel" placeholder="+91 98XXX XXXXX"></div>
-          <div class="kc-field"><label class="kc-lbl">Email</label><input class="kc-inp" type="email" placeholder="staff@kcozm.com"></div>
+          <div class="kc-field"><label class="kc-lbl">Phone</label><input class="kc-inp" id="mPhone" type="tel" placeholder="+91 98XXX XXXXX"></div>
+          <div class="kc-field"><label class="kc-lbl">Email</label><input class="kc-inp" id="mEmail" type="email" placeholder="staff@kcozm.com"></div>
         </div>
         <div class="kc-row2">
           <div class="kc-field"><label class="kc-lbl">Branch</label>
-            <select class="kc-inp">
+            <select class="kc-inp" id="mBranch">
+              <option value="">Select branch…</option>
               <option>Pune West</option><option>Mumbai Andheri</option><option>Nagpur Central</option>
             </select>
           </div>
-          <div class="kc-field"><label class="kc-lbl">Joining Date</label><input class="kc-inp" type="date"></div>
+          <div class="kc-field"><label class="kc-lbl">Joining Date</label><input class="kc-inp" id="mJoining" type="date"></div>
         </div>
-        <div class="kc-field"><label class="kc-lbl">Specialisations</label><input class="kc-inp" type="text" placeholder="e.g. Bridal, Keratin, Nail Art"></div>
+        <div class="kc-field"><label class="kc-lbl">Specialisations</label><input class="kc-inp" id="mSpeciality" type="text" placeholder="e.g. Bridal, Keratin, Nail Art"></div>
       </div>
       <div class="kc-modal-foot">
         <button class="kc-btn-out" onclick="closeModal()">Cancel</button>
-        <button class="kc-btn-gold" onclick="closeModal();KcozmAdmin.showToast('Staff member added successfully!','success')">
+        <button class="kc-btn-gold" onclick="addStaffFromModal()">
           <i class="fa-solid fa-user-plus"></i> Add Staff
         </button>
       </div>
@@ -274,6 +275,23 @@
       {id:8, name:'Meghna Rao',    role:'Makeup Artist',    status:'leave', branch:'Pune West',    appts:89, rating:'4.7',exp:'3 yrs',speciality:'Editorial, Bridal'},
     ];
 
+    /* Merge edits from staff_form.html */
+    (function(){
+      try {
+        var saved = JSON.parse(sessionStorage.getItem('kc_staff_data') || '[]');
+        saved.forEach(function(s){
+          var idx = STAFF.findIndex(function(x){ return x.id === s.id; });
+          if (idx >= 0) Object.assign(STAFF[idx], s);
+          else STAFF.push(s);
+        });
+      } catch(e){}
+      try {
+        var t = JSON.parse(sessionStorage.getItem('kc_staff_toast') || 'null');
+        if (t) { setTimeout(function(){ KcozmAdmin.showToast(t.msg, t.type); }, 300); }
+        sessionStorage.removeItem('kc_staff_toast');
+      } catch(e){}
+    })();
+
     let currentFilter='all', currentSearch='';
 
     function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
@@ -294,7 +312,7 @@
         const bg=s.status==='active'
           ?`linear-gradient(135deg, ${av}22, ${av}44)`
           :`linear-gradient(135deg, #f0ebe4, #e8e2da)`;
-        return `<div class="kc-scard" style="animation-delay:${i*.05}s" onclick="KcozmAdmin.showToast('Viewing ${s.name}','info')">
+        return `<div class="kc-scard" style="animation-delay:${i*.05}s">
           <div class="kc-scard-top" style="background:${bg}">
             <div class="kc-scard-av" style="background:${av}">${initials(s.name)}</div>
           </div>
@@ -302,16 +320,16 @@
             <div class="kc-scard-name">${s.name}</div>
             <div class="kc-scard-role">${s.role} · ${s.branch}</div>
             <div class="kc-scard-badges">${statusBadge}</div>
-            <div style="font-size:11px;color:var(--ink-3);margin-bottom:14px;line-height:1.5">${s.speciality}</div>
+            <div style="font-size:11px;color:var(--ink-3);margin-bottom:14px;line-height:1.5">${s.speciality||'—'}</div>
             <div class="kc-scard-stats">
               <div class="kc-ss"><div class="kc-ss-val">${s.appts}</div><div class="kc-ss-lbl">Appts</div></div>
               <div class="kc-ss"><div class="kc-ss-val">★${s.rating}</div><div class="kc-ss-lbl">Rating</div></div>
               <div class="kc-ss"><div class="kc-ss-val">${s.exp}</div><div class="kc-ss-lbl">Exp</div></div>
             </div>
             <div class="kc-scard-acts">
-              <button class="kc-sact" onclick="event.stopPropagation()"><i class="fa-solid fa-pen"></i> Edit</button>
-              <button class="kc-sact" onclick="event.stopPropagation()"><i class="fa-solid fa-calendar-days"></i> Schedule</button>
-              <button class="kc-sact danger" onclick="event.stopPropagation()"><i class="fa-solid fa-trash"></i></button>
+              <a class="kc-sact" href="forms/staff_form.html?id=${s.id}" onclick="syncStaffStorage();event.stopPropagation()"><i class="fa-solid fa-pen"></i> Edit</a>
+              <button class="kc-sact" onclick="event.stopPropagation();window.location.href='staff-schedule.html'"><i class="fa-solid fa-calendar-days"></i> Schedule</button>
+              <button class="kc-sact danger" onclick="event.stopPropagation();deleteStaff(${s.id})"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
         </div>`;
@@ -334,7 +352,56 @@
     function handleSearch(v){ currentSearch=v.toLowerCase(); applyFilters(); }
 
     function openModal(){document.getElementById('modalOv').classList.add('show');document.body.style.overflow='hidden';}
-    function closeModal(){document.getElementById('modalOv').classList.remove('show');document.body.style.overflow='';}
+    function closeModal(){
+      document.getElementById('modalOv').classList.remove('show');
+      document.body.style.overflow='';
+      // Clear modal fields
+      ['mFirstName','mLastName','mPhone','mEmail','mJoining','mSpeciality'].forEach(function(id){
+        document.getElementById(id).value='';
+      });
+      document.getElementById('mRole').value='';
+      document.getElementById('mBranch').value='';
+    }
+
+    function addStaffFromModal(){
+      var fn   = document.getElementById('mFirstName').value.trim();
+      var ln   = document.getElementById('mLastName').value.trim();
+      var role = document.getElementById('mRole').value;
+      var phone= document.getElementById('mPhone').value.trim();
+      var email= document.getElementById('mEmail').value.trim();
+      var branch=document.getElementById('mBranch').value;
+      var joining=document.getElementById('mJoining').value;
+      var spec = document.getElementById('mSpeciality').value.trim();
+
+      if (!fn || !ln) { KcozmAdmin.showToast('Please enter first and last name','error'); return; }
+      if (!role)      { KcozmAdmin.showToast('Please select a role','error'); return; }
+      if (!branch)    { KcozmAdmin.showToast('Please select a branch','error'); return; }
+
+      var name = fn + ' ' + ln;
+      var nid  = STAFF.length ? Math.max.apply(null, STAFF.map(function(s){ return s.id; })) + 1 : 1;
+      STAFF.push({ id:nid, name:name, role:role, phone:phone, email:email,
+        branch:branch, joining:joining, speciality:spec,
+        status:'active', appts:0, rating:'—', exp:'<1 yr' });
+
+      closeModal();
+      applyFilters();
+      KcozmAdmin.showToast('"'+name+'" added to the team!','success');
+    }
+
+    /* Save back to sessionStorage so staff_form.html edits persist */
+    function syncStaffStorage(){
+      try { sessionStorage.setItem('kc_staff_data', JSON.stringify(STAFF)); } catch(e){}
+    }
+
+    function deleteStaff(id){
+      var s = STAFF.find(function(x){ return x.id === id; });
+      if (!s) return;
+      if (!confirm('Remove "' + s.name + '" from the team?')) return;
+      STAFF.splice(STAFF.indexOf(s), 1);
+      syncStaffStorage();
+      applyFilters();
+      KcozmAdmin.showToast('"' + s.name + '" removed','info');
+    }
 
     renderGrid(STAFF);
   </script>

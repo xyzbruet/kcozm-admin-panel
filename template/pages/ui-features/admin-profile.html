@@ -823,9 +823,22 @@
 
     /* ── Save sections ── */
     function saveSection(section) {
+      if (section === 'password') {
+        var curr    = document.getElementById('currPw').value;
+        var newPw   = document.getElementById('newPw').value;
+        var confirm = document.getElementById('confirmPw').value;
+        if (!curr)             { KcozmAdmin.showToast('Please enter your current password','error'); return; }
+        if (newPw.length < 8)  { KcozmAdmin.showToast('New password must be at least 8 characters','error'); return; }
+        if (newPw !== confirm)  { KcozmAdmin.showToast('Passwords do not match','error'); return; }
+        document.getElementById('currPw').value    = '';
+        document.getElementById('newPw').value     = '';
+        document.getElementById('confirmPw').value = '';
+        checkStrength({ value: '' });
+        KcozmAdmin.showToast('Password updated securely!','success');
+        return;
+      }
       var msgs = {
         personal: 'Personal info saved successfully!',
-        password: 'Password updated securely!',
         notifications: 'Notification preferences saved!',
         appearance: 'Appearance preferences saved!'
       };

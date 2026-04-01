@@ -404,6 +404,23 @@
         ]},
     ];
 
+    /* Merge any customers added/edited via customer_form.html */
+    (function(){
+      try {
+        var saved = JSON.parse(sessionStorage.getItem('kc_customers_data') || '[]');
+        saved.forEach(function(s){
+          var idx = CUSTOMERS.findIndex(function(c){ return c.id === s.id; });
+          if (idx >= 0) CUSTOMERS[idx] = Object.assign(CUSTOMERS[idx], s);
+          else CUSTOMERS.push(s);
+        });
+      } catch(e){}
+      try {
+        var t = JSON.parse(sessionStorage.getItem('kc_customers_toast') || 'null');
+        if (t) { setTimeout(function(){ KcozmAdmin.showToast(t.msg, t.type); }, 300); }
+        sessionStorage.removeItem('kc_customers_toast');
+      } catch(e){}
+    })();
+
     var activeFilter='all', searchQ='', sortBy='name';
     var currentCustomerId=null;
 
@@ -638,7 +655,7 @@
     }
 
     function openNewCustomer(){
-      KcozmAdmin.showToast('New customer form coming soon','info');
+      window.location.href='forms/customer_form.html';
     }
 
     document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDrawer(); });

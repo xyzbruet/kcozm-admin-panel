@@ -638,9 +638,9 @@
               <div><div class="sc-title">Change Password</div><div class="sc-sub">Keep your account secure with a strong password</div></div>
             </div>
             <div class="form-grid-2">
-              <div class="fg full"><label class="flbl">Current Password</label><input type="password" class="finp" placeholder="Enter current password"></div>
+              <div class="fg full"><label class="flbl">Current Password</label><input type="password" class="finp" id="sCurrPwd" placeholder="Enter current password"></div>
               <div class="fg"><label class="flbl">New Password</label><input type="password" class="finp" placeholder="New password" id="newPwd" oninput="checkPwd(this.value)"></div>
-              <div class="fg"><label class="flbl">Confirm New Password</label><input type="password" class="finp" placeholder="Repeat new password"></div>
+              <div class="fg"><label class="flbl">Confirm New Password</label><input type="password" class="finp" id="sConfirmPwd" placeholder="Repeat new password"></div>
               <div class="fg full">
                 <div style="display:flex;gap:6px;margin-top:2px" id="pwdStrength">
                   <div style="height:4px;flex:1;border-radius:4px;background:var(--border);transition:background .3s" id="ps1"></div>
@@ -652,7 +652,7 @@
               </div>
             </div>
             <div class="sc-footer">
-              <button class="btn btn-gold" onclick="KcozmAdmin.showToast('Password updated!','success')"><i class="fa-solid fa-key"></i> Update Password</button>
+              <button class="btn btn-gold" onclick="savePassword()"><i class="fa-solid fa-key"></i> Update Password</button>
             </div>
           </div>
         </div>
@@ -1101,7 +1101,10 @@
               </div>
               <div class="srow">
                 <div class="srow-left"><div class="srow-label">Allowed IP Addresses</div><div class="srow-desc">Restrict admin access to specific IP ranges</div></div>
-                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="KcozmAdmin.showToast('Feature coming soon','info')"><i class="fa-solid fa-plus"></i> Add IP</button></div>
+                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="openIpModal()"><i class="fa-solid fa-plus"></i> Add IP</button></div>
+              </div>
+              <div id="ipListWrap" style="display:none;padding:10px 0 4px">
+                <div id="ipList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
               </div>
             </div>
           </div>
@@ -1144,7 +1147,7 @@
             <div class="sc-body">
               <div class="srow">
                 <div class="srow-left"><div class="srow-label">Payment Method</div><div class="srow-desc"><i class="fa-brands fa-cc-visa" style="color:#1565c0;font-size:16px"></i> &nbsp;Visa ending in 4242 · Expires 08/26</div></div>
-                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="KcozmAdmin.showToast('Update card coming soon','info')"><i class="fa-solid fa-pen"></i> Update</button></div>
+                <div class="srow-right"><button class="btn btn-out btn-sm" onclick="openCardModal()"><i class="fa-solid fa-pen"></i> Update</button></div>
               </div>
               <div class="srow">
                 <div class="srow-left"><div class="srow-label">Next Billing Date</div><div class="srow-desc">Your plan renews automatically on this date</div></div>
@@ -1398,6 +1401,171 @@
       +'</div>';
     }).join('');
   }
+</script>
+
+<!-- ══ IP MODAL ══ -->
+<div id="ipModalOv" style="display:none;position:fixed;inset:0;background:rgba(26,18,8,.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:0 8px 40px rgba(26,18,8,.18);width:100%;max-width:400px;margin:0 20px;overflow:hidden">
+    <div style="padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)">Add Allowed IP</div>
+      <button onclick="closeIpModal()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-3);padding:4px"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div style="padding:22px">
+      <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">IP Address or CIDR Range</label>
+      <input type="text" id="ipInput" placeholder="e.g. 192.168.1.0/24 or 203.0.113.5"
+        style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
+        onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
+        onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'"
+        onkeydown="if(event.key==='Enter')saveIp()">
+      <div style="font-size:11.5px;color:var(--ink-3);margin-top:8px">IPv4, IPv6, and CIDR notation are all supported. Leave empty to restrict all unknown IPs.</div>
+    </div>
+    <div style="padding:14px 22px 18px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border);background:var(--surface-2)">
+      <button onclick="closeIpModal()" style="padding:9px 20px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer">Cancel</button>
+      <button onclick="saveIp()" style="padding:9px 22px;border:none;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;cursor:pointer"><i class="fa-solid fa-plus"></i> Add IP</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ UPDATE CARD MODAL ══ -->
+<div id="cardModalOv" style="display:none;position:fixed;inset:0;background:rgba(26,18,8,.45);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:0 8px 40px rgba(26,18,8,.18);width:100%;max-width:440px;margin:0 20px;overflow:hidden">
+    <div style="padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)">Update Payment Method</div>
+      <button onclick="closeCardModal()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-3);padding:4px"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div style="padding:22px;display:flex;flex-direction:column;gap:14px">
+      <div>
+        <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">Cardholder Name</label>
+        <input type="text" id="cardName" placeholder="Name as on card" value="Salon Admin"
+          style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
+          onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
+          onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+      </div>
+      <div>
+        <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">Card Number</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/(.{4})/g,'$1 ').trim()"
+          style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',monospace;font-size:14px;letter-spacing:.08em;color:var(--ink);background:var(--surface-2);outline:none"
+          onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
+          onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div>
+          <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">Expiry (MM/YY)</label>
+          <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5"
+            oninput="var v=this.value.replace(/[^0-9]/g,'');this.value=v.length>2?v.slice(0,2)+'/'+v.slice(2):v"
+            style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
+            onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
+            onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        </div>
+        <div>
+          <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">CVV</label>
+          <input type="password" id="cardCvv" placeholder="•••" maxlength="4"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
+            onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
+            onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        </div>
+      </div>
+      <div style="font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--surface-2);border-radius:var(--r-sm);border:1px solid var(--border)">
+        <i class="fa-solid fa-lock" style="color:var(--gold-dk)"></i> Your payment details are encrypted and stored securely.
+      </div>
+    </div>
+    <div style="padding:14px 22px 18px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border);background:var(--surface-2)">
+      <button onclick="closeCardModal()" style="padding:9px 20px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer">Cancel</button>
+      <button onclick="saveCard()" style="padding:9px 22px;border:none;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;cursor:pointer"><i class="fa-solid fa-credit-card"></i> Save Card</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Password Save ── */
+  function savePassword() {
+    var curr    = document.getElementById('sCurrPwd').value;
+    var newPw   = document.getElementById('newPwd').value;
+    var confirm = document.getElementById('sConfirmPwd').value;
+    if (!curr)              { KcozmAdmin.showToast('Please enter your current password','error'); return; }
+    if (newPw.length < 8)   { KcozmAdmin.showToast('New password must be at least 8 characters','error'); return; }
+    if (newPw !== confirm)  { KcozmAdmin.showToast('Passwords do not match','error'); return; }
+    /* In a real app this would call an API — here we simulate success */
+    document.getElementById('sCurrPwd').value    = '';
+    document.getElementById('newPwd').value      = '';
+    document.getElementById('sConfirmPwd').value = '';
+    checkPwd('');
+    KcozmAdmin.showToast('Password updated successfully!','success');
+  }
+
+  /* ── IP Allowlist ── */
+  var allowedIPs = [];
+  function openIpModal() {
+    document.getElementById('ipInput').value = '';
+    var ov = document.getElementById('ipModalOv');
+    ov.style.display = 'flex';
+    setTimeout(function(){ document.getElementById('ipInput').focus(); }, 50);
+  }
+  function closeIpModal() { document.getElementById('ipModalOv').style.display = 'none'; }
+  function saveIp() {
+    var val = document.getElementById('ipInput').value.trim();
+    if (!val) { KcozmAdmin.showToast('Please enter an IP address','error'); return; }
+    var ipv4cidr = /^(\d{1,3}\.){3}\d{1,3}(\/\d{1,2})?$/;
+    var ipv6     = /^[0-9a-fA-F:]+/;
+    if (!ipv4cidr.test(val) && !ipv6.test(val)) { KcozmAdmin.showToast('Invalid IP format','error'); return; }
+    if (allowedIPs.includes(val)) { KcozmAdmin.showToast('This IP is already in the list','info'); return; }
+    allowedIPs.push(val);
+    renderIpList();
+    closeIpModal();
+    KcozmAdmin.showToast('IP address added','success');
+  }
+  function removeIp(ip) {
+    allowedIPs = allowedIPs.filter(function(x){ return x !== ip; });
+    renderIpList();
+    KcozmAdmin.showToast('IP removed','info');
+  }
+  function renderIpList() {
+    var wrap = document.getElementById('ipListWrap');
+    var list = document.getElementById('ipList');
+    if (!allowedIPs.length) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    list.innerHTML = allowedIPs.map(function(ip){
+      return '<span style="display:inline-flex;align-items:center;gap:6px;background:var(--gold-lt);color:var(--gold-dk);font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;font-family:monospace">'
+        + ip
+        + '<button onclick="removeIp(\''+ip+'\')" style="background:none;border:none;cursor:pointer;color:var(--gold-dk);font-size:11px;opacity:.7;padding:0;line-height:1">×</button>'
+        + '</span>';
+    }).join('');
+  }
+  document.getElementById('ipModalOv').addEventListener('click', function(e){ if(e.target===this) closeIpModal(); });
+
+  /* ── Update Card ── */
+  function openCardModal() {
+    ['cardName','cardNumber','cardExpiry','cardCvv'].forEach(function(id){
+      if (id !== 'cardName') document.getElementById(id).value = '';
+    });
+    var ov = document.getElementById('cardModalOv');
+    ov.style.display = 'flex';
+    setTimeout(function(){ document.getElementById('cardName').focus(); }, 50);
+  }
+  function closeCardModal() { document.getElementById('cardModalOv').style.display = 'none'; }
+  function saveCard() {
+    var name   = document.getElementById('cardName').value.trim();
+    var num    = document.getElementById('cardNumber').value.replace(/\s/g,'');
+    var expiry = document.getElementById('cardExpiry').value.trim();
+    var cvv    = document.getElementById('cardCvv').value.trim();
+    if (!name)              { KcozmAdmin.showToast('Please enter cardholder name','error'); return; }
+    if (num.length < 15)    { KcozmAdmin.showToast('Please enter a valid card number','error'); return; }
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) { KcozmAdmin.showToast('Please enter expiry as MM/YY','error'); return; }
+    if (cvv.length < 3)     { KcozmAdmin.showToast('Please enter a valid CVV','error'); return; }
+    /* Update the displayed card summary */
+    var last4 = num.slice(-4);
+    var disp  = document.querySelector('.srow-desc .fa-cc-visa')
+      ? document.querySelector('.srow-desc')
+      : null;
+    if (disp) {
+      disp.innerHTML = '<i class="fa-brands fa-cc-visa" style="color:#1565c0;font-size:16px"></i> &nbsp;Visa ending in ' + last4 + ' · Expires ' + expiry;
+    }
+    closeCardModal();
+    KcozmAdmin.showToast('Payment method updated!','success');
+  }
+  document.getElementById('cardModalOv').addEventListener('click', function(e){ if(e.target===this) closeCardModal(); });
 </script>
 </body>
 </html>
