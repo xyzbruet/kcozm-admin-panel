@@ -307,7 +307,6 @@
       <button class="kc-dtab active" onclick="switchTab('overview')">Overview</button>
       <button class="kc-dtab"        onclick="switchTab('history')">Visit History</button>
       <button class="kc-dtab"        onclick="switchTab('preferences')">Preferences</button>
-      <button class="kc-dtab"        onclick="switchTab('edit')">Edit</button>
     </div>
 
     <div class="kc-dbody">
@@ -317,13 +316,12 @@
       <div class="kc-dtab-panel" id="tab-history"></div>
       <!-- Preferences tab -->
       <div class="kc-dtab-panel" id="tab-preferences"></div>
-      <!-- Edit tab -->
-      <div class="kc-dtab-panel" id="tab-edit"></div>
+
     </div>
 
     <div class="kc-dfooter">
       <button class="kc-btn-gold" style="flex:1" id="drawerBookBtn"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</button>
-      <button class="kc-btn-out" onclick="switchTab('edit')"><i class="fa-solid fa-pen"></i> Edit</button>
+      <button class="kc-btn-out" onclick="editCustomer(currentCustomerId)"><i class="fa-solid fa-pen"></i> Edit</button>
       <button class="kc-btn-out" style="border-color:#fca5a5;color:#c62828;padding:9px 13px" title="Delete customer"><i class="fa-solid fa-trash"></i></button>
     </div>
   </div>
@@ -471,8 +469,9 @@
           +'<td><div class="kc-rating"><span class="stars" style="color:var(--gold)">'+starStr(c.rating)+'</span> <span>'+c.rating+'</span></div></td>'
           +'<td style="font-size:12.5px;color:var(--ink-3)">'+lastVisitLabel(c.lastVisit)+'</td>'
           +'<td><div class="kc-row-actions">'
-            +'<button class="kc-row-btn" onclick="event.stopPropagation();quickBook('+c.id+')" title="Book"><i class="fa-solid fa-calendar-plus"></i></button>'
-            +'<button class="kc-row-btn danger" onclick="event.stopPropagation()" title="Delete"><i class="fa-solid fa-trash"></i></button>'
+            +'<button class="kc-row-btn" onclick="event.stopPropagation();quickBook('+c.id+')" title="Book Appointment"><i class="fa-solid fa-calendar-plus"></i></button>'
+            +'<button class="kc-row-btn" onclick="event.stopPropagation();editCustomer('+c.id+')" title="Edit Customer"><i class="fa-solid fa-pen"></i></button>'
+            +'<button class="kc-row-btn danger" onclick="event.stopPropagation()" title="Delete Customer"><i class="fa-solid fa-trash"></i></button>'
           +'</div></td>'
         +'</tr>';
       }).join('');
@@ -512,8 +511,6 @@
       buildOverviewTab(c);
       buildHistoryTab(c);
       buildPreferencesTab(c);
-      buildEditTab(c);
-
       /* show first tab */
       switchTab('overview');
 
@@ -531,7 +528,7 @@
 
     function switchTab(name){
       document.querySelectorAll('.kc-dtab').forEach(function(b,i){
-        var names=['overview','history','preferences','edit'];
+        var names=['overview','history','preferences'];
         b.classList.toggle('active',names[i]===name);
       });
       document.querySelectorAll('.kc-dtab-panel').forEach(function(p){p.classList.remove('active');});
@@ -612,46 +609,23 @@
       KcozmAdmin.showToast('Preferences updated','success');
     }
 
-    /* ── Edit tab ── */
-    function buildEditTab(c){
-      document.getElementById('tab-edit').innerHTML=
-        '<div class="kc-edit-row"><div class="kc-edit-lbl">Full Name</div><input class="kc-edit-input" id="editName" value="'+c.name+'"></div>'
-        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Email</div><input class="kc-edit-input" id="editEmail" type="email" value="'+c.email+'"></div>'
-        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Phone</div><input class="kc-edit-input" id="editPhone" type="tel" value="'+c.phone+'"></div>'
-        +'<div class="kc-edit-row"><div class="kc-edit-lbl">City</div><input class="kc-edit-input" id="editCity" value="'+c.city+'"></div>'
-        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Date of Birth</div><input class="kc-edit-input" id="editDob" type="date" value="'+(c.dob||'')+'"></div>'
-        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Status</div>'
-        +'<select class="kc-edit-input" id="editStatus">'
-        +'<option value="new"'+(c.status==='new'?' selected':'')+'>New</option>'
-        +'<option value="active"'+(c.status==='active'?' selected':'')+'>Active</option>'
-        +'<option value="vip"'+(c.status==='vip'?' selected':'')+'>VIP</option>'
-        +'<option value="idle"'+(c.status==='idle'?' selected':'')+'>Idle</option>'
-        +'</select></div>'
-        +'<button class="kc-btn-gold" style="width:100%;margin-top:6px" onclick="saveEdit('+c.id+')"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>';
-    }
-
-    function saveEdit(id){
-      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
-      c.name   = document.getElementById('editName').value.trim()||c.name;
-      c.email  = document.getElementById('editEmail').value.trim()||c.email;
-      c.phone  = document.getElementById('editPhone').value.trim()||c.phone;
-      c.city   = document.getElementById('editCity').value.trim()||c.city;
-      c.dob    = document.getElementById('editDob').value||c.dob;
-      c.status = document.getElementById('editStatus').value;
-      /* refresh hero */
-      var av=AVATARS[(c.id-1)%AVATARS.length];
-      document.getElementById('drawerHero').querySelector('.kc-dhero-name').textContent=c.name;
-      document.getElementById('drawerHero').querySelector('.kc-dhero-sub').innerHTML=c.city+' &nbsp;·&nbsp; '+badgeHtml(c.status);
-      buildOverviewTab(c);
-      renderTable(getFiltered());
-      updateStats();
-      KcozmAdmin.showToast(c.name+' updated successfully','success');
-      switchTab('overview');
-    }
 
     function quickBook(id){
       var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
       window.location.href='forms/appointment_form.html?customer='+encodeURIComponent(c.name)+'&phone='+encodeURIComponent(c.phone);
+    }
+
+    function editCustomer(id){
+      if(!id) return;
+      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
+      /* Merge this customer into sessionStorage so customer_form.html can read it in edit mode */
+      var saved=[];
+      try{ saved=JSON.parse(sessionStorage.getItem('kc_customers_data')||'[]'); }catch(e){}
+      var idx=saved.findIndex(function(x){return x.id===id;});
+      if(idx>=0) saved[idx]=Object.assign({},saved[idx],c);
+      else saved.push(Object.assign({},c));
+      sessionStorage.setItem('kc_customers_data', JSON.stringify(saved));
+      window.location.href='forms/customer_form.html?id='+id;
     }
 
     function openNewCustomer(){

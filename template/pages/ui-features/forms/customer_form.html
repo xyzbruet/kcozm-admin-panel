@@ -284,16 +284,21 @@
 
     var r = DATA.find(function(x){ return x.id === editId; });
     if (r) {
-      document.getElementById('custName').value  = r.name   || '';
-      document.getElementById('custPhone').value = r.phone  || '';
-      document.getElementById('custEmail').value = r.email  || '';
-      document.getElementById('custCity').value  = r.city   || '';
-      document.getElementById('custDob').value   = r.dob    || '';
-      document.getElementById('custNotes').value = r.notes  || '';
+      document.getElementById('custName').value   = r.name   || '';
+      document.getElementById('custPhone').value  = r.phone  || '';
+      document.getElementById('custEmail').value  = r.email  || '';
+      document.getElementById('custCity').value   = r.city   || '';
+      document.getElementById('custDob').value    = r.dob    || '';
+      document.getElementById('custNotes').value  = r.notes  || '';
       document.getElementById('custStatus').value = r.status || 'new';
       updateStatusPreview();
       tags = (r.prefs || []).slice();
       renderTags();
+    } else {
+      /* Customer not found in sessionStorage — likely navigated directly via URL.
+         Show a warning and redirect back. */
+      try { KcozmAdmin.showToast('Customer not found. Please use the Edit button on the Customers page.', 'error'); } catch(e){}
+      setTimeout(function(){ window.location.href = '../customers.html'; }, 2000);
     }
   }
 
@@ -323,8 +328,9 @@
         rec.prefs  = tags.slice();
       }
     } else {
+      /* Start IDs at 100+ to avoid colliding with the 10 hardcoded customers in customers.html */
       var nid = DATA.length
-        ? Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1 : 1;
+        ? Math.max(100, Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1) : 101;
       DATA.push({
         id:       nid,
         name:     name,

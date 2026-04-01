@@ -245,9 +245,9 @@
       align-items: center;
       flex-wrap: wrap
     }
-    .page-hero .btn-out{background:linear-gradient(135deg,#c8a040,#9a7020);color:#fff;border:none;box-shadow:0 4px 14px rgba(200,160,64,.28)}
-    .page-hero .btn-out:hover{background:linear-gradient(135deg,#d4aa48,#a87828);box-shadow:0 6px 20px rgba(200,160,64,.42);transform:translateY(-1px);color:#fff}
-    .page-hero .btn-gold{box-shadow:0 4px 14px rgba(200,160,64,.30)}
+    .page-hero .kc-btn-out{background:linear-gradient(135deg,#c8a040,#9a7020);color:#fff;border:none;box-shadow:0 4px 14px rgba(200,160,64,.28)}
+    .page-hero .kc-btn-out:hover{background:linear-gradient(135deg,#d4aa48,#a87828);box-shadow:0 6px 20px rgba(200,160,64,.42);transform:translateY(-1px);color:#fff}
+    .page-hero .kc-btn-gold{box-shadow:0 4px 14px rgba(200,160,64,.30)}
 
     /* ── Level Nav ── */
     .level-nav {
@@ -536,7 +536,7 @@
     }
 
     /* ── Buttons ── */
-    .btn {
+    .kc-btn {
       display: inline-flex;
       align-items: center;
       gap: 7px;
@@ -552,37 +552,37 @@
       text-decoration: none
     }
 
-    .btn-gold {
+    .kc-btn-gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       color: #fff;
       box-shadow: 0 3px 12px var(--gold-glow)
     }
 
-    .btn-gold:hover {
+    .kc-btn-gold:hover {
       box-shadow: 0 6px 20px rgba(200, 160, 64, .42);
       transform: translateY(-1px);
       color: #fff
     }
 
-    .btn-rose {
+    .kc-btn-rose {
       background: linear-gradient(135deg, var(--rose), var(--rose-dk));
       color: #fff;
       box-shadow: 0 3px 12px rgba(201, 123, 132, .25)
     }
 
-    .btn-rose:hover {
+    .kc-btn-rose:hover {
       box-shadow: 0 6px 20px rgba(201, 123, 132, .38);
       transform: translateY(-1px);
       color: #fff
     }
 
-    .btn-out {
+    .kc-btn-out {
       background: transparent;
       border: 1.5px solid var(--border);
       color: var(--ink-2)
     }
 
-    .btn-out:hover {
+    .kc-btn-out:hover {
       border-color: var(--gold);
       color: var(--gold-dk);
       background: var(--gold-lt)
@@ -827,7 +827,7 @@
       font-size: 8px
     }
 
-    .badge {
+    .kc-badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -837,22 +837,22 @@
       border-radius: 20px
     }
 
-    .badge.rose {
+    .kc-badge.rose {
       background: var(--rose-lt);
       color: var(--rose-dk)
     }
 
-    .badge.blue {
+    .kc-badge.blue {
       background: #e3f2fd;
       color: #1565c0
     }
 
-    .badge.gold {
+    .kc-badge.gold {
       background: var(--gold-lt);
       color: var(--gold-dk)
     }
 
-    .badge.green {
+    .kc-badge.green {
       background: #e8f5e9;
       color: #2e7d32
     }
@@ -946,14 +946,14 @@
     }
 
     /* Row actions */
-    .row-acts {
+    .kc-row-acts {
       display: flex;
       align-items: center;
       gap: 6px;
       justify-content: flex-end
     }
 
-    .act {
+    .kc-act {
       width: 33px;
       height: 33px;
       border-radius: 9px;
@@ -969,23 +969,23 @@
       text-decoration: none
     }
 
-    .act:hover {
+    .kc-act:hover {
       transform: scale(1.08)
     }
 
-    .act.view:hover {
+    .kc-act.kc-view:hover {
       background: #e3f2fd;
       border-color: #90caf9;
       color: #1565c0
     }
 
-    .act.edit:hover {
+    .kc-act.kc-edit:hover {
       background: #e8f5e9;
       border-color: #a5d6a7;
       color: #2e7d32
     }
 
-    .act.del:hover {
+    .kc-act.kc-del:hover {
       background: #fce4ec;
       border-color: #f48fb1;
       color: #c62828
@@ -1117,12 +1117,12 @@
       color: var(--ink-3)
     }
 
-    .pag-btns {
+    .kc-pag-btns {
       display: flex;
       gap: 4px
     }
 
-    .pag-btn {
+    .kc-pag-btn {
       min-width: 34px;
       height: 34px;
       padding: 0 10px;
@@ -1136,13 +1136,13 @@
       transition: all var(--t)
     }
 
-    .pag-btn:hover {
+    .kc-pag-btn:hover {
       border-color: var(--gold);
       color: var(--gold-dk);
       background: var(--gold-lt)
     }
 
-    .pag-btn.active {
+    .kc-pag-btn.active {
       background: linear-gradient(135deg, var(--gold), var(--gold-dk));
       color: #fff;
       border-color: transparent
@@ -1431,8 +1431,8 @@
           </div>
         </div>
         <div class="page-hero-right">
-          <a href="service_category.html" class="btn btn-out"><i class="fa-solid fa-folder"></i> Categories</a>
-          <a href="service.html" class="btn btn-out"><i class="fa-solid fa-scissors"></i> View Services</a>
+          <a href="service_category.html" class="kc-btn kc-btn-out"><i class="fa-solid fa-folder"></i> Categories</a>
+          <a href="service.html" class="kc-btn kc-btn-out"><i class="fa-solid fa-scissors"></i> View Services</a>
         </div>
       </div>
 
@@ -1502,7 +1502,7 @@
               <input type="text" class="search-input" id="catSearch" placeholder="Search sub-categories…"
                 oninput="handleSearch(this.value)">
             </div>
-            <a href="forms/service_subcategory_form.html" class="btn btn-rose">
+            <a href="forms/service_subcategory_form.html" class="kc-btn kc-btn-rose">
               <i class="fa-solid fa-plus"></i> Add Sub-Category
             </a>
           </div>
@@ -1550,10 +1550,10 @@
 
         <div class="pag">
           <div class="pag-info" id="pagInfo">Showing all sub-categories</div>
-          <div class="pag-btns">
-            <button class="pag-btn">&#8249;</button>
-            <button class="pag-btn active">1</button>
-            <button class="pag-btn">&#8250;</button>
+          <div class="kc-pag-btns">
+            <button class="kc-pag-btn">&#8249;</button>
+            <button class="kc-pag-btn active">1</button>
+            <button class="kc-pag-btn">&#8250;</button>
           </div>
         </div>
       </div>
@@ -1576,8 +1576,8 @@
       </div>
       <div class="drawer-body" id="drawerBody"></div>
       <div class="drawer-foot">
-        <button class="btn btn-out" style="flex:1" onclick="closeView()">Close</button>
-        <button class="btn btn-rose" style="flex:1" id="drawerEditBtn"><i class="fa-solid fa-pen-to-square"></i> Edit
+        <button class="kc-btn kc-btn-out" style="flex:1" onclick="closeView()">Close</button>
+        <button class="kc-btn kc-btn-rose" style="flex:1" id="drawerEditBtn"><i class="fa-solid fa-pen-to-square"></i> Edit
           Sub-Category</button>
       </div>
     </div>
@@ -1671,14 +1671,14 @@
           + '<span class="path-seg" style="background:var(--rose-lt);color:var(--rose-dk)"><i class="fa-solid fa-folder-open" style="font-size:9px"></i> ' + c.name + '</span>'
           + '</div>'
           + '</td>'
-          + '<td><span class="badge ' + m.cls + '"><i class="fa-solid ' + m.icon + '" style="font-size:9px"></i> ' + c.parent + '</span></td>'
+          + '<td><span class="kc-badge ' + m.cls + '"><i class="fa-solid ' + m.icon + '" style="font-size:9px"></i> ' + c.parent + '</span></td>'
           + '<td><div class="num-val">' + c.count + '</div><div class="num-lbl">services</div></td>'
           + '<td><span class="status-pill ' + c.status + '"><span class="status-dot"></span>' + (c.status === 'active' ? 'Active' : 'Inactive') + '</span></td>'
-          + '<td><div class="row-acts">'
-          + '<button class="act view" title="View Services" onclick="toggleExpand(' + c.id + ')" style="' + (isExp ? 'background:#e3f2fd;border-color:#90caf9;color:#1565c0' : '') + '"><i class="fa-solid ' + (isExp ? 'fa-chevron-up' : 'fa-eye') + '"></i></button>'
-          + '<button class="act view" title="Full Details" onclick="openView(' + c.id + ')" style="border-radius:9px"><i class="fa-solid fa-circle-info"></i></button>'
-          + '<button class="act edit" title="Edit" onclick="editRow(' + c.id + ')"><i class="fa-solid fa-pen"></i></button>'
-          + '<button class="act del"  title="Delete" onclick="openDelModal(' + c.id + ')"><i class="fa-solid fa-trash"></i></button>'
+          + '<td><div class="kc-row-acts">'
+          + '<button class="kc-act kc-view" title="View Services" onclick="toggleExpand(' + c.id + ')" style="' + (isExp ? 'background:#e3f2fd;border-color:#90caf9;color:#1565c0' : '') + '"><i class="fa-solid ' + (isExp ? 'fa-chevron-up' : 'fa-eye') + '"></i></button>'
+          + '<button class="kc-act kc-view" title="Full Details" onclick="openView(' + c.id + ')" style="border-radius:9px"><i class="fa-solid fa-circle-info"></i></button>'
+          + '<button class="kc-act kc-edit" title="Edit" onclick="editRow(' + c.id + ')"><i class="fa-solid fa-pen"></i></button>'
+          + '<button class="kc-act kc-del"  title="Delete" onclick="openDelModal(' + c.id + ')"><i class="fa-solid fa-trash"></i></button>'
           + '</div></td>'
           + '</tr>';
         /* Expand row */
@@ -1715,7 +1715,7 @@
       document.getElementById('drawerEditBtn').onclick = function () { editRow(c.id); };
       document.getElementById('drawerBody').innerHTML =
         '<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-folder-open"></i> Name</div><div class="dw-val" style="font-weight:700;font-size:16px">' + c.name + '</div></div>'
-        + '<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-folder"></i> Parent</div><div class="dw-val"><span class="badge ' + m.cls + '"><i class="fa-solid ' + m.icon + '" style="font-size:9px"></i> ' + c.parent + '</span></div></div>'
+        + '<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-folder"></i> Parent</div><div class="dw-val"><span class="kc-badge ' + m.cls + '"><i class="fa-solid ' + m.icon + '" style="font-size:9px"></i> ' + c.parent + '</span></div></div>'
         + '<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-scissors"></i> Services</div><div class="dw-val" style="font-family:Playfair Display,serif;font-size:22px;font-weight:700">' + c.count + '</div></div>'
         + '<div class="dw-row"><div class="dw-lbl"><i class="fa-solid fa-circle-dot"></i> Status</div><div class="dw-val">'
         + (c.status === 'active'
