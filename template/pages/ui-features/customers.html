@@ -18,21 +18,17 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'DM Sans',sans-serif;background:var(--surface-2)}
-
     .main-panel{min-width:0;overflow-x:hidden}
     .kc-page-content{padding:28px 28px 0;flex:1;width:100%;min-width:0}
-
     @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
     @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
     @keyframes popIn   {from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
 
-    /* Breadcrumb */
     .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
     .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px}
     .kc-bc a:hover{opacity:.75}
     .kc-bc i{font-size:10px}
 
-    /* Stats */
     .kc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
     @media(max-width:900px){.kc-stats{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:520px){.kc-stats{grid-template-columns:1fr}}
@@ -53,7 +49,6 @@
     .kc-stat:nth-child(3) .kc-stat-icon{background:var(--pk-lt);color:var(--pk-dk)}
     .kc-stat:nth-child(4) .kc-stat-icon{background:#e3f2fd;color:#1565c0}
 
-    /* Card */
     .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .5s .05s ease both;margin-bottom:28px}
     .kc-card-head{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
     .kc-head-left{display:flex;align-items:center;gap:14px}
@@ -62,26 +57,23 @@
     .kc-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
     .kc-title small{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:2px}
     .kc-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-
     .kc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border:none;padding:10px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px var(--gold-glow);transition:transform var(--t),box-shadow var(--t);white-space:nowrap;text-decoration:none}
     .kc-btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,64,.40)}
     .kc-btn-out{padding:9px 18px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all var(--t);white-space:nowrap}
     .kc-btn-out:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
 
-    /* Toolbar */
     .kc-toolbar{padding:14px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface-2)}
     .kc-search-wrap{position:relative;flex:1;min-width:200px;max-width:320px}
     .kc-search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px;pointer-events:none}
     .kc-search{width:100%;padding:9px 14px 9px 36px;border:1.5px solid var(--border);border-radius:50px;background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);outline:none;transition:all var(--t)}
     .kc-search:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
     .kc-search::placeholder{color:var(--ink-3)}
-    .kc-filter-tabs{display:flex;gap:4px}
+    .kc-filter-tabs{display:flex;gap:4px;flex-wrap:wrap}
     .kc-ftab{padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);font-size:12.5px;font-weight:600;color:var(--ink-3);cursor:pointer;background:var(--surface);transition:all var(--t);white-space:nowrap}
     .kc-ftab.active,.kc-ftab:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
     .kc-sort-select{padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-2);background:var(--surface);outline:none;cursor:pointer;transition:border-color var(--t)}
     .kc-sort-select:focus{border-color:var(--gold)}
 
-    /* Table */
     .kc-tbl-wrap{overflow-x:auto}
     table.kc-tbl{width:100%;border-collapse:collapse}
     .kc-tbl th{padding:12px 20px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap}
@@ -93,31 +85,23 @@
     .kc-tbl tr:last-child td{border-bottom:none}
     .kc-tbl tbody tr:hover td{background:#fdf8f0;cursor:pointer}
 
-    /* Customer cell */
     .kc-cust{display:flex;align-items:center;gap:12px}
     .kc-avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;color:#fff}
     .kc-cust-name{font-weight:600;color:var(--ink);font-size:14px}
     .kc-cust-email{font-size:12px;color:var(--ink-3);margin-top:2px}
-
-    /* Badge */
     .kc-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;font-size:11.5px;font-weight:600}
     .kc-badge.vip   {background:#fff8e1;color:#f57f17}
     .kc-badge.active{background:#e8f5e9;color:#2e7d32}
     .kc-badge.new   {background:var(--pk-lt);color:var(--pk-dk)}
     .kc-badge.idle  {background:var(--surface-2);color:var(--ink-3);border:1px solid var(--border)}
-
-    /* Rating */
     .kc-rating{display:flex;align-items:center;gap:4px}
     .kc-rating .stars{color:var(--gold);font-size:12px}
     .kc-rating span{font-size:12.5px;font-weight:600;color:var(--ink-2)}
-
-    /* Row actions */
     .kc-row-actions{display:flex;align-items:center;gap:6px;justify-content:flex-end}
     .kc-row-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:13px;transition:all var(--t)}
     .kc-row-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
     .kc-row-btn.danger:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
 
-    /* Pagination */
     .kc-pag{padding:16px 26px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
     .kc-pag-info{font-size:13px;color:var(--ink-3)}
     .kc-pag-btns{display:flex;gap:4px}
@@ -125,40 +109,96 @@
     .kc-pag-btn:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
     .kc-pag-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;border-color:transparent}
 
-    /* Customer drawer */
+    /* ═══════════════════════════════════════
+       CUSTOMER PROFILE DRAWER
+    ═══════════════════════════════════════ */
     .kc-drawer-ov{display:none;position:fixed;inset:0;background:rgba(26,18,8,.55);z-index:2000;backdrop-filter:blur(3px)}
     .kc-drawer-ov.show{display:block}
-    .kc-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,95vw);background:var(--surface);box-shadow:-8px 0 50px rgba(26,18,8,.18);z-index:2001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
+    .kc-drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,96vw);background:var(--surface);box-shadow:-8px 0 50px rgba(26,18,8,.18);z-index:2001;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
     .kc-drawer.show{transform:translateX(0)}
-    .kc-drawer-head{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-    .kc-drawer-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--ink)}
-    .kc-drawer-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
-    .kc-drawer-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
-    .kc-drawer-body{flex:1;overflow-y:auto;padding:22px}
-    .kc-drawer-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:800;color:#fff}
-    .kc-drawer-name{text-align:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
-    .kc-drawer-sub{text-align:center;font-size:13px;color:var(--ink-3);margin-top:4px}
-    .kc-drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
-    .kc-ds{background:var(--surface-2);border-radius:var(--r-md);padding:14px;text-align:center;border:1px solid var(--border)}
-    .kc-ds-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
-    .kc-ds-lbl{font-size:11px;color:var(--ink-3);margin-top:4px}
-    .kc-drawer-sec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin:18px 0 10px}
-    .kc-drawer-info-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-    .kc-drawer-info-row:last-child{border-bottom:none}
+
+    /* Drawer header */
+    .kc-dhead{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface)}
+    .kc-dhead-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--ink)}
+    .kc-dhead-close{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink-3);font-size:14px;transition:all var(--t)}
+    .kc-dhead-close:hover{border-color:var(--pk);color:var(--pk-dk);background:var(--pk-lt)}
+
+    /* Drawer hero */
+    .kc-dhero{padding:24px 22px 20px;background:linear-gradient(135deg,var(--gold-lt),#fff9f0);border-bottom:1px solid rgba(200,160,64,.18);text-align:center}
+    .kc-dhero-av{width:76px;height:76px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.5)}
+    .kc-dhero-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:800;color:var(--ink)}
+    .kc-dhero-sub{font-size:12.5px;color:var(--ink-3);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+    .kc-dhero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .kc-dhs{background:rgba(255,255,255,.8);border-radius:var(--r-md);padding:12px 8px;text-align:center;border:1px solid rgba(200,160,64,.2)}
+    .kc-dhs-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:800;color:var(--ink)}
+    .kc-dhs-lbl{font-size:10.5px;color:var(--ink-3);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+
+    /* Drawer tabs */
+    .kc-dtabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 22px}
+    .kc-dtab{padding:12px 16px;font-size:13px;font-weight:600;color:var(--ink-3);border:none;background:transparent;cursor:pointer;position:relative;transition:color var(--t);white-space:nowrap}
+    .kc-dtab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2.5px;background:var(--gold);border-radius:2px 2px 0 0;transform:scaleX(0);transition:transform .2s}
+    .kc-dtab.active{color:var(--gold-dk)}
+    .kc-dtab.active::after{transform:scaleX(1)}
+
+    /* Drawer body */
+    .kc-dbody{flex:1;overflow-y:auto}
+    .kc-dtab-panel{display:none;padding:20px 22px}
+    .kc-dtab-panel.active{display:block;animation:fadeUp .25s ease both}
+
+    /* Section label */
+    .kc-dsec{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-3);margin:0 0 12px}
+
+    /* Info rows */
+    .kc-dinfo-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+    .kc-dinfo-row:last-child{border-bottom:none}
     .kc-di-icon{width:34px;height:34px;border-radius:8px;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;color:var(--gold-dk);font-size:13px;flex-shrink:0}
     .kc-di-lbl{font-size:11px;color:var(--ink-3)}
     .kc-di-val{font-size:13.5px;font-weight:600;color:var(--ink)}
-    .kc-hist-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+
+    /* Notes textarea */
+    .kc-notes-area{width:100%;min-height:100px;padding:12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);resize:vertical;outline:none;transition:border-color var(--t)}
+    .kc-notes-area:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+
+    /* Preference tags */
+    .kc-pref-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+    .kc-pref-tag{padding:5px 12px;border-radius:50px;border:1.5px solid var(--border);font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all var(--t);display:inline-flex;align-items:center;gap:5px}
+    .kc-pref-tag.on{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .kc-pref-tag:hover{border-color:var(--gold);color:var(--gold-dk)}
+
+    /* Visit history */
+    .kc-hist-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
     .kc-hist-item:last-child{border-bottom:none}
-    .kc-hist-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
-    .kc-hist-svc{font-size:13.5px;font-weight:600;color:var(--ink);flex:1}
-    .kc-hist-date{font-size:12px;color:var(--ink-3)}
+    .kc-hist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .kc-hist-dot.confirmed{background:#4caf50}
+    .kc-hist-dot.completed{background:var(--gold)}
+    .kc-hist-dot.cancelled{background:#e91e63}
+    .kc-hist-info{flex:1;min-width:0}
+    .kc-hist-svc{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kc-hist-meta{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+    .kc-hist-right{text-align:right;flex-shrink:0}
     .kc-hist-amt{font-size:13px;font-weight:700;color:var(--gold-dk)}
-    .kc-drawer-footer{padding:16px 22px;border-top:1px solid var(--border);display:flex;gap:10px}
+    .kc-hist-status{font-size:10.5px;margin-top:2px}
+    .kc-hist-status.completed{color:var(--gold-dk)}
+    .kc-hist-status.confirmed{color:#2e7d32}
+    .kc-hist-status.cancelled{color:#c62828}
+
+    /* Alerts section */
+    .kc-alert-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--r-sm);margin-bottom:10px;font-size:13px}
+    .kc-alert-item.info{background:#e3f2fd;color:#1565c0;border:1px solid #bbdefb}
+    .kc-alert-item.warn{background:#fff3e0;color:#e65100;border:1px solid #ffe0b2}
+    .kc-alert-item.tip {background:var(--gold-lt);color:var(--gold-dk);border:1px solid rgba(200,160,64,.25)}
+
+    /* Edit inline */
+    .kc-edit-input{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color var(--t)}
+    .kc-edit-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+    .kc-edit-row{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+    .kc-edit-lbl{font-size:11.5px;font-weight:600;color:var(--ink-3)}
+
+    /* Drawer footer */
+    .kc-dfooter{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--surface)}
   </style>
 </head>
 <body>
-
   <div class="main-panel">
     <div class="kc-page-content">
 
@@ -173,25 +213,25 @@
         <div class="kc-stat" style="animation-delay:.0s">
           <div class="kc-stat-icon"><i class="fa-solid fa-users"></i></div>
           <div class="kc-stat-label">Total Customers</div>
-          <div class="kc-stat-val">1,842</div>
+          <div class="kc-stat-val" id="statTotal">0</div>
           <div class="kc-stat-sub"><span class="kc-stat-up"><i class="fa-solid fa-arrow-up"></i> 5%</span> <span style="color:var(--ink-3)">vs last month</span></div>
         </div>
         <div class="kc-stat" style="animation-delay:.07s">
           <div class="kc-stat-icon"><i class="fa-solid fa-user-check"></i></div>
           <div class="kc-stat-label">Active This Month</div>
-          <div class="kc-stat-val">364</div>
+          <div class="kc-stat-val" id="statActive">0</div>
           <div class="kc-stat-sub"><span class="kc-stat-up"><i class="fa-solid fa-arrow-up"></i> 12%</span> <span style="color:var(--ink-3)">returning</span></div>
         </div>
         <div class="kc-stat" style="animation-delay:.14s">
           <div class="kc-stat-icon"><i class="fa-solid fa-crown"></i></div>
           <div class="kc-stat-label">VIP Members</div>
-          <div class="kc-stat-val">87</div>
+          <div class="kc-stat-val" id="statVIP">0</div>
           <div class="kc-stat-sub"><span class="kc-stat-up"><i class="fa-solid fa-arrow-up"></i> 3</span> <span style="color:var(--ink-3)">new this week</span></div>
         </div>
         <div class="kc-stat" style="animation-delay:.21s">
           <div class="kc-stat-icon"><i class="fa-solid fa-user-plus"></i></div>
           <div class="kc-stat-label">New This Month</div>
-          <div class="kc-stat-val">48</div>
+          <div class="kc-stat-val" id="statNew">0</div>
           <div class="kc-stat-sub"><span class="kc-stat-dn"><i class="fa-solid fa-arrow-down"></i> 2%</span> <span style="color:var(--ink-3)">vs last month</span></div>
         </div>
       </div>
@@ -205,20 +245,21 @@
           </div>
           <div class="kc-head-right">
             <button class="kc-btn-out"><i class="fa-solid fa-file-export"></i> Export</button>
-            <button class="kc-btn-gold" onclick="openDrawer('new')"><i class="fa-solid fa-plus"></i> Add Customer</button>
+            <button class="kc-btn-gold" onclick="openNewCustomer()"><i class="fa-solid fa-plus"></i> Add Customer</button>
           </div>
         </div>
 
         <div class="kc-toolbar">
           <div class="kc-search-wrap">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" class="kc-search" placeholder="Search customers…" oninput="filterTable(this.value)">
+            <input type="text" class="kc-search" placeholder="Search name, phone, email…" oninput="filterTable(this.value)">
           </div>
-          <div class="kc-filter-tabs">
-            <button class="kc-ftab active" onclick="setFilter(this,'all')">All</button>
-            <button class="kc-ftab" onclick="setFilter(this,'vip')">VIP</button>
-            <button class="kc-ftab" onclick="setFilter(this,'active')">Active</button>
-            <button class="kc-ftab" onclick="setFilter(this,'new')">New</button>
+          <div class="kc-filter-tabs" id="filterTabs">
+            <button class="kc-ftab active" data-filter="all">All</button>
+            <button class="kc-ftab" data-filter="vip">VIP</button>
+            <button class="kc-ftab" data-filter="active">Active</button>
+            <button class="kc-ftab" data-filter="new">New</button>
+            <button class="kc-ftab" data-filter="idle">Idle</button>
           </div>
           <select class="kc-sort-select" onchange="sortTable(this.value)">
             <option value="name">Sort by Name</option>
@@ -241,32 +282,49 @@
         </div>
 
         <div class="kc-pag">
-          <div class="kc-pag-info" id="pagInfo">Showing 1–10 of 32</div>
-          <div class="kc-pag-btns">
-            <button class="kc-pag-btn">‹</button>
-            <button class="kc-pag-btn active">1</button>
-            <button class="kc-pag-btn">2</button>
-            <button class="kc-pag-btn">3</button>
-            <button class="kc-pag-btn">4</button>
-            <button class="kc-pag-btn">›</button>
-          </div>
+          <div class="kc-pag-info" id="pagInfo">Showing 0 customers</div>
+          <div class="kc-pag-btns" id="pagBtns"></div>
         </div>
       </div>
 
-    </div><!-- /kc-page-content -->
-  </div><!-- /main-panel -->
+    </div>
+  </div>
 
-  <!-- Customer Detail Drawer -->
+  <!-- Customer Profile Drawer -->
   <div class="kc-drawer-ov" id="drawerOv" onclick="closeDrawer()"></div>
   <div class="kc-drawer" id="drawer">
-    <div class="kc-drawer-head">
-      <div class="kc-drawer-title" id="drawerTitle">Customer Profile</div>
-      <button class="kc-drawer-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
+
+    <div class="kc-dhead">
+      <div class="kc-dhead-title">Customer Profile</div>
+      <button class="kc-dhead-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="kc-drawer-body" id="drawerBody"></div>
-    <div class="kc-drawer-footer">
-      <button class="kc-btn-gold" style="flex:1"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</button>
-      <button class="kc-btn-out"><i class="fa-solid fa-pen"></i> Edit</button>
+
+    <!-- Hero with avatar, name, quick stats -->
+    <div class="kc-dhero" id="drawerHero"></div>
+
+    <!-- Tabs -->
+    <div class="kc-dtabs">
+      <button class="kc-dtab active" onclick="switchTab('overview')">Overview</button>
+      <button class="kc-dtab"        onclick="switchTab('history')">Visit History</button>
+      <button class="kc-dtab"        onclick="switchTab('preferences')">Preferences</button>
+      <button class="kc-dtab"        onclick="switchTab('edit')">Edit</button>
+    </div>
+
+    <div class="kc-dbody">
+      <!-- Overview tab -->
+      <div class="kc-dtab-panel active" id="tab-overview"></div>
+      <!-- History tab -->
+      <div class="kc-dtab-panel" id="tab-history"></div>
+      <!-- Preferences tab -->
+      <div class="kc-dtab-panel" id="tab-preferences"></div>
+      <!-- Edit tab -->
+      <div class="kc-dtab-panel" id="tab-edit"></div>
+    </div>
+
+    <div class="kc-dfooter">
+      <button class="kc-btn-gold" style="flex:1" id="drawerBookBtn"><i class="fa-solid fa-calendar-plus"></i> Book Appointment</button>
+      <button class="kc-btn-out" onclick="switchTab('edit')"><i class="fa-solid fa-pen"></i> Edit</button>
+      <button class="kc-btn-out" style="border-color:#fca5a5;color:#c62828;padding:9px 13px" title="Delete customer"><i class="fa-solid fa-trash"></i></button>
     </div>
   </div>
 
@@ -274,99 +332,319 @@
   <script>
     KcozmAdmin.init({ activePage:'customers', pageTitle:'Customers', depth:'../../' });
 
-    const AVATARS=['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5','#795548','#607d8b'];
-    const CUSTOMERS=[
-      {id:1, name:'Priya Sharma',   email:'priya.sharma@gmail.com',  phone:'+91 98201 11234',status:'vip',   visits:24,spend:'₹48,200',rating:5.0,last:'2 days ago',  city:'Pune'},
-      {id:2, name:'Ananya Singh',   email:'ananya.s@outlook.com',    phone:'+91 90001 22345',status:'active',visits:18,spend:'₹32,500',rating:4.8,last:'1 week ago',  city:'Mumbai'},
-      {id:3, name:'Meera Kapoor',   email:'meera.k@gmail.com',       phone:'+91 99201 33456',status:'vip',   visits:31,spend:'₹62,800',rating:5.0,last:'3 days ago',  city:'Pune'},
-      {id:4, name:'Ritika Joshi',   email:'ritika.j@yahoo.com',      phone:'+91 88001 44567',status:'new',   visits:2, spend:'₹3,400', rating:4.5,last:'5 days ago',  city:'Nagpur'},
-      {id:5, name:'Kavya Nair',     email:'kavya.nair@gmail.com',    phone:'+91 77201 55678',status:'active',visits:12,spend:'₹21,600',rating:4.7,last:'2 weeks ago', city:'Pune'},
-      {id:6, name:'Deepa Menon',    email:'deepa.m@gmail.com',       phone:'+91 91101 66789',status:'idle',  visits:5, spend:'₹8,900', rating:4.2,last:'2 months ago',city:'Mumbai'},
-      {id:7, name:'Sunita Verma',   email:'sunita.v@gmail.com',      phone:'+91 80001 77890',status:'vip',   visits:28,spend:'₹55,400',rating:4.9,last:'4 days ago',  city:'Hyderabad'},
-      {id:8, name:'Pallavi Desai',  email:'pallavi.d@outlook.com',   phone:'+91 99001 88901',status:'active',visits:9, spend:'₹16,200',rating:4.6,last:'1 week ago',  city:'Pune'},
-      {id:9, name:'Nandita Rao',    email:'nandita.r@gmail.com',     phone:'+91 78001 99012',status:'new',   visits:1, spend:'₹1,800', rating:4.0,last:'1 day ago',   city:'Bangalore'},
-      {id:10,name:'Shalini Iyer',   email:'shalini.i@gmail.com',     phone:'+91 92001 10123',status:'active',visits:15,spend:'₹27,300',rating:4.8,last:'3 days ago',  city:'Mumbai'},
+    var AVATARS=['#c8a040','#e91e63','#2196f3','#4caf50','#9c27b0','#ff5722','#009688','#3f51b5','#795548','#607d8b'];
+
+    var CUSTOMERS=[
+      {id:1, name:'Priya Sharma',   email:'priya.sharma@gmail.com',  phone:'+91 98201 11234', status:'vip',   visits:24, spendNum:48200, rating:5.0, lastVisit:'2026-03-30', city:'Pune',      notes:'Prefers Aisha for hair. Sensitive to strong fragrances.', dob:'1990-05-14',
+        prefs:['Aisha Khan','Hair Colour','Bridal Packages','Morning Slots'],
+        history:[
+          {svc:'Bridal Hair & Makeup', date:'2026-03-30', staff:'Aisha Khan', amt:8500, status:'completed'},
+          {svc:'Hair Colour + Highlights',date:'2026-03-08',staff:'Aisha Khan',amt:4200,status:'completed'},
+          {svc:'Facial & Cleanup',date:'2026-02-14',staff:'Sonal Mehta',amt:2100,status:'completed'},
+          {svc:'Keratin Treatment',date:'2026-01-20',staff:'Aisha Khan',amt:6500,status:'completed'},
+          {svc:'Nail Art',date:'2025-12-10',staff:'Roshni Gupta',amt:1800,status:'completed'},
+        ]},
+      {id:2, name:'Ananya Singh',   email:'ananya.s@outlook.com',    phone:'+91 90001 22345', status:'active', visits:18, spendNum:32500, rating:4.8, lastVisit:'2026-03-22', city:'Mumbai',    notes:'Comes every 3 weeks. Loves balayage.', dob:'1995-08-22',
+        prefs:['Roshni Gupta','Balayage','Weekends','No Strong Chemicals'],
+        history:[
+          {svc:'Hair Colour + Highlights',date:'2026-03-22',staff:'Roshni Gupta',amt:4200,status:'completed'},
+          {svc:'Hair Spa',date:'2026-02-28',staff:'Roshni Gupta',amt:2800,status:'completed'},
+          {svc:'Waxing',date:'2026-02-10',staff:'Sonal Mehta',amt:900,status:'completed'},
+        ]},
+      {id:3, name:'Meera Kapoor',   email:'meera.k@gmail.com',       phone:'+91 99201 33456', status:'vip',   visits:31, spendNum:62800, rating:5.0, lastVisit:'2026-03-28', city:'Pune',      notes:'VIP — always schedule with senior staff. Bridal booking April 2026.', dob:'1988-11-03',
+        prefs:['Preethi Nair','Bridal','Keratin','Evening Slots'],
+        history:[
+          {svc:'Bridal Package',date:'2026-03-28',staff:'Preethi Nair',amt:18000,status:'confirmed'},
+          {svc:'Keratin Treatment',date:'2026-02-20',staff:'Preethi Nair',amt:6500,status:'completed'},
+          {svc:'Facial & Cleanup',date:'2026-01-15',staff:'Sonal Mehta',amt:2100,status:'completed'},
+        ]},
+      {id:4, name:'Ritika Joshi',   email:'ritika.j@yahoo.com',      phone:'+91 88001 44567', status:'new',   visits:2,  spendNum:3400,  rating:4.5, lastVisit:'2026-03-26', city:'Nagpur',    notes:'New client. Referred by Priya Sharma.', dob:'2000-02-17',
+        prefs:['Facials','Mornings'],
+        history:[
+          {svc:'Facial & Cleanup',date:'2026-03-26',staff:'Sonal Mehta',amt:2100,status:'completed'},
+          {svc:'Threading',date:'2026-03-12',staff:'Roshni Gupta',amt:350,status:'completed'},
+        ]},
+      {id:5, name:'Kavya Nair',     email:'kavya.nair@gmail.com',    phone:'+91 77201 55678', status:'active', visits:12, spendNum:21600, rating:4.7, lastVisit:'2026-03-15', city:'Pune',      notes:'Prefers nail art and threading. Books 2 weeks in advance.', dob:'1997-07-09',
+        prefs:['Nail Art','Threading','Aisha Khan'],
+        history:[
+          {svc:'Nail Art',date:'2026-03-15',staff:'Aisha Khan',amt:1800,status:'completed'},
+          {svc:'Threading',date:'2026-02-20',staff:'Roshni Gupta',amt:350,status:'completed'},
+          {svc:'Manicure & Pedicure',date:'2026-01-28',staff:'Aisha Khan',amt:1600,status:'completed'},
+        ]},
+      {id:6, name:'Deepa Menon',    email:'deepa.m@gmail.com',       phone:'+91 91101 66789', status:'idle',  visits:5,  spendNum:8900,  rating:4.2, lastVisit:'2026-01-12', city:'Mumbai',    notes:'Last visit 2+ months ago. Consider a re-engagement offer.', dob:'1985-04-25',
+        prefs:['Waxing'],
+        history:[
+          {svc:'Waxing',date:'2026-01-12',staff:'Sonal Mehta',amt:900,status:'completed'},
+          {svc:'Facial & Cleanup',date:'2025-11-20',staff:'Sonal Mehta',amt:2100,status:'completed'},
+        ]},
+      {id:7, name:'Sunita Verma',   email:'sunita.v@gmail.com',      phone:'+91 80001 77890', status:'vip',   visits:28, spendNum:55400, rating:4.9, lastVisit:'2026-03-27', city:'Hyderabad', notes:'High-value client. Birthday 15 Sept. Allergic to certain hair dyes — check before colouring.', dob:'1986-09-15',
+        prefs:['Preethi Nair','Bridal','Hair Colour','No Ammonia Products'],
+        history:[
+          {svc:'Bridal Package',date:'2026-03-27',staff:'Preethi Nair',amt:18000,status:'confirmed'},
+          {svc:'Hair Spa',date:'2026-02-18',staff:'Preethi Nair',amt:2800,status:'completed'},
+          {svc:'Keratin Treatment',date:'2026-01-05',staff:'Preethi Nair',amt:6500,status:'completed'},
+        ]},
+      {id:8, name:'Pallavi Desai',  email:'pallavi.d@outlook.com',   phone:'+91 99001 88901', status:'active', visits:9,  spendNum:16200, rating:4.6, lastVisit:'2026-03-23', city:'Pune',      notes:'Regular monthly visit. Likes short appointments.', dob:'1993-12-30',
+        prefs:['Sonal Mehta','Threading','Waxing','Short Slots'],
+        history:[
+          {svc:'Threading',date:'2026-03-23',staff:'Roshni Gupta',amt:350,status:'completed'},
+          {svc:'Waxing',date:'2026-02-25',staff:'Sonal Mehta',amt:900,status:'completed'},
+        ]},
+      {id:9, name:'Nandita Rao',    email:'nandita.r@gmail.com',     phone:'+91 78001 99012', status:'new',   visits:1,  spendNum:1800,  rating:4.0, lastVisit:'2026-04-01', city:'Bangalore', notes:'First visit today. Walk-in.', dob:'2001-06-08',
+        prefs:['Facials'],
+        history:[
+          {svc:'Facial & Cleanup',date:'2026-04-01',staff:'Sonal Mehta',amt:2100,status:'confirmed'},
+        ]},
+      {id:10,name:'Shalini Iyer',   email:'shalini.i@gmail.com',     phone:'+91 92001 10123', status:'active', visits:15, spendNum:27300, rating:4.8, lastVisit:'2026-03-24', city:'Mumbai',    notes:'Regular for hair spa and colour. Prefers evenings.', dob:'1994-03-11',
+        prefs:['Aisha Khan','Hair Spa','Hair Colour','Evening Slots'],
+        history:[
+          {svc:'Hair Spa',date:'2026-03-24',staff:'Aisha Khan',amt:2800,status:'completed'},
+          {svc:'Hair Colour + Highlights',date:'2026-02-15',staff:'Aisha Khan',amt:4200,status:'completed'},
+          {svc:'Keratin Treatment',date:'2025-12-28',staff:'Aisha Khan',amt:6500,status:'cancelled'},
+        ]},
     ];
 
-    function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}
-    function starStr(r){let s='';for(let i=0;i<5;i++)s+=i<Math.floor(r)?'★':'☆';return s}
+    var activeFilter='all', searchQ='', sortBy='name';
+    var currentCustomerId=null;
+
+    function initials(n){ return n.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase(); }
+    function starStr(r){ var s=''; for(var i=0;i<5;i++) s+=i<Math.floor(r)?'★':'☆'; return s; }
+    function fmtSpend(n){ return '₹'+n.toLocaleString('en-IN'); }
+    function fmtDate(iso){ if(!iso) return '—'; var d=new Date(iso+'T00:00:00'); return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+    function daysSince(iso){ if(!iso) return 9999; var diff=new Date('2026-04-01')-new Date(iso+'T00:00:00'); return Math.floor(diff/86400000); }
+    function lastVisitLabel(iso){ var d=daysSince(iso); if(d===0) return 'Today'; if(d===1) return 'Yesterday'; if(d<7) return d+' days ago'; if(d<14) return '1 week ago'; if(d<30) return Math.floor(d/7)+' weeks ago'; if(d<60) return '1 month ago'; return Math.floor(d/30)+' months ago'; }
+
     function badgeHtml(st){
-      const m={vip:'<span class="kc-badge vip"><i class="fa-solid fa-crown" style="font-size:10px"></i> VIP</span>',active:'<span class="kc-badge active"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>',new:'<span class="kc-badge new">New</span>',idle:'<span class="kc-badge idle">Idle</span>'};
+      var m={vip:'<span class="kc-badge vip"><i class="fa-solid fa-crown" style="font-size:10px"></i> VIP</span>',active:'<span class="kc-badge active"><i class="fa-solid fa-circle" style="font-size:7px"></i> Active</span>',new:'<span class="kc-badge new">New</span>',idle:'<span class="kc-badge idle">Idle</span>'};
       return m[st]||'';
     }
 
-    function renderTable(data){
-      const tb=document.getElementById('custTbody'); tb.innerHTML='';
-      data.forEach((c,i)=>{
-        const av=AVATARS[i%AVATARS.length];
-        tb.innerHTML+=`<tr onclick="openDrawer(${c.id})" style="animation:fadeUp .3s ${i*.04}s ease both">
-          <td><span style="font-size:12px;color:var(--ink-3);font-weight:700">${String(c.id).padStart(2,'0')}</span></td>
-          <td><div class="kc-cust"><div class="kc-avatar" style="background:${av}">${initials(c.name)}</div><div><div class="kc-cust-name">${c.name}</div><div class="kc-cust-email">${c.email}</div></div></div></td>
-          <td style="color:var(--ink-3);font-size:13px">${c.phone}</td>
-          <td>${badgeHtml(c.status)}</td>
-          <td><span style="font-weight:700;color:var(--ink)">${c.visits}</span> <span style="font-size:11px;color:var(--ink-3)">visits</span></td>
-          <td><span style="font-weight:700;color:var(--gold-dk)">${c.spend}</span></td>
-          <td><div class="kc-rating"><span class="stars" style="color:var(--gold)">${starStr(c.rating)}</span> <span>${c.rating}</span></div></td>
-          <td style="font-size:12.5px;color:var(--ink-3)">${c.last}</td>
-          <td><div class="kc-row-actions">
-            <button class="kc-row-btn" onclick="event.stopPropagation()" title="Message"><i class="fa-solid fa-comment"></i></button>
-            <button class="kc-row-btn" onclick="event.stopPropagation()" title="Book"><i class="fa-solid fa-calendar-plus"></i></button>
-            <button class="kc-row-btn danger" onclick="event.stopPropagation()" title="Delete"><i class="fa-solid fa-trash"></i></button>
-          </div></td>
-        </tr>`;
+    function updateStats(){
+      document.getElementById('statTotal').textContent  = CUSTOMERS.length;
+      document.getElementById('statActive').textContent = CUSTOMERS.filter(function(c){return c.status==='active';}).length;
+      document.getElementById('statVIP').textContent    = CUSTOMERS.filter(function(c){return c.status==='vip';}).length;
+      document.getElementById('statNew').textContent    = CUSTOMERS.filter(function(c){return c.status==='new';}).length;
+    }
+
+    function getFiltered(){
+      var list=CUSTOMERS.filter(function(c){
+        var mf=activeFilter==='all'||c.status===activeFilter;
+        var ms=!searchQ||c.name.toLowerCase().indexOf(searchQ)>=0||c.email.toLowerCase().indexOf(searchQ)>=0||c.phone.indexOf(searchQ)>=0;
+        return mf&&ms;
       });
-    }
-    renderTable(CUSTOMERS);
-
-    function filterTable(q){
-      const r=CUSTOMERS.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.email.toLowerCase().includes(q.toLowerCase()));
-      renderTable(r);
-    }
-    function setFilter(el,f){
-      document.querySelectorAll('.kc-ftab').forEach(b=>b.classList.remove('active'));
-      el.classList.add('active');
-      renderTable(f==='all'?CUSTOMERS:CUSTOMERS.filter(c=>c.status===f));
-    }
-    function sortTable(v){
-      const r=[...CUSTOMERS];
-      if(v==='name')  r.sort((a,b)=>a.name.localeCompare(b.name));
-      if(v==='visits')r.sort((a,b)=>b.visits-a.visits);
-      if(v==='spend') r.sort((a,b)=>parseInt(b.spend.replace(/\D/g,''))-parseInt(a.spend.replace(/\D/g,'')));
-      renderTable(r);
+      list=[].concat(list);
+      if(sortBy==='name')   list.sort(function(a,b){return a.name.localeCompare(b.name);});
+      if(sortBy==='visits') list.sort(function(a,b){return b.visits-a.visits;});
+      if(sortBy==='spend')  list.sort(function(a,b){return b.spendNum-a.spendNum;});
+      if(sortBy==='recent') list.sort(function(a,b){return daysSince(a.lastVisit)-daysSince(b.lastVisit);});
+      return list;
     }
 
+    function renderTable(data){
+      var tb=document.getElementById('custTbody');
+      tb.innerHTML=data.map(function(c,i){
+        var av=AVATARS[(c.id-1)%AVATARS.length];
+        return '<tr onclick="openDrawer('+c.id+')" style="animation:fadeUp .3s '+(i*.04)+'s ease both">'
+          +'<td><span style="font-size:12px;color:var(--ink-3);font-weight:700">'+String(c.id).padStart(2,'0')+'</span></td>'
+          +'<td><div class="kc-cust"><div class="kc-avatar" style="background:'+av+'">'+initials(c.name)+'</div><div><div class="kc-cust-name">'+c.name+'</div><div class="kc-cust-email">'+c.email+'</div></div></div></td>'
+          +'<td style="color:var(--ink-3);font-size:13px">'+c.phone+'</td>'
+          +'<td>'+badgeHtml(c.status)+'</td>'
+          +'<td><span style="font-weight:700;color:var(--ink)">'+c.visits+'</span> <span style="font-size:11px;color:var(--ink-3)">visits</span></td>'
+          +'<td><span style="font-weight:700;color:var(--gold-dk)">'+fmtSpend(c.spendNum)+'</span></td>'
+          +'<td><div class="kc-rating"><span class="stars" style="color:var(--gold)">'+starStr(c.rating)+'</span> <span>'+c.rating+'</span></div></td>'
+          +'<td style="font-size:12.5px;color:var(--ink-3)">'+lastVisitLabel(c.lastVisit)+'</td>'
+          +'<td><div class="kc-row-actions">'
+            +'<button class="kc-row-btn" onclick="event.stopPropagation();quickBook('+c.id+')" title="Book"><i class="fa-solid fa-calendar-plus"></i></button>'
+            +'<button class="kc-row-btn danger" onclick="event.stopPropagation()" title="Delete"><i class="fa-solid fa-trash"></i></button>'
+          +'</div></td>'
+        +'</tr>';
+      }).join('');
+      document.getElementById('pagInfo').textContent='Showing '+data.length+' customer'+(data.length!==1?'s':'');
+    }
+
+    function filterTable(q){ searchQ=q.toLowerCase().trim(); renderTable(getFiltered()); }
+    function sortTable(v){ sortBy=v; renderTable(getFiltered()); }
+    document.getElementById('filterTabs').addEventListener('click',function(e){
+      var btn=e.target.closest('.kc-ftab'); if(!btn) return;
+      document.querySelectorAll('.kc-ftab').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active'); activeFilter=btn.dataset.filter; renderTable(getFiltered());
+    });
+
+    /* ════════════════════════════════════════
+       DRAWER
+    ════════════════════════════════════════ */
     function openDrawer(id){
-      if(id==='new') return;
-      const c=CUSTOMERS.find(x=>x.id===id); if(!c) return;
-      const av=AVATARS[(c.id-1)%AVATARS.length];
-      document.getElementById('drawerTitle').textContent=c.name;
-      document.getElementById('drawerBody').innerHTML=`
-        <div class="kc-drawer-avatar" style="background:${av}">${initials(c.name)}</div>
-        <div class="kc-drawer-name">${c.name}</div>
-        <div class="kc-drawer-sub">${c.city} · ${badgeHtml(c.status)}</div>
-        <div class="kc-drawer-stats">
-          <div class="kc-ds"><div class="kc-ds-val">${c.visits}</div><div class="kc-ds-lbl">Visits</div></div>
-          <div class="kc-ds"><div class="kc-ds-val">${c.spend}</div><div class="kc-ds-lbl">Spent</div></div>
-          <div class="kc-ds"><div class="kc-ds-val">${c.rating}</div><div class="kc-ds-lbl">Rating</div></div>
-        </div>
-        <div class="kc-drawer-sec">Contact Info</div>
-        <div class="kc-drawer-info-row"><div class="kc-di-icon"><i class="fa-solid fa-envelope"></i></div><div><div class="kc-di-lbl">Email</div><div class="kc-di-val">${c.email}</div></div></div>
-        <div class="kc-drawer-info-row"><div class="kc-di-icon"><i class="fa-solid fa-phone"></i></div><div><div class="kc-di-lbl">Phone</div><div class="kc-di-val">${c.phone}</div></div></div>
-        <div class="kc-drawer-info-row"><div class="kc-di-icon"><i class="fa-solid fa-location-dot"></i></div><div><div class="kc-di-lbl">City</div><div class="kc-di-val">${c.city}</div></div></div>
-        <div class="kc-drawer-sec">Recent Visits</div>
-        <div class="kc-hist-item"><div class="kc-hist-dot"></div><div class="kc-hist-svc">Bridal Hair &amp; Makeup</div><div class="kc-hist-date">2 days ago</div><div class="kc-hist-amt">₹8,500</div></div>
-        <div class="kc-hist-item"><div class="kc-hist-dot"></div><div class="kc-hist-svc">Hair Colour + Highlights</div><div class="kc-hist-date">3 weeks ago</div><div class="kc-hist-amt">₹4,200</div></div>
-        <div class="kc-hist-item"><div class="kc-hist-dot"></div><div class="kc-hist-svc">Facial &amp; Cleanup</div><div class="kc-hist-date">6 weeks ago</div><div class="kc-hist-amt">₹2,100</div></div>
-      `;
+      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
+      currentCustomerId=id;
+      var av=AVATARS[(c.id-1)%AVATARS.length];
+
+      /* Hero */
+      document.getElementById('drawerHero').innerHTML=
+        '<div class="kc-dhero-av" style="background:'+av+'">'+initials(c.name)+'</div>'
+        +'<div class="kc-dhero-name">'+c.name+'</div>'
+        +'<div class="kc-dhero-sub">'+c.city+' &nbsp;·&nbsp; '+badgeHtml(c.status)+'</div>'
+        +'<div class="kc-dhero-stats">'
+          +'<div class="kc-dhs"><div class="kc-dhs-val">'+c.visits+'</div><div class="kc-dhs-lbl">Visits</div></div>'
+          +'<div class="kc-dhs"><div class="kc-dhs-val" style="font-size:16px">'+fmtSpend(c.spendNum)+'</div><div class="kc-dhs-lbl">Total Spent</div></div>'
+          +'<div class="kc-dhs"><div class="kc-dhs-val">'+c.rating+'</div><div class="kc-dhs-lbl">Rating</div></div>'
+        +'</div>';
+
+      /* Book btn */
+      document.getElementById('drawerBookBtn').onclick=function(){ quickBook(id); };
+
+      buildOverviewTab(c);
+      buildHistoryTab(c);
+      buildPreferencesTab(c);
+      buildEditTab(c);
+
+      /* show first tab */
+      switchTab('overview');
+
       document.getElementById('drawerOv').classList.add('show');
       document.getElementById('drawer').classList.add('show');
       document.body.style.overflow='hidden';
     }
+
     function closeDrawer(){
       document.getElementById('drawerOv').classList.remove('show');
       document.getElementById('drawer').classList.remove('show');
       document.body.style.overflow='';
+      currentCustomerId=null;
     }
+
+    function switchTab(name){
+      document.querySelectorAll('.kc-dtab').forEach(function(b,i){
+        var names=['overview','history','preferences','edit'];
+        b.classList.toggle('active',names[i]===name);
+      });
+      document.querySelectorAll('.kc-dtab-panel').forEach(function(p){p.classList.remove('active');});
+      document.getElementById('tab-'+name).classList.add('active');
+    }
+
+    /* ── Overview tab ── */
+    function buildOverviewTab(c){
+      var alerts='';
+      if(c.status==='idle') alerts+='<div class="kc-alert-item warn"><i class="fa-solid fa-clock"></i><div>Last visit was <strong>'+lastVisitLabel(c.lastVisit)+'</strong>. Consider sending a re-engagement offer.</div></div>';
+      if(c.notes&&c.notes.toLowerCase().indexOf('allerg')>=0) alerts+='<div class="kc-alert-item warn"><i class="fa-solid fa-triangle-exclamation"></i><div>Allergy note on file — check before service.</div></div>';
+      if(c.status==='vip') alerts+='<div class="kc-alert-item tip"><i class="fa-solid fa-crown"></i><div>VIP client — always assign senior staff.</div></div>';
+      if(c.notes&&c.notes.toLowerCase().indexOf('birthday')>=0||c.notes.toLowerCase().indexOf('dob')>=0||c.dob) {
+        var bday=new Date(c.dob+'T00:00:00');
+        var bdayStr=bday.toLocaleDateString('en-IN',{day:'numeric',month:'long'});
+        alerts+='<div class="kc-alert-item info"><i class="fa-solid fa-cake-candles"></i><div>Birthday: <strong>'+bdayStr+'</strong> — send a birthday offer!</div></div>';
+      }
+
+      document.getElementById('tab-overview').innerHTML=
+        (alerts?'<div style="margin-bottom:16px">'+alerts+'</div>':'')
+        +'<div class="kc-dsec">Contact Info</div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-envelope"></i></div><div><div class="kc-di-lbl">Email</div><div class="kc-di-val">'+c.email+'</div></div></div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-phone"></i></div><div><div class="kc-di-lbl">Phone</div><div class="kc-di-val">'+c.phone+'</div></div></div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-location-dot"></i></div><div><div class="kc-di-lbl">City</div><div class="kc-di-val">'+c.city+'</div></div></div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-cake-candles"></i></div><div><div class="kc-di-lbl">Date of Birth</div><div class="kc-di-val">'+(c.dob?fmtDate(c.dob):'Not set')+'</div></div></div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-calendar-check"></i></div><div><div class="kc-di-lbl">Last Visit</div><div class="kc-di-val">'+fmtDate(c.lastVisit)+' ('+lastVisitLabel(c.lastVisit)+')</div></div></div>'
+        +'<div style="margin-top:20px"><div class="kc-dsec">Staff Notes</div>'
+        +'<textarea class="kc-notes-area" id="drawerNotes" placeholder="Add notes about this customer…">'+c.notes+'</textarea>'
+        +'<button class="kc-btn-out" style="margin-top:8px;font-size:12px" onclick="saveNotes('+c.id+')"><i class="fa-solid fa-floppy-disk"></i> Save Notes</button></div>';
+    }
+
+    function saveNotes(id){
+      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
+      c.notes=document.getElementById('drawerNotes').value;
+      KcozmAdmin.showToast('Notes saved for '+c.name,'success');
+    }
+
+    /* ── History tab ── */
+    function buildHistoryTab(c){
+      var html='<div class="kc-dsec">'+c.history.length+' visit'+(c.history.length!==1?'s':'')+' · Total '+fmtSpend(c.spendNum)+'</div>';
+      if(c.history.length===0){
+        html+='<div style="text-align:center;padding:30px 0;color:var(--ink-3)"><i class="fa-solid fa-calendar-xmark" style="font-size:24px;opacity:.4;display:block;margin-bottom:8px"></i>No visits yet</div>';
+      } else {
+        html+=c.history.map(function(h){
+          return '<div class="kc-hist-item">'
+            +'<div class="kc-hist-dot '+h.status+'"></div>'
+            +'<div class="kc-hist-info"><div class="kc-hist-svc">'+h.svc+'</div><div class="kc-hist-meta">'+fmtDate(h.date)+' &middot; '+h.staff+'</div></div>'
+            +'<div class="kc-hist-right"><div class="kc-hist-amt">'+fmtSpend(h.amt)+'</div><div class="kc-hist-status '+h.status+'">'+h.status.charAt(0).toUpperCase()+h.status.slice(1)+'</div></div>'
+          +'</div>';
+        }).join('');
+      }
+      document.getElementById('tab-history').innerHTML=html;
+    }
+
+    /* ── Preferences tab ── */
+    var ALL_PREFS=['Aisha Khan','Roshni Gupta','Preethi Nair','Sonal Mehta','Hair Colour','Keratin','Facials','Waxing','Nail Art','Bridal','Hair Spa','Threading','Manicure & Pedicure','Morning Slots','Evening Slots','Weekends','Short Slots','No Ammonia Products','No Strong Chemicals'];
+    function buildPreferencesTab(c){
+      var html='<div class="kc-dsec">Preferred Staff & Services</div><div class="kc-pref-tags">';
+      ALL_PREFS.forEach(function(p){
+        var on=c.prefs.indexOf(p)>=0;
+        html+='<div class="kc-pref-tag'+(on?' on':'')+'" onclick="togglePref('+c.id+',\''+p.replace(/'/g,"\\'")+'\')" id="pref-'+c.id+'-'+p.replace(/\s/g,'_')+'">'+p+'</div>';
+      });
+      html+='</div>';
+      html+='<div style="margin-top:14px"><div class="kc-dsec">Hair Profile</div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-droplet"></i></div><div><div class="kc-di-lbl">Hair Type</div><div class="kc-di-val">Wavy / Medium</div></div></div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-palette"></i></div><div><div class="kc-di-lbl">Current Colour</div><div class="kc-di-val">Dark Brown with Highlights</div></div></div>'
+        +'<div class="kc-dinfo-row"><div class="kc-di-icon"><i class="fa-solid fa-triangle-exclamation"></i></div><div><div class="kc-di-lbl">Allergies / Sensitivities</div><div class="kc-di-val">'+(c.prefs.indexOf('No Ammonia Products')>=0?'No Ammonia Products':c.prefs.indexOf('No Strong Chemicals')>=0?'No Strong Chemicals':'None noted')+'</div></div></div>'
+      +'</div>';
+      document.getElementById('tab-preferences').innerHTML=html;
+    }
+
+    function togglePref(id, pref){
+      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
+      var idx=c.prefs.indexOf(pref);
+      if(idx>=0) c.prefs.splice(idx,1); else c.prefs.push(pref);
+      var el=document.getElementById('pref-'+id+'-'+pref.replace(/\s/g,'_'));
+      if(el) el.classList.toggle('on', c.prefs.indexOf(pref)>=0);
+      KcozmAdmin.showToast('Preferences updated','success');
+    }
+
+    /* ── Edit tab ── */
+    function buildEditTab(c){
+      document.getElementById('tab-edit').innerHTML=
+        '<div class="kc-edit-row"><div class="kc-edit-lbl">Full Name</div><input class="kc-edit-input" id="editName" value="'+c.name+'"></div>'
+        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Email</div><input class="kc-edit-input" id="editEmail" type="email" value="'+c.email+'"></div>'
+        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Phone</div><input class="kc-edit-input" id="editPhone" type="tel" value="'+c.phone+'"></div>'
+        +'<div class="kc-edit-row"><div class="kc-edit-lbl">City</div><input class="kc-edit-input" id="editCity" value="'+c.city+'"></div>'
+        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Date of Birth</div><input class="kc-edit-input" id="editDob" type="date" value="'+(c.dob||'')+'"></div>'
+        +'<div class="kc-edit-row"><div class="kc-edit-lbl">Status</div>'
+        +'<select class="kc-edit-input" id="editStatus">'
+        +'<option value="new"'+(c.status==='new'?' selected':'')+'>New</option>'
+        +'<option value="active"'+(c.status==='active'?' selected':'')+'>Active</option>'
+        +'<option value="vip"'+(c.status==='vip'?' selected':'')+'>VIP</option>'
+        +'<option value="idle"'+(c.status==='idle'?' selected':'')+'>Idle</option>'
+        +'</select></div>'
+        +'<button class="kc-btn-gold" style="width:100%;margin-top:6px" onclick="saveEdit('+c.id+')"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>';
+    }
+
+    function saveEdit(id){
+      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
+      c.name   = document.getElementById('editName').value.trim()||c.name;
+      c.email  = document.getElementById('editEmail').value.trim()||c.email;
+      c.phone  = document.getElementById('editPhone').value.trim()||c.phone;
+      c.city   = document.getElementById('editCity').value.trim()||c.city;
+      c.dob    = document.getElementById('editDob').value||c.dob;
+      c.status = document.getElementById('editStatus').value;
+      /* refresh hero */
+      var av=AVATARS[(c.id-1)%AVATARS.length];
+      document.getElementById('drawerHero').querySelector('.kc-dhero-name').textContent=c.name;
+      document.getElementById('drawerHero').querySelector('.kc-dhero-sub').innerHTML=c.city+' &nbsp;·&nbsp; '+badgeHtml(c.status);
+      buildOverviewTab(c);
+      renderTable(getFiltered());
+      updateStats();
+      KcozmAdmin.showToast(c.name+' updated successfully','success');
+      switchTab('overview');
+    }
+
+    function quickBook(id){
+      var c=CUSTOMERS.find(function(x){return x.id===id;}); if(!c) return;
+      window.location.href='forms/appointment_form.html?customer='+encodeURIComponent(c.name)+'&phone='+encodeURIComponent(c.phone);
+    }
+
+    function openNewCustomer(){
+      KcozmAdmin.showToast('New customer form coming soon','info');
+    }
+
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDrawer(); });
+
+    updateStats();
+    renderTable(getFiltered());
   </script>
 </body>
 </html>
