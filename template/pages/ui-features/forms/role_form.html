@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Role Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060; --ink-4:#c4a898;
+      --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
+      --r-sm:8px; --r-md:14px; --r-lg:20px;
+      --shadow:0 2px 24px rgba(26,18,8,.08); --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink)}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none}}
+
+    .kc-page-content{padding:28px 28px 48px;width:100%;min-width:0}
+    @media(max-width:640px){.kc-page-content{padding:18px 16px 40px}}
+
+    /* Breadcrumb */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:9px;color:var(--ink-4)}
+
+    /* Card */
+    .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .45s ease both;margin-bottom:28px;width:100%}
+
+    /* Card header */
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:800;color:var(--ink);line-height:1.2}
+    .kc-title-sub{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:3px}
+
+    /* Edit banner */
+    .kc-edit-banner{display:none;background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:var(--r-sm);padding:10px 16px;margin:16px 28px 0;font-size:13px;color:var(--gold-dk);align-items:center;gap:8px}
+    .kc-edit-banner.show{display:flex}
+
+    /* Form body */
+    .kc-form-body{padding:28px;display:flex;flex-direction:column;gap:20px}
+    .kc-section{border:1px solid var(--border);border-radius:var(--r-md);padding:22px 24px}
+    .kc-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+    .kc-sec-lbl i{color:var(--gold-dk)}
+
+    .kc-ff-row  {display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .kc-ff-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+    @media(max-width:700px){.kc-ff-row-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.kc-ff-row,.kc-ff-row-3{grid-template-columns:1fr}}
+
+    .kc-ff{display:flex;flex-direction:column;gap:6px}
+    .kc-flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-req{color:#c2185b;margin-left:2px}
+
+    .kc-finp,.kc-fsel,.kc-ftxt{
+      padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+      font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);
+      background:var(--surface-2);outline:none;width:100%;
+      transition:border-color var(--t),box-shadow var(--t),background var(--t);
+    }
+    .kc-finp:focus,.kc-fsel:focus,.kc-ftxt:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp::placeholder,.kc-ftxt::placeholder{color:var(--ink-4)}
+    .kc-ftxt{resize:vertical;min-height:80px;line-height:1.55}
+
+    .kc-fsel{
+      cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 13px center;
+      padding-right:34px;background-color:var(--surface-2);
+    }
+    .kc-fsel:focus{background-color:#fff}
+
+    /* Role preview badge */
+    .kc-role-preview{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 16px;border-radius:var(--r-md);
+      font-size:13px;font-weight:600;margin-top:4px;
+      transition:all var(--t);border:1.5px solid transparent;
+    }
+    .kc-role-preview .rp-icon{
+      width:32px;height:32px;border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;color:#fff;flex-shrink:0;
+    }
+
+    /* Permissions grid */
+    .perms-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+      gap:10px;
+    }
+    .perm-check{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 14px;border:1.5px solid var(--border);
+      border-radius:10px;cursor:pointer;transition:all var(--t);
+      background:var(--surface);
+    }
+    .perm-check:hover{border-color:var(--gold);background:var(--gold-lt)}
+    .perm-check input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer;flex-shrink:0}
+    .perm-check-label{font-size:12.5px;font-weight:500;color:var(--ink-2)}
+    .perm-check-desc{font-size:10.5px;color:var(--ink-3);margin-top:1px}
+
+    /* Select-all row */
+    .perms-actions{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+    .perm-action-btn{
+      font-size:11.5px;font-weight:600;color:var(--gold-dk);
+      background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);
+      border-radius:6px;padding:5px 12px;cursor:pointer;transition:all var(--t);
+    }
+    .perm-action-btn:hover{background:rgba(200,160,64,.2)}
+
+    /* Category separator inside perms */
+    .perm-cat-label{
+      grid-column:1/-1;
+      font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;
+      color:var(--ink-4);padding:6px 2px 2px;
+      border-bottom:1px solid var(--border);margin-bottom:2px;
+    }
+
+    /* Footer */
+    .kc-form-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;align-items:center;background:var(--surface-2)}
+    .kc-btn-sec{padding:10px 22px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background var(--t)}
+    .kc-btn-sec:hover{background:var(--surface-2)}
+    .kc-btn-pri{padding:10px 28px;border:none;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 16px var(--gold-glow);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-pri:hover{opacity:.88;transform:translateY(-1px)}
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../staff.html"><i class="fa-solid fa-user-tie"></i> Staff</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../staff-roles.html"><i class="fa-solid fa-shield-halved"></i> Roles</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span id="bcLabel">New Role</span>
+    </nav>
+
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-shield-halved"></i></div>
+          <h4 class="kc-title">
+            <span id="pageHeading">New Role</span>
+            <span class="kc-title-sub" id="pageSubtitle">Define a custom role with specific permissions</span>
+          </h4>
+        </div>
+      </div>
+
+      <!-- Edit banner -->
+      <div class="kc-edit-banner" id="editBanner">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>You are editing an existing role. Changes will be saved back to the Roles list.</span>
+      </div>
+
+      <!-- Form Body -->
+      <div class="kc-form-body">
+
+        <!-- ── PREVIEW ── -->
+        <div class="kc-section" style="background:linear-gradient(135deg,var(--gold-lt),rgba(255,255,255,.5))">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-eye"></i> Preview</div>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <div class="kc-role-preview" id="rolePreview" style="background:var(--gold-lt);border-color:rgba(200,160,64,.3);color:#7a5010">
+              <div class="rp-icon" id="previewIcon" style="background:linear-gradient(135deg,#c8a040,#a07828)">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div>
+                <div style="font-size:14px;font-weight:700" id="previewName">Role Name</div>
+                <div style="font-size:11px;font-weight:400;opacity:.75;margin-top:1px" id="previewDesc">Description will appear here</div>
+              </div>
+            </div>
+            <div style="font-size:12px;color:var(--ink-3)">
+              <span id="previewPermCount" style="font-weight:700;color:var(--gold-dk)">0</span> permissions selected
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ROLE IDENTITY ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-tag"></i> Role Identity</div>
+
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Role Name <span class="kc-req">*</span></label>
+              <input type="text" class="kc-finp" id="roleName" placeholder="e.g. Senior Stylist, Receptionist…" oninput="updatePreview()">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Role Colour <span class="kc-req">*</span></label>
+              <select class="kc-fsel" id="roleColor" onchange="updatePreview()">
+                <option value="gold">Gold — Luxury / Admin</option>
+                <option value="blue">Blue — Operations</option>
+                <option value="rose">Rose — Beauty / Stylist</option>
+                <option value="green">Green — Front Desk</option>
+                <option value="purple">Purple — Creative</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="kc-ff">
+            <label class="kc-flbl">Description</label>
+            <input type="text" class="kc-finp" id="roleDesc" placeholder="Brief description of what this role can do…" oninput="updatePreview()">
+          </div>
+        </div>
+
+        <!-- ── PERMISSIONS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-lock-open"></i> Permissions</div>
+
+          <div class="perms-actions">
+            <button class="perm-action-btn" type="button" onclick="toggleAll(true)"><i class="fa-solid fa-check-double" style="font-size:10px"></i> Select All</button>
+            <button class="perm-action-btn" type="button" onclick="toggleAll(false)"><i class="fa-solid fa-xmark" style="font-size:10px"></i> Clear All</button>
+          </div>
+
+          <div class="perms-grid" id="permsGrid"></div>
+        </div>
+
+      </div><!-- /kc-form-body -->
+
+      <!-- Footer -->
+      <div class="kc-form-footer">
+        <a href="../staff-roles.html" class="kc-btn-sec">
+          <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-shield-halved" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Create Role</span>
+        </button>
+      </div>
+
+    </div><!-- /kc-card -->
+  </div>
+</div>
+
+<script src="../../../js/shared-components.js"></script>
+<script>
+  KcozmAdmin.init({ activePage: 'staff-roles', pageTitle: 'Role Form', depth: '../../../' });
+
+  /* ── Colour palette (matches staff-roles.html) ── */
+  var ROLE_COLORS = {
+    gold:   { bg:'linear-gradient(135deg,#c8a040,#a07828)', light:'#fdf6e8', text:'#7a5010' },
+    rose:   { bg:'linear-gradient(135deg,#c97b84,#a85560)', light:'#fdf0f2', text:'#a85560' },
+    blue:   { bg:'linear-gradient(135deg,#2196f3,#1565c0)', light:'#e3f2fd', text:'#1565c0' },
+    green:  { bg:'linear-gradient(135deg,#4caf50,#2e7d32)', light:'#e8f5e9', text:'#2e7d32' },
+    purple: { bg:'linear-gradient(135deg,#9c27b0,#6a1b9a)', light:'#f3e5f5', text:'#7b1fa2' },
+  };
+
+  /* ── All permissions (must stay in sync with staff-roles.html) ── */
+  var PERMS_ALL = [
+    { key:'dashboard',    label:'View Dashboard',        cat:'General' },
+    { key:'appointments', label:'Manage Appointments',   cat:'General' },
+    { key:'customers',    label:'Manage Customers',      cat:'General' },
+    { key:'services',     label:'Manage Services',       cat:'Salon'   },
+    { key:'products',     label:'Manage Products',       cat:'Salon'   },
+    { key:'loyalty',      label:'Manage Loyalty Cards',  cat:'Salon'   },
+    { key:'staff_view',   label:'View Staff',            cat:'Staff'   },
+    { key:'staff_manage', label:'Manage Staff',          cat:'Staff'   },
+    { key:'roles',        label:'Manage Roles',          cat:'Staff'   },
+    { key:'payments',     label:'Process Payments',      cat:'Finance' },
+    { key:'reports',      label:'View Reports',          cat:'Finance' },
+    { key:'franchise',    label:'Manage Franchise',      cat:'Finance' },
+    { key:'settings',     label:'Access Settings',       cat:'System'  },
+    { key:'delete',       label:'Delete Records',        cat:'System'  },
+  ];
+
+  /* ── Render permission checkboxes grouped by category ── */
+  function renderPerms(selectedPerms) {
+    selectedPerms = selectedPerms || [];
+    var cats = PERMS_ALL.reduce(function(acc, p) {
+      if (!acc[p.cat]) acc[p.cat] = [];
+      acc[p.cat].push(p);
+      return acc;
+    }, {});
+
+    var html = '';
+    Object.keys(cats).forEach(function(cat) {
+      html += '<div class="perm-cat-label"><i class="fa-solid fa-tag" style="font-size:9px;margin-right:4px;color:var(--gold-dk)"></i>' + cat + '</div>';
+      cats[cat].forEach(function(p) {
+        var checked = selectedPerms.indexOf(p.key) >= 0;
+        html += '<label class="perm-check">'
+          + '<input type="checkbox" name="perm" value="' + p.key + '"' + (checked ? ' checked' : '') + ' onchange="updatePreview()">'
+          + '<div>'
+          + '<div class="perm-check-label">' + p.label + '</div>'
+          + '<div class="perm-check-desc">' + p.cat + '</div>'
+          + '</div>'
+          + '</label>';
+      });
+    });
+    document.getElementById('permsGrid').innerHTML = html;
+  }
+
+  /* ── Live preview ── */
+  function updatePreview() {
+    var name  = document.getElementById('roleName').value.trim() || 'Role Name';
+    var desc  = document.getElementById('roleDesc').value.trim() || 'Description will appear here';
+    var color = document.getElementById('roleColor').value;
+    var c     = ROLE_COLORS[color] || ROLE_COLORS.gold;
+    var count = document.querySelectorAll('#permsGrid input[name="perm"]:checked').length;
+
+    document.getElementById('previewName').textContent    = name;
+    document.getElementById('previewDesc').textContent    = desc;
+    document.getElementById('previewPermCount').textContent = count;
+
+    var preview = document.getElementById('rolePreview');
+    preview.style.background   = c.light;
+    preview.style.borderColor  = c.text + '33';
+    preview.style.color        = c.text;
+
+    var icon = document.getElementById('previewIcon');
+    icon.style.background = c.bg;
+  }
+
+  function toggleAll(checked) {
+    document.querySelectorAll('#permsGrid input[name="perm"]').forEach(function(cb) {
+      cb.checked = checked;
+    });
+    updatePreview();
+  }
+
+  /* ── URL params for edit mode ── */
+  var params = new URLSearchParams(window.location.search);
+  var isEdit = params.has('id');
+  var editId = isEdit ? parseInt(params.get('id')) : null;
+
+  var DATA = [];
+  try { DATA = JSON.parse(sessionStorage.getItem('kc_roles_data') || '[]'); } catch(e){}
+
+  if (isEdit) {
+    document.getElementById('bcLabel').textContent      = 'Edit Role';
+    document.getElementById('pageHeading').textContent  = 'Edit Role';
+    document.getElementById('pageSubtitle').textContent = 'Update this role\'s details and permissions';
+    document.getElementById('fmBtnIcon').className      = 'fa-solid fa-check';
+    document.getElementById('fmBtnLabel').textContent   = 'Save Changes';
+    document.getElementById('editBanner').classList.add('show');
+
+    var r = DATA.find(function(x){ return x.id === editId; });
+    if (r) {
+      document.getElementById('roleName').value  = r.name  || '';
+      document.getElementById('roleDesc').value  = r.desc  || '';
+      document.getElementById('roleColor').value = r.color || 'gold';
+      renderPerms(r.perms || []);
+    } else {
+      renderPerms();
+    }
+  } else {
+    renderPerms();
+  }
+
+  updatePreview();
+
+  /* ── Submit ── */
+  function submitForm() {
+    var name  = document.getElementById('roleName').value.trim();
+    var desc  = document.getElementById('roleDesc').value.trim();
+    var color = document.getElementById('roleColor').value;
+    var perms = Array.from(document.querySelectorAll('#permsGrid input[name="perm"]:checked'))
+                     .map(function(cb){ return cb.value; });
+
+    if (!name) { KcozmAdmin.showToast('Please enter a role name', 'error'); return; }
+
+    if (isEdit) {
+      var rec = DATA.find(function(x){ return x.id === editId; });
+      if (rec) {
+        rec.name  = name;
+        rec.desc  = desc;
+        rec.color = color;
+        rec.perms = perms;
+      }
+    } else {
+      var nid = DATA.length
+        ? Math.max.apply(null, DATA.map(function(x){ return x.id; })) + 1
+        : 1;
+      DATA.push({ id:nid, name:name, color:color, desc:desc || 'Custom role', members:0, perms:perms, avatarColors:[] });
+    }
+
+    sessionStorage.setItem('kc_roles_data', JSON.stringify(DATA));
+    sessionStorage.setItem('kc_roles_toast', JSON.stringify({
+      msg:  '"' + name + '" ' + (isEdit ? 'updated successfully!' : 'role created!'),
+      type: 'success'
+    }));
+    window.location.href = '../staff-roles.html';
+  }
+</script>
+</body>
+</html>

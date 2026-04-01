@@ -627,12 +627,12 @@
     ]},
     { sec:'SALON', items:[
       { slug:'services', label:'Services', icon:'fa-scissors', badge:null, children:[
-        { slug:'services',            label:'All Services',       icon:'fa-list',               href:'pages/ui-features/service.html'            },
-        { slug:'categorylist',        label:'Categories',         icon:'fa-folder',             href:'pages/ui-features/service_category.html'        },
-        { slug:'service_categories',  label:'Sub-Categories',     icon:'fa-folder-open',        href:'pages/ui-features/service_subcategory.html'  },
-        { slug:'styling',             label:'Styling',            icon:'fa-wand-magic-sparkles', href:'pages/ui-features/styling.html'            }
+        { slug:'services',             label:'All Services',  icon:'fa-list',                href:'pages/ui-features/service.html'             },
+        { slug:'service_category',     label:'Categories',    icon:'fa-folder',              href:'pages/ui-features/service_category.html'    },
+        { slug:'service_subcategory',  label:'Sub-Categories',icon:'fa-folder-open',         href:'pages/ui-features/service_subcategory.html' },
+        { slug:'styling',              label:'Styling',       icon:'fa-wand-magic-sparkles', href:'pages/ui-features/styling.html'             }
       ]},
-      { slug:'products', label:'Products', icon:'fa-bottle-droplet', href:'pages/ui-features/e_shop.html', badge:null },
+      { slug:'eshop', label:'Products', icon:'fa-bottle-droplet', href:'pages/ui-features/e_shop.html', badge:null },
       { slug:'staff', label:'Staff', icon:'fa-user-tie', badge:null, children:[
         { slug:'staff-list',     label:'All Staff',  icon:'fa-users',         href:'pages/ui-features/staff.html'          },
         { slug:'staff-roles',    label:'Roles',      icon:'fa-shield-halved', href:'pages/ui-features/staff-roles.html'    },
@@ -644,11 +644,10 @@
       { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'pages/ui-features/payments.html',     badge:null },
       { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'pages/ui-features/reports.html',     badge:null },
       { slug:'more-pages', label:'More Pages', icon:'fa-layer-group', badge:null, children:[
-        { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/bridal.html'  },
-        { slug:'offers',  label:'Offers',   icon:'fa-tag',          href:'pages/ui-features/Offers_new.html'    },
-        { slug:'contact', label:'Contact',  icon:'fa-envelope',     href:'pages/ui-features/contact_admin.html' },
-        { slug:'about',   label:'About Us', icon:'fa-circle-info',  href:'pages/ui-features/about.html'         },
-        { slug:'e-shop',  label:'E-Shop',   icon:'fa-bag-shopping', href:'pages/ui-features/e_shop.html'        }
+        { slug:'bridal',  label:'Bridal',   icon:'fa-ring',        href:'pages/ui-features/bridal.html'        },
+        { slug:'offers',  label:'Offers',   icon:'fa-tag',         href:'pages/ui-features/Offers_new.html'    },
+        { slug:'contact', label:'Contact',  icon:'fa-envelope',    href:'pages/ui-features/contact_admin.html' },
+        { slug:'about',   label:'About Us', icon:'fa-circle-info', href:'pages/ui-features/about.html'         }
       ]}
     ]},
     { sec:'SYSTEM', items:[

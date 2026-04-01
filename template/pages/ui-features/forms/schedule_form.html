@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Schedule Form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../../images/favicon.png"/>
+  <style>
+    :root {
+      --gold:#c8a040; --gold-dk:#a07828; --gold-lt:#fdf6e4; --gold-glow:rgba(200,160,64,.15);
+      --rose:#c97b84; --rose-dk:#a85560; --rose-lt:#fdf0f2;
+      --ink:#1a1410; --ink-2:#3d3028; --ink-3:#8a7060; --ink-4:#c4a898;
+      --surface:#fff; --surface-2:#f9f7f5; --border:#e8e2da;
+      --r-sm:8px; --r-md:14px; --r-lg:20px;
+      --shadow:0 2px 24px rgba(26,18,8,.08); --t:.18s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink)}
+    a{text-decoration:none}
+    .main-panel{min-width:0;overflow-x:hidden}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none}}
+
+    .kc-page-content{padding:28px 28px 48px;width:100%;min-width:0}
+    @media(max-width:640px){.kc-page-content{padding:18px 16px 40px}}
+
+    /* Breadcrumb */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t)}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:9px;color:var(--ink-4)}
+
+    /* Card */
+    .kc-card{background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .45s ease both;margin-bottom:28px;width:100%}
+
+    /* Card header */
+    .kc-card-header{padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border)}
+    .kc-title-block{display:flex;align-items:center;gap:14px}
+    .kc-icon-wrap{width:46px;height:46px;border-radius:var(--r-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .kc-icon-wrap i{color:var(--gold-dk);font-size:19px}
+    .kc-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:800;color:var(--ink);line-height:1.2}
+    .kc-title-sub{display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-3);margin-top:3px}
+
+    /* Edit banner */
+    .kc-edit-banner{display:none;background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:var(--r-sm);padding:10px 16px;margin:16px 28px 0;font-size:13px;color:var(--gold-dk);align-items:center;gap:8px}
+    .kc-edit-banner.show{display:flex}
+
+    /* Form body */
+    .kc-form-body{padding:28px;display:flex;flex-direction:column;gap:20px}
+    .kc-section{border:1px solid var(--border);border-radius:var(--r-md);padding:22px 24px}
+    .kc-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+    .kc-sec-lbl i{color:var(--gold-dk)}
+
+    .kc-ff-row  {display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .kc-ff-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+    @media(max-width:700px){.kc-ff-row-3{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.kc-ff-row,.kc-ff-row-3{grid-template-columns:1fr}}
+
+    .kc-ff{display:flex;flex-direction:column;gap:6px}
+    .kc-flbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3)}
+    .kc-req{color:#c2185b;margin-left:2px}
+
+    .kc-finp,.kc-fsel,.kc-ftxt{
+      padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+      font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);
+      background:var(--surface-2);outline:none;width:100%;
+      transition:border-color var(--t),box-shadow var(--t),background var(--t);
+    }
+    .kc-finp:focus,.kc-fsel:focus,.kc-ftxt:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff}
+    .kc-finp:disabled,.kc-fsel:disabled{opacity:.5;cursor:not-allowed}
+    .kc-finp::placeholder,.kc-ftxt::placeholder{color:var(--ink-4)}
+    .kc-ftxt{resize:vertical;min-height:80px;line-height:1.55}
+
+    .kc-fsel{
+      cursor:pointer;appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7060' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 13px center;
+      padding-right:34px;background-color:var(--surface-2);
+    }
+    .kc-fsel:focus{background-color:#fff}
+
+    /* Shift type badges */
+    .shift-types{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+    .shift-type-btn{
+      display:flex;align-items:center;gap:7px;
+      padding:9px 16px;border-radius:10px;
+      font-size:12.5px;font-weight:600;cursor:pointer;
+      border:2px solid var(--border);background:var(--surface);
+      color:var(--ink-3);transition:all var(--t);flex-shrink:0;
+    }
+    .shift-type-btn:hover{border-color:var(--gold);color:var(--ink-2)}
+    .shift-type-btn.selected-working {border-color:#2e7d32;background:#e8f5e9;color:#2e7d32}
+    .shift-type-btn.selected-half    {border-color:var(--gold-dk);background:var(--gold-lt);color:var(--gold-dk)}
+    .shift-type-btn.selected-leave   {border-color:var(--rose-dk);background:var(--rose-lt);color:var(--rose-dk)}
+    .shift-type-btn.selected-off     {border-color:#757575;background:#f5f5f5;color:#555}
+
+    /* Time row — hidden when off/leave */
+    .time-row{transition:opacity var(--t)}
+    .time-row.dimmed{opacity:.35;pointer-events:none}
+
+    /* Days multi-select grid */
+    .days-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+    .day-chip{
+      width:44px;height:44px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:11.5px;font-weight:700;cursor:pointer;
+      border:2px solid var(--border);background:var(--surface);
+      color:var(--ink-3);transition:all var(--t);flex-shrink:0;user-select:none;
+    }
+    .day-chip:hover{border-color:var(--gold);color:var(--gold-dk);background:var(--gold-lt)}
+    .day-chip.selected{
+      border-color:var(--gold-dk);background:linear-gradient(135deg,var(--gold),var(--gold-dk));
+      color:#fff;box-shadow:0 3px 10px rgba(200,160,64,.35);
+    }
+    .day-chip.off-day{border-color:#ccc;background:#f5f5f5;color:#aaa}
+
+    /* Preview card */
+    .schedule-preview{
+      background:linear-gradient(135deg,var(--gold-lt),rgba(255,255,255,.5));
+      border:1.5px solid rgba(200,160,64,.25);
+      border-radius:var(--r-md);padding:18px 20px;
+      display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    }
+    .preview-avatar{
+      width:46px;height:46px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;
+      color:#fff;flex-shrink:0;background:var(--gold);
+    }
+    .preview-info{flex:1;min-width:160px}
+    .preview-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px}
+    .preview-detail{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .preview-badge{
+      display:inline-flex;align-items:center;gap:4px;
+      padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;
+    }
+    .preview-badge.working{background:#e8f5e9;color:#2e7d32}
+    .preview-badge.half   {background:var(--gold-lt);color:var(--gold-dk)}
+    .preview-badge.leave  {background:var(--rose-lt);color:var(--rose-dk)}
+    .preview-badge.off    {background:#f5f5f5;color:#555}
+
+    /* Footer */
+    .kc-form-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;align-items:center;background:var(--surface-2)}
+    .kc-btn-sec{padding:10px 22px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:background var(--t)}
+    .kc-btn-sec:hover{background:var(--surface-2)}
+    .kc-btn-pri{padding:10px 28px;border:none;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 16px var(--gold-glow);transition:opacity var(--t),transform var(--t)}
+    .kc-btn-pri:hover{opacity:.88;transform:translateY(-1px)}
+
+    /* helper */
+    .hint{font-size:11px;color:var(--ink-4);margin-top:4px}
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../staff.html"><i class="fa-solid fa-user-tie"></i> Staff</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <a href="../staff-schedule.html"><i class="fa-solid fa-calendar-days"></i> Schedules</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span id="bcLabel">New Schedule</span>
+    </nav>
+
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-calendar-plus"></i></div>
+          <h4 class="kc-title">
+            <span id="pageHeading">New Schedule</span>
+            <span class="kc-title-sub" id="pageSubtitle">Assign a shift to a staff member</span>
+          </h4>
+        </div>
+      </div>
+
+      <!-- Edit banner -->
+      <div class="kc-edit-banner" id="editBanner">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>You are editing an existing schedule entry. Changes will be saved back to the Schedules view.</span>
+      </div>
+
+      <!-- Form Body -->
+      <div class="kc-form-body">
+
+        <!-- ── PREVIEW ── -->
+        <div class="kc-section" style="background:linear-gradient(135deg,var(--gold-lt),rgba(255,255,255,.5))">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-eye"></i> Preview</div>
+          <div class="schedule-preview">
+            <div class="preview-avatar" id="previewAvatar">?</div>
+            <div class="preview-info">
+              <div class="preview-name" id="previewName">Select a staff member</div>
+              <div class="preview-detail">
+                <span id="previewDays" style="color:var(--ink-4)">No days selected</span>
+                <span id="previewTime" style="display:none">·</span>
+                <span id="previewTimeVal" style="display:none"></span>
+              </div>
+            </div>
+            <span class="preview-badge working" id="previewBadge">
+              <i class="fa-solid fa-circle" style="font-size:6px"></i> Working
+            </span>
+          </div>
+        </div>
+
+        <!-- ── STAFF & WEEK ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-user-tie"></i> Staff & Week</div>
+
+          <div class="kc-ff-row" style="margin-bottom:16px">
+            <div class="kc-ff">
+              <label class="kc-flbl">Staff Member <span class="kc-req">*</span></label>
+              <select class="kc-fsel" id="staffSelect" onchange="updatePreview()">
+                <option value="">— Select Staff Member —</option>
+                <option value="1" data-color="#c8a040">Rekha Kaur — Sr. Makeup Artist</option>
+                <option value="2" data-color="#c97b84">Sunita Mehta — Hair Stylist</option>
+                <option value="3" data-color="#2196f3">Pooja Devi — Nail Technician</option>
+                <option value="4" data-color="#4caf50">Anita Sharma — Bridal Specialist</option>
+                <option value="5" data-color="#9c27b0">Raj Malhotra — Manager</option>
+                <option value="6" data-color="#e91e63">Priya Nair — Receptionist</option>
+                <option value="7" data-color="#ff5722">Vikram Singh — Administrator</option>
+              </select>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Branch <span class="kc-req">*</span></label>
+              <select class="kc-fsel" id="branchSelect">
+                <option value="">— Select Branch —</option>
+                <option>Pune West</option>
+                <option>Mumbai Andheri</option>
+                <option>Nagpur Central</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="kc-ff-row">
+            <div class="kc-ff">
+              <label class="kc-flbl">Week Starting <span class="kc-req">*</span></label>
+              <input type="date" class="kc-finp" id="weekStart" onchange="updatePreview()">
+              <span class="hint">Select any Monday. Shifts will be assigned to specific days below.</span>
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Repeat Schedule</label>
+              <select class="kc-fsel" id="repeatSchedule">
+                <option value="once">This week only</option>
+                <option value="2weeks">Next 2 weeks</option>
+                <option value="month">Next 4 weeks</option>
+                <option value="ongoing">Ongoing (until changed)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SHIFT DETAILS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-clock"></i> Shift Details</div>
+
+          <div class="kc-ff" style="margin-bottom:20px">
+            <label class="kc-flbl">Shift Type <span class="kc-req">*</span></label>
+            <div class="shift-types">
+              <button type="button" class="shift-type-btn selected-working" data-val="working" onclick="selectShiftType('working')">
+                <i class="fa-solid fa-circle-check" style="color:#2e7d32"></i> Full Day
+              </button>
+              <button type="button" class="shift-type-btn" data-val="half" onclick="selectShiftType('half')">
+                <i class="fa-solid fa-circle-half-stroke" style="color:var(--gold-dk)"></i> Half Day
+              </button>
+              <button type="button" class="shift-type-btn" data-val="leave" onclick="selectShiftType('leave')">
+                <i class="fa-solid fa-umbrella-beach" style="color:var(--rose-dk)"></i> On Leave
+              </button>
+              <button type="button" class="shift-type-btn" data-val="off" onclick="selectShiftType('off')">
+                <i class="fa-solid fa-moon" style="color:#757575"></i> Day Off
+              </button>
+            </div>
+            <input type="hidden" id="shiftType" value="working">
+          </div>
+
+          <div class="kc-ff-row-3 time-row" id="timeRow">
+            <div class="kc-ff">
+              <label class="kc-flbl">Start Time <span class="kc-req">*</span></label>
+              <input type="time" class="kc-finp" id="shiftStart" value="10:00" onchange="updatePreview()">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">End Time <span class="kc-req">*</span></label>
+              <input type="time" class="kc-finp" id="shiftEnd" value="19:00" onchange="updatePreview()">
+            </div>
+            <div class="kc-ff">
+              <label class="kc-flbl">Break Duration</label>
+              <select class="kc-fsel" id="breakDuration">
+                <option value="0">No break</option>
+                <option value="15">15 minutes</option>
+                <option value="30" selected>30 minutes</option>
+                <option value="45">45 minutes</option>
+                <option value="60">1 hour</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── DAYS ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-calendar-week"></i> Apply to Days <span class="kc-req" style="margin-left:2px">*</span></div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+            <span class="hint" style="margin-top:0">Click to toggle days. Selected days will receive the shift type defined above.</span>
+            <div style="display:flex;gap:8px">
+              <button type="button" class="perm-action-btn" onclick="selectDays([0,1,2,3,4])" style="font-size:11.5px;font-weight:600;color:var(--gold-dk);background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all var(--t)">Weekdays</button>
+              <button type="button" class="perm-action-btn" onclick="selectDays([5,6])"       style="font-size:11.5px;font-weight:600;color:var(--gold-dk);background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all var(--t)">Weekend</button>
+              <button type="button" class="perm-action-btn" onclick="selectDays([])"          style="font-size:11.5px;font-weight:600;color:var(--gold-dk);background:var(--gold-lt);border:1px solid rgba(200,160,64,.3);border-radius:6px;padding:5px 12px;cursor:pointer;transition:all var(--t)">Clear</button>
+            </div>
+          </div>
+
+          <div class="days-grid" id="daysGrid"></div>
+        </div>
+
+        <!-- ── NOTES ── -->
+        <div class="kc-section">
+          <div class="kc-sec-lbl"><i class="fa-solid fa-note-sticky"></i> Internal Notes</div>
+          <div class="kc-ff">
+            <label class="kc-flbl">Notes</label>
+            <textarea class="kc-ftxt" id="shiftNote" placeholder="e.g. Bridal shoot on Saturday, swap requested by staff…"></textarea>
+          </div>
+        </div>
+
+      </div><!-- /kc-form-body -->
+
+      <!-- Footer -->
+      <div class="kc-form-footer">
+        <a href="../staff-schedule.html" class="kc-btn-sec">
+          <i class="fa-solid fa-arrow-left"></i> Cancel
+        </a>
+        <button class="kc-btn-pri" onclick="submitForm()">
+          <i class="fa-solid fa-calendar-plus" id="fmBtnIcon"></i>
+          <span id="fmBtnLabel">Save Schedule</span>
+        </button>
+      </div>
+
+    </div><!-- /kc-card -->
+  </div>
+</div>
+
+<script src="../../../js/shared-components.js"></script>
+<script>
+  KcozmAdmin.init({ activePage:'staff-schedule', pageTitle:'Schedule Form', depth:'../../../' });
+
+  var DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var DAYS_FULL  = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  var selectedDays = [];
+  var currentShiftType = 'working';
+
+  /* ── Set default week to nearest Monday ── */
+  (function setDefaultWeek() {
+    var d = new Date();
+    var day = d.getDay(); // 0=Sun
+    var diff = day === 0 ? -6 : 1 - day;
+    d.setDate(d.getDate() + diff);
+    var yyyy = d.getFullYear();
+    var mm   = String(d.getMonth()+1).padStart(2,'0');
+    var dd   = String(d.getDate()).padStart(2,'0');
+    document.getElementById('weekStart').value = yyyy+'-'+mm+'-'+dd;
+  })();
+
+  /* ── Build day chips ── */
+  function buildDaysGrid() {
+    document.getElementById('daysGrid').innerHTML = DAYS_SHORT.map(function(d, i) {
+      var isSel = selectedDays.indexOf(i) >= 0;
+      return '<div class="day-chip' + (isSel ? ' selected' : '') + '" data-idx="' + i + '" onclick="toggleDay(' + i + ')">' + d + '</div>';
+    }).join('');
+  }
+  buildDaysGrid();
+
+  function toggleDay(idx) {
+    var pos = selectedDays.indexOf(idx);
+    if (pos >= 0) selectedDays.splice(pos, 1);
+    else selectedDays.push(idx);
+    buildDaysGrid();
+    updatePreview();
+  }
+
+  function selectDays(idxArr) {
+    selectedDays = idxArr.slice();
+    buildDaysGrid();
+    updatePreview();
+  }
+
+  /* ── Shift type toggle ── */
+  function selectShiftType(val) {
+    currentShiftType = val;
+    document.getElementById('shiftType').value = val;
+
+    document.querySelectorAll('.shift-type-btn').forEach(function(btn) {
+      btn.className = 'shift-type-btn';
+      var bv = btn.getAttribute('data-val');
+      if (bv === val) btn.classList.add('selected-' + val);
+    });
+
+    var timeRow = document.getElementById('timeRow');
+    timeRow.classList.toggle('dimmed', val === 'off' || val === 'leave');
+
+    updatePreview();
+  }
+
+  /* ── Live preview ── */
+  function updatePreview() {
+    var sel    = document.getElementById('staffSelect');
+    var opt    = sel.options[sel.selectedIndex];
+    var name   = opt && sel.value ? opt.text.split(' — ')[0] : 'Select a staff member';
+    var color  = opt && opt.getAttribute('data-color') ? opt.getAttribute('data-color') : '#c8a040';
+    var start  = document.getElementById('shiftStart').value;
+    var end    = document.getElementById('shiftEnd').value;
+    var type   = currentShiftType;
+
+    // Avatar
+    var initials = name.split(' ').map(function(w){ return w[0]; }).join('').substring(0,2).toUpperCase();
+    document.getElementById('previewAvatar').textContent = initials || '?';
+    document.getElementById('previewAvatar').style.background = color;
+    document.getElementById('previewName').textContent = name;
+
+    // Days
+    if (selectedDays.length === 0) {
+      document.getElementById('previewDays').textContent = 'No days selected';
+      document.getElementById('previewDays').style.color = 'var(--ink-4)';
+    } else {
+      var sorted = selectedDays.slice().sort(function(a,b){return a-b;});
+      document.getElementById('previewDays').textContent = sorted.map(function(i){return DAYS_SHORT[i];}).join(', ');
+      document.getElementById('previewDays').style.color = 'var(--ink-2)';
+    }
+
+    // Time
+    var showTime = (type === 'working' || type === 'half') && start && end;
+    document.getElementById('previewTime').style.display    = showTime ? 'inline' : 'none';
+    document.getElementById('previewTimeVal').style.display = showTime ? 'inline' : 'none';
+    if (showTime) document.getElementById('previewTimeVal').textContent = start + ' – ' + end;
+
+    // Badge
+    var badgeMap = {
+      working:'<i class="fa-solid fa-circle" style="font-size:6px"></i> Full Day',
+      half:   '<i class="fa-solid fa-circle-half-stroke" style="font-size:10px"></i> Half Day',
+      leave:  '<i class="fa-solid fa-umbrella-beach" style="font-size:10px"></i> On Leave',
+      off:    '<i class="fa-solid fa-moon" style="font-size:10px"></i> Day Off',
+    };
+    var badge = document.getElementById('previewBadge');
+    badge.className = 'preview-badge ' + type;
+    badge.innerHTML = badgeMap[type] || badgeMap.working;
+  }
+
+  updatePreview();
+
+  /* ── URL params for edit mode ── */
+  var params = new URLSearchParams(window.location.search);
+  var isEdit = params.has('staffId');
+
+  if (isEdit) {
+    document.getElementById('bcLabel').textContent      = 'Edit Schedule';
+    document.getElementById('pageHeading').textContent  = 'Edit Schedule';
+    document.getElementById('pageSubtitle').textContent = 'Update this staff member\'s shift assignment';
+    document.getElementById('fmBtnIcon').className      = 'fa-solid fa-check';
+    document.getElementById('fmBtnLabel').textContent   = 'Save Changes';
+    document.getElementById('editBanner').classList.add('show');
+
+    // Pre-fill from URL params
+    var staffId = params.get('staffId');
+    var dayIdx  = params.get('day');
+    if (staffId) document.getElementById('staffSelect').value = staffId;
+    if (dayIdx !== null) { selectedDays = [parseInt(dayIdx)]; buildDaysGrid(); }
+
+    var shType = params.get('type') || 'working';
+    selectShiftType(shType);
+    if (params.get('start')) document.getElementById('shiftStart').value = params.get('start');
+    if (params.get('end'))   document.getElementById('shiftEnd').value   = params.get('end');
+    if (params.get('note'))  document.getElementById('shiftNote').value  = params.get('note');
+    if (params.get('week'))  document.getElementById('weekStart').value  = params.get('week');
+
+    updatePreview();
+  }
+
+  /* ── Submit ── */
+  function submitForm() {
+    var staffId = document.getElementById('staffSelect').value;
+    var branch  = document.getElementById('branchSelect').value;
+    var week    = document.getElementById('weekStart').value;
+    var type    = document.getElementById('shiftType').value;
+    var start   = document.getElementById('shiftStart').value;
+    var end     = document.getElementById('shiftEnd').value;
+    var note    = document.getElementById('shiftNote').value.trim();
+
+    if (!staffId)             { KcozmAdmin.showToast('Please select a staff member', 'error'); return; }
+    if (!branch)              { KcozmAdmin.showToast('Please select a branch', 'error');        return; }
+    if (!week)                { KcozmAdmin.showToast('Please select a week start date', 'error'); return; }
+    if (selectedDays.length === 0) { KcozmAdmin.showToast('Please select at least one day', 'error'); return; }
+    if ((type === 'working' || type === 'half') && (!start || !end)) {
+      KcozmAdmin.showToast('Please enter shift start and end time', 'error'); return;
+    }
+    if ((type === 'working' || type === 'half') && start >= end) {
+      KcozmAdmin.showToast('End time must be after start time', 'error'); return;
+    }
+
+    // Persist to sessionStorage
+    var DATA = [];
+    try { DATA = JSON.parse(sessionStorage.getItem('kc_schedule_data') || '[]'); } catch(e){}
+
+    var staffSel  = document.getElementById('staffSelect');
+    var staffName = staffSel.options[staffSel.selectedIndex].text.split(' — ')[0];
+
+    selectedDays.forEach(function(dayIdx) {
+      var existing = DATA.findIndex(function(e){ return e.staffId === staffId && e.day === dayIdx && e.week === week; });
+      var entry = { staffId:staffId, staffName:staffName, branch:branch, week:week, day:dayIdx, type:type, start:start, end:end, break:document.getElementById('breakDuration').value, note:note, repeat:document.getElementById('repeatSchedule').value };
+      if (existing >= 0) DATA[existing] = entry;
+      else DATA.push(entry);
+    });
+
+    sessionStorage.setItem('kc_schedule_data', JSON.stringify(DATA));
+    sessionStorage.setItem('kc_schedule_toast', JSON.stringify({
+      msg:  staffName + '\'s schedule ' + (isEdit ? 'updated!' : 'saved!'),
+      type: 'success'
+    }));
+    window.location.href = '../staff-schedule.html';
+  }
+</script>
+</body>
+</html>
