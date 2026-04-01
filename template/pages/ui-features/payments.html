@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>KCOZM Admin – Payments</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    :root {
+      --gold:#c8a040;--gold-dk:#a07828;--gold-lt:#fdf6e4;--gold-glow:rgba(200,160,64,.15);
+      --ink:#1a1a2e;--ink-mid:#4a4a6a;--ink-light:#8888aa;
+      --surface:#fff;--surface-2:#f8f7fc;--border:#ededf5;
+      --radius-sm:8px;--radius-lg:20px;
+      --shadow-card:0 2px 24px rgba(26,26,46,.08);
+      --shadow-btn:0 4px 16px rgba(200,160,64,.32);
+      --t:.18s ease;
+    }
+    *,*::before,*::after { box-sizing:border-box; }
+    body { font-family:'DM Sans',sans-serif; background:var(--surface-2); }
+    .main-panel { min-width:0; overflow-x:hidden; }
+
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:none} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:none} }
+    @keyframes rowSlide { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:none} }
+
+    .kc-page-content { padding:28px 28px 0;flex:1;width:100%;min-width:0; }
+
+    /* BREADCRUMB */
+    .kc-bc { display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--ink-light);margin-bottom:22px;animation:fadeDown .4s ease both; }
+    .kc-bc a { color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:opacity var(--t); }
+    .kc-bc a:hover { opacity:.72; }
+    .kc-bc .sep { font-size:10px; }
+
+    /* STAT CARDS */
+    .kc-stats-row { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:24px; }
+    .kc-stat { background:var(--surface);border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--shadow-card);padding:20px 22px;animation:fadeUp .45s ease both;position:relative;overflow:hidden; }
+    .kc-stat::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-dk)); }
+    .kc-stat-label { font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-light);margin-bottom:10px; }
+    .kc-stat-val { font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--ink);line-height:1; }
+    .kc-stat-sub { font-size:11.5px;color:var(--ink-light);margin-top:6px; }
+    .kc-stat-icon { position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:36px;color:var(--gold);opacity:.10; }
+
+    /* CARD */
+    .kc-card { background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--border);overflow:hidden;animation:fadeUp .45s ease both;width:100%;margin-bottom:28px;min-width:0; }
+
+    /* CARD HEADER */
+    .kc-card-header { padding:22px 28px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-bottom:1px solid var(--border); }
+    .kc-title-block { display:flex;align-items:center;gap:14px; }
+    .kc-icon-wrap { width:46px;height:46px;border-radius:var(--radius-sm);background:var(--gold-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .kc-icon-wrap i { color:var(--gold);font-size:19px; }
+    .kc-title { font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--ink);margin:0;line-height:1.2; }
+    .kc-title span { display:block;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--ink-light);margin-top:3px; }
+
+    /* TOOLBAR */
+    .kc-toolbar { padding:16px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+    .kc-search-wrap { position:relative;flex:1;min-width:220px;max-width:440px; }
+    .kc-search-wrap .kc-si { position:absolute;top:50%;left:14px;transform:translateY(-50%);color:var(--ink-light);font-size:13px;pointer-events:none; }
+    .kc-search { width:100%;padding:9.5px 14px 9.5px 40px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface-2);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);outline:none;transition:border-color var(--t),box-shadow var(--t),background var(--t); }
+    .kc-search:focus { border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);background:#fff; }
+    .kc-search::placeholder { color:var(--ink-light); }
+    .kc-filter-select { padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink-mid);background:var(--surface);outline:none;cursor:pointer;transition:border-color var(--t); }
+    .kc-filter-select:focus { border-color:var(--gold); }
+    .kc-stat-pill { display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-light);background:var(--surface);border:1px solid var(--border);padding:6px 16px;border-radius:50px;margin-left:auto;white-space:nowrap; }
+
+    /* TABLE */
+    .kc-table-wrap { overflow-x:auto; }
+    .kc-table { width:100%;border-collapse:collapse; }
+    .kc-table th { padding:12px 20px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ink-light);background:var(--surface-2);border-bottom:1px solid var(--border);white-space:nowrap; }
+    .kc-table td { padding:14px 20px;font-size:13.5px;color:var(--ink-mid);border-bottom:1px solid var(--border);vertical-align:middle; }
+    .kc-table tbody tr { transition:background var(--t);animation:rowSlide .3s ease both; }
+    .kc-table tbody tr:hover { background:var(--surface-2); }
+    .kc-table tbody tr:last-child td { border-bottom:none; }
+
+    /* STATUS BADGES */
+    .kc-badge { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;font-size:11.5px;font-weight:600;white-space:nowrap; }
+    .kc-badge-success { background:#e8f5e9;color:#2e7d32; }
+    .kc-badge-warn    { background:#fff8e1;color:#f57f17; }
+    .kc-badge-danger  { background:#fce4ec;color:#c62828; }
+    .kc-badge-info    { background:#e3f2fd;color:#1565c0; }
+
+    /* CUSTOMER NAME */
+    .kc-cust-cell { display:flex;align-items:center;gap:10px; }
+    .kc-avatar { width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--gold-lt),var(--gold));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gold-dk);flex-shrink:0; }
+    .kc-cust-name { font-weight:600;color:var(--ink); }
+
+    /* AMOUNT */
+    .kc-amount { font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--ink); }
+
+    /* ACTION BTNS */
+    .kc-act-row { display:flex;gap:8px; }
+    .kc-act { width:30px;height:30px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-mid);transition:all var(--t); }
+    .kc-act:hover { border-color:var(--gold);color:var(--gold);background:var(--gold-lt); }
+    .kc-act.red:hover { border-color:#e53935;color:#e53935;background:#fce4ec; }
+
+    /* EMPTY STATE */
+    .kc-empty { padding:60px 24px;text-align:center;display:none; }
+    .kc-empty.show { display:block; }
+    .kc-empty-ring { width:72px;height:72px;border-radius:50%;background:var(--gold-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:28px;color:var(--gold); }
+    .kc-empty h6 { font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink);margin:0 0 6px; }
+    .kc-empty p { font-size:13.5px;color:var(--ink-light);margin:0; }
+
+    /* PAGINATION */
+    .kc-pagination { padding:18px 28px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--border); }
+    .kc-pg { padding:7px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:all var(--t); }
+    .kc-pg:hover:not(:disabled) { border-color:var(--gold);color:var(--gold); }
+    .kc-pg:disabled { opacity:.45;cursor:not-allowed; }
+    .kc-pg-num { min-width:32px;height:32px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t); }
+    .kc-pg-num.active { background:var(--gold);color:#fff;border-color:var(--gold); }
+    .kc-pg-info { font-size:12px;color:var(--ink-light);margin-left:auto; }
+
+    /* RECEIPT MODAL */
+    .kc-overlay { position:fixed;inset:0;background:rgba(26,26,46,.45);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px; }
+    .kc-overlay.show { display:flex; }
+    .kc-modal { background:var(--surface);border-radius:var(--radius-lg);box-shadow:0 24px 64px rgba(26,26,46,.22);width:100%;max-width:480px;animation:fadeUp .3s ease both;overflow:hidden; }
+    .kc-modal-head { padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between; }
+    .kc-modal-title { font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--ink); }
+    .kc-modal-close { width:30px;height:30px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-mid);transition:all var(--t); }
+    .kc-modal-close:hover { border-color:var(--gold);color:var(--gold);background:var(--gold-lt); }
+    .kc-modal-body { padding:24px 26px; }
+    .kc-receipt-row { display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13.5px; }
+    .kc-receipt-row:last-child { border-bottom:none; }
+    .kc-receipt-label { color:var(--ink-light);font-weight:500; }
+    .kc-receipt-val { color:var(--ink);font-weight:600; }
+    .kc-receipt-total { font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--gold); }
+    .kc-modal-foot { padding:18px 26px;border-top:1px solid var(--border);display:flex;gap:10px; }
+    .kc-btn-outline { flex:1;padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink-mid);cursor:pointer;transition:all var(--t); }
+    .kc-btn-outline:hover { background:var(--surface-2); }
+    .kc-btn-gold { flex:1;padding:10px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:#fff;cursor:pointer;box-shadow:var(--shadow-btn);transition:opacity var(--t),transform var(--t); }
+    .kc-btn-gold:hover { opacity:.9;transform:translateY(-1px); }
+  </style>
+</head>
+<body>
+<div class="main-panel">
+  <div class="kc-page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="kc-bc">
+      <a href="../../index.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <i class="fa-solid fa-chevron-right sep"></i>
+      <span>Payments</span>
+    </nav>
+
+    <!-- Stat Cards -->
+    <div class="kc-stats-row">
+      <div class="kc-stat" style="animation-delay:.05s">
+        <div class="kc-stat-label">Total Revenue</div>
+        <div class="kc-stat-val" id="statRevenue">₹0</div>
+        <div class="kc-stat-sub">All-time collected</div>
+        <i class="fa-solid fa-indian-rupee-sign kc-stat-icon"></i>
+      </div>
+      <div class="kc-stat" style="animation-delay:.10s">
+        <div class="kc-stat-label">This Month</div>
+        <div class="kc-stat-val" id="statMonth">₹0</div>
+        <div class="kc-stat-sub" id="statMonthLabel">–</div>
+        <i class="fa-solid fa-calendar kc-stat-icon"></i>
+      </div>
+      <div class="kc-stat" style="animation-delay:.15s">
+        <div class="kc-stat-label">Pending</div>
+        <div class="kc-stat-val" id="statPending">₹0</div>
+        <div class="kc-stat-sub" id="statPendingCount">0 transactions</div>
+        <i class="fa-solid fa-clock kc-stat-icon"></i>
+      </div>
+      <div class="kc-stat" style="animation-delay:.20s">
+        <div class="kc-stat-label">Refunded</div>
+        <div class="kc-stat-val" id="statRefund">₹0</div>
+        <div class="kc-stat-sub" id="statRefundCount">0 transactions</div>
+        <i class="fa-solid fa-rotate-left kc-stat-icon"></i>
+      </div>
+    </div>
+
+    <div class="kc-card">
+
+      <!-- Header -->
+      <div class="kc-card-header">
+        <div class="kc-title-block">
+          <div class="kc-icon-wrap"><i class="fa-solid fa-credit-card"></i></div>
+          <h4 class="kc-title">Payments<span>Track transactions, refunds &amp; revenue</span></h4>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="kc-toolbar">
+        <div class="kc-search-wrap">
+          <i class="fa-solid fa-magnifying-glass kc-si"></i>
+          <input type="text" class="kc-search" id="searchInput" placeholder="Search by customer, receipt ID…" oninput="handleSearch()">
+        </div>
+        <select class="kc-filter-select" id="statusFilter" onchange="handleSearch()">
+          <option value="">All Status</option>
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Refunded">Refunded</option>
+          <option value="Failed">Failed</option>
+        </select>
+        <select class="kc-filter-select" id="methodFilter" onchange="handleSearch()">
+          <option value="">All Methods</option>
+          <option value="Cash">Cash</option>
+          <option value="Card">Card</option>
+          <option value="UPI">UPI</option>
+          <option value="Online">Online</option>
+        </select>
+        <div class="kc-stat-pill">Total &nbsp;<strong id="totalCount">0</strong></div>
+      </div>
+
+      <!-- Table -->
+      <div class="kc-table-wrap">
+        <table class="kc-table">
+          <thead><tr>
+            <th style="width:54px">#</th>
+            <th>Receipt ID</th>
+            <th>Customer</th>
+            <th>Service / Item</th>
+            <th style="width:130px">Method</th>
+            <th style="width:130px">Amount</th>
+            <th style="width:130px">Date</th>
+            <th style="width:110px">Status</th>
+            <th style="width:80px">Actions</th>
+          </tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="kc-empty" id="emptyState">
+          <div class="kc-empty-ring"><i class="fa-solid fa-credit-card"></i></div>
+          <h6>No payments found</h6>
+          <p>Adjust your filters or check back after new appointments are completed.</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="kc-pagination" id="paginationWrap">
+        <button class="kc-pg" id="prevBtn" onclick="changePage(-1)"><i class="fa-solid fa-angle-left"></i> Previous</button>
+        <div id="pageNumbers" style="display:flex;gap:6px"></div>
+        <button class="kc-pg" id="nextBtn" onclick="changePage(1)">Next <i class="fa-solid fa-angle-right"></i></button>
+        <span class="kc-pg-info" id="pageInfo"></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Receipt Detail Modal -->
+<div class="kc-overlay" id="receiptOverlay">
+  <div class="kc-modal">
+    <div class="kc-modal-head">
+      <div class="kc-modal-title">Payment Receipt</div>
+      <button class="kc-modal-close" onclick="closeReceipt()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="kc-modal-body" id="receiptBody"></div>
+    <div class="kc-modal-foot">
+      <button class="kc-btn-outline" onclick="closeReceipt()">Close</button>
+      <button class="kc-btn-gold" onclick="KcozmAdmin.showToast('Printing receipt…','info')"><i class="fa-solid fa-print"></i> &nbsp;Print</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/shared-components.js"></script>
+<script>KcozmAdmin.init({activePage:'payments',pageTitle:'Payments',depth:'../../'});</script>
+<script>
+  var DATA = (function(){
+    var stored = sessionStorage.getItem('kc_payments_data');
+    if(stored) return JSON.parse(stored);
+    var methods = ['Cash','Card','UPI','Online'];
+    var statuses = ['Paid','Paid','Paid','Pending','Paid','Refunded','Failed','Paid'];
+    var services = ['Hair Colour + Highlights','Bridal Makeup','Deep Conditioning','Manicure & Pedicure','Balayage','Keratin Treatment','Hair Spa','Nail Art','Facial + Cleanup','Classic Blowout'];
+    var names = ['Priya Sharma','Sneha Desai','Meera Joshi','Anita Kulkarni','Kavya Nair','Rohini Patil','Divya Iyer','Ritu Malhotra','Pooja Verma','Sunita Reddy','Lakshmi Bhat','Nandita Rao'];
+    var base = new Date(2026,0,5);
+    return Array.from({length:38},function(_,i){
+      var d=new Date(base.getTime()+i*86400000*Math.floor(Math.random()*4+1));
+      return {
+        id:i+1,
+        receiptId:'KCP-'+String(2600+i).padStart(4,'0'),
+        customer:names[i%names.length],
+        service:services[i%services.length],
+        method:methods[i%methods.length],
+        amount:Math.floor(Math.random()*4500+500),
+        date:d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}),
+        dateRaw:d,
+        status:statuses[i%statuses.length]
+      };
+    });
+  })();
+
+  var ROWS=12, page=1, list=DATA.slice();
+
+  function fmt(n){ return '₹'+Number(n).toLocaleString('en-IN'); }
+
+  function computeStats(){
+    var now=new Date(), mo=now.getMonth(), yr=now.getFullYear();
+    var rev=0,mth=0,pend=0,pendCount=0,ref=0,refCount=0;
+    DATA.forEach(function(r){
+      if(r.status==='Paid'){ rev+=r.amount; if(r.dateRaw.getMonth()===mo&&r.dateRaw.getFullYear()===yr) mth+=r.amount; }
+      if(r.status==='Pending'){ pend+=r.amount; pendCount++; }
+      if(r.status==='Refunded'){ ref+=r.amount; refCount++; }
+    });
+    document.getElementById('statRevenue').textContent=fmt(rev);
+    document.getElementById('statMonth').textContent=fmt(mth);
+    document.getElementById('statMonthLabel').textContent=now.toLocaleString('en-IN',{month:'long',year:'numeric'});
+    document.getElementById('statPending').textContent=fmt(pend);
+    document.getElementById('statPendingCount').textContent=pendCount+' transaction'+(pendCount!==1?'s':'');
+    document.getElementById('statRefund').textContent=fmt(ref);
+    document.getElementById('statRefundCount').textContent=refCount+' transaction'+(refCount!==1?'s':'');
+  }
+
+  function badgeClass(s){ return s==='Paid'?'kc-badge-success':s==='Pending'?'kc-badge-warn':s==='Refunded'?'kc-badge-info':'kc-badge-danger'; }
+  function methodIcon(m){ return m==='Cash'?'fa-money-bill-wave':m==='Card'?'fa-credit-card':m==='UPI'?'fa-mobile-screen-button':'fa-globe'; }
+  function initials(n){ return n.split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase(); }
+
+  function handleSearch(){
+    var q=document.getElementById('searchInput').value.toLowerCase();
+    var st=document.getElementById('statusFilter').value;
+    var mt=document.getElementById('methodFilter').value;
+    list=DATA.filter(function(r){
+      return (!q||(r.receiptId.toLowerCase().includes(q)||r.customer.toLowerCase().includes(q)||r.service.toLowerCase().includes(q)))
+          && (!st||r.status===st)
+          && (!mt||r.method===mt);
+    });
+    page=1; render();
+  }
+
+  function render(){
+    var total=list.length;
+    var pages=Math.ceil(total/ROWS)||1;
+    page=Math.min(page,pages);
+    var start=(page-1)*ROWS, slice=list.slice(start,start+ROWS);
+    var tb=document.getElementById('tableBody');
+    if(!slice.length){
+      tb.innerHTML='';
+      document.getElementById('emptyState').classList.add('show');
+      document.getElementById('paginationWrap').style.display='none';
+    } else {
+      document.getElementById('emptyState').classList.remove('show');
+      document.getElementById('paginationWrap').style.display='flex';
+      tb.innerHTML=slice.map(function(r,i){
+        return '<tr style="animation-delay:'+(i*0.03)+'s">'
+          +'<td style="color:var(--ink-light);font-size:12px">'+(start+i+1)+'</td>'
+          +'<td style="font-family:\'DM Sans\',monospace;font-size:12.5px;color:var(--ink);font-weight:600">'+r.receiptId+'</td>'
+          +'<td><div class="kc-cust-cell"><div class="kc-avatar">'+initials(r.customer)+'</div><span class="kc-cust-name">'+r.customer+'</span></div></td>'
+          +'<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+r.service+'</td>'
+          +'<td><i class="fa-solid '+methodIcon(r.method)+'" style="color:var(--gold);margin-right:6px"></i>'+r.method+'</td>'
+          +'<td><span class="kc-amount">'+fmt(r.amount)+'</span></td>'
+          +'<td style="font-size:12.5px;color:var(--ink-mid)">'+r.date+'</td>'
+          +'<td><span class="kc-badge '+badgeClass(r.status)+'">'+r.status+'</span></td>'
+          +'<td><div class="kc-act-row">'
+          +'<button class="kc-act" title="View receipt" onclick="openReceipt('+r.id+')"><i class="fa-solid fa-receipt"></i></button>'
+          +'</div></td>'
+          +'</tr>';
+      }).join('');
+    }
+    document.getElementById('totalCount').textContent=total;
+
+    // Pagination
+    var prevBtn=document.getElementById('prevBtn'), nextBtn=document.getElementById('nextBtn');
+    prevBtn.disabled=page===1; nextBtn.disabled=page===pages;
+    var pn=document.getElementById('pageNumbers');
+    pn.innerHTML='';
+    for(var p2=1;p2<=pages;p2++){
+      var b=document.createElement('button');
+      b.className='kc-pg-num'+(p2===page?' active':'');
+      b.textContent=p2;
+      b.onclick=(function(pp){return function(){goPage(pp);};})(p2);
+      pn.appendChild(b);
+    }
+    document.getElementById('pageInfo').textContent='Showing '+(total?start+1:0)+'–'+Math.min(start+ROWS,total)+' of '+total;
+  }
+
+  function changePage(d){ page=Math.max(1,page+d); render(); }
+  function goPage(p){ page=p; render(); }
+
+  function openReceipt(id){
+    var r=DATA.find(function(x){return x.id===id;});
+    if(!r) return;
+    document.getElementById('receiptBody').innerHTML=
+      '<div class="kc-receipt-row"><span class="kc-receipt-label">Receipt ID</span><span class="kc-receipt-val" style="font-family:monospace">'+r.receiptId+'</span></div>'
+      +'<div class="kc-receipt-row"><span class="kc-receipt-label">Customer</span><span class="kc-receipt-val">'+r.customer+'</span></div>'
+      +'<div class="kc-receipt-row"><span class="kc-receipt-label">Service</span><span class="kc-receipt-val">'+r.service+'</span></div>'
+      +'<div class="kc-receipt-row"><span class="kc-receipt-label">Payment Method</span><span class="kc-receipt-val"><i class="fa-solid '+methodIcon(r.method)+'" style="color:var(--gold);margin-right:5px"></i>'+r.method+'</span></div>'
+      +'<div class="kc-receipt-row"><span class="kc-receipt-label">Date</span><span class="kc-receipt-val">'+r.date+'</span></div>'
+      +'<div class="kc-receipt-row"><span class="kc-receipt-label">Status</span><span class="kc-badge '+badgeClass(r.status)+'">'+r.status+'</span></div>'
+      +'<div class="kc-receipt-row" style="margin-top:8px;padding-top:16px;border-top:2px solid var(--border)"><span class="kc-receipt-label" style="font-size:15px;font-weight:700;color:var(--ink)">Total</span><span class="kc-receipt-total">'+fmt(r.amount)+'</span></div>';
+    document.getElementById('receiptOverlay').classList.add('show');
+  }
+  function closeReceipt(){ document.getElementById('receiptOverlay').classList.remove('show'); }
+  document.getElementById('receiptOverlay').addEventListener('click',function(e){if(e.target===this)closeReceipt();});
+
+  computeStats();
+  render();
+</script>
+</body>
+</html>

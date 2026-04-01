@@ -641,8 +641,8 @@
     ]},
     { sec:'BUSINESS', items:[
       { slug:'franchise', label:'Franchise', icon:'fa-store',       href:'pages/ui-features/franchise.html', badge:null },
-      { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'#',     badge:null, onClick:'_comingSoon("Payments")' },
-      { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'#',     badge:null, onClick:'_comingSoon("Reports")' },
+      { slug:'payments',  label:'Payments',  icon:'fa-credit-card', href:'pages/ui-features/payments.html',     badge:null },
+      { slug:'reports',   label:'Reports',   icon:'fa-chart-line',  href:'pages/ui-features/reports.html',     badge:null },
       { slug:'more-pages', label:'More Pages', icon:'fa-layer-group', badge:null, children:[
         { slug:'bridal',  label:'Bridal',   icon:'fa-ring',         href:'pages/ui-features/bridal.html'  },
         { slug:'offers',  label:'Offers',   icon:'fa-tag',          href:'pages/ui-features/Offers_new.html'    },

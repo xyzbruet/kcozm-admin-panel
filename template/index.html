@@ -219,8 +219,8 @@
       <!-- HERO -->
       <div class="kc-hero kc-anim" style="animation-delay:.05s">
         <div class="kc-hero-left">
-          <div class="kc-hero-eyebrow">Friday, 13 March 2026</div>
-          <h1 class="kc-hero-name">Good morning, <em>Admin</em> 👋</h1>
+          <div class="kc-hero-eyebrow" id="kc-hero-date">Friday, 13 March 2026</div>
+          <h1 class="kc-hero-name" id="kc-hero-greeting">Good morning, <em>Admin</em> 👋</h1>
           <p class="kc-hero-sub">KCOZM has 12 appointments scheduled today. Revenue is up 8.4% this week.</p>
         </div>
         <div class="kc-hero-right">
@@ -478,6 +478,27 @@
       ctx.fillStyle='rgba(144,120,96,.65)';
       ctx.font='10px DM Sans,sans-serif'; ctx.textAlign='center';
       labels.forEach(function(l,i){ ctx.fillText(l,xAt(i),pad.t+cH+18); });
+    })();
+    /* Dynamic Hero Date and Greeting */
+    (function() {
+      var d = new Date();
+      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      
+      var dateEl = document.getElementById('kc-hero-date');
+      if(dateEl) {
+        dateEl.textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+      }
+      
+      var hour = d.getHours();
+      var greeting = 'Good evening';
+      if(hour < 12) greeting = 'Good morning';
+      else if(hour < 17) greeting = 'Good afternoon';
+      
+      var greetingEl = document.getElementById('kc-hero-greeting');
+      if(greetingEl) {
+        greetingEl.innerHTML = greeting + ', <em>Admin</em> 👋';
+      }
     })();
   </script>
 </body>
