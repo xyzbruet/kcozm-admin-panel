@@ -26,12 +26,54 @@
     body{font-family:'DM Sans',sans-serif;background:var(--surface-2);color:var(--ink);line-height:1.5}
     a{text-decoration:none}
     .main-panel{min-width:0;overflow-x:hidden}
-    .kc-page-content{padding:0;flex:1;width:100%;min-width:0;display:flex;flex-direction:column}
+    .kc-page-content{padding:32px 32px 48px;flex:1;width:100%;min-width:0;display:flex;flex-direction:column}
+
+    /* ── Breadcrumb ── */
+    .kc-bc{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:22px;animation:fadeDown .4s ease both}
+    .kc-bc a{color:var(--gold);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+    .kc-bc a:hover{opacity:.75}
+    .kc-bc i.sep{font-size:10px}
 
     @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
     @keyframes fadeUp  {from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none}}
     @keyframes fadeIn  {from{opacity:0}                             to{opacity:1}}
     @keyframes popIn   {from{opacity:0;transform:scale(.93)}        to{opacity:1;transform:scale(1)}}
+
+    /* ── Shared Modal & Overlay classes ── */
+    .kc-overlay{display:none;position:fixed;inset:0;background:rgba(26,18,8,.52);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+    .kc-overlay.show{display:flex}
+    .kc-modal-box{background:var(--surface);border-radius:20px;border:1px solid var(--border);box-shadow:0 16px 56px rgba(26,18,8,.22);width:100%;margin:0 20px;overflow:hidden;animation:popIn .22s ease both}
+    .kc-modal-hd{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .kc-modal-ttl{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)}
+    .kc-modal-close-btn{background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-3);padding:4px;line-height:1}
+    .kc-modal-close-btn:hover{color:var(--ink)}
+    .kc-modal-bd{padding:22px;display:flex;flex-direction:column;gap:14px}
+    .kc-modal-ft{padding:14px 22px 18px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border);background:var(--surface-2)}
+    .kc-modal-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px}
+    .kc-modal-inp{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none;transition:border-color var(--t),box-shadow var(--t)}
+    .kc-modal-inp:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+    .kc-modal-inp-mono{font-family:'DM Sans',monospace;font-size:14px;letter-spacing:.08em}
+    .kc-modal-hint{font-size:11.5px;color:var(--ink-3);margin-top:8px}
+    .kc-modal-secure{font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--surface-2);border-radius:var(--r-sm);border:1px solid var(--border)}
+    .kc-modal-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .kc-modal-btn{padding:9px 20px;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:opacity var(--t)}
+    .kc-modal-btn:hover{opacity:.85}
+    .kc-modal-btn.cancel{border:1.5px solid var(--border);background:var(--surface);color:var(--ink-2)}
+    .kc-modal-btn.primary{border:none;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:#fff;padding:9px 22px}
+    .kc-modal-btn.danger-btn{border:none;background:linear-gradient(135deg,#e53935,#b71c1c);color:#fff;padding:9px 22px}
+
+    /* ── Danger confirm modal body ── */
+    .dng-ring{width:64px;height:64px;border-radius:50%;background:#fef2f2;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+    .dng-ring i{color:#c62828;font-size:26px}
+    .dng-title{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#c62828;text-align:center;margin-bottom:8px}
+    .dng-msg{font-size:13.5px;color:var(--ink-3);line-height:1.6;text-align:center}
+    .dng-modal-body{padding:32px 28px 24px;text-align:center}
+
+    /* ── Manage Roles link card ── */
+    .roles-link-card{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;gap:16px}
+    .btn-roles{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1.5px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-lt);color:var(--gold-ddk);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:none;transition:all var(--t);white-space:nowrap;flex-shrink:0}
+    .btn-roles:hover{background:var(--gold);color:#fff;box-shadow:0 4px 14px var(--gold-glow)}
+    @media(max-width:600px){.roles-link-card{flex-direction:column;align-items:flex-start}}
     @keyframes pulse   {0%,100%{opacity:1}50%{opacity:.5}}
     @keyframes slideRight{from{transform:translateX(-20px);opacity:0}to{transform:none;opacity:1}}
 
@@ -438,22 +480,6 @@
       color: var(--ink-3); letter-spacing: 1px; min-width: 0;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-
-    /* ── Staff permission table ── */
-    .perm-table { width: 100%; border-collapse: collapse; }
-    .perm-table th {
-      padding: 10px 20px; text-align: left; font-size: 10px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1px; color: var(--ink-3);
-      background: var(--surface-2); border-bottom: 1px solid var(--border);
-    }
-    .perm-table th:first-child { padding-left: 24px; }
-    .perm-table td {
-      padding: 13px 20px; border-bottom: 1px solid var(--border-lt);
-      font-size: 13px; color: var(--ink-2); vertical-align: middle;
-    }
-    .perm-table td:first-child { padding-left: 24px; font-weight: 600; }
-    .perm-table tr:last-child td { border-bottom: none; }
-    .perm-table tbody tr:hover td { background: #fdf8f0; }
 
     /* ── Appearance preview ── */
     .theme-options { display: flex; gap: 12px; flex-wrap: wrap; padding: 20px 24px; }
@@ -996,21 +1022,14 @@
           <div class="setting-card">
             <div class="sc-head">
               <div class="sc-head-icon blue"><i class="fa-solid fa-shield-halved"></i></div>
-              <div><div class="sc-title">Role Permissions Matrix</div><div class="sc-sub">Define access levels for each role in your salon</div></div>
+              <div><div class="sc-title">Role Permissions Matrix</div><div class="sc-sub">View and manage role-based access for each staff role</div></div>
             </div>
-            <div class="sc-body">
-              <table class="perm-table">
-                <thead>
-                  <tr>
-                    <th>Permission</th>
-                    <th style="text-align:center">Admin</th>
-                    <th style="text-align:center">Manager</th>
-                    <th style="text-align:center">Stylist</th>
-                    <th style="text-align:center">Receptionist</th>
-                  </tr>
-                </thead>
-                <tbody id="permTable"></tbody>
-              </table>
+            <div class="roles-link-card">
+              <div>
+                <div class="srow-label">Manage Roles &amp; Permissions</div>
+                <div class="srow-desc" style="margin-top:3px">The full permissions matrix is maintained in the Staff → Roles page to avoid duplication. Create, edit and assign roles from there.</div>
+              </div>
+              <a href="staff-roles.html" class="btn-roles"><i class="fa-solid fa-shield-halved"></i> Manage Roles <i class="fa-solid fa-arrow-right" style="font-size:11px"></i></a>
             </div>
           </div>
 
@@ -1288,18 +1307,35 @@
   var keyVisible = {};
   function toggleKey(id, real) {
     keyVisible[id] = !keyVisible[id];
-    document.getElementById(id).textContent = keyVisible[id] ? real : id.replace('Key','').toLowerCase()+'_live_kczm_' + '•'.repeat(32);
+    document.getElementById(id).textContent = keyVisible[id] ? real : '•'.repeat(32);
   }
   function copyKey(val) {
     navigator.clipboard.writeText(val).then(function(){ KcozmAdmin.showToast('API key copied!','success'); });
   }
 
   /* ── Danger confirm ── */
+  var pendingDangerType = null;
+  var dangerLabels = {
+    reset:        { title:'Reset All Settings?',            msg:'This will restore all settings to factory defaults. Every customisation you\'ve made will be lost.',  btn:'Reset Settings' },
+    appointments: { title:'Delete All Appointments?',       msg:'All appointment history will be permanently erased. This action cannot be undone.',                      btn:'Delete All' },
+    account:      { title:'Permanently Delete Account?',    msg:'Your KCOZM account and all associated data will be wiped. This is irreversible — proceed with caution.', btn:'Delete Account' }
+  };
   function confirmDanger(type) {
-    var msgs = { reset:'Reset all settings to default?', appointments:'Delete ALL appointment history?', account:'Permanently delete your account?' };
-    if (confirm(msgs[type] + '\n\nThis action CANNOT be undone.')) {
-      KcozmAdmin.showToast(type==='account'?'Account deletion requested — check email':'Action completed','success');
-    }
+    pendingDangerType = type;
+    var d = dangerLabels[type];
+    document.getElementById('dangerTitle').textContent      = d.title;
+    document.getElementById('dangerMsg').textContent        = d.msg;
+    document.getElementById('dangerConfirmBtn').textContent = d.btn;
+    document.getElementById('dangerModalOv').classList.add('show');
+  }
+  function closeDangerModal() {
+    document.getElementById('dangerModalOv').classList.remove('show');
+    pendingDangerType = null;
+  }
+  function executeDanger() {
+    var type = pendingDangerType;
+    closeDangerModal();
+    KcozmAdmin.showToast(type === 'account' ? 'Account deletion requested — check email' : 'Action completed', 'success');
   }
 
   /* ── Operating Hours Grid ── */
@@ -1327,33 +1363,7 @@
     document.getElementById('close-'+i).style.cssText += open?'opacity:1;pointer-events:auto':'opacity:.35;pointer-events:none';
   }
 
-  /* ── Permissions Table ── */
-  var PERMS = [
-    ['View Dashboard',        true,  true,  true,  true ],
-    ['Manage Appointments',   true,  true,  true,  true ],
-    ['Manage Services',       true,  true,  false, false],
-    ['Manage Staff',          true,  true,  false, false],
-    ['Manage Customers',      true,  true,  false, true ],
-    ['View Reports',          true,  true,  false, false],
-    ['Manage Products',       true,  true,  true,  false],
-    ['Process Payments',      true,  true,  true,  true ],
-    ['Manage Settings',       true,  false, false, false],
-    ['Delete Records',        true,  false, false, false],
-  ];
-  var permTable = document.getElementById('permTable');
-  if (permTable) {
-    permTable.innerHTML = PERMS.map(function(row){
-      return '<tr><td>'+row[0]+'</td>'
-        + [1,2,3,4].map(function(j){
-            return '<td style="text-align:center">'
-              +(row[j]
-                ?'<i class="fa-solid fa-circle-check" style="color:var(--gold-dk);font-size:15px"></i>'
-                :'<i class="fa-solid fa-circle-xmark" style="color:var(--border);font-size:15px"></i>')
-              +'</td>';
-          }).join('')
-        +'</tr>';
-    }).join('');
-  }
+  /* Permissions matrix removed — managed via Staff → Roles page (staff-roles.html) */
 
   /* ── Integrations ── */
   var INTEGRATIONS = [
@@ -1404,76 +1414,78 @@
 </script>
 
 <!-- ══ IP MODAL ══ -->
-<div id="ipModalOv" style="display:none;position:fixed;inset:0;background:rgba(26,18,8,.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:0 8px 40px rgba(26,18,8,.18);width:100%;max-width:400px;margin:0 20px;overflow:hidden">
-    <div style="padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)">Add Allowed IP</div>
-      <button onclick="closeIpModal()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-3);padding:4px"><i class="fa-solid fa-xmark"></i></button>
+<div id="ipModalOv" class="kc-overlay" onclick="if(event.target===this)closeIpModal()">
+  <div class="kc-modal-box" style="max-width:400px">
+    <div class="kc-modal-hd">
+      <div class="kc-modal-ttl">Add Allowed IP</div>
+      <button class="kc-modal-close-btn" onclick="closeIpModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div style="padding:22px">
-      <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">IP Address or CIDR Range</label>
-      <input type="text" id="ipInput" placeholder="e.g. 192.168.1.0/24 or 203.0.113.5"
-        style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
-        onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
-        onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'"
-        onkeydown="if(event.key==='Enter')saveIp()">
-      <div style="font-size:11.5px;color:var(--ink-3);margin-top:8px">IPv4, IPv6, and CIDR notation are all supported. Leave empty to restrict all unknown IPs.</div>
+    <div class="kc-modal-bd">
+      <div>
+        <label class="kc-modal-lbl">IP Address or CIDR Range</label>
+        <input type="text" id="ipInput" class="kc-modal-inp" placeholder="e.g. 192.168.1.0/24 or 203.0.113.5"
+          onkeydown="if(event.key==='Enter')saveIp()">
+        <div class="kc-modal-hint">IPv4, IPv6, and CIDR notation are all supported. Leave empty to restrict all unknown IPs.</div>
+      </div>
     </div>
-    <div style="padding:14px 22px 18px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border);background:var(--surface-2)">
-      <button onclick="closeIpModal()" style="padding:9px 20px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer">Cancel</button>
-      <button onclick="saveIp()" style="padding:9px 22px;border:none;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;cursor:pointer"><i class="fa-solid fa-plus"></i> Add IP</button>
+    <div class="kc-modal-ft">
+      <button onclick="closeIpModal()" class="kc-modal-btn cancel">Cancel</button>
+      <button onclick="saveIp()" class="kc-modal-btn primary"><i class="fa-solid fa-plus"></i> Add IP</button>
     </div>
   </div>
 </div>
 
 <!-- ══ UPDATE CARD MODAL ══ -->
-<div id="cardModalOv" style="display:none;position:fixed;inset:0;background:rgba(26,18,8,.45);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:0 8px 40px rgba(26,18,8,.18);width:100%;max-width:440px;margin:0 20px;overflow:hidden">
-    <div style="padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
-      <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--ink)">Update Payment Method</div>
-      <button onclick="closeCardModal()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink-3);padding:4px"><i class="fa-solid fa-xmark"></i></button>
+<div id="cardModalOv" class="kc-overlay" onclick="if(event.target===this)closeCardModal()">
+  <div class="kc-modal-box" style="max-width:440px">
+    <div class="kc-modal-hd">
+      <div class="kc-modal-ttl">Update Payment Method</div>
+      <button class="kc-modal-close-btn" onclick="closeCardModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div style="padding:22px;display:flex;flex-direction:column;gap:14px">
+    <div class="kc-modal-bd">
       <div>
-        <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">Cardholder Name</label>
-        <input type="text" id="cardName" placeholder="Name as on card" value="Salon Admin"
-          style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
-          onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
-          onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <label class="kc-modal-lbl">Cardholder Name</label>
+        <input type="text" id="cardName" class="kc-modal-inp" placeholder="Name as on card" value="Salon Admin">
       </div>
       <div>
-        <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">Card Number</label>
-        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19"
-          oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/(.{4})/g,'$1 ').trim()"
-          style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',monospace;font-size:14px;letter-spacing:.08em;color:var(--ink);background:var(--surface-2);outline:none"
-          onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
-          onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        <label class="kc-modal-lbl">Card Number</label>
+        <input type="text" id="cardNumber" class="kc-modal-inp kc-modal-inp-mono" placeholder="1234 5678 9012 3456" maxlength="19"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/(.{4})/g,'$1 ').trim()">
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="kc-modal-grid-2">
         <div>
-          <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">Expiry (MM/YY)</label>
-          <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5"
-            oninput="var v=this.value.replace(/[^0-9]/g,'');this.value=v.length>2?v.slice(0,2)+'/'+v.slice(2):v"
-            style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
-            onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
-            onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+          <label class="kc-modal-lbl">Expiry (MM/YY)</label>
+          <input type="text" id="cardExpiry" class="kc-modal-inp" placeholder="MM/YY" maxlength="5"
+            oninput="var v=this.value.replace(/[^0-9]/g,'');this.value=v.length>2?v.slice(0,2)+'/'+v.slice(2):v">
         </div>
         <div>
-          <label style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--ink-3);display:block;margin-bottom:6px">CVV</label>
-          <input type="password" id="cardCvv" placeholder="•••" maxlength="4"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-            style="width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--ink);background:var(--surface-2);outline:none"
-            onfocus="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 0 3px var(--gold-glow)'"
-            onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+          <label class="kc-modal-lbl">CVV</label>
+          <input type="password" id="cardCvv" class="kc-modal-inp" placeholder="•••" maxlength="4"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         </div>
       </div>
-      <div style="font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--surface-2);border-radius:var(--r-sm);border:1px solid var(--border)">
+      <div class="kc-modal-secure">
         <i class="fa-solid fa-lock" style="color:var(--gold-dk)"></i> Your payment details are encrypted and stored securely.
       </div>
     </div>
-    <div style="padding:14px 22px 18px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border);background:var(--surface-2)">
-      <button onclick="closeCardModal()" style="padding:9px 20px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--surface);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--ink-2);cursor:pointer">Cancel</button>
-      <button onclick="saveCard()" style="padding:9px 22px;border:none;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--gold),var(--gold-dk));font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:#fff;cursor:pointer"><i class="fa-solid fa-credit-card"></i> Save Card</button>
+    <div class="kc-modal-ft">
+      <button onclick="closeCardModal()" class="kc-modal-btn cancel">Cancel</button>
+      <button onclick="saveCard()" class="kc-modal-btn primary"><i class="fa-solid fa-credit-card"></i> Save Card</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DANGER CONFIRM MODAL ══ -->
+<div id="dangerModalOv" class="kc-overlay" onclick="if(event.target===this)closeDangerModal()">
+  <div class="kc-modal-box" style="max-width:380px">
+    <div class="dng-modal-body">
+      <div class="dng-ring"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div class="dng-title" id="dangerTitle">Are you sure?</div>
+      <div class="dng-msg" id="dangerMsg"></div>
+    </div>
+    <div class="kc-modal-ft" style="justify-content:center;padding-top:0">
+      <button onclick="closeDangerModal()" class="kc-modal-btn cancel" style="flex:1">Cancel</button>
+      <button onclick="executeDanger()" class="kc-modal-btn danger-btn" style="flex:1" id="dangerConfirmBtn">Confirm</button>
     </div>
   </div>
 </div>
@@ -1499,11 +1511,10 @@
   var allowedIPs = [];
   function openIpModal() {
     document.getElementById('ipInput').value = '';
-    var ov = document.getElementById('ipModalOv');
-    ov.style.display = 'flex';
+    document.getElementById('ipModalOv').classList.add('show');
     setTimeout(function(){ document.getElementById('ipInput').focus(); }, 50);
   }
-  function closeIpModal() { document.getElementById('ipModalOv').style.display = 'none'; }
+  function closeIpModal() { document.getElementById('ipModalOv').classList.remove('show'); }
   function saveIp() {
     var val = document.getElementById('ipInput').value.trim();
     if (!val) { KcozmAdmin.showToast('Please enter an IP address','error'); return; }
@@ -1533,18 +1544,17 @@
         + '</span>';
     }).join('');
   }
-  document.getElementById('ipModalOv').addEventListener('click', function(e){ if(e.target===this) closeIpModal(); });
+  /* click-outside already handled via onclick on overlay elements */
 
   /* ── Update Card ── */
   function openCardModal() {
     ['cardName','cardNumber','cardExpiry','cardCvv'].forEach(function(id){
       if (id !== 'cardName') document.getElementById(id).value = '';
     });
-    var ov = document.getElementById('cardModalOv');
-    ov.style.display = 'flex';
+    document.getElementById('cardModalOv').classList.add('show');
     setTimeout(function(){ document.getElementById('cardName').focus(); }, 50);
   }
-  function closeCardModal() { document.getElementById('cardModalOv').style.display = 'none'; }
+  function closeCardModal() { document.getElementById('cardModalOv').classList.remove('show'); }
   function saveCard() {
     var name   = document.getElementById('cardName').value.trim();
     var num    = document.getElementById('cardNumber').value.replace(/\s/g,'');
@@ -1565,7 +1575,7 @@
     closeCardModal();
     KcozmAdmin.showToast('Payment method updated!','success');
   }
-  document.getElementById('cardModalOv').addEventListener('click', function(e){ if(e.target===this) closeCardModal(); });
+
 </script>
 </body>
 </html>
